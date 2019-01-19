@@ -87,29 +87,18 @@ central-platform -- 父项目，公共依赖
 <table>
     <tr>
         <td><img src="zlt-doc/截屏/登录.png"/></td>
-        <td><img src="zlt-doc/截屏/权限分配.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="zlt-doc/截屏/代码生成器.png"/></td>
-        <td><img src="zlt-doc/截屏/文档中心.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="zlt-doc/截屏/日志中心01.png"/></td>
-        <td><img src="zlt-doc/截屏/日志中心02.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="zlt-doc/截屏/慢查询sql.png"/></td>
         <td><img src="zlt-doc/截屏/任务中心.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="zlt-doc/截屏/日志中心02.png"/></td>
+        <td><img src="zlt-doc/截屏/慢查询sql.png"/></td>
     </tr>
     <tr>
         <td><img src="zlt-doc/截屏/应用监控01.png"/></td>
         <td><img src="zlt-doc/截屏/应用监控02.png"/></td>
     </tr>
     <tr>
-        <td><img src="zlt-doc/截屏/nacos-conf.png"/></td>
         <td><img src="zlt-doc/截屏/nacos-discovery.png"/></td>
-    </tr>
-    <tr>
         <td><img src="zlt-doc/截屏/elk.png"/></td>
     </tr>
 </table>
