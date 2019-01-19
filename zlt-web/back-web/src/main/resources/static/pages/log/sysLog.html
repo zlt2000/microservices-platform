@@ -1,0 +1,66 @@
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2 class="header-title">系统日志</h2>
+        <span class="layui-breadcrumb pull-right">
+          <a href="#!console">首页</a>
+          <a><cite>系统日志</cite></a>
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-form toolbar">
+            搜索：
+            <select id="user-search-key">
+                <option value="">-请选择-</option>
+                <option value="message">日志信息</option>
+                <option value="logLevel">日志级别</option>
+                <option value="appName">应用名</option>
+                <option value="classname">类名</option>
+            </select>&emsp;
+            <input id="user-search-value" class="layui-input search-input" type="text" placeholder="输入关键字"/>&emsp;
+            <button id="user-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+        </div>
+
+        <table class="layui-table" id="sysLog-table" lay-filter="sysLog-table"></table>
+    </div>
+</div>
+
+<script>
+    layui.use(['form', 'table', 'util', 'config', 'admin', 'upload'], function () {
+        var table = layui.table;
+        var config = layui.config;
+        var util = layui.util;
+
+        // 渲染表格
+        table.render({
+            elem: '#sysLog-table',
+            url: config.base_server + 'api-log/sysLog?data='+new Date(),
+            method: 'GET',
+            where: {
+                access_token: config.getToken().access_token
+            },
+            page: true,
+            cols: [[
+                {type: 'numbers'},
+                {
+                    field: 'timestamp', width: 200, sort: true, templet: function (d) {
+                        return util.toDateString(d.timestamp, 'yyyy-MM-dd HH:mm:ss');
+                    }, title: '日志时间'
+                },
+                {field: 'message', sort: true, title: '日志信息', width: 350},
+                {field: 'logLevel', sort: true, title: '日志级别', width: 100},
+                {field: 'appName', sort: true, title: '应用名', width: 120},
+                {field: 'serverIp', sort: true, title: '服务ip', width: 130},
+                {field: 'serverPort', sort: true, title: '服务端口', width: 100},
+                {field: 'threadName', sort: true, title: '线程名', width: 150},
+                {field: 'classname', sort: true, title: '类名', width: 250}
+            ]]
+        });
+
+        // 搜索按钮点击事件
+        $('#user-btn-search').click(function () {
+            var key = $('#user-search-key').val();
+            var value = $('#user-search-value').val();
+            table.reload('sysLog-table', {where: {searchKey: key, searchValue: value}});
+        });
+    });
+</script>

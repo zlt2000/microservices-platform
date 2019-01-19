@@ -1,0 +1,14 @@
+server:
+  port: 7000
+
+spring:
+  application:
+    name: user-center
+  cloud:
+    nacos:
+      config:
+        server-addr: ${zlt.nacos.server-addr}
+        file-extension: yml
+        shared-dataids: common.yml
+      discovery:
+        server-addr: ${zlt.nacos.server-addr}

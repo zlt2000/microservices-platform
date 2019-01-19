@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.central.user.mapper.SysUserMapper">
+	<sql id="where">
+		<where>
+			t.is_del=0
+			<if test="u.id != null and u.id != ''">
+				and t.id like concat('%', #{u.id}, '%')
+			</if>
+			<if test="u.username != null and u.username != ''">
+				and t.username like concat('%', #{u.username}, '%')
+			</if>
+			<if test="u.nickname != null and u.nickname != ''">
+				and t.nickname like concat('%', #{u.nickname}, '%')
+			</if>
+			<if test="u.enabled != null and u.enabled != ''">
+				and t.enabled = #{u.enabled}
+			</if>
+			<if test="u.type != null and u.type != ''">
+				and t.type = #{u.type}
+			</if>
+			<if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='user_id'">
+				and t.id  like concat('%', #{u.searchValue}, '%')
+			</if>
+			<if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='username'">
+				and t.username  like concat('%', #{u.searchValue}, '%')
+			</if>
+			<if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='nick_name'">
+				and t.nickname  like concat('%', #{u.searchValue}, '%')
+			</if>
+			<if test="u.searchKey != null and u.searchKey != '' and u.searchKey=='mobile'">
+				and t.mobile  like concat('%', #{u.searchValue}, '%')
+			</if>
+		</where>
+	</sql>
+
+	<select id="findList" resultType="com.central.common.model.SysUser">
+		select * from sys_user t
+		<include refid="where" />
+		order by t.id desc
+	</select>
+</mapper>

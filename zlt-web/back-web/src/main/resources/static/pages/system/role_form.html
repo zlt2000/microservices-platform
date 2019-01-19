@@ -1,0 +1,69 @@
+<!-- role表单弹窗 -->
+<form id="role-form" lay-filter="role-form" class="layui-form model-form">
+    <input name="id" type="hidden"/>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">权限</label>
+        <div class="layui-input-block">
+            <select name="roleIds" xm-select="roleIds" lay-verify="required">
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item model-form-footer">
+        <button class="layui-btn layui-btn-primary" ew-event="closeDialog" type="button">取消</button>
+        <button class="layui-btn" lay-filter="role-form-submit" lay-submit>保存</button>
+    </div>
+</form>
+
+<script>
+    layui.use(['layer', 'admin', 'form', 'formSelects'], function () {
+        var layer = layui.layer;
+        var admin = layui.admin;
+        var form = layui.form;
+        var formSelects = layui.formSelects;
+
+        var role =  admin.getTempData('t_role');
+
+        // 获取所有权限
+        layer.load(2);
+        admin.req('api-user/permissions/'+role.id+'/permissions', {}, function (data) {
+            layer.closeAll('loading');
+            var roleSelectData = new Array();
+            for (var i = 0; i < data.length; i++) {
+                roleSelectData.push({name: data[i].name, value: data[i].id});
+            }
+            formSelects.data('roleIds', 'local', {arr: roleSelectData});
+            // 回显user数据
+            $('#role-form').attr('method', 'POST');
+            form.val('role-form', role);
+
+            var rds = new Array();
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].checked){
+                    rds.push(data[i].id);
+                }
+            }
+            formSelects.value('roleIds', rds);
+        }, 'GET');
+
+        // 表单提交事件
+        form.on('submit(role-form-submit)', function (data) {
+        	layer.load(2);
+            data.roleId = data.field.id;
+            data.authIds = data.field.roleIds.split(",");
+            console.log(data);
+            admin.req('api-user/permissions/granted', JSON.stringify(data), function (data) {
+            	layer.closeAll('loading');
+                if (data.resp_code == 0) {
+                    layer.msg(data.resp_msg, {icon: 1, time: 500});
+                    admin.finishPopupCenter();
+                } else {
+                    layer.msg(data.resp_msg, {icon: 2, time: 500});
+                }
+                
+            }, $('#role-form').attr('method'));
+            return false;
+        });
+    });
+</script>

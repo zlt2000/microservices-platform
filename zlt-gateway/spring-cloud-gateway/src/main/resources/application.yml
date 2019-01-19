@@ -1,0 +1,37 @@
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          lowerCaseServiceId: true
+          enabled: true
+      routes:
+        # =====================================
+        - id: api-user
+          uri: lb://user-center
+          order: 8001
+          predicates:
+            - Path=/api-user/**
+          filters:
+            - GwSwaggerHeaderFilter
+            - StripPrefix=1
+        - id: api-uaa
+          uri: lb://uaa-server
+          order: 8002
+          predicates:
+            - Path=/api-uaa/**
+          filters:
+            - GwSwaggerHeaderFilter
+            - StripPrefix=1
+        - id: api-file
+          uri: lb://file-center
+          order: 8003
+          predicates:
+            - Path=/api-file/**
+          filters:
+            - StripPrefix=1
+
+  redis:
+    host: ${zlt.redis.host}
+    port: ${zlt.redis.port}
+    timeout: ${zlt.redis.timeout}

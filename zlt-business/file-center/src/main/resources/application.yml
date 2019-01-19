@@ -1,0 +1,41 @@
+#aliyun:
+#  oss:
+#    access-key: 你的密钥
+#    accessKeySecret: 你的密钥
+#    endpoint: 你的端点
+#    bucketName: 你的名称
+#    domain: 你的说明
+
+qiniu:
+  oss:
+    access-key: tpi8mObnfzZi4ggBX8Bw7zydjoTQ0WeML3RkPKsX
+    accessKeySecret: HZBXmSyUTy-haYp0KbBTtsil-GoKjVS2kDKT8Yow
+    endpoint: http://pkqtmn0p1.bkt.clouddn.com
+    bucketName: public-oss
+
+spring:
+  datasource:
+    url: jdbc:mysql://${zlt.datasource.ip}:3306/file_center?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
+    username: ${zlt.datasource.username}
+    password: ${zlt.datasource.password}
+    driver-class-name: com.mysql.jdbc.Driver
+
+  redis:
+    host: ${zlt.redis.host}
+    port: ${zlt.redis.port}
+    timeout: ${zlt.redis.timeout}
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.central.file.model
+  global-config:
+    db-config:
+      id-type: INPUT
+zlt:
+  swagger:
+    enabled: true
+    title: 文件中心
+    description: 文件中心接口文档
+    version: 1.0
+    base-package: com.central.file.controller

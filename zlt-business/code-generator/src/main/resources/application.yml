@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:mysql://${zlt.datasource.ip}:3306/user-center?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
+    username: ${zlt.datasource.username}
+    password: ${zlt.datasource.password}
+    driver-class-name: com.mysql.jdbc.Driver
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.central.generator.model

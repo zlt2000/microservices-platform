@@ -1,0 +1,19 @@
+server:
+  port: 9200
+  undertow:
+    io-threads: 16
+    worker-threads: 256
+    buffer-size: 1024
+    direct-buffers: true
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    nacos:
+      config:
+        server-addr: ${zlt.nacos.server-addr}
+        file-extension: yml
+        shared-dataids: common.yml
+      discovery:
+        server-addr: ${zlt.nacos.server-addr}

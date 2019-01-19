@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.central.oauth.mapper.ClientMapper">
+
+    <sql id="where">
+        <where>
+            <if test="params.clientId!= null and params.clientId != ''">
+                and client_id = #{params.clientId}
+            </if>
+            <if test="params.resourceIds != null and params.resourceIds != ''">
+                and resource_ids = #{params.resourceIds}
+            </if>
+            <if test="params.clientSecret != null and params.clientSecret != ''">
+                and client_secret = #{params.clientSecret}
+            </if>
+            <if test="params.scope != null and params.scope != ''">
+                and scope = #{params.scope}
+            </if>
+            <if test="params.authorizedGrantTypes != null and params.authorizedGrantTypes != ''">
+                and authorized_grant_types = #{params.authorizedGrantTypes}
+            </if>
+            <if test="params.webServerRedirectUri != null and params.webServerRedirectUri != ''">
+                and web_server_redirect_uri = #{params.webServerRedirectUri}
+            </if>
+            <if test="params.authorities != null and params.authorities != ''">
+                and authorities = #{params.authorities}
+            </if>
+            <if test="params.accessTokenValidity != null and params.accessTokenValidity != ''">
+                and access_token_validity = #{params.accessTokenValidity}
+            </if>
+            <if test="params.refreshTokenValidity != null and params.refreshTokenValidity != ''">
+                and refresh_token_validity = #{params.refreshTokenValidity}
+            </if>
+            <if test="params.additionalInformation != null and params.additionalInformation != ''">
+                and additional_information = #{params.additionalInformation}
+            </if>
+            <if test="params.autoapprove != null and params.autoapprove != ''">
+                and autoapprove = #{params.autoapprove}
+            </if>
+            <if test="params.searchKey != null and params.searchKey != ''">
+                and client_id like concat('%', #{params.searchKey}, '%')
+            </if>
+
+        </where>
+    </sql>
+
+    <select id="findList" resultType="com.central.oauth.model.Client">
+        select id , client_id , resource_ids ,
+        client_secret ,
+        client_secret_str ,
+        web_server_redirect_uri from oauth_client_details t
+        <include refid="where"/>
+    </select>
+</mapper>

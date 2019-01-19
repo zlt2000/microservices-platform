@@ -1,0 +1,21 @@
+server:
+  port: 6500
+
+spring:
+  application:
+    name: sc-admin
+  security:
+    user:
+      name: 'admin'
+      password: 'admin'
+  cloud:
+    nacos:
+      config:
+        server-addr: ${zlt.nacos.server-addr}
+        file-extension: yml
+        shared-dataids: common.yml
+      discovery:
+        server-addr: ${zlt.nacos.server-addr}
+        metadata:
+          user.name: ${spring.security.user.name}
+          user.password: ${spring.security.user.password}

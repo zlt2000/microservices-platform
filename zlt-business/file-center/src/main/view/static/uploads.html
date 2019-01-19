@@ -1,0 +1,32 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<div>
+		<form method="POST" enctype="multipart/form-data" id="upload_form">
+			<table>
+				<tr><td>File1 to upload:</td><td><input type="file" name="file1" /></td></tr>
+				<tr><td>File2 to upload:</td><td><input type="file" name="file2" /></td></tr>
+				<tr><td></td><td><input type="button" value="上传文件" onclick="uploadImage()"/></td></tr>
+			</table>
+		</form>
+	</div>
+</body>
+<script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="/js/jquery.form.js" ></script>
+<script type="text/javascript">
+	function uploadImage(){
+		$("#upload_form").ajaxSubmit({
+			url : "/files-anon",
+			type:'post',
+			dataType:'json',
+			asyn:false,
+			success:function(data){
+				if(data.code!='10000'){
+					alert(JSON.stringify(data));
+					return;
+				}
+				alert(JSON.stringify(data));
+			}
+		});
+	}
+</script>
+</html>

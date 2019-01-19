@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.central.file.mapper.FileMapper">
+
+	<sql id="where">
+		<where>
+			<if test="f.name != null and f.name != ''">
+				and t.name like concat('%', #{f.name}, '%')
+			</if>
+			<if test="f.beginTime != null and f.beginTime != ''">
+				and t.create_time &gt;= #{f.beginTime}
+			</if>
+			<if test="f.endTime != null and f.endTime != ''">
+				and t.create_time &lt;= #{f.endTime}
+			</if>
+            <if test="f.searchKey != null and f.searchKey != ''">
+                and t.name like concat('%', #{f.searchKey}, '%')
+            </if>
+		</where>
+	</sql>
+
+	<select id="findList" resultType="com.central.file.model.FileInfo">
+		select * from file_info t
+		<include refid="where" />
+		order by t.create_time desc
+	</select>
+</mapper>

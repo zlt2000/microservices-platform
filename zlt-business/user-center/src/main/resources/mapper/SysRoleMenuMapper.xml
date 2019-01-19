@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.central.user.mapper.SysRoleMenuMapper">
+
+	<update id="delete">
+		delete from sys_role_menu
+		<where>
+			<if test="roleId != null">
+				and role_id = #{roleId}
+			</if>
+			<if test="menuId != null">
+				and menu_id = #{menuId}
+			</if>
+		</where>
+	</update>
+
+	<select id="findMenusByRoleIds" resultType="com.central.common.model.SysMenu">
+		select distinct t.* from sys_menu t
+		inner join sys_role_menu r on r.menu_id = t.id
+		where
+		r.role_id in
+		<foreach collection="roleIds" index="index" item="roleId"
+			open="(" separator="," close=")">
+			#{roleId}
+		</foreach>
+		<if test="type != null">
+			and t.type = #{type}
+		</if>
+		ORDER BY sort ASC
+	</select>
+
+    <select id="findMenusByRoleCodes" resultType="com.central.common.model.SysMenu">
+		select distinct t.* from sys_menu t
+		inner join sys_role_menu r on r.menu_id = t.id
+		inner join sys_role rl on rl.id = r.role_id
+		where
+		rl.code in
+		<foreach collection="roleCodes" index="index" item="roleCode"
+				 open="(" separator="," close=")">
+			#{roleCode}
+		</foreach>
+		<if test="type != null">
+			and t.type = #{type}
+		</if>
+		ORDER BY sort ASC
+	</select>
+</mapper>

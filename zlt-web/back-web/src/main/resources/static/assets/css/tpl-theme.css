@@ -1,0 +1,60 @@
+.layui-card-body {
+    padding: 0;
+}
+
+.theme-div {
+    padding-left: 15px;
+    padding-top: 20px;
+    margin-bottom: 10px;
+}
+
+.btnTheme {
+    display: inline-block;
+    margin: 0 6px 15px 0;
+    padding: 4px;
+    border: 1px solid #fff;
+}
+
+.btnTheme img {
+    width: 80px;
+    height: 50px;
+    border: 1px solid #f2f2f2;
+    background: #F2F2F2;
+    cursor: pointer;
+}
+
+.btnTheme:hover, .btnTheme.active {
+    border-color: #5FB878;
+}
+
+.more-menu-item {
+    display: block;
+    height: 50px;
+    line-height: 50px;
+    font-size: 16px;
+    border-bottom: 1px solid #e8e8e8;
+    color: #333;
+    padding: 0px 25px;
+    font-style: normal;
+}
+
+.more-menu-item:first-child {
+    border-top: 1px solid #e8e8e8;
+}
+
+.more-menu-item:hover {
+    background: #F2F2F2;
+    color: #333;
+}
+
+.more-menu-item .layui-icon {
+    padding-right: 10px;
+    font-size: 18px;
+}
+
+.more-menu-item:after {
+    content: "\e602";
+    font-family: layui-icon !important;
+    position: absolute;
+    right: 16px;
+}

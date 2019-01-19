@@ -1,0 +1,127 @@
+/** EasyWeb 白色主题 data:2018-10-17 */
+
+/** 透明侧边栏导航 */
+.layui-layout-admin .layui-side .layui-nav {
+    background-color: transparent;
+}
+
+.layui-layout-admin .layui-side .layui-nav .layui-nav-item > a:hover {
+    background: rgba(255, 255, 255, .03);
+}
+
+/** logo部分样式 */
+.layui-layout-admin .layui-header .layui-logo {
+    background-color: #ffffff;
+    color: #333;
+}
+
+/** header样式 */
+.layui-layout-admin .layui-header {
+    background-color: #fff;
+}
+
+.layui-layout-admin .layui-header a {
+    color: #333;
+}
+
+.layui-layout-admin .layui-header a:hover {
+    color: #333;
+}
+
+.layui-layout-admin .layui-header .layui-nav .layui-nav-more {
+    border-color: #333 transparent transparent;
+}
+
+.layui-layout-admin .layui-header .layui-nav .layui-nav-mored {
+    border-color: transparent transparent #333;
+}
+
+/** 导航栏下面的线条 */
+.layui-layout-admin .layui-header .layui-nav .layui-this:after, .layui-layout-admin .layui-header .layui-nav-bar {
+    background-color: #333;
+}
+
+/** 侧边栏样式 */
+.layui-layout-admin .layui-side {
+    background-color: #ffffff !important;
+}
+
+.layui-nav-tree .layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a, .layui-nav-tree .layui-this, .layui-nav-tree .layui-this > a, .layui-nav-tree .layui-this > a:hover {
+    color: #ffffff;
+}
+
+/** 主题颜色 */
+
+/** 主体标题 */
+.layui-body-header-title {
+    border-left-color: #009688;
+}
+
+/** 主题切换 */
+.btnTheme:hover, .btnTheme.active {
+    border-color: #009688;
+}
+
+/** 侧边栏文字颜色 */
+.layui-side .layui-nav .layui-nav-item a {
+    color: rgba(51, 51, 51, .7);
+    font-weight: 600;
+}
+
+.layui-side .layui-nav .layui-nav-child a {
+    font-weight: 500;
+}
+
+.layui-side .layui-nav-itemed > a, .layui-nav-tree .layui-nav-title a, .layui-nav-tree .layui-nav-title a:hover {
+    color: #333 !important;
+}
+
+.layui-layout-admin .layui-side .layui-nav .layui-nav-more {
+    border-color: #666 transparent transparent;
+}
+
+.layui-layout-admin .layui-side .layui-nav .layui-nav-itemed > a .layui-nav-more {
+    border-color: transparent transparent #666;
+}
+
+.layui-layout-admin .layui-side .layui-nav .layui-nav-item > .layui-nav-child {
+    background-color: rgba(0, 0, 0, .05) !important;
+}
+
+.layui-layout-admin .layui-side {
+    border-right: 1px solid #E6E6E6;
+}
+
+.layui-layout-admin.admin-nav-mini .layui-side .layui-nav li.layui-nav-itemed > a {
+    background: rgba(0, 0, 0, .05);
+}
+
+/** logo样式 */
+.layui-layout-admin .layui-header .layui-logo {
+    border-right: 1px solid #E6E6E6;
+}
+
+/** header线条 */
+.layui-layout-admin .layui-header .layui-nav .layui-this:after, .layui-layout-admin .layui-header .layui-nav-bar {
+    background-color: #009688;
+}
+
+/** tab下划线 */
+.layui-layout-admin .layui-body .layui-tab .layui-tab-title li.layui-this:after {
+    background-color: #009688;
+}
+
+/** PC端折叠鼠标经过样式 */
+.layui-layout-admin.admin-nav-mini .layui-side .layui-nav .layui-nav-item.admin-nav-hover > .layui-nav-child {
+    background: #ffffff !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12);
+    border: 1px solid #dddddd;
+}
+
+/** 移动设备样式 */
+@media screen and (max-width: 750px) {
+    /** 去掉PC端折叠鼠标经过样式 */
+    .layui-layout-admin.admin-nav-mini .layui-side .layui-nav .layui-nav-item.admin-nav-hover > .layui-nav-child {
+        background-color: rgba(0, 0, 0, .3) !important;
+    }
+}

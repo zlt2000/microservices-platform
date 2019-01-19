@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="utf-8"/>
+    <title>EasyWeb主题生成器</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../assets/libs/layui/css/layui.css"/>
+    <style>
+        .layui-form-pane .layui-form-label {
+            width: 210px;
+        }
+
+        .layui-form-pane .layui-input-block {
+            margin-left: 210px;
+        }
+
+        .color-demo {
+            height: 25px;
+            width: 25px;
+            border: 1px solid #e6e6e6;
+            float: right;
+            margin-top: -32px;
+            margin-right: 6px;
+            background-color: #FBFBFB;
+        }
+
+        .login-footer {
+            text-align: center;
+            line-height: 30px;
+            padding-bottom: 20px;
+            margin-top: 40px;
+        }
+
+        .login-footer span {
+            padding: 0 5px
+        }
+
+        .login-footer a {
+            padding: 0 5px;
+        }
+
+        .login-footer a:hover {
+            color: #000 !important;
+        }
+    </style>
+</head>
+
+<body>
+<div style="margin: 0 auto; max-width: 800px;padding: 20px;">
+    <h2 style="text-align: center;margin-bottom: 25px;margin-top: 30px;">EasyWeb主题生成器</h2>
+    <div class="layui-form" style="margin-bottom: 15px;text-align: right">
+        <div class="layui-inline">
+            <label class="layui-form-label">验证颜色：</label>
+            <div class="layui-input-inline" id="yxys">
+                <input type="checkbox" name="yyy" lay-skin="switch" lay-text="ON|OFF" lay-filter="ck-yz" checked>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form layui-form-pane">
+        <div class="layui-form-item">
+            <label class="layui-form-label">logo背景颜色</label>
+            <div class="layui-input-block">
+                <input name="logo" class="layui-input" type="text" value="#002140" lay-verify="required">
+                <div class="color-demo"></div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">logo文字颜色</label>
+            <div class="layui-input-block">
+                <input name="logo_font" class="layui-input" value="#eee" type="text" lay-verify="required">
+                <div class="color-demo"></div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">header背景颜色</label>
+            <div class="layui-input-block">
+                <input name="header" class="layui-input" type="text" value="#fff" lay-verify="required">
+                <div class="color-demo"></div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">header字体颜色</label>
+            <div class="layui-input-block">
+                <input name="header_font" class="layui-input" value="#333" type="text" lay-verify="required">
+                <div class="color-demo"></div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">侧边栏背景颜色</label>
+            <div class="layui-input-block">
+                <input name="side" class="layui-input" type="text" value="#001529" lay-verify="required">
+                <div class="color-demo"></div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">全局主题颜色(按钮等)</label>
+            <div class="layui-input-block">
+                <input name="primary" class="layui-input" type="text" value="#009688" lay-verify="required">
+                <div class="color-demo"></div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="form-sub"><i
+                    class="layui-icon layui-icon-engine"></i> 生成
+            </button>
+        </div>
+        <div class="layui-form-item">
+            <button class="layui-btn layui-btn-fluid" id="btn-down"><i
+                    class="layui-icon layui-icon-download-circle"></i> 下载
+            </button>
+        </div>
+    </div>
+    <hr>
+    <h2 style="margin-top: 20px;margin-bottom: 15px;">生成结果</h2>
+    <pre class="layui-code" id="tv-rs" lay-title="theme.css"></pre>
+
+    <hr>
+
+    <h2 style="margin-top: 20px;margin-bottom: 15px;">使用方法</h2>
+    <p>将下载好的css放在项目里面，然后打开index.html，引入下载的css即可生效，如果样式有生成的不全的，请联系作者增加：</p>
+    <pre class="layui-code" id="tv-jc" lay-title="index.html" lay-encode="true"></pre>
+
+    <div class="login-footer">
+        <p>© 2018 <a href="javascript:;" target="_blank">EasyWeb版权所有</a></p>
+        <p>
+            <span><a href="https://github.com/whvcse/EasyWebPage" target="_blank">前往github</a></span>
+            <span><a href="https://gitee.com/whvse/EasyWebPage" target="_blank">前往gitee</a></span>
+            <span><a href="https://whvse.gitee.io/easywebpage/docs/" target="_blank">开发文档</a></span>
+        </p>
+    </div>
+</div>
+
+<script type="text/javascript" src="../assets/libs/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../assets/libs/layui/layui.js"></script>
+<script type="text/javascript" src="FileSaver.min.js"></script>
+
+<script>
+    layui.use(['element', 'form', 'code', 'util', 'layer'], function () {
+        var element = layui.element;
+        var form = layui.form;
+        var util = layui.util;
+        var layer = layui.layer;
+        var isVer = true;
+
+        $('#tv-jc').text('<link rel="stylesheet" href="assets/css/admin.css"/>\n' +
+            '<!-- 引入下载的css，放在admin.css之后，建议放在所有css之后 -->\n' +
+            '<link rel="stylesheet" href="assets/css/theme.css"/>');
+        layui.code({about: false});
+        $('#btn-down').hide();
+
+        var tpl;
+
+        form.on('submit(form-sub)', function (data) {
+            for (var key in data.field) {
+                var colorValue = data.field[key];
+                if (!isVer || /^#[0-9a-fA-F]{3,6}$/.test(colorValue)) {
+                    tpl = tpl.replace(new RegExp('{{' + key + '}}', 'gm'), colorValue);
+                    layer.msg('生成完成', {icon: 6});
+                    $('#btn-down').show();
+                } else {
+                    layer.msg(key + '颜色值输入错误', {icon: 5});
+                    return false;
+                }
+            }
+            $('#tv-rs').text(tpl);
+            layui.code({elem: '#tv-rs', about: false});
+        });
+
+        layer.load(2);
+        $.get('theme.tpl', function (data) {
+            tpl = data;
+            layer.closeAll('loading');
+        });
+
+        $(".layui-form input[type='text']").on('input', function () {
+            var colorValue = $(this).val();
+            if (!isVer || /^#[0-9a-fA-F]{3,6}$/.test(colorValue)) {
+                $(this).parent().find('.color-demo').css('background-color', colorValue);
+            } else {
+                $(this).parent().find('.color-demo').css('background-color', '#FBFBFB');
+            }
+        });
+
+        $('#btn-down').click(function () {
+            var file = new File([tpl], "theme.css", {type: "text/plain;charset=utf-8"});
+            saveAs(file);
+        });
+
+        $(".layui-form input[type='text']").trigger('input');
+
+        //固定Bar
+        util.fixbar({bgcolor: '#009688'});
+
+        form.on('switch(ck-yz)', function (data) {
+            isVer = data.elem.checked;
+        });
+
+        $('#yxys').hover(function () {
+            layer.tips('目前只校验16进制颜色值，如需rgb颜色，请关闭校验！', this, {tips: [1, '#344058']});
+        }, function () {
+            layer.closeAll('tips');
+        });
+    });
+</script>
+</body>
+
+</html>

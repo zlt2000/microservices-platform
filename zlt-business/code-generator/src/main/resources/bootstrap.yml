@@ -1,0 +1,14 @@
+server:
+  port: 7300
+
+spring:
+  application:
+    name: code-generator
+  cloud:
+    nacos:
+      config:
+        server-addr: ${zlt.nacos.server-addr}
+        file-extension: yml
+        shared-dataids: common.yml
+      discovery:
+        server-addr: ${zlt.nacos.server-addr}

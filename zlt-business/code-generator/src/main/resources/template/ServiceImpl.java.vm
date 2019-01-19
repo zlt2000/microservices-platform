@@ -1,0 +1,45 @@
+package ${package}.${moduleName}.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.central.common.model.PageResult;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+
+import java.util.List;
+import java.util.Map;
+import org.apache.commons.collections4.MapUtils;
+import lombok.extern.slf4j.Slf4j;
+
+import ${package}.${moduleName}.entity.${className};
+import ${package}.${moduleName}.dao.${className}Dao;
+import ${package}.${moduleName}.service.${className}Service;
+
+/**
+ * ${comments}
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Slf4j
+@Service
+public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${className}> implements I${className}Service {
+    /**
+     * 列表
+     * @param params
+     * @return
+     */
+    public PageResult<${className}> findList(Map<String, Object> params){
+        Integer page = MapUtils.getInteger(params, "page");
+        Integer limit = MapUtils.getInteger(params, "limit");
+        if (page == null) {
+            page = 1;
+        }
+        if (limit == null) {
+            limit = -1;
+        }
+        Page<${className}> page = new Page<>(page, limit);
+        List<${className}> list  =  baseMapper.findList(page, params);
+        return PageResult.<${className}>builder().data(list).code(0).count(page.getTotal()).build();
+    }
+}
