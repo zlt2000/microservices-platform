@@ -112,4 +112,7 @@ central-platform -- 父项目，公共依赖
         <td><img src="zlt-doc/截屏/nacos-discovery.png"/></td>
         <td><img src="zlt-doc/截屏/elk.png"/></td>
     </tr>
+    <tr>
+    	<td><img src="zlt-doc/截屏/应用吞吐量监控.png"/></td>
+    </tr>
 </table>
