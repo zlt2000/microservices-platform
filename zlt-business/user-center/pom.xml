@@ -12,6 +12,10 @@
         <!-- 公共实体类模块 -->
         <dependency>
             <groupId>com.zlt</groupId>
+            <artifactId>zlt-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.zlt</groupId>
             <artifactId>zlt-common-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
@@ -26,14 +30,14 @@
             <groupId>com.zlt</groupId>
             <artifactId>zlt-ribbon-spring-boot-starter</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.zlt</groupId>
+            <artifactId>zlt-sentinel-spring-boot-starter</artifactId>
+        </dependency>
         <!-- swagger -->
         <dependency>
             <groupId>com.zlt</groupId>
             <artifactId>zlt-swagger2-spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.zlt</groupId>
-            <artifactId>zlt-config</artifactId>
         </dependency>
 
         <dependency>

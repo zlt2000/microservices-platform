@@ -12,6 +12,10 @@
         <!-- 公共实体类模块 -->
         <dependency>
             <groupId>com.zlt</groupId>
+            <artifactId>zlt-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.zlt</groupId>
             <artifactId>zlt-common-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
@@ -24,7 +28,7 @@
         </dependency>
         <dependency>
             <groupId>com.zlt</groupId>
-            <artifactId>zlt-config</artifactId>
+            <artifactId>zlt-sentinel-spring-boot-starter</artifactId>
         </dependency>
 
         <dependency>

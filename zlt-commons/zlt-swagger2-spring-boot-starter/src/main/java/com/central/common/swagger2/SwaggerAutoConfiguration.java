@@ -10,7 +10,6 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.ParameterBuilder;
@@ -38,7 +37,6 @@ import java.util.stream.Collectors;
  * @author zlt
  * @date 2018/11/18 9:22
  */
-@Configuration
 @Import( {
         Swagger2Configuration.class
 })

@@ -10,7 +10,6 @@ import com.central.common.utils.SpringUtil;
 import com.central.oauth.mobile.MobileAuthenticationToken;
 import com.central.oauth.openid.OpenIdAuthenticationToken;
 import com.central.oauth.service.impl.RedisClientDetailsService;
-import com.central.oauth2.common.properties.SecurityProperties;
 import com.central.oauth2.common.util.AuthUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.Api;
@@ -19,8 +18,6 @@ import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.*;
@@ -71,19 +68,15 @@ public class OAuth2Controller {
     @Resource
     private UserService userService;
 
-    @Autowired
-    private SecurityProperties securityProperties;
-
-    @Value("${test2:}")
-    private String test2;
-
     @GetMapping("/oauth/test")
-    public String[] testNacos() {
-        return securityProperties.getCode().getIgnoreClientCode();
+    public SysUser testNacos() {
+        return userService.selectByUsername("admin");
     }
+
     @GetMapping("/oauth/test2")
-    public String test2() {
-        return test2;
+    public String testNacos2() throws InterruptedException {
+        Thread.sleep(5000);
+        return "success";
     }
 
     @ApiOperation(value = "用户名密码获取token")

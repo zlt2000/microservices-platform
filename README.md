@@ -1,12 +1,15 @@
 # microservices-platform
 
+[![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
+
 ## 如果您觉得有帮助，请点右上角 "Star" 支持一下谢谢
 
 [TOC]
 
 ## 1. 项目介绍
 
-* 技术交流群 [250883130](http://shang.qq.com/wpa/qunwpa?idkey=17544199255998bda0d938fb72b08d076c40c52c9904520b76eb5eb0585da71e)
+* 技术交流群 [250883130](http://shang.qq.com/wpa/qunwpa?idkey=17544199255998bda0d938fb72b08d076c40c52c9904520b76eb5eb0585da71e) <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=d6d7089596a656c397818a2dcbfb83c9c068ac3417951ad71304d615051e74a5"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="微服务技术交流群" title="微服务技术交流群"></a>
+
 * **详细在线文档** [点击查看](https://www.kancloud.cn/zlt2000/microservices-platform/919412)
 * 前后端分离的企业级微服务架构
 * 基于`Spring Boot 2.0.X`、`Spring Cloud Finchley`和`Spring Cloud Alibaba`
@@ -24,17 +27,24 @@
   * 支持手机号加密码登录
   * 支持openId登录
   * 支持第三方系统单点登录
+
 * **分布式系统基础支撑**
   * 服务注册发现、路由与负载均衡
   * 服务降级与熔断
-  * 服务调用链监控
+  * 服务限流(url/方法级别)
   * 统一配置中心
   * 统一日志中心
   * 统一分布式缓存操作类、cacheManager配置扩展
   * 分布式锁
   * 分布式任务调度器
+* **系统监控功能**
+  * 服务调用链监控
   * 应用监控(应用健康、JVM、内存、线程)
+  * 错误日志查询
   * 慢查询SQL监控
+  * 应用吞吐量监控(qps、rt)
+  * 服务降级、熔断监控
+  * 服务限流监控
 * **业务基础功能支撑**
   * 高性能方法级幂等性支持
   * RBAC权限管理，实现细粒度控制(方法、url级别)
@@ -59,10 +69,11 @@ central-platform -- 父项目，公共依赖
 │  │  ├─zlt-common-spring-boot-starter -- 封装通用操作逻辑
 │  │  ├─zlt-db-spring-boot-starter -- 封装数据库通用操作逻辑
 │  │  ├─zlt-log-spring-boot-starter -- 封装log通用操作逻辑
+│  │  ├─zlt-mq-spring-boot-starter -- 封装mq通用操作逻辑
 │  │  ├─zlt-redis-spring-boot-starter -- 封装Redis通用操作逻辑
 │  │  ├─zlt-ribbon-spring-boot-starter -- 封装Ribbon和Feign的通用操作逻辑
+│  │  ├─zlt-sentinel-spring-boot-starter -- 封装Sentinel的通用操作逻辑
 │  │  ├─zlt-swagger2-spring-boot-starter -- 封装Swagger通用操作逻辑
-│  │  ├─zlt-mq-spring-boot-starter -- 封装mq通用操作逻辑
 │  ├─zlt-config -- 配置中心
 │  ├─zlt-doc -- 项目文档
 │  ├─zlt-gateway -- api网关一级工程

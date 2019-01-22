@@ -113,6 +113,11 @@
             </dependency>
             <dependency>
                 <groupId>com.zlt</groupId>
+                <artifactId>zlt-sentinel-spring-boot-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zlt</groupId>
                 <artifactId>zlt-config</artifactId>
                 <version>${project.version}</version>
             </dependency>
