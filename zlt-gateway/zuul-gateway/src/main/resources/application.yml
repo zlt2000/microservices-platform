@@ -94,4 +94,4 @@ swagger:
     api-docs-path:  v2/api-docs
     swagger-version: 2.0
     auto-generate-from-zuul-routes: true
-    generate-routes: auth,user,file
+    generate-routes: user,file

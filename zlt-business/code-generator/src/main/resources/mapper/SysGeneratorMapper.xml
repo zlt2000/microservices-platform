@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.central.generator.mapper.SysGeneratorMapper">
 	<select id="queryList" resultType="map">
-		select table_name tableName, engine, table_comment tableComment, create_time createTime from
+		select table_name tableName, engine engine, table_comment tableComment, create_time createTime from
 		information_schema.tables
 		where table_schema = (select database())
 		<if test="p.tableName != null and p.tableName.trim() != ''">
