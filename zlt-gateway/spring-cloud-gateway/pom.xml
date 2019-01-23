@@ -8,15 +8,16 @@
     </parent>
     <artifactId>sc-gateway</artifactId>
     <description>spring cloud gateway网关</description>
+
     <dependencies>
+        <dependency>
+            <groupId>com.zlt</groupId>
+            <artifactId>zlt-config</artifactId>
+        </dependency>
         <!-- 加入redis的处理 -->
         <dependency>
             <groupId>com.zlt</groupId>
             <artifactId>zlt-redis-spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.zlt</groupId>
-            <artifactId>zlt-config</artifactId>
         </dependency>
 
         <dependency>

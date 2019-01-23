@@ -11,11 +11,11 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.zlt</groupId>
-			<artifactId>zlt-log-spring-boot-starter</artifactId>
+			<artifactId>zlt-config</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.zlt</groupId>
-			<artifactId>zlt-config</artifactId>
+			<artifactId>zlt-log-spring-boot-starter</artifactId>
 		</dependency>
 
 		<dependency>

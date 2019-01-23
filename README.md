@@ -8,9 +8,12 @@
 
 ## 1. 项目介绍
 
-* 技术交流群 [250883130](http://shang.qq.com/wpa/qunwpa?idkey=17544199255998bda0d938fb72b08d076c40c52c9904520b76eb5eb0585da71e) <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=d6d7089596a656c397818a2dcbfb83c9c068ac3417951ad71304d615051e74a5"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="微服务技术交流群" title="微服务技术交流群"></a>
-
-* **详细在线文档** [点击查看](https://www.kancloud.cn/zlt2000/microservices-platform/919412)
+* **技术交流群** [250883130](http://shang.qq.com/wpa/qunwpa?idkey=17544199255998bda0d938fb72b08d076c40c52c9904520b76eb5eb0585da71e) 
+* **详细在线文档** [点击查看](https://www.kancloud.cn/zlt2000/microservices-platform/919413)
+* 演示地址
+  * url： [http://120.78.94.191:8066](http://120.78.94.191:8066)
+  * 账号密码：admin/admin
+  * 应用监控账号密码：admin/admin
 * 前后端分离的企业级微服务架构
 * 基于`Spring Boot 2.0.X`、`Spring Cloud Finchley`和`Spring Cloud Alibaba`
 * 深度定制`Spring Security`真正实现了基于`RBAC`、`jwt`和`oauth2`的无状态统一权限认证的解决方案
@@ -78,7 +81,7 @@ central-platform -- 父项目，公共依赖
 │  ├─zlt-doc -- 项目文档
 │  ├─zlt-gateway -- api网关一级工程
 │  │  ├─spring-cloud-gateway -- 开发中..
-│  │  ├─zuul-gateway -- netflix-zuul[9200]
+│  │  ├─zuul-gateway -- netflix-zuul[9900]
 │  ├─zlt-job -- 分布式任务调度一级工程
 │  │  ├─job-admin -- 任务管理器[8081]
 │  │  ├─job-core -- 任务调度核心代码

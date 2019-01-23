@@ -23,4 +23,4 @@ CREATE TABLE `file_info`  (
 -- ----------------------------
 -- Records of file_info
 -- ----------------------------
-INSERT INTO `file_info` VALUES ('1e1c589e5d7716f865062dbceccf9630', '1.png', 1, 'image/png', 207704, 'http://pb0pz1b7c.bkt.clouddn.com//1.png', 'http://pb0pz1b7c.bkt.clouddn.com//1.png', 'QINIU', '2018-11-15 23:19:47', NULL);
+INSERT INTO `file_info` VALUES ('2c95b54f4d8356cf8ab40802f496df83', '头像.png', 1, 'image/png', 1290, 'http://pkqtmn0p1.bkt.clouddn.com/头像.png', 'http://pkqtmn0p1.bkt.clouddn.com/头像.png', 'QINIU', '2019-01-08 17:05:36', '2019-01-08 17:05:36');
