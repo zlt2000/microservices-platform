@@ -1,4 +1,4 @@
-rem @echo off
+@echo off
 rem Copyright 1999-2018 Alibaba Group Holding Ltd.
 rem Licensed under the Apache License, Version 2.0 (the "License");
 rem you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ set CUSTOM_SEARCH_LOCATIONS=%DEFAULT_SEARCH_LOCATIONS%,file:%BASE_DIR%conf/
 
 
 
-if not ""%2"" == "cluster" (
+if not "%2" == "cluster" (
     set "JAVA_OPT=%JAVA_OPT% -Xms512m -Xmx512m -Xmn256m"
     set "JAVA_OPT=%JAVA_OPT% -Dnacos.standalone=true"
  ) else (
@@ -34,12 +34,10 @@ if not ""%2"" == "cluster" (
     set "JAVA_OPT=%JAVA_OPT% -XX:-UseLargePages"
  )
 
-set "JAVA_OPT=%JAVA_OPT% -Djava.ext.dirs=%BASE_DIR%\plugins\cmdb"
+set "JAVA_OPT=%JAVA_OPT% -Xbootclasspath/a:%BASE_DIR%\plugins\cmdb"
 set "JAVA_OPT=%JAVA_OPT% -Dnacos.home=%BASE_DIR%"
 set "JAVA_OPT=%JAVA_OPT% -jar %BASE_DIR%\target\nacos-server.jar"
 set "JAVA_OPT=%JAVA_OPT% --spring.config.location="%CUSTOM_SEARCH_LOCATIONS%""
 set "JAVA_OPT=%JAVA_OPT% --logging.config="%BASE_DIR%/conf/nacos-logback.xml""
-
-echo "%JAVA%" %JAVA_OPT% %*
 
 call "%JAVA%" %JAVA_OPT% %*
