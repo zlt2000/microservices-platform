@@ -45,7 +45,7 @@ public class SysLogController extends LogController<SysLog> {
                 searchValue = searchValue.toUpperCase();
             }
             // 模糊查询
-            builder.must(QueryBuilders.matchPhraseQuery(searchKey, searchValue));
+            builder.must(QueryBuilders.matchQuery(searchKey, searchValue));
         }
         return super.getPage(params, builder, logDao);
     }

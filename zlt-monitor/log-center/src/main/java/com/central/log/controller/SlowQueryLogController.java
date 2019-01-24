@@ -40,7 +40,7 @@ public class SlowQueryLogController extends LogController<SlowQueryLog> {
         String searchValue = (String) params.get("searchValue");
         if (StrUtil.isNotEmpty(searchKey) && StrUtil.isNotEmpty(searchValue)) {
             // 模糊查询
-            builder.must(QueryBuilders.matchPhraseQuery(ES_PARAM_QUERY, searchValue));
+            builder.must(QueryBuilders.matchQuery(ES_PARAM_QUERY, searchValue));
         }
 
         return super.getPage(params, builder, logDao);
