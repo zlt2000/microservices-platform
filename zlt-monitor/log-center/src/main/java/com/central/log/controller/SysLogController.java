@@ -40,25 +40,13 @@ public class SysLogController extends LogController<SysLog> {
         BoolQueryBuilder builder = QueryBuilders.boolQuery();
         String searchKey = (String) params.get("searchKey");
         String searchValue = (String) params.get("searchValue");
-        if (StrUtil.isNotEmpty(searchKey)) {
-            if (ES_PARAM_MESSAGE.equals(searchKey)) {
-                // 整词模糊查询 日志信息
-                builder.must(QueryBuilders.matchPhraseQuery(ES_PARAM_MESSAGE, searchValue));
-            }
+        if (StrUtil.isNotEmpty(searchKey) && StrUtil.isNotEmpty(searchValue)) {
             if (ES_PARAM_LOG_LEVEL.equals(searchKey)) {
-                // 模糊查询
-                builder.must(QueryBuilders.matchPhraseQuery(ES_PARAM_LOG_LEVEL, searchValue.toUpperCase()));
+                searchValue = searchValue.toUpperCase();
             }
-            if (ES_PARAM_APP_NAME.equals(searchKey)) {
-                // 模糊查询
-                builder.must(QueryBuilders.fuzzyQuery(ES_PARAM_APP_NAME, searchValue));
-            }
-            if (ES_PARAM_CLASSNAME.equals(searchKey)) {
-                // 模糊查询
-                builder.must(QueryBuilders.fuzzyQuery(ES_PARAM_CLASSNAME, searchValue));
-            }
+            // 模糊查询
+            builder.must(QueryBuilders.matchPhraseQuery(searchKey, searchValue));
         }
-
         return super.getPage(params, builder, logDao);
     }
 }

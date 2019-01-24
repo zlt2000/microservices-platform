@@ -38,11 +38,9 @@ public class SlowQueryLogController extends LogController<SlowQueryLog> {
         BoolQueryBuilder builder = QueryBuilders.boolQuery();
         String searchKey = (String) params.get("searchKey");
         String searchValue = (String) params.get("searchValue");
-        if (StrUtil.isNotEmpty(searchKey)) {
-            if (ES_PARAM_QUERY.equals(searchKey)) {
-                // 模糊查询
-                builder.must(QueryBuilders.matchPhraseQuery(ES_PARAM_QUERY, searchValue.toUpperCase()));
-            }
+        if (StrUtil.isNotEmpty(searchKey) && StrUtil.isNotEmpty(searchValue)) {
+            // 模糊查询
+            builder.must(QueryBuilders.matchPhraseQuery(ES_PARAM_QUERY, searchValue));
         }
 
         return super.getPage(params, builder, logDao);
