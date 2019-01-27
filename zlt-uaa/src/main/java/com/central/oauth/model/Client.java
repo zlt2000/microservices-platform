@@ -1,5 +1,6 @@
 package com.central.oauth.model;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.central.common.model.SuperEntity;
 import lombok.Data;
@@ -21,8 +22,10 @@ public class Client extends SuperEntity {
    private String authorizedGrantTypes = "authorization_code,password,refresh_token,client_credentials";
    private String webServerRedirectUri;
    private String authorities = "";
-   private Integer accessTokenValidity = 18000;
-   private Integer refreshTokenValidity = 28800;
+   @TableField(value = "access_token_validity")
+   private Integer accessTokenValiditySeconds = 18000;
+   @TableField(value = "refresh_token_validity")
+   private Integer refreshTokenValiditySeconds = 28800;
    private String additionalInformation = "{}";
    private String autoapprove = "true";
 }

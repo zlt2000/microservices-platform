@@ -4,6 +4,32 @@ spring:
     port: ${zlt.redis.port}
     timeout: ${zlt.redis.timeout}
 
+  # sentinel动态配置规则
+  cloud:
+    sentinel:
+      datasource:
+        # 限流
+        ds1:
+          nacos:
+            server-addr: ${zlt.nacos.server-addr}
+            dataId: sentinel-flow
+            groupId: DEFAULT_GROUP
+            rule-type: flow
+        # 熔断
+        ds2:
+          nacos:
+            server-addr: ${zlt.nacos.server-addr}
+            dataId: sentinel-degrade
+            groupId: DEFAULT_GROUP
+            rule-type: degrade
+        # 系统负载保护
+        ds4:
+          nacos:
+            server-addr: ${zlt.nacos.server-addr}
+            dataId: sentinel-system
+            groupId: DEFAULT_GROUP
+            rule-type: system
+
 zlt:
   oauth2:
     token:

@@ -157,9 +157,18 @@
             xhr.setRequestHeader("client_type", "DESKTOP_WEB");
             xhr.onload = function() {
                 if (this.status == 200) {
+                    var fileName = "user.xls";
                     var blob = this.response;
-                    var objecturl = URL.createObjectURL(blob);
-                    window.location.href = objecturl;
+                    var a = document.createElement('a');
+                    a.innerHTML = fileName;
+                    // 指定生成的文件名
+                    a.download = fileName;
+                    a.href = URL.createObjectURL(blob);
+                    document.body.appendChild(a);
+                    var evt = document.createEvent("MouseEvents");
+                    evt.initEvent("click", false, false);
+                    a.dispatchEvent(evt);
+                    document.body.removeChild(a);
                 }
             }
             xhr.send();

@@ -1,6 +1,6 @@
 # microservices-platform
 
-[![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
+[![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)<a href='https://gitee.com/zlt2000/microservices-platform'><img src='https://gitee.com/zlt2000/microservices-platform/widgets/widget_4.svg' alt='Fork me on Gitee'></img></a><a href='https://gitee.com/zlt2000/microservices-platform/stargazers'><img src='https://gitee.com/zlt2000/microservices-platform/badge/star.svg?theme=dark' alt='star'></img></a>
 
 ## 如果您觉得有帮助，请点右上角 "Star" 支持一下谢谢
 

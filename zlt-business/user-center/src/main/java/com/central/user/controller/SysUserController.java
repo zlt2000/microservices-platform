@@ -229,11 +229,11 @@ public class SysUserController {
      *
      * @return
      */
-    @GetMapping("/users/export")
+    @PostMapping("/users/export")
     public void exportUser(@RequestParam Map<String, Object> params, HttpServletResponse response) throws IOException {
         List<SysUserExcel> result = appUserService.findAllUsers(params);
         //导出操作
-        ExcelUtil.exportExcel(result, null, "用户", SysUserExcel.class, "test", response);
+        ExcelUtil.exportExcel(result, null, "用户", SysUserExcel.class, "user", response);
     }
 
     @PostMapping(value = "/users/import")

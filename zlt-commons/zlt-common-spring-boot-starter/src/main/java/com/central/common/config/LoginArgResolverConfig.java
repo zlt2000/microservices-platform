@@ -3,6 +3,7 @@ package com.central.common.config;
 import com.central.common.feign.UserService;
 import com.central.common.resolver.TokenArgumentResolver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -15,6 +16,7 @@ import java.util.List;
  * @date 2018/8/25
  */
 public class LoginArgResolverConfig implements WebMvcConfigurer {
+    @Lazy
     @Autowired
     private UserService userService;
     /**

@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.zlt</groupId>
     <artifactId>central-platform</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -31,7 +31,7 @@
         <mybatis-plus-boot-starter.version>3.0.6</mybatis-plus-boot-starter.version>
         <aliyun-sdk-oss>3.4.0</aliyun-sdk-oss>
         <qiniu-java-sdk>7.2.17</qiniu-java-sdk>
-        <easypoi.version>3.0.3</easypoi.version>
+        <easypoi.version>4.0.0</easypoi.version>
         <spring-boot-admin.version>2.0.4</spring-boot-admin.version>
         <velocity.version>1.7</velocity.version>
         <commons-configuration.version>1.10</commons-configuration.version>
