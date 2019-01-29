@@ -8,6 +8,7 @@
     </parent>
     <artifactId>zlt-common-spring-boot-starter</artifactId>
     <description>公共通用组件</description>
+    <packaging>jar</packaging>
     <dependencies>
         <dependency>
             <groupId>com.zlt</groupId>
