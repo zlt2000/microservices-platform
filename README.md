@@ -41,6 +41,7 @@
   * 统一分布式缓存操作类、cacheManager配置扩展
   * 分布式锁
   * 分布式任务调度器
+  * 支持CI/CD，多环境自动化部署
 * **系统监控功能**
   * 服务调用链监控
   * 应用监控(应用健康、JVM、内存、线程)
@@ -119,5 +120,8 @@ central-platform -- 父项目，公共依赖
     <tr>
     	<td><img src="https://gitee.com/zlt2000/images/raw/master/应用吞吐量监控.png"/></td>
         <td><img src="https://gitee.com/zlt2000/images/raw/master/持续集成.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://gitee.com/zlt2000/images/raw/master/持续集成2.png"/></td>
     </tr>
 </table>

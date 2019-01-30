@@ -1,6 +1,10 @@
 server:
   port: 5000
 
+zlt:
+  nacos:
+    server-addr: 192.168.28.130:8848
+
 spring:
   application:
     name: file-center

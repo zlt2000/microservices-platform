@@ -6,6 +6,10 @@ server:
     buffer-size: 1024
     direct-buffers: true
 
+zlt:
+  nacos:
+    server-addr: 192.168.28.130:8848
+
 spring:
   application:
     name: api-gateway

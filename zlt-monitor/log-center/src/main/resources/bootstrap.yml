@@ -1,6 +1,10 @@
 server:
   port: 7200
 
+zlt:
+  nacos:
+    server-addr: 192.168.28.130:8848
+
 spring:
   application:
     name: log-center
