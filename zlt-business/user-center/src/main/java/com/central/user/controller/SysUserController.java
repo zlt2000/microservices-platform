@@ -14,11 +14,9 @@ import com.central.common.utils.ExcelUtil;
 import com.central.user.model.SysUserExcel;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
 
 import com.central.common.utils.SysUserUtil;
@@ -39,7 +37,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Slf4j
 @RestController
-@RefreshScope
 @Api(tags = "用户模块api")
 public class SysUserController {
     @Autowired
