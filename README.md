@@ -41,7 +41,7 @@
   * 统一分布式缓存操作类、cacheManager配置扩展
   * 分布式锁
   * 分布式任务调度器
-  * 支持CI/CD多环境部署(包括前端和后端)
+  * 支持CI/CD持续集成(包括前端和后端)
 * **系统监控功能**
   * 服务调用链监控
   * 应用监控(应用健康、JVM、内存、线程)
@@ -101,8 +101,12 @@ central-platform -- 父项目，公共依赖
 ## 4. 截图（点击可大图预览）
 
 <table>
+	<tr>
+        <td><img src="https://gitee.com/zlt2000/images/raw/master/持续集成2.png"/></td>
+        <td><img src="https://gitee.com/zlt2000/images/raw/master/持续集成.png"/></td>
+    </tr>
     <tr>
-        <td><img src="https://gitee.com/zlt2000/images/raw/master/登录.png"/></td>
+        <td><img src="https://gitee.com/zlt2000/images/raw/master/elk.png"/></td>
         <td><img src="https://gitee.com/zlt2000/images/raw/master/任务中心.png"/></td>
     </tr>
     <tr>
@@ -115,13 +119,6 @@ central-platform -- 父项目，公共依赖
     </tr>
     <tr>
         <td><img src="https://gitee.com/zlt2000/images/raw/master/nacos-discovery.png"/></td>
-        <td><img src="https://gitee.com/zlt2000/images/raw/master/elk.png"/></td>
-    </tr>
-    <tr>
-    	<td><img src="https://gitee.com/zlt2000/images/raw/master/应用吞吐量监控.png"/></td>
-        <td><img src="https://gitee.com/zlt2000/images/raw/master/持续集成.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://gitee.com/zlt2000/images/raw/master/持续集成2.png"/></td>
+        <td><img src="https://gitee.com/zlt2000/images/raw/master/应用吞吐量监控.png"/></td>
     </tr>
 </table>
