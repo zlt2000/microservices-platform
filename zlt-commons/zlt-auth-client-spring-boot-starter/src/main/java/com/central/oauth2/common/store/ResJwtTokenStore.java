@@ -50,8 +50,8 @@ public class ResJwtTokenStore {
      * @return 公钥 Key
      */
     private String getPubKey() {
-        Resource resource = new ClassPathResource(ResJwtTokenStore.PUBLIC_KEY);
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(resource.getInputStream()))) {
+        Resource res = new ClassPathResource(ResJwtTokenStore.PUBLIC_KEY);
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(res.getInputStream()))) {
             return br.lines().collect(Collectors.joining("\n"));
         } catch (IOException ioe) {
             return getKeyFromAuthorizationServer();

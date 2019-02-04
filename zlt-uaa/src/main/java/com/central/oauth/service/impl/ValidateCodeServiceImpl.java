@@ -95,7 +95,7 @@ public class ValidateCodeServiceImpl implements IValidateCodeService {
      * 验证验证码
      */
     @Override
-    public void validate(HttpServletRequest request) throws ValidateCodeException {
+    public void validate(HttpServletRequest request) {
         String deviceId = request.getParameter("deviceId");
         if (StringUtils.isBlank(deviceId)) {
             throw new ValidateCodeException("请在请求参数中携带deviceId参数");

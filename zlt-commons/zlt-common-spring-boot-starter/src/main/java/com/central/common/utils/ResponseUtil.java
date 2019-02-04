@@ -14,6 +14,9 @@ import java.util.Map;
  * @date 2018/12/20
  */
 public class ResponseUtil {
+    private ResponseUtil() {
+        throw new IllegalStateException("Utility class");
+    }
     /**
      * 通过流写到前端
      *

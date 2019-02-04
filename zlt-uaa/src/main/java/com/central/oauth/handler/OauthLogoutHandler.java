@@ -39,7 +39,6 @@ public class OauthLogoutHandler implements LogoutHandler {
 				log.info("remove existingAccessToken!", existingAccessToken);
 				tokenStore.removeAccessToken(existingAccessToken);
 			}
-			return;
 		}
 	}
 }

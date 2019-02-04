@@ -14,6 +14,10 @@ import java.util.UUID;
  * @date 2017-3-28 下午1:11:31
  */
 public class UUIDUtil {
+	private UUIDUtil() {
+		throw new IllegalStateException("Utility class");
+	}
+
 	private static String[] chars = new String[] { "a", "b", "c", "d", "e", "f",
 			"g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
 			"t", "u", "v", "w", "x", "y", "z", "0", "1", "2", "3", "4", "5",
@@ -27,7 +31,7 @@ public class UUIDUtil {
 	 * @author wangfan
 	 */
 	public static String randomUUID8() {
-		StringBuffer shortBuffer = new StringBuffer();
+		StringBuilder shortBuffer = new StringBuilder();
 		String uuid = UUID.randomUUID().toString().replace("-", "");
 		for (int i = 0; i < 8; i++) {
 			String str = uuid.substring(i * 4, i * 4 + 4);
@@ -43,8 +47,7 @@ public class UUIDUtil {
 	 * @author wangfan
 	 */
 	public static String randomUUID32(){
-		String uuid = UUID.randomUUID().toString().replace("-", "");
-		return uuid;
+		return UUID.randomUUID().toString().replace("-", "");
 	}
 
 }

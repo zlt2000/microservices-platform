@@ -28,7 +28,6 @@ public class DefaultMybatisPlusConfig {
     @Bean
     @Profile({"dev","test"})
     public PerformanceInterceptor performanceInterceptor() {
-        PerformanceInterceptor performanceInterceptor = new PerformanceInterceptor();
-        return performanceInterceptor;
+        return new PerformanceInterceptor();
     }
 }

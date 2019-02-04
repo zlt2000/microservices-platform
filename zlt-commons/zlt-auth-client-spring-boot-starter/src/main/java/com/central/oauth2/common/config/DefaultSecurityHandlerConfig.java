@@ -30,9 +30,7 @@ public class DefaultSecurityHandlerConfig {
      */
     @Bean
     public AuthenticationEntryPoint authenticationEntryPoint() {
-        return (request, response, authException) -> {
-            ResponseUtil.responseWriter(objectMapper, response, authException.getMessage(), HttpStatus.UNAUTHORIZED.value());
-        };
+        return (request, response, authException) -> ResponseUtil.responseWriter(objectMapper, response, authException.getMessage(), HttpStatus.UNAUTHORIZED.value());
     }
 
     @Bean

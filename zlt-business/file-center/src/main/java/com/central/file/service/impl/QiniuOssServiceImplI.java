@@ -40,15 +40,6 @@ public class QiniuOssServiceImplI extends AbstractIFileService implements Initia
         return FileType.QINIU;
     }
 
-    /**
-     * 获取上传凭证
-     *
-     * @return
-     */
-    private String getUploadToken() {
-        return this.auth.uploadToken(bucket, null, 3600, putPolicy);
-    }
-
     @Override
     protected void uploadFile(MultipartFile file, FileInfo fileInfo) throws Exception {
         // 调用put方法上传

@@ -40,6 +40,7 @@
         <spring-boot-dependencies.version>2.0.8.RELEASE</spring-boot-dependencies.version>
         <spring-cloud-dependencies.version>Finchley.SR2</spring-cloud-dependencies.version>
         <spring-boot-maven-plugin.version>2.1.1.RELEASE</spring-boot-maven-plugin.version>
+        <sonar.exclusions>zlt-job/**/*, zlt-register/**/*, zlt-web/**/*</sonar.exclusions>
     </properties>
 
     <dependencies>
@@ -300,6 +301,16 @@
             </plugins>
         </pluginManagement>
     </build>
+
+    <repositories>
+        <repository>
+            <id>aliyun-repos</id>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
     <modules>
         <!-- 公共 -->

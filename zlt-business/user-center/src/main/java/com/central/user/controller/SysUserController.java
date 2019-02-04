@@ -39,6 +39,8 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @Api(tags = "用户模块api")
 public class SysUserController {
+    private static final String ADMIN_CHANGE_MSG = "超级管理员不给予修改";
+
     @Autowired
     private ISysUserService appUserService;
 
@@ -163,7 +165,7 @@ public class SysUserController {
     public Result updateEnabled(@RequestParam Map<String, Object> params) {
         Long id = MapUtils.getLong(params, "id");
         if (checkAdmin(id)) {
-            return Result.failed("超级管理员不给予修改");
+            return Result.failed(ADMIN_CHANGE_MSG);
         }
         return appUserService.updateEnabled(params);
     }
@@ -176,7 +178,7 @@ public class SysUserController {
     @PutMapping(value = "/users/{id}/password")
     public Result resetPassword(@PathVariable Long id) {
         if (checkAdmin(id)) {
-            return Result.failed("超级管理员不给予修改");
+            return Result.failed(ADMIN_CHANGE_MSG);
         }
         appUserService.updatePassword(id, null, null);
         return Result.succeed("重置成功");
@@ -188,7 +190,7 @@ public class SysUserController {
     @PutMapping(value = "/users/password")
     public Result resetPassword(@RequestBody SysUser sysUser) {
         if (checkAdmin(sysUser.getId())) {
-            return Result.failed("超级管理员不给予修改");
+            return Result.failed(ADMIN_CHANGE_MSG);
         }
         appUserService.updatePassword(sysUser.getId(), sysUser.getOldPassword(), sysUser.getNewPassword());
         return Result.succeed("重置成功");
@@ -202,7 +204,7 @@ public class SysUserController {
     @DeleteMapping(value = "/users/{id}")
     public Result delete(@PathVariable Long id) {
         if (checkAdmin(id)) {
-            return Result.failed("超级管理员不给予修改");
+            return Result.failed(ADMIN_CHANGE_MSG);
         }
         appUserService.delUser(id);
         return Result.succeed("删除成功");

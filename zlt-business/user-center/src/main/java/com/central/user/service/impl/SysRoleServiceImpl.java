@@ -66,6 +66,7 @@ public class SysRoleServiceImpl extends SuperServiceImpl<SysRoleMapper, SysRole>
     }
 
     @Override
+    @Transactional
     public Result saveOrUpdateRole(SysRole sysRole) {
         if (sysRole.getId() == null) {
             this.saveRole(sysRole);

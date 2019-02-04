@@ -140,7 +140,7 @@ public class RedisTemplateTokenStore implements TokenStore {
                 ExpiringOAuth2RefreshToken expiringRefreshToken = (ExpiringOAuth2RefreshToken) refreshToken;
                 Date expiration = expiringRefreshToken.getExpiration();
                 if (expiration != null) {
-                    int seconds = Long.valueOf((expiration.getTime() - System.currentTimeMillis()) / 1000L).intValue();
+                    int seconds = (int)((expiration.getTime() - System.currentTimeMillis()) / 1000L);
 
                     redisTemplate.expire(REFRESH_TO_ACCESS + token.getRefreshToken().getValue(), seconds, TimeUnit.SECONDS);
                     redisTemplate.expire(ACCESS_TO_REFRESH + token.getValue(), seconds, TimeUnit.SECONDS);
@@ -221,24 +221,20 @@ public class RedisTemplateTokenStore implements TokenStore {
     @Override
     public Collection<OAuth2AccessToken> findTokensByClientIdAndUserName(String clientId, String userName) {
         List<Object> result = redisTemplate.opsForList().range(UNAME_TO_ACCESS + getApprovalKey(clientId, userName), 0, -1);
-        if (result == null || result.size() == 0) {
-            return Collections.emptySet();
-        }
-        List<OAuth2AccessToken> accessTokens = new ArrayList<OAuth2AccessToken>(result.size());
-        for (Iterator<Object> it = result.iterator(); it.hasNext(); ) {
-            OAuth2AccessToken accessToken = (OAuth2AccessToken) it.next();
-            accessTokens.add(accessToken);
-        }
-        return Collections.unmodifiableCollection(accessTokens);
+        return getTokenColl(result);
     }
 
     @Override
     public Collection<OAuth2AccessToken> findTokensByClientId(String clientId) {
         List<Object> result = redisTemplate.opsForList().range((CLIENT_ID_TO_ACCESS + clientId), 0, -1);
-        if (result == null || result.size() == 0) {
+        return getTokenColl(result);
+    }
+
+    private Collection<OAuth2AccessToken> getTokenColl(List<Object> result) {
+        if (result == null || result.isEmpty()) {
             return Collections.emptySet();
         }
-        List<OAuth2AccessToken> accessTokens = new ArrayList<OAuth2AccessToken>(result.size());
+        List<OAuth2AccessToken> accessTokens = new ArrayList<>(result.size());
         for (Iterator<Object> it = result.iterator(); it.hasNext(); ) {
             OAuth2AccessToken accessToken = (OAuth2AccessToken) it.next();
             accessTokens.add(accessToken);

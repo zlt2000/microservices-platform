@@ -73,11 +73,6 @@ public interface CommonConstant {
     String DEL_FLAG = "is_del";
 
     /**
-     * 编码
-     */
-    String UTF8 = "UTF-8";
-
-    /**
      * 超级管理员用户名
      */
     String ADMIN_USER_NAME = "admin";

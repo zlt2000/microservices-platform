@@ -80,7 +80,7 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
             loginAppUser.setRoles(sysRoles);
 
             if (!CollectionUtils.isEmpty(sysRoles)) {
-                Set<Long> roleIds = sysRoles.parallelStream().map(r -> r.getId()).collect(Collectors.toSet());
+                Set<Long> roleIds = sysRoles.parallelStream().map(SuperEntity::getId).collect(Collectors.toSet());
                 List<SysMenu> menus = roleMenuMapper.findMenusByRoleIds(roleIds, CommonConstant.PERMISSION);
                 if (!CollectionUtils.isEmpty(menus)) {
                     Set<String> permissions = menus.parallelStream().map(p -> p.getPathMethod()+":"+p.getPath())
@@ -154,9 +154,7 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
 
         userRoleMapper.deleteUserRole(id, null);
         if (!CollectionUtils.isEmpty(roleIds)) {
-            roleIds.forEach(roleId -> {
-                userRoleMapper.saveUserRoles(id, roleId);
-            });
+            roleIds.forEach(roleId -> userRoleMapper.saveUserRoles(id, roleId));
         }
     }
 
@@ -188,10 +186,8 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
             List<Long> userIds = list.stream().map(SysUser::getId).collect(Collectors.toList());
 
             List<SysRole> sysRoles = userRoleMapper.findRolesByUserIds(userIds);
-            list.forEach(u -> {
-                u.setRoles(sysRoles.stream().filter(r -> !ObjectUtils.notEqual(u.getId(), r.getUserId()))
-                        .collect(Collectors.toList()));
-            });
+            list.forEach(u -> u.setRoles(sysRoles.stream().filter(r -> !ObjectUtils.notEqual(u.getId(), r.getUserId()))
+                    .collect(Collectors.toList())));
         }
         return PageResult.<SysUser>builder().data(list).code(0).count(total).build();
     }
@@ -238,9 +234,7 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
             userRoleMapper.deleteUserRole(sysUser.getId(), null);
             List roleIds = Arrays.asList(sysUser.getRoleId().split(","));
             if (!CollectionUtils.isEmpty(roleIds)) {
-                roleIds.forEach(roleId -> {
-                    userRoleMapper.saveUserRoles(sysUser.getId(), Long.parseLong(roleId.toString()));
-                });
+                roleIds.forEach(roleId -> userRoleMapper.saveUserRoles(sysUser.getId(), Long.parseLong(roleId.toString())));
             }
         }
         return result ? Result.succeed(sysUser, "操作成功") : Result.failed("操作失败");
@@ -250,7 +244,7 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
     @Override
     public boolean delUser(Long id) {
         userRoleMapper.deleteUserRole(id, null);
-        return baseMapper.deleteById(id) > 0 ? true : false;
+        return baseMapper.deleteById(id) > 0;
     }
 
     @Override

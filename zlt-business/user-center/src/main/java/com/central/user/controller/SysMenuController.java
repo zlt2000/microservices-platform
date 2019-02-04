@@ -75,9 +75,8 @@ public class SysMenuController {
     @ApiOperation(value = "根据roleId获取对应的菜单")
     @GetMapping("/{roleId}/menus")
     public List<Map<String, Object>> findMenusByRoleId(@PathVariable Long roleId) {
-        Set<Long> roleIds = new HashSet<Long>() {{
-            add(roleId);
-        }};
+        Set<Long> roleIds = new HashSet<>();
+        roleIds.add(roleId);
         //获取该角色对应的菜单
         List<SysMenu> roleMenus = menuService.findByRoles(roleIds);
         //全部的菜单列表
@@ -169,7 +168,6 @@ public class SysMenuController {
             return Collections.emptyList();
         }
         List<SysMenu> menus = menuService.findByRoleCodes(roles.parallelStream().map(SysRole::getCode).collect(Collectors.toSet()), CommonConstant.MENU);
-        List<SysMenu> sysMenus = treeBuilder(menus);
-        return sysMenus;
+        return treeBuilder(menus);
     }
 }

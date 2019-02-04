@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.util.Date;
 
 import com.central.file.model.FileInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,7 +14,11 @@ import org.springframework.web.multipart.MultipartFile;
  * @author zlt
  * 文件工具类
 */
+@Slf4j
 public class FileUtil {
+	private FileUtil() {
+		throw new IllegalStateException("Utility class");
+	}
 
 	public static FileInfo getFileInfo(MultipartFile file) throws Exception {
 		String md5 = fileMd5(file.getInputStream());
@@ -37,7 +42,7 @@ public class FileUtil {
 		try {
 			return DigestUtils.md5Hex(inputStream);
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error("fileMd5-error", e);
 		}
 		return null;
 	}
@@ -54,7 +59,7 @@ public class FileUtil {
 			file.transferTo(targetFile);
 			return path;
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("saveFile-error", e);
 		}
 		return null;
 	}

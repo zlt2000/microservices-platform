@@ -7,7 +7,9 @@ package com.central.common.redis.constant;
  * @date 2018/5/21 11:59
  */
 public class RedisToolsConstant {
-
+    private RedisToolsConstant() {
+        throw new IllegalStateException("Utility class");
+    }
     /**
      * single Redis
      */

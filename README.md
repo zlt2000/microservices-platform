@@ -103,7 +103,7 @@ central-platform -- 父项目，公共依赖
 <table>
 	<tr>
         <td><img src="https://gitee.com/zlt2000/images/raw/master/持续集成2.png"/></td>
-        <td><img src="https://gitee.com/zlt2000/images/raw/master/持续集成.png"/></td>
+        <td><img src="https://gitee.com/zlt2000/images/raw/master/sonar结果.png"/></td>
     </tr>
     <tr>
         <td><img src="https://gitee.com/zlt2000/images/raw/master/elk.png"/></td>

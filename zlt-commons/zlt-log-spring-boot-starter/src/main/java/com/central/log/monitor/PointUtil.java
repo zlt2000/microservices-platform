@@ -9,6 +9,10 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class PointUtil {
+    private PointUtil() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static final String SPLIT = "|";
 
     /**

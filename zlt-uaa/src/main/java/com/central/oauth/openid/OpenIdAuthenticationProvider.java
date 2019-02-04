@@ -15,7 +15,7 @@ public class OpenIdAuthenticationProvider implements AuthenticationProvider {
     private SocialUserDetailsService userDetailsService;
 
     @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+    public Authentication authenticate(Authentication authentication) {
         OpenIdAuthenticationToken authenticationToken = (OpenIdAuthenticationToken) authentication;
         String openId = (String) authenticationToken.getPrincipal();
         UserDetails user = userDetailsService.loadUserByUserId(openId);

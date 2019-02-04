@@ -33,9 +33,7 @@ public class SysMenuServiceImpl extends SuperServiceImpl<SysMenuMapper, SysMenu>
 		sysRoleMenuMapper.delete(roleId, null);
 
 		if (!CollectionUtils.isEmpty(menuIds)) {
-			menuIds.forEach(menuId -> {
-				sysRoleMenuMapper.save(roleId, menuId);
-			});
+			menuIds.forEach(menuId -> sysRoleMenuMapper.save(roleId, menuId));
 		}
 	}
 

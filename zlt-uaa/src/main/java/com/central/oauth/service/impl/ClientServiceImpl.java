@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.central.common.constant.CommonConstant;
 import com.central.common.lock.DistributedLock;
-import com.central.common.model.SysUser;
 import com.central.common.redis.template.RedisRepository;
 import com.central.common.constant.SecurityConstants;
 import com.central.common.model.PageResult;

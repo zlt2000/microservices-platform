@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.aliyun.oss.OSSClient;
-import com.central.file.mapper.FileMapper;
 import com.central.file.model.FileInfo;
 import com.central.file.model.FileType;
 

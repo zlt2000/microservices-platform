@@ -26,7 +26,7 @@ public class UserDetailServiceImpl implements ZltUserDetailsService, SocialUserD
     private UserService userService;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) {
         LoginAppUser loginAppUser = userService.findByUsername(username);
         if (loginAppUser == null) {
             throw new InternalAuthenticationServiceException("用户名或密码错误");
@@ -35,13 +35,13 @@ public class UserDetailServiceImpl implements ZltUserDetailsService, SocialUserD
     }
 
     @Override
-    public SocialUserDetails loadUserByUserId(String openId) throws UsernameNotFoundException {
+    public SocialUserDetails loadUserByUserId(String openId) {
         LoginAppUser loginAppUser = userService.findByOpenId(openId);
         return checkUser(loginAppUser);
     }
 
     @Override
-    public UserDetails loadUserByMobile(String mobile) throws UsernameNotFoundException {
+    public UserDetails loadUserByMobile(String mobile) {
         LoginAppUser loginAppUser = userService.findByMobile(mobile);
         return checkUser(loginAppUser);
     }

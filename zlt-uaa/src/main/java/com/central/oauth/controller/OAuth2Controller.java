@@ -116,7 +116,7 @@ public class OAuth2Controller {
      * @return
      */
     @ApiOperation(value = "当前登陆用户信息")
-    @RequestMapping(value = {"/oauth/userinfo"}, produces = "application/json") // 获取用户信息。/auth/user
+    @GetMapping(value = {"/oauth/userinfo"}, produces = "application/json") // 获取用户信息。/auth/user
     public Map<String, Object> getCurrentUserDetail(@LoginUser SysUser user) {
         Map<String, Object> userInfo = new HashMap<>();
         if (user != null) {

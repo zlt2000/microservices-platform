@@ -59,7 +59,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
                             return true;
                         }
                     }
-                } catch (IOException e) {
+                } catch (Exception e) {
                     log.error("解析client信息失败", e);
                 }
             }

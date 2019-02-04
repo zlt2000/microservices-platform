@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +24,10 @@ import java.util.Map;
  * @date 2019/1/6
  */
 public class ExcelUtil {
+    private ExcelUtil() {
+        throw new IllegalStateException("Utility class");
+    }
+
     /**
      * 导出
      *
@@ -95,23 +100,21 @@ public class ExcelUtil {
 
     public static <T> List<T> importExcel(String filePath, Integer titleRows, Integer headerRows, Class<T> pojoClass) {
         if (StringUtils.isBlank(filePath)) {
-            return null;
+            return Collections.emptyList();
         }
         ImportParams params = new ImportParams();
         params.setTitleRows(titleRows);
         params.setHeadRows(headerRows);
-        List<T> list = ExcelImportUtil.importExcel(new File(filePath), pojoClass, params);
-        return list;
+        return ExcelImportUtil.importExcel(new File(filePath), pojoClass, params);
     }
 
     public static <T> List<T> importExcel(MultipartFile file, Integer titleRows, Integer headerRows, Class<T> pojoClass) throws Exception {
         if (file == null) {
-            return null;
+            return Collections.emptyList();
         }
         ImportParams params = new ImportParams();
         params.setTitleRows(titleRows);
         params.setHeadRows(headerRows);
-        List<T> list = ExcelImportUtil.importExcel(file.getInputStream(), pojoClass, params);
-        return list;
+        return ExcelImportUtil.importExcel(file.getInputStream(), pojoClass, params);
     }
 }

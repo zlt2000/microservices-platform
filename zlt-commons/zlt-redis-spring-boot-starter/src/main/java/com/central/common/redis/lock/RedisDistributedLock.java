@@ -56,7 +56,8 @@ public class RedisDistributedLock extends AbstractDistributedLock {
                 log.debug("get redisDistributeLock failed, retrying..." + retryTimes);
                 Thread.sleep(sleepMillis);
             } catch (InterruptedException e) {
-                return false;
+                log.warn("Interrupted!", e);
+                Thread.currentThread().interrupt();
             }
             result = setRedis(key, expire);
         }

@@ -41,6 +41,7 @@ import java.util.stream.Collectors;
         Swagger2Configuration.class
 })
 public class SwaggerAutoConfiguration implements BeanFactoryAware {
+    private static final String AUTH_KEY = "Authorization";
 
     private BeanFactory beanFactory;
 
@@ -179,7 +180,7 @@ public class SwaggerAutoConfiguration implements BeanFactoryAware {
     }
 
     @Override
-    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+    public void setBeanFactory(BeanFactory beanFactory) {
         this.beanFactory = beanFactory;
     }
 
@@ -198,13 +199,13 @@ public class SwaggerAutoConfiguration implements BeanFactoryAware {
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
         List<SecurityReference> references = new ArrayList<>(1);
-        references.add(new SecurityReference("Authorization", authorizationScopes));
+        references.add(new SecurityReference(AUTH_KEY, authorizationScopes));
         return references;
     }
 
     private List<ApiKey> securitySchemes() {
         List<ApiKey> apiKeys = new ArrayList<>(1);
-        ApiKey apiKey = new ApiKey("Authorization", "Authorization", "header");
+        ApiKey apiKey = new ApiKey(AUTH_KEY, AUTH_KEY, "header");
         apiKeys.add(apiKey);
         return apiKeys;
     }

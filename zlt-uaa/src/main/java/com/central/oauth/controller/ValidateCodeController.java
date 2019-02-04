@@ -35,8 +35,7 @@ public class ValidateCodeController {
      * @throws Exception
      */
     @GetMapping(SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/{deviceId}")
-    public void createCode(@PathVariable String deviceId, HttpServletResponse response)
-            throws Exception {
+    public void createCode(@PathVariable String deviceId, HttpServletResponse response) throws Exception {
         Assert.notNull(deviceId, "机器码不能为空");
         response.setHeader("Cache-Control", "no-store, no-cache");
         response.setContentType("image/jpeg");

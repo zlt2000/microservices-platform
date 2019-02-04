@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.central.oauth.openid;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
@@ -66,7 +63,7 @@ public class OpenIdAuthenticationToken extends AbstractAuthenticationToken {
 	}
 
 	@Override
-	public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
+	public void setAuthenticated(boolean isAuthenticated) {
 		if (isAuthenticated) {
 			throw new IllegalArgumentException(
 					"Cannot set this token to trusted - use constructor which takes a GrantedAuthority list instead");

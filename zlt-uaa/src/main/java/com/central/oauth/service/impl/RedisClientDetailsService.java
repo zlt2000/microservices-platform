@@ -37,7 +37,7 @@ public class RedisClientDetailsService extends JdbcClientDetailsService {
     }
 
     @Override
-    public ClientDetails loadClientByClientId(String clientId) throws InvalidClientException {
+    public ClientDetails loadClientByClientId(String clientId) {
         // 先从redis获取
         ClientDetails clientDetails = (ClientDetails) redisTemplate.opsForValue().get(clientRedisKey(clientId));
         if (clientDetails == null) {
@@ -70,19 +70,19 @@ public class RedisClientDetailsService extends JdbcClientDetailsService {
     }
 
     @Override
-    public void updateClientDetails(ClientDetails clientDetails) throws NoSuchClientException {
+    public void updateClientDetails(ClientDetails clientDetails) {
         super.updateClientDetails(clientDetails);
         cacheAndGetClient(clientDetails.getClientId());
     }
 
     @Override
-    public void updateClientSecret(String clientId, String secret) throws NoSuchClientException {
+    public void updateClientSecret(String clientId, String secret) {
         super.updateClientSecret(clientId, secret);
         cacheAndGetClient(clientId);
     }
 
     @Override
-    public void removeClientDetails(String clientId) throws NoSuchClientException {
+    public void removeClientDetails(String clientId) {
         super.removeClientDetails(clientId);
         removeRedisCache(clientId);
     }
@@ -106,9 +106,7 @@ public class RedisClientDetailsService extends JdbcClientDetailsService {
             return;
         }
 
-        list.parallelStream().forEach(client -> {
-            redisTemplate.opsForValue().set(clientRedisKey(client.getClientId()), client);
-        });
+        list.parallelStream().forEach(client -> redisTemplate.opsForValue().set(clientRedisKey(client.getClientId()), client));
     }
 
     private String clientRedisKey(String clientId) {

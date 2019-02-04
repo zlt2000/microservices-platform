@@ -7,6 +7,7 @@ import org.springframework.security.oauth2.common.exceptions.UnapprovedClientAut
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Enumeration;
 
@@ -18,6 +19,10 @@ import java.util.Enumeration;
  */
 @Slf4j
 public class AuthUtils {
+    private AuthUtils() {
+        throw new IllegalStateException("Utility class");
+    }
+
     private static final String BASIC_ = "Basic ";
 
     /**
@@ -60,7 +65,7 @@ public class AuthUtils {
     /**
      * *从header 请求中的clientId:clientSecret
      */
-    public static String[] extractClient(HttpServletRequest request) throws IOException, UnapprovedClientAuthenticationException {
+    public static String[] extractClient(HttpServletRequest request) {
         String header = request.getHeader("Authorization");
         if (header == null || !header.startsWith(BASIC_)) {
             throw new UnapprovedClientAuthenticationException("请求头中client信息为空");
@@ -73,10 +78,10 @@ public class AuthUtils {
      *
      * @param header header中的参数
      */
-    public static String[] extractHeaderClient(String header) throws IOException {
-        byte[] base64Client = header.substring(BASIC_.length()).getBytes(CommonConstant.UTF8);
+    public static String[] extractHeaderClient(String header) {
+        byte[] base64Client = header.substring(BASIC_.length()).getBytes(StandardCharsets.UTF_8);
         byte[] decoded = Base64.getDecoder().decode(base64Client);
-        String clientStr = new String(decoded, CommonConstant.UTF8);
+        String clientStr = new String(decoded, StandardCharsets.UTF_8);
         String[] clientArr = clientStr.split(":");
         if (clientArr.length != 2) {
             throw new RuntimeException("Invalid basic authentication token");

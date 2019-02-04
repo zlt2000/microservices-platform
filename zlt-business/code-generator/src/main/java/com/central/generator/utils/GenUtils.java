@@ -3,6 +3,7 @@ package com.central.generator.utils;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -33,6 +34,10 @@ import org.apache.velocity.app.Velocity;
  */
 @Slf4j
 public class GenUtils {
+    private GenUtils() {
+        throw new IllegalStateException("Utility class");
+    }
+
     private final static String FILE_NAME_MODEL = "Model.java.vm";
     private final static String FILE_NAME_MAPPER = "Mapper.java.vm";
     private final static String FILE_NAME_MAPPERXML = "Mapper.xml.vm";
@@ -40,17 +45,20 @@ public class GenUtils {
     private final static String FILE_NAME_SERVICEIMPL = "ServiceImpl.java.vm";
     private final static String FILE_NAME_CONTROLLER = "Controller.java.vm";
     private final static String FILE_NAME_PAGE = "index.html.vm";
+    private final static String TEMPLATE_PATH = "template/";
+    private final static String PACKAGE = "package";
+    private final static String MODULE_NAME = "moduleName";
 
     public static List<String> getTemplates() {
-        List<String> templates = new ArrayList<String>();
-        templates.add("template/"+FILE_NAME_MODEL);
-        templates.add("template/"+FILE_NAME_MAPPER);
-        templates.add("template/"+FILE_NAME_MAPPERXML);
-        templates.add("template/"+FILE_NAME_SERVICE);
-        templates.add("template/"+FILE_NAME_SERVICEIMPL);
-        templates.add("template/"+FILE_NAME_CONTROLLER);
+        List<String> templates = new ArrayList<>();
+        templates.add(TEMPLATE_PATH+FILE_NAME_MODEL);
+        templates.add(TEMPLATE_PATH+FILE_NAME_MAPPER);
+        templates.add(TEMPLATE_PATH+FILE_NAME_MAPPERXML);
+        templates.add(TEMPLATE_PATH+FILE_NAME_SERVICE);
+        templates.add(TEMPLATE_PATH+FILE_NAME_SERVICEIMPL);
+        templates.add(TEMPLATE_PATH+FILE_NAME_CONTROLLER);
 
-        templates.add("template/"+FILE_NAME_PAGE);
+        templates.add(TEMPLATE_PATH+FILE_NAME_PAGE);
 
         return templates;
     }
@@ -123,8 +131,8 @@ public class GenUtils {
         map.put("columns", tableEntity.getColumns());
         map.put("hasBigDecimal", hasBigDecimal);
         map.put("mainPath", mainPath);
-        map.put("package", config.getString("package"));
-        map.put("moduleName", config.getString("moduleName"));
+        map.put(PACKAGE, config.getString(PACKAGE));
+        map.put(MODULE_NAME, config.getString(MODULE_NAME));
         map.put("author", config.getString("author"));
         map.put("email", config.getString("email"));
         map.put("datetime", DateUtils.format(new Date(), DateUtils.DATE_TIME_PATTERN));
@@ -141,8 +149,8 @@ public class GenUtils {
                 tpl.merge(context, sw);
 
                 //添加到zip
-                zip.putNextEntry(new ZipEntry(getFileName(template, tableEntity.getClassName(), config.getString("package"), config.getString("moduleName"))));
-                IOUtils.write(sw.toString(), zip, "UTF-8");
+                zip.putNextEntry(new ZipEntry(getFileName(template, tableEntity.getClassName(), config.getString(PACKAGE), config.getString(MODULE_NAME))));
+                IOUtils.write(sw.toString(), zip, StandardCharsets.UTF_8);
                 zip.closeEntry();
             } catch (IOException e) {
                 log.error("generatorCode-error", e);

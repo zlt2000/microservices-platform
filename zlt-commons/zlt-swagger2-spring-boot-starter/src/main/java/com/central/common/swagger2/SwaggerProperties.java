@@ -1,6 +1,8 @@
 package com.central.common.swagger2;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.ArrayList;
@@ -51,7 +53,8 @@ public class SwaggerProperties {
     /**全局参数配置**/
     private List<GlobalOperationParameter> globalOperationParameters;
 
-
+    @Setter
+    @Getter
     public static class GlobalOperationParameter{
         /**参数名**/
         private String name;
@@ -67,46 +70,6 @@ public class SwaggerProperties {
 
         /**参数是否必须传**/
         private String required;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public void setDescription(String description) {
-            this.description = description;
-        }
-
-        public String getModelRef() {
-            return modelRef;
-        }
-
-        public void setModelRef(String modelRef) {
-            this.modelRef = modelRef;
-        }
-
-        public String getParameterType() {
-            return parameterType;
-        }
-
-        public void setParameterType(String parameterType) {
-            this.parameterType = parameterType;
-        }
-
-        public String getRequired() {
-            return required;
-        }
-
-        public void setRequired(String required) {
-            this.required = required;
-        }
     }
 
     @Data
@@ -139,7 +102,6 @@ public class SwaggerProperties {
 
     @Data
     public static class Contact {
-
         /**联系人**/
         private String name = "";
         /**联系人url**/

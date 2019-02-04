@@ -1,5 +1,6 @@
 package com.central.file.config;
 
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +20,7 @@ import com.central.file.model.FileType;
 @Configuration
 public class OssServiceFactory {
 
-    private Map<FileType, IFileService> map = new HashMap<>();
+    private Map<FileType, IFileService> map = new EnumMap<>(FileType.class);
     @Autowired
     private IFileService aliyunOssServiceImpl;
 

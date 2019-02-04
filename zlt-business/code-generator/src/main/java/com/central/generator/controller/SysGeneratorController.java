@@ -9,10 +9,7 @@ import com.central.common.model.PageResult;
 import com.central.generator.service.SysGeneratorService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import io.swagger.annotations.Api;
 
@@ -30,16 +27,16 @@ public class SysGeneratorController {
      * 列表
      */
     @ResponseBody
-    @RequestMapping("/list")
-    public PageResult list(@RequestParam Map<String, Object> params) {
+    @GetMapping("/list")
+    public PageResult getTableList(@RequestParam Map<String, Object> params) {
         return sysGeneratorService.queryList(params);
     }
 
     /**
-     * 生成代码
+     * 生成代码FileUtil
      */
-    @RequestMapping("/code")
-    public void code(String tables, HttpServletResponse response) throws IOException {
+    @GetMapping("/code")
+    public void makeCode(String tables, HttpServletResponse response) throws IOException {
         byte[] data = sysGeneratorService.generatorCode(tables.split(","));
         response.reset();
         response.setHeader("Content-Disposition", "attachment; filename=\"generator.zip\"");

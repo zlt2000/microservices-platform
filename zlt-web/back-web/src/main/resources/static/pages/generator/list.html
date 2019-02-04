@@ -75,20 +75,6 @@
             // layer.msg("演示阶段", {icon: 1});
             var url = config.base_server + 'api-generator/generator/code?access_token=' + config.getToken().access_token + "&tables=" + obj.data.tableName;
             window.location.href = url;
-
-            // var xhr = new XMLHttpRequest();
-            // xhr.open('GET', url, true);
-            // xhr.responseType = "blob";
-            // xhr.setRequestHeader("client_type", "DESKTOP_WEB");
-            // xhr.onload = function() {
-            //     if (this.status == 200) {
-            //         var blob = this.response;
-            //         var objecturl = URL.createObjectURL(blob);
-            //         window.location.href = objecturl;
-            //     }
-            // }
-            // xhr.send();
-
         };
     });
 </script>
