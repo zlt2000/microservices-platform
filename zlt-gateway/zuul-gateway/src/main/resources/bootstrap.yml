@@ -19,5 +19,6 @@ spring:
         server-addr: ${zlt.nacos.server-addr}
         file-extension: yml
         shared-dataids: common.yml
+        refreshable-dataids: common.yml
       discovery:
         server-addr: ${zlt.nacos.server-addr}
