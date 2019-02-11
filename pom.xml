@@ -305,12 +305,25 @@
     <repositories>
         <repository>
             <id>aliyun-repos</id>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <url>https://maven.aliyun.com/repository/public</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
         </repository>
     </repositories>
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <name>releases Repository</name>
+            <url>http://192.168.28.138:8081/repository/maven-releases/</url>
+        </repository>
+
+        <snapshotRepository>
+            <id>snapshots</id>
+            <url>http://192.168.28.138:8081/repository/maven-snapshots/</url>
+            <uniqueVersion>true</uniqueVersion>
+        </snapshotRepository>
+    </distributionManagement>
 
     <modules>
         <!-- 公共 -->
