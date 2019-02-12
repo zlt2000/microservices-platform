@@ -47,7 +47,6 @@ public abstract class DefaultPermissionServiceImpl implements IPermissionService
         if (HttpMethod.OPTIONS.name().equalsIgnoreCase(request.getMethod())) {
             return true;
         }
-        boolean hasPermission = false;
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             //判断是否开启url权限验证
             if (!securityProperties.getAuth().isUrlEnabled()) {
@@ -59,7 +58,7 @@ public abstract class DefaultPermissionServiceImpl implements IPermissionService
                 return true;
             }
 
-            //判断认证通过后，所以用户都能访问的url
+            //判断认证通过后，所有用户都能访问的url
             for (String path : securityProperties.getIgnore().getMenusPaths()) {
                 if (antPathMatcher.match(path, request.getRequestURI())) {
                     return true;
@@ -69,7 +68,7 @@ public abstract class DefaultPermissionServiceImpl implements IPermissionService
             List<SimpleGrantedAuthority> grantedAuthorityList = (List<SimpleGrantedAuthority>) authentication.getAuthorities();
             if (CollectionUtil.isEmpty(grantedAuthorityList)) {
                 log.warn("角色列表为空：{}", authentication.getPrincipal());
-                return hasPermission;
+                return false;
             }
 
             String roleCodes = grantedAuthorityList.stream().map(SimpleGrantedAuthority::getAuthority).collect(Collectors.joining(", "));
@@ -83,6 +82,6 @@ public abstract class DefaultPermissionServiceImpl implements IPermissionService
             }
         }
 
-        return hasPermission;
+        return false;
     }
 }
