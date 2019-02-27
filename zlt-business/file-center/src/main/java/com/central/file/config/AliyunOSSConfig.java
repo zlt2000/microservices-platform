@@ -8,8 +8,9 @@ import org.springframework.context.annotation.Configuration;
 import com.aliyun.oss.OSSClient;
 
 /**
- * @author zlt
  * 阿里云配置
+ *
+ * @author 作者 owen E-mail: 624191343@qq.com
  */
 @Configuration
 public class AliyunOSSConfig {

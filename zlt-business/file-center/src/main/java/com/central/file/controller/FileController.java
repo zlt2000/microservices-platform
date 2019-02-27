@@ -22,7 +22,7 @@ import com.central.file.model.FileType;
  * 文件上传 同步oss db双写 目前仅实现了阿里云,七牛云
  * 参考src/main/view/upload.html
  *
- * @author zlt
+ * @author 作者 owen E-mail: 624191343@qq.com
  */
 @RestController
 public class FileController {

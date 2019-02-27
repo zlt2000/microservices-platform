@@ -11,9 +11,10 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * @author zlt
  * 文件工具类
-*/
+ *
+ * @author 作者 owen E-mail: 624191343@qq.com
+ */
 @Slf4j
 public class FileUtil {
 	private FileUtil() {

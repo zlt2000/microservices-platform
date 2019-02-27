@@ -9,8 +9,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.central.file.model.FileInfo;
 
 /**
- * @author zlt
  * 文件service 目前仅支持阿里云oss,七牛云
+ *
+ * @author 作者 owen E-mail: 624191343@qq.com
 */
 public interface IFileService extends IService<FileInfo> {
 	FileInfo upload(MultipartFile file ) throws Exception;

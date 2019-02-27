@@ -18,10 +18,11 @@ import com.central.file.utils.FileUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @author zlt
  * AbstractIFileService 抽取类
  * 根据filetype 实例化具体oss对象
-*/
+ *
+ * @author 作者 owen E-mail: 624191343@qq.com
+ */
 @Slf4j
 public abstract class AbstractIFileService extends ServiceImpl<FileMapper, FileInfo> implements IFileService {
 	@Override

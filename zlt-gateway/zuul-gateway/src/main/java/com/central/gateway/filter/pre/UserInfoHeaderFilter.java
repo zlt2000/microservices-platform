@@ -44,7 +44,7 @@ public class UserInfoHeaderFilter extends ZuulFilter {
             String userInfo;
             if (principal instanceof SysUser) {
                 SysUser user = (SysUser) principal;
-                userInfo = user.getUsername() + SecurityConstants.USER_SPLIT + user.getId();
+                userInfo = user.getUsername();
             } else {
                 //jwt的token只有name
                 userInfo = authentication.getName();

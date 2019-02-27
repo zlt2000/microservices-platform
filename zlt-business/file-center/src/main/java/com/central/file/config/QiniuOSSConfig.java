@@ -10,8 +10,9 @@ import com.qiniu.storage.UploadManager;
 import com.qiniu.util.Auth;
 
 /**
- * @author zlt
  * 七牛云配置
+ *
+ * @author 作者 owen E-mail: 624191343@qq.com
  */
 @Configuration
 public class QiniuOSSConfig {

@@ -13,9 +13,10 @@ import org.springframework.context.annotation.Configuration;
 import com.central.file.model.FileType;
 
 /**
- * @author zlt
  * FileService工厂<br>
  * 将各个实现类放入map
+ *
+ * @author 作者 owen E-mail: 624191343@qq.com
  */
 @Configuration
 public class OssServiceFactory {

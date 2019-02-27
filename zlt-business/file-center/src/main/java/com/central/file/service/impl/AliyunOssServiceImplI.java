@@ -10,8 +10,9 @@ import com.central.file.model.FileInfo;
 import com.central.file.model.FileType;
 
 /**
- * @author zlt
  * 阿里云oss存储文件
+ *
+ * @author 作者 owen E-mail: 624191343@qq.com
  */
 @Service("aliyunOssServiceImpl")
 public class AliyunOssServiceImplI extends AbstractIFileService {

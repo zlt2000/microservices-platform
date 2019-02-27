@@ -1,8 +1,9 @@
 package com.central.file.model;
 
 /**
- * @author zlt
  * 仅支持阿里云 oss ,七牛云等
+ *
+ * @author 作者 owen E-mail: 624191343@qq.com
  */
 public enum FileType {
     //七牛

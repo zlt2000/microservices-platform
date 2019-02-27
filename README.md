@@ -15,11 +15,9 @@
   * 账号密码：admin/admin
   * 应用监控账号密码：admin/admin
   * 配置中心账号密码：nacos/nacos
-
+  * APM监控账号密码：admin/admin
 * **[项目更新日志](https://www.kancloud.cn/zlt2000/microservices-platform/936235)**
-
 * **[文档更新日志](https://www.kancloud.cn/zlt2000/microservices-platform/936236)**
-
 * 前后端分离的企业级微服务架构
 * 基于`Spring Boot 2.0.X`、`Spring Cloud Finchley`和`Spring Cloud Alibaba`
 * 深度定制`Spring Security`真正实现了基于`RBAC`、`jwt`和`oauth2`的无状态统一权限认证的解决方案
@@ -28,7 +26,15 @@
 * 注重代码规范，严格控制包依赖，每个工程基本都是最小依赖
 * 非常适合学习和企业中使用
 
-## 2. 功能介绍
+&nbsp;
+
+## 2. 总体服务拓扑图
+
+![](https://gitee.com/zlt2000/images/raw/master/服务拓扑图.png)
+
+&nbsp;
+
+## 3. 功能介绍
 
 * **统一认证功能**
   * 支持oauth2的四种模式登录
@@ -49,6 +55,10 @@
   * 支持CI/CD持续集成(包括前端和后端)
 * **系统监控功能**
   * 服务调用链监控
+  * 应用拓扑图
+
+  * 慢服务检测
+
   * 应用监控(应用健康、JVM、内存、线程)
   * 错误日志查询
   * 慢查询SQL监控
@@ -66,7 +76,9 @@
   * 统一跨域处理
   * 统一异常处理
 
-## 3. 模块说明
+&nbsp;
+
+## 4. 模块说明
 
 ```lua
 central-platform -- 父项目，公共依赖
@@ -103,12 +115,18 @@ central-platform -- 父项目，公共依赖
 │  │  ├─back-web -- 后台前端[8066]
 ```
 
-## 4. 截图（点击可大图预览）
+&nbsp;
+
+## 5. 截图（点击可大图预览）
 
 <table>
 	<tr>
         <td><img src="https://gitee.com/zlt2000/images/raw/master/持续集成2.png"/></td>
         <td><img src="https://gitee.com/zlt2000/images/raw/master/sonar结果.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://gitee.com/zlt2000/images/raw/master/skywalking首页.png"/></td>
+        <td><img src="https://gitee.com/zlt2000/images/raw/master/skywalking应用拓扑图.png"/></td>
     </tr>
     <tr>
         <td><img src="https://gitee.com/zlt2000/images/raw/master/elk.png"/></td>

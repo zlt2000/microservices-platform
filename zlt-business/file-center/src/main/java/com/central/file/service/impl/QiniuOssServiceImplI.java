@@ -17,8 +17,9 @@ import com.qiniu.util.Auth;
 import com.qiniu.util.StringMap;
 
 /**
- * @author zlt
  * 七牛云oss存储文件
+ *
+ * @author 作者 owen E-mail: 624191343@qq.com
  */
 @Slf4j
 @Service("qiniuOssServiceImpl")
