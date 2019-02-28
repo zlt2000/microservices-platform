@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.zlt</groupId>
         <artifactId>zlt-business</artifactId>
-        <version>1.1.3</version>
+        <version>1.2.0</version>
     </parent>
     <artifactId>code-generator</artifactId>
 
