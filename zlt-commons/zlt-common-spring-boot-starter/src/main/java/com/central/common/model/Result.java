@@ -26,6 +26,10 @@ public class Result<T> implements Serializable {
         return succeedWith(model, CodeEnum.SUCCESS.getCode(), msg);
     }
 
+    public static <T> Result<T> succeed(T model) {
+        return succeedWith(model, CodeEnum.SUCCESS.getCode(), "");
+    }
+
     public static <T> Result<T> succeedWith(T datas, Integer code, String msg) {
         return new Result<>(datas, code, msg);
     }
