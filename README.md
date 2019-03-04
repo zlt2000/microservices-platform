@@ -16,6 +16,7 @@
   * 应用监控账号密码：admin/admin
   * 配置中心账号密码：nacos/nacos
   * APM监控账号密码：admin/admin
+  * Grafana账号：zlt/zlt
 * **[项目更新日志](https://www.kancloud.cn/zlt2000/microservices-platform/936235)**
 * **[文档更新日志](https://www.kancloud.cn/zlt2000/microservices-platform/936236)**
 * 前后端分离的企业级微服务架构
