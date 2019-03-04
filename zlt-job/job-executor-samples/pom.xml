@@ -71,6 +71,11 @@
             <artifactId>job-core</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+
+        <dependency>
+        <groupId>io.micrometer</groupId>
+        <artifactId>micrometer-registry-prometheus</artifactId>
+    </dependency>
     </dependencies>
 
     <build>
