@@ -29,9 +29,9 @@
 
 &nbsp;
 
-## 2. 总体服务拓扑图
+## 2. 项目总体架构图
 
-![](https://gitee.com/zlt2000/images/raw/master/服务拓扑图.png)
+![](https://gitee.com/zlt2000/images/raw/master/spring cloud 微服务架构图.jpg)
 
 &nbsp;
 

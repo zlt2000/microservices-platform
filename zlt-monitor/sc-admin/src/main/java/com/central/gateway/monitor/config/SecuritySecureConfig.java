@@ -22,6 +22,7 @@ public class SecuritySecureConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         SavedRequestAwareAuthenticationSuccessHandler successHandler = new SavedRequestAwareAuthenticationSuccessHandler();
         successHandler.setTargetUrlParameter("redirectTo");
+        successHandler.setDefaultTargetUrl(adminContextPath + "/");
 
         http.authorizeRequests()
                     .antMatchers(adminContextPath + "/assets/**").permitAll()
