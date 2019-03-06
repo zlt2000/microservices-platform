@@ -31,7 +31,7 @@
 
 ## 2. 项目总体架构图
 
-![](https://gitee.com/zlt2000/images/raw/master/spring cloud 微服务架构图.jpg)
+![](https://gitee.com/zlt2000/images/raw/master/springcloud微服务架构图.jpg)
 
 &nbsp;
 
@@ -54,12 +54,12 @@
   * 分布式锁
   * 分布式任务调度器
   * 支持CI/CD持续集成(包括前端和后端)
+  * 分布式高性能Id生成器
 * **系统监控功能**
   * 服务调用链监控
   * 应用拓扑图
-
   * 慢服务检测
-
+  * 服务Metric监控
   * 应用监控(应用健康、JVM、内存、线程)
   * 错误日志查询
   * 慢查询SQL监控
