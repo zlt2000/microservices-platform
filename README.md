@@ -19,6 +19,7 @@
   * Grafana账号：zlt/zlt
 * **[项目更新日志](https://www.kancloud.cn/zlt2000/microservices-platform/936235)**
 * **[文档更新日志](https://www.kancloud.cn/zlt2000/microservices-platform/936236)**
+* **演示环境有全方位的监控示例：日志系统 + APM系统 + GPE系统**
 * 前后端分离的企业级微服务架构
 * 基于`Spring Boot 2.0.X`、`Spring Cloud Finchley`和`Spring Cloud Alibaba`
 * 深度定制`Spring Security`真正实现了基于`RBAC`、`jwt`和`oauth2`的无状态统一权限认证的解决方案
