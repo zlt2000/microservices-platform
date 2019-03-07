@@ -19,6 +19,8 @@
   * Grafana账号：zlt/zlt
 * **[项目更新日志](https://www.kancloud.cn/zlt2000/microservices-platform/936235)**
 * **[文档更新日志](https://www.kancloud.cn/zlt2000/microservices-platform/936236)**
+* Gitee地址：https://gitee.com/zlt2000/microservices-platform
+* Github地址：https://github.com/zlt2000/microservices-platform
 * **演示环境有全方位的监控示例：日志系统 + APM系统 + GPE系统**
 * 前后端分离的企业级微服务架构
 * 基于`Spring Boot 2.0.X`、`Spring Cloud Finchley`和`Spring Cloud Alibaba`
