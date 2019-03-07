@@ -10,18 +10,19 @@
 
 * **技术交流群** [250883130](http://shang.qq.com/wpa/qunwpa?idkey=17544199255998bda0d938fb72b08d076c40c52c9904520b76eb5eb0585da71e) 
 * **详细在线文档** [点击查看](https://www.kancloud.cn/zlt2000/microservices-platform/936236)
-* 演示地址
+* **演示地址**
   * url： [http://120.78.94.191:8066](http://120.78.94.191:8066)
   * 账号密码：admin/admin
   * 应用监控账号密码：admin/admin
   * 配置中心账号密码：nacos/nacos
   * APM监控账号密码：admin/admin
   * Grafana账号：zlt/zlt
+* **演示环境有全方位的监控示例：日志系统 + APM系统 + GPE系统**
 * **[项目更新日志](https://www.kancloud.cn/zlt2000/microservices-platform/936235)**
 * **[文档更新日志](https://www.kancloud.cn/zlt2000/microservices-platform/936236)**
 * Gitee地址：https://gitee.com/zlt2000/microservices-platform
 * Github地址：https://github.com/zlt2000/microservices-platform
-* **演示环境有全方位的监控示例：日志系统 + APM系统 + GPE系统**
+
 * 前后端分离的企业级微服务架构
 * 基于`Spring Boot 2.0.X`、`Spring Cloud Finchley`和`Spring Cloud Alibaba`
 * 深度定制`Spring Security`真正实现了基于`RBAC`、`jwt`和`oauth2`的无状态统一权限认证的解决方案
