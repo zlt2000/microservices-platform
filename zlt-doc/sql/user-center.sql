@@ -129,9 +129,9 @@ INSERT INTO `sys_menu` VALUES (64, 63, '系统日志', '#!sysLog', 'log/sysLog.h
 INSERT INTO `sys_menu` VALUES (65, 37, '代码生成器', '#!generator', 'generator/list.html', NULL, 'layui-icon-template', 2, '2019-01-14 00:47:36', '2019-01-23 14:06:31', 1, 0);
 INSERT INTO `sys_menu` VALUES (66, 63, '慢查询SQL', '#!slowQueryLog', 'log/slowQueryLog.html', NULL, 'layui-icon-snowflake', 2, '2019-01-16 12:00:27', '2019-01-16 15:32:31', 1, 0);
 INSERT INTO `sys_menu` VALUES (67, -1, '任务管理', '#!job', 'http://127.0.0.1:8081/', NULL, 'layui-icon-date', 3, '2019-01-17 20:18:22', '2019-01-23 14:01:53', 1, 0);
-INSERT INTO `sys_menu` VALUES (68, 63, '应用吞吐量监控', '#!sentinel', 'http://localhost:6999', NULL, 'layui-icon-chart', 4, '2019-01-22 16:31:55', '2019-01-22 16:34:03', 1, 0);
+INSERT INTO `sys_menu` VALUES (68, 63, '应用吞吐量监控', '#!sentinel', 'http://127.0.0.1:6999', NULL, 'layui-icon-chart', 4, '2019-01-22 16:31:55', '2019-01-22 16:34:03', 1, 0);
 INSERT INTO `sys_menu` VALUES (69, 37, '配置中心', '#!nacos', 'http://127.0.0.1:8848/nacos', NULL, 'layui-icon-tabs', 1, '2019-01-23 14:06:10', '2019-01-23 14:06:10', 1, 0);
-INSERT INTO `sys_menu` VALUES (70, 63, ''APM监控'', ''#!apm'', ''http://47.107.114.25:8080'', null, ''layui-icon-engine'', 5, ''2019-02-27 10:31:55'', ''2019-02-27 10:31:55'', 1, 0);
+INSERT INTO `sys_menu` VALUES (70, 63, 'APM监控', '#!apm', 'http://127.0.0.1:8080', null, 'layui-icon-engine', 5, '2019-02-27 10:31:55', '2019-02-27 10:31:55', 1, 0);
 
 -- ----------------------------
 -- Table structure for sys_role_menu
