@@ -132,4 +132,8 @@ public interface SecurityConstants {
      * 手机登录URL
      */
     String MOBILE_TOKEN_URL = "/oauth/mobile/token";
+    /**
+     * 登出URL
+     */
+    String LOGOUT_URL = "/oauth/remove/token";
 }

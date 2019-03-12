@@ -67,17 +67,6 @@ public class OAuth2Controller {
     @Resource
     private UserService userService;
 
-    @GetMapping("/oauth/test")
-    public SysUser testNacos() {
-        return userService.selectByUsername("admin");
-    }
-
-    @GetMapping("/oauth/test2")
-    public String testNacos2() throws InterruptedException {
-        Thread.sleep(5000);
-        return "success";
-    }
-
     @ApiOperation(value = "用户名密码获取token")
     @PostMapping(SecurityConstants.PASSWORD_LOGIN_PRO_URL)
     public void getUserTokenInfo(

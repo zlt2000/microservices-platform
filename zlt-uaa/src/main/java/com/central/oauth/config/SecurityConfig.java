@@ -89,6 +89,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .failureHandler(authenticationFailureHandler)
                     .and()
 				.logout()
+					.logoutUrl(SecurityConstants.LOGOUT_URL)
 					.logoutSuccessUrl(SecurityConstants.LOGIN_PAGE)
 					.logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler())
 					.addLogoutHandler(oauthLogoutHandler)
