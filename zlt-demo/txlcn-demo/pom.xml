@@ -19,21 +19,4 @@
         <!-- 服务c -->
         <module>txlcn-demo-spring-service-c</module>
     </modules>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-        <finalName>${project.artifactId}</finalName>
-    </build>
 </project>
