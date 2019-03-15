@@ -1,6 +1,7 @@
 .idea/
 logs/
 target/
+.txlcn/
 
 *.iml
 *.versionsBackup

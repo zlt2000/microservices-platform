@@ -17,6 +17,7 @@
   * 配置中心账号密码：nacos/nacos
   * APM监控账号密码：admin/admin
   * Grafana账号：zlt/zlt
+  * txlcn事务管理器密码：admin
 * **演示环境有全方位的监控示例：日志系统 + APM系统 + GPE系统**
 * **[项目更新日志](https://www.kancloud.cn/zlt2000/microservices-platform/936235)**
 * **[文档更新日志](https://www.kancloud.cn/zlt2000/microservices-platform/936236)**
@@ -59,6 +60,7 @@
   * 分布式任务调度器
   * 支持CI/CD持续集成(包括前端和后端)
   * 分布式高性能Id生成器
+  * 分布式事务
 * **系统监控功能**
   * 服务调用链监控
   * 应用拓扑图
@@ -96,7 +98,6 @@ central-platform -- 父项目，公共依赖
 │  │  ├─zlt-common-spring-boot-starter -- 封装通用操作逻辑
 │  │  ├─zlt-db-spring-boot-starter -- 封装数据库通用操作逻辑
 │  │  ├─zlt-log-spring-boot-starter -- 封装log通用操作逻辑
-│  │  ├─zlt-mq-spring-boot-starter -- 封装mq通用操作逻辑
 │  │  ├─zlt-redis-spring-boot-starter -- 封装Redis通用操作逻辑
 │  │  ├─zlt-ribbon-spring-boot-starter -- 封装Ribbon和Feign的通用操作逻辑
 │  │  ├─zlt-sentinel-spring-boot-starter -- 封装Sentinel的通用操作逻辑
@@ -115,9 +116,12 @@ central-platform -- 父项目，公共依赖
 │  │  ├─log-center -- 日志中心[6200]
 │  ├─zlt-uaa -- spring-security认证中心[8000]
 │  ├─zlt-register -- 注册中心Nacos[8848]
-│  ├─zlt-search -- 搜索引擎一级工程
 │  ├─zlt-web -- 前端一级工程
 │  │  ├─back-web -- 后台前端[8066]
+│  ├─zlt-transaction -- 事务一级工程
+│  │  ├─txlcn-tm -- tx-lcn事务管理器[7970]
+│  ├─zlt-demo -- demo一级工程
+│  │  ├─txlcn-demo -- txlcn的demo
 ```
 
 &nbsp;

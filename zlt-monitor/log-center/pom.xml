@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.zlt</groupId>
         <artifactId>zlt-monitor</artifactId>
-        <version>1.3.0</version>
+        <version>1.4.0</version>
     </parent>
     <artifactId>log-center</artifactId>
     <dependencies>
