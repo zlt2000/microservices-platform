@@ -115,6 +115,20 @@ zuul:
       strip-prefix: true
   ssl-hostname-validation-enabled: false
 
+hystrix:
+  threadpool:
+    default:
+      coreSize: 100
+      maximumSize: 2000
+      allowMaximumSizeToDivergeFromCoreSize: true
+      maxQueueSize: -1
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+
 swagger:
   butler:
     api-docs-path:  v2/api-docs
