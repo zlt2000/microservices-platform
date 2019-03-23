@@ -1,9 +1,4 @@
 spring:
-  redis:
-    host: ${zlt.redis.host}
-    port: ${zlt.redis.port}
-    timeout: ${zlt.redis.timeout}
-
   # sentinel动态配置规则
   cloud:
     sentinel:

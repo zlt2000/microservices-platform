@@ -30,8 +30,3 @@ spring:
             - Path=/api-file/**
           filters:
             - StripPrefix=1
-
-  redis:
-    host: ${zlt.redis.host}
-    port: ${zlt.redis.port}
-    timeout: ${zlt.redis.timeout}

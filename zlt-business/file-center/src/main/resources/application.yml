@@ -20,11 +20,6 @@ spring:
     password: ${zlt.datasource.password}
     driver-class-name: com.mysql.jdbc.Driver
 
-  redis:
-    host: ${zlt.redis.host}
-    port: ${zlt.redis.port}
-    timeout: ${zlt.redis.timeout}
-
 mybatis-plus:
   mapper-locations: classpath:/mapper/*Mapper.xml
   #实体扫描，多个package用逗号或者分号分隔
