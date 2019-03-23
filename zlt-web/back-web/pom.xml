@@ -51,7 +51,7 @@
                     <env>
                         <JAVA_OPTS>${docker.java.opts}</JAVA_OPTS>
                     </env>
-                    <entryPoint>["java ","$JAVA_OPTS ${docker.java.security.egd} ","-jar ","/${project.build.finalName}.jar"]</entryPoint>
+                    <entryPoint>["sh","-c","java $JAVA_OPTS ${docker.java.security.egd} -jar /${project.build.finalName}.jar"]</entryPoint>
                     <resources>
                         <resource>
                             <targetPath>/</targetPath>
