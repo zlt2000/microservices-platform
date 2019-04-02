@@ -1,7 +1,9 @@
 package com.central.oauth2.common.util;
 
 import com.central.common.constant.CommonConstant;
+import com.central.common.model.SysUser;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.exceptions.UnapprovedClientAuthenticationException;
 
@@ -87,5 +89,19 @@ public class AuthUtils {
             throw new RuntimeException("Invalid basic authentication token");
         }
         return clientArr;
+    }
+
+    /**
+     * 获取登陆的用户名
+     */
+    public static String getUsername(Authentication authentication) {
+        Object principal = authentication.getPrincipal();
+        String username = null;
+        if (principal instanceof SysUser) {
+            username = ((SysUser) principal).getUsername();
+        } else if (principal instanceof String) {
+            username = (String) principal;
+        }
+        return username;
     }
 }

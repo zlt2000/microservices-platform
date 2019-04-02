@@ -13,7 +13,8 @@ import java.util.Properties;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import com.central.common.utils.DateUtils;
+import cn.hutool.core.date.DateUtil;
+import com.central.common.constant.CommonConstant;
 import com.central.generator.model.ColumnEntity;
 import com.central.generator.model.TableEntity;
 import lombok.extern.slf4j.Slf4j;
@@ -135,7 +136,7 @@ public class GenUtils {
         map.put(MODULE_NAME, config.getString(MODULE_NAME));
         map.put("author", config.getString("author"));
         map.put("email", config.getString("email"));
-        map.put("datetime", DateUtils.format(new Date(), DateUtils.DATE_TIME_PATTERN));
+        map.put("datetime", DateUtil.format(new Date(), CommonConstant.DATETIME_FORMAT));
         VelocityContext context = new VelocityContext(map);
 
         //获取模板列表

@@ -3,9 +3,9 @@ package com.central.oauth2.common.service.impl;
 import cn.hutool.core.collection.CollectionUtil;
 import com.central.common.constant.CommonConstant;
 import com.central.common.model.SysMenu;
-import com.central.common.utils.SysUserUtil;
 import com.central.oauth2.common.properties.SecurityProperties;
 import com.central.oauth2.common.service.IPermissionService;
+import com.central.oauth2.common.util.AuthUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +53,7 @@ public abstract class DefaultPermissionServiceImpl implements IPermissionService
                 return true;
             }
             //超级管理员admin不需认证
-            String username = SysUserUtil.getUsername(authentication);
+            String username = AuthUtils.getUsername(authentication);
             if (CommonConstant.ADMIN_USER_NAME.equals(username)) {
                 return true;
             }

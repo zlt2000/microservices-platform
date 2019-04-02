@@ -1,11 +1,8 @@
 package com.central.oauth.controller;
 
-import com.central.common.annotation.LoginUser;
 import com.central.common.constant.SecurityConstants;
 import com.central.common.feign.UserService;
-import com.central.common.model.LoginAppUser;
 import com.central.common.model.Result;
-import com.central.common.model.SysUser;
 import com.central.common.utils.SpringUtil;
 import com.central.oauth.mobile.MobileAuthenticationToken;
 import com.central.oauth.openid.OpenIdAuthenticationToken;
@@ -31,7 +28,6 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Request;
 import org.springframework.security.oauth2.provider.TokenRequest;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,8 +36,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * OAuth2相关操作
@@ -94,26 +88,6 @@ public class OAuth2Controller {
             HttpServletRequest request, HttpServletResponse response) throws IOException {
         MobileAuthenticationToken token = new MobileAuthenticationToken(mobile, password);
         writerToken(request, response, token, "手机号或密码错误");
-    }
-
-    /**
-     * 当前登陆用户信息
-     * security获取当前登录用户的方法是SecurityContextHolder.getContext().getAuthentication()
-     * 这里的实现类是org.springframework.security.oauth2.provider.OAuth2Authentication
-     *
-     * @return
-     */
-    @ApiOperation(value = "当前登陆用户信息")
-    @GetMapping(value = {"/oauth/userinfo"}, produces = "application/json") // 获取用户信息。/auth/user
-    public Map<String, Object> getCurrentUserDetail(@LoginUser SysUser user) {
-        Map<String, Object> userInfo = new HashMap<>();
-        if (user != null) {
-            LoginAppUser loginAppUser = userService.findByUsername(user.getUsername());
-            userInfo.put("user", loginAppUser);
-            userInfo.put("permissions", loginAppUser.getPermissions());
-            userInfo.put("resp_code", "200");
-        }
-        return userInfo;
     }
 
     private void writerToken(HttpServletRequest request, HttpServletResponse response, AbstractAuthenticationToken token

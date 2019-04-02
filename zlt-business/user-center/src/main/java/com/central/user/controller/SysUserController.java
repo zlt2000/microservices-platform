@@ -19,7 +19,6 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
-import com.central.common.utils.SysUserUtil;
 import com.central.user.service.ISysUserService;
 
 import io.swagger.annotations.Api;
@@ -52,7 +51,7 @@ public class SysUserController {
     @ApiOperation(value = "根据access_token当前登录用户")
     @GetMapping("/users/current")
     public LoginAppUser getLoginAppUser(@LoginUser(isFull = true) SysUser user) {
-        return SysUserUtil.getLoginAppUser(user);
+        return appUserService.getLoginAppUser(user);
     }
 
     /**

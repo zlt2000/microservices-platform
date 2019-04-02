@@ -28,6 +28,13 @@ public interface ISysUserService extends ISuperService<SysUser> {
 	LoginAppUser findByMobile(String username);
 
 	/**
+	 * 通过SysUser 转换为 LoginAppUser，把roles和permissions也查询出来
+	 * @param sysUser
+	 * @return
+	 */
+	LoginAppUser getLoginAppUser(SysUser sysUser);
+
+	/**
 	 * 根据用户名查询用户
 	 * @param username
 	 * @return

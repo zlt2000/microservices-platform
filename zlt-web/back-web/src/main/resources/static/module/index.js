@@ -189,12 +189,13 @@ layui.define(['config', 'admin', 'layer', 'laytpl', 'element', 'form'], function
         getUser: function (success) {
             layer.load(2);
             // admin.req('userInfo.json', {}, function (data) {
-            admin.req('api-uaa/oauth/userinfo', {}, function (data) {
+            admin.req('api-user/users/current', {}, function (data) {
                 layer.closeAll('loading');
-                if (200 == data.resp_code) {
-                    config.putUser(data.user);
-                    admin.putTempData("permissions",data.permissions);
-                    success(data.user);
+                if (data) {
+                    var user = data;
+                    config.putUser(user);
+                    admin.putTempData("permissions",user.permissions);
+                    success(user);
                 } else {
                     layer.msg('获取用户失败', {icon: 2});
                     //add by owen 登录失败重定向到登录页

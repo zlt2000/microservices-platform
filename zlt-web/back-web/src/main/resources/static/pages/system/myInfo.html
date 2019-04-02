@@ -56,9 +56,8 @@
 
         form.render('radio');
 
-        admin.req('api-uaa/oauth/userinfo', {}, function (data) {
-            var user = data.user;
-            console.log(user);
+        admin.req('api-user/users/current', {}, function (data) {
+            var user = data;
             // 回显user数据
             $('#user-form').attr('method', 'PUT');
             if (user) {

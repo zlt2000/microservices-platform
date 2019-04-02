@@ -68,7 +68,8 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
         return getLoginAppUser(sysUser);
     }
 
-    private LoginAppUser getLoginAppUser(SysUser sysUser) {
+    @Override
+    public LoginAppUser getLoginAppUser(SysUser sysUser) {
         if (sysUser != null) {
             LoginAppUser loginAppUser = new LoginAppUser();
             BeanUtils.copyProperties(sysUser, loginAppUser);
