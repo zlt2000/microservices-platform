@@ -18,8 +18,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * 支持redis cluster模式
  *
- * @author zlt
- * @date 2018/7/27 11:33
+ * @author owen 624191343@qq.com
+ * @version 创建时间：2017年11月12日 上午22:57:51
  */
 @Slf4j
 public class RedisTemplateTokenStore implements TokenStore {

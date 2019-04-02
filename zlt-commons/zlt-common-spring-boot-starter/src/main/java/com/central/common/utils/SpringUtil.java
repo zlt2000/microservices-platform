@@ -7,7 +7,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * spring获取bean工具类
- * @author zlt
+ *
+ * @author 作者 owen E-mail: 624191343@qq.com
  */
 @Component
 public class SpringUtil implements ApplicationContextAware {
