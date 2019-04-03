@@ -106,7 +106,6 @@ central-platform -- 父项目，公共依赖
 │  ├─zlt-config -- 配置中心
 │  ├─zlt-doc -- 项目文档
 │  ├─zlt-gateway -- api网关一级工程
-│  │  ├─spring-cloud-gateway -- 开发中..
 │  │  ├─zuul-gateway -- netflix-zuul[9900]
 │  ├─zlt-job -- 分布式任务调度一级工程
 │  │  ├─job-admin -- 任务管理器[8081]

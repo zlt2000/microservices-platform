@@ -10,6 +10,5 @@
     <packaging>pom</packaging>
     <modules>
         <module>zuul-gateway</module>
-        <module>spring-cloud-gateway</module>
     </modules>
 </project>
