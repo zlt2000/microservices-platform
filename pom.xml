@@ -39,7 +39,7 @@
         <platform-bom>Cairo-SR3</platform-bom>
         <spring-cloud-alibaba-dependencies.version>0.2.1.RELEASE</spring-cloud-alibaba-dependencies.version>
         <spring-boot-dependencies.version>2.0.8.RELEASE</spring-boot-dependencies.version>
-        <spring-cloud-dependencies.version>Finchley.SR2</spring-cloud-dependencies.version>
+        <spring-cloud-dependencies.version>Finchley.SR3</spring-cloud-dependencies.version>
         <spring-boot-maven-plugin.version>2.1.1.RELEASE</spring-boot-maven-plugin.version>
         <docker-maven-plugin.version>1.2.0</docker-maven-plugin.version>
         <sonar.exclusions>zlt-job/**/*, zlt-register/**/*, zlt-web/**/*</sonar.exclusions>
