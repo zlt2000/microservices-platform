@@ -12,5 +12,7 @@
     <modules>
         <!-- txlcn分布式事务demo -->
         <module>txlcn-demo</module>
+        <!-- sharding-jdbc分库分表demo -->
+        <module>sharding-jdbc-demo</module>
     </modules>
 </project>

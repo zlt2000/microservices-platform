@@ -22,7 +22,7 @@
         <jjwt.version>0.9.1</jjwt.version>
         <druid-starter>1.1.10</druid-starter>
         <jasypt.version>1.14</jasypt.version>
-        <sharding-jdbc>2.0.3</sharding-jdbc>
+        <sharding-sphere.version>3.1.0</sharding-sphere.version>
         <security-oauth2.version>2.3.5.RELEASE</security-oauth2.version>
         <security-jwt.version>1.0.9.RELEASE</security-jwt.version>
         <redisson.version>3.9.1</redisson.version>
@@ -279,6 +279,11 @@
                 <groupId>com.codingapi.txlcn</groupId>
                 <artifactId>txlcn-txmsg-netty</artifactId>
                 <version>${txlcn.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.shardingsphere</groupId>
+                <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
+                <version>${sharding-sphere.version}</version>
             </dependency>
 
             <dependency>

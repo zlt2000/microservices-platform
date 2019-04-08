@@ -14,6 +14,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @MapperScan({"com.central.user.mapper*"})
 public class MybatisPlusConfig extends DefaultMybatisPlusConfig {
+    /**
+     * 逻辑删除注入器
+     */
     @Bean
     public ISqlInjector sqlInjector(){
         return new LogicSqlInjector();

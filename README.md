@@ -37,7 +37,7 @@
 
 ## 2. 项目总体架构图
 
-![](https://gitee.com/zlt2000/images/raw/master/springcloud微服务架构图.jpg)
+![](http://processon.com/chart_image/5c7f2ad6e4b02b2ce48d6835.png?_=1554621571250)
 
 &nbsp;
 
@@ -73,6 +73,7 @@
   * 应用吞吐量监控(qps、rt)
   * 服务降级、熔断监控
   * 服务限流监控
+  * 分库分表、读写分离
 * **业务基础功能支撑**
   * 高性能方法级幂等性支持
   * RBAC权限管理，实现细粒度控制(方法、url级别)
@@ -122,6 +123,7 @@ central-platform -- 父项目，公共依赖
 │  │  ├─txlcn-tm -- tx-lcn事务管理器[7970]
 │  ├─zlt-demo -- demo一级工程
 │  │  ├─txlcn-demo -- txlcn的demo
+│  │  ├─sharding-jdbc-demo -- sharding-jdbc的demo
 ```
 
 &nbsp;
