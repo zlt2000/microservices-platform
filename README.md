@@ -24,7 +24,6 @@
 * **[文档更新日志](https://www.kancloud.cn/zlt2000/microservices-platform/936236)**
 * Gitee地址：https://gitee.com/zlt2000/microservices-platform
 * Github地址：https://github.com/zlt2000/microservices-platform
-
 * 前后端分离的企业级微服务架构
 * 基于`Spring Boot 2.0.X`、`Spring Cloud Finchley`和`Spring Cloud Alibaba`
 * 深度定制`Spring Security`真正实现了基于`RBAC`、`jwt`和`oauth2`的无状态统一权限认证的解决方案
@@ -32,6 +31,8 @@
 * 引入组件化的思想实现高内聚低耦合，项目代码简洁注释丰富上手容易
 * 注重代码规范，严格控制包依赖，每个工程基本都是最小依赖
 * 非常适合学习和企业中使用
+
+> 重构于开源项目OCP&cp：https://gitee.com/owenwangwen/open-capacity-platform
 
 &nbsp;
 
