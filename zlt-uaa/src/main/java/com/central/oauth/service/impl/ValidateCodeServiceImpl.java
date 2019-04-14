@@ -62,7 +62,7 @@ public class ValidateCodeServiceImpl implements IValidateCodeService {
         }
 
         SysUser user = userService.findByMobile(mobile);
-        if (user != null) {
+        if (user == null) {
             log.error("根据用户手机号{}查询用户为空", mobile);
             return Result.failed("手机号不存在");
         }
