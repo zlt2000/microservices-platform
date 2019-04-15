@@ -127,7 +127,7 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
     @Override
     public SysUser selectByOpenId(String openId) {
         List<SysUser> users = baseMapper.selectList(
-                new QueryWrapper<SysUser>().eq("openId", openId)
+                new QueryWrapper<SysUser>().eq("open_id", openId)
         );
         return getUser(users);
     }
