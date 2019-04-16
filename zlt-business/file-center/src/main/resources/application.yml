@@ -22,7 +22,7 @@ zlt:
     #oss:
     #  access-key: tpi8mObnfzZi4ggBX8Bw7zydjoTQ0WeML3RkPKsX
     #  accessKeySecret: HZBXmSyUTy-haYp0KbBTtsil-GoKjVS2kDKT8Yow
-    # endpoint: http://pkqtmn0p1.bkt.clouddn.com
+    #  endpoint: http://pkqtmn0p1.bkt.clouddn.com
     #  bucketName: public-oss
     #  domain:
   swagger:
