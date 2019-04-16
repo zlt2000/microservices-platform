@@ -24,7 +24,8 @@ public class FileUtil {
 	public static FileInfo getFileInfo(MultipartFile file) throws Exception {
 		String md5 = fileMd5(file.getInputStream());
 		FileInfo fileInfo = new FileInfo();
-		fileInfo.setId(md5);// 将文件的md5设置为文件表的id
+		// 将文件的md5设置为文件表的id
+		fileInfo.setId(md5);
 		fileInfo.setName(file.getOriginalFilename());
 		fileInfo.setContentType(file.getContentType());
 		fileInfo.setIsImg(fileInfo.getContentType().startsWith("image/"));

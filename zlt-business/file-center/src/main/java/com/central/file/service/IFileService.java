@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.central.file.model.FileInfo;
 
 /**
- * 文件service 目前仅支持阿里云oss,七牛云
+ * 文件service
  *
  * @author 作者 owen E-mail: 624191343@qq.com
 */
@@ -17,4 +17,6 @@ public interface IFileService extends IService<FileInfo> {
 	FileInfo upload(MultipartFile file ) throws Exception;
 	
 	PageResult<FileInfo> findList(Map<String, Object> params);
+
+	void delete(String id);
 }
