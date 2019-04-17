@@ -1,7 +1,6 @@
 package com.central.oauth.controller;
 
 import com.central.common.constant.SecurityConstants;
-import com.central.common.feign.UserService;
 import com.central.common.model.Result;
 import com.central.common.utils.SpringUtil;
 import com.central.oauth.mobile.MobileAuthenticationToken;
@@ -57,9 +56,6 @@ public class OAuth2Controller {
 
     @Autowired
     private AuthenticationManager authenticationManager;
-
-    @Resource
-    private UserService userService;
 
     @ApiOperation(value = "用户名密码获取token")
     @PostMapping(SecurityConstants.PASSWORD_LOGIN_PRO_URL)
