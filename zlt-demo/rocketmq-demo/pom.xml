@@ -3,18 +3,18 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.zlt</groupId>
-        <artifactId>central-platform</artifactId>
+        <artifactId>zlt-demo</artifactId>
         <version>1.5.0</version>
     </parent>
-    <artifactId>zlt-demo</artifactId>
+    <artifactId>rocketmq-demo</artifactId>
     <packaging>pom</packaging>
 
     <modules>
-        <!-- txlcn分布式事务demo -->
-        <module>txlcn-demo</module>
-        <!-- sharding-jdbc分库分表demo -->
-        <module>sharding-jdbc-demo</module>
-        <!-- rocketmq消息队列demo -->
-        <module>rocketmq-demo</module>
+        <!-- rocketmq事务消息demo -->
+        <module>rocketmq-transactional</module>
+        <!-- rocketmq生产者demo -->
+        <module>rocketmq-produce</module>
+        <!-- rocketmq消费者demo -->
+        <module>rocketmq-consume</module>
     </modules>
 </project>

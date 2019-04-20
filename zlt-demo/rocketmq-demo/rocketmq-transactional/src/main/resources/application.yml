@@ -1,0 +1,52 @@
+server:
+  port: 11002
+
+spring:
+  application:
+    name: rocketmq-tx
+  cloud:
+    stream:
+      rocketmq:
+        binder:
+          # RocketMQ 服务器地址
+          name-server: 192.168.28.130:9876
+        bindings:
+          output:
+            producer:
+              group: order-tx-produce-group
+              #开启事务消息
+              transactional: true
+          input:
+            consumer:
+              #重试失败直接进入死信队列
+              delayLevelWhenNextConsume: -1
+      bindings:
+        # 生产者
+        output:
+          destination: TransactionTopic
+          content-type: application/json
+        # 消费者
+        input:
+          destination: TransactionTopic
+          content-type: application/json
+          group: order-tx-consume-group
+          consumer:
+            #多线程
+            concurrency: 20
+            #重试1次
+            maxAttempts: 2
+        inputDlq:
+          destination: '%DLQ%${spring.cloud.stream.bindings.input.group}'
+          content-type: application/json
+          group: order-dlq-group
+          consumer:
+            concurrency: 20
+
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          stream:
+            binder:
+              rocketmq: DEBUG
