@@ -9,6 +9,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * @author zlt
+ * @date 2019/5/1
  */
 @EnableLoginArgResolver
 @EnableDiscoveryClient
