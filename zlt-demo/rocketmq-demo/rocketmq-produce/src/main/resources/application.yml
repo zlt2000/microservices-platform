@@ -1,0 +1,32 @@
+server:
+  port: 11004
+
+spring:
+  application:
+    name: rocketmq-produce
+  cloud:
+    stream:
+      rocketmq:
+        binder:
+          # RocketMQ 服务地址
+          name-server: 192.168.28.130:9876
+        bindings:
+          output:
+            producer:
+              group: produce-group
+          output2:
+            producer:
+              group: test-group2
+      bindings:
+        output:
+          destination: test-topic
+          content-type: application/json
+
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          stream:
+            binder:
+              rocketmq: DEBUG

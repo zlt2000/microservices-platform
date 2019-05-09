@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.zlt</groupId>
         <artifactId>central-platform</artifactId>
-        <version>1.4.0</version>
+        <version>1.6.0</version>
     </parent>
     <artifactId>zlt-demo</artifactId>
     <packaging>pom</packaging>
@@ -12,5 +12,9 @@
     <modules>
         <!-- txlcn分布式事务demo -->
         <module>txlcn-demo</module>
+        <!-- sharding-jdbc分库分表demo -->
+        <module>sharding-jdbc-demo</module>
+        <!-- rocketmq消息队列demo -->
+        <module>rocketmq-demo</module>
     </modules>
 </project>

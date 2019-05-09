@@ -1,0 +1,21 @@
+server:
+  port: 11001
+
+spring:
+  profiles:
+    active: sharding-databases
+  application:
+    name: sharding-jdbc-demo
+
+zlt:
+  datasource:
+    ip: 192.168.28.131
+    username: root
+    password: 1q2w3e4r
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  typeAliasesPackage: com.sharding.demo.model
+  global-config:
+    db-config:
+      id-type: ID_WORKER

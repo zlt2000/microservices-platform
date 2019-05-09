@@ -4,7 +4,6 @@ import java.util.Map;
 
 import com.central.common.model.Result;
 import com.central.file.service.IFileService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,21 +13,19 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.central.common.model.PageResult;
-import com.central.file.config.OssServiceFactory;
 import com.central.file.model.FileInfo;
-import com.central.file.model.FileType;
+
+import javax.annotation.Resource;
 
 /**
- * 文件上传 同步oss db双写 目前仅实现了阿里云,七牛云
- * 参考src/main/view/upload.html
+ * 文件上传
  *
  * @author 作者 owen E-mail: 624191343@qq.com
  */
 @RestController
 public class FileController {
-
-    @Autowired
-    private OssServiceFactory fileServiceFactory;
+    @Resource
+    private IFileService fileService;
 
     /**
      * 文件上传
@@ -40,8 +37,6 @@ public class FileController {
      */
     @PostMapping("/files-anon")
     public FileInfo upload(@RequestParam("file") MultipartFile file) throws Exception {
-        String fileType = FileType.QINIU.toString();
-        IFileService fileService = fileServiceFactory.getFileService(fileType);
         return fileService.upload(file);
     }
 
@@ -53,11 +48,7 @@ public class FileController {
     @DeleteMapping("/files/{id}")
     public Result delete(@PathVariable String id) {
         try {
-            FileInfo fileInfo = fileServiceFactory.getFileService(FileType.QINIU.toString()).getById(id);
-            if (fileInfo != null) {
-                IFileService fileService = fileServiceFactory.getFileService(fileInfo.getSource());
-                fileService.removeById(fileInfo);
-            }
+            fileService.delete(id);
             return Result.succeed("操作成功");
         } catch (Exception ex) {
             return Result.failed("操作失败");
@@ -72,6 +63,6 @@ public class FileController {
      */
     @GetMapping("/files")
     public PageResult<FileInfo> findFiles(@RequestParam Map<String, Object> params) {
-        return fileServiceFactory.getFileService(FileType.QINIU.toString()).findList(params);
+        return fileService.findList(params);
     }
 }

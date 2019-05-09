@@ -1,0 +1,39 @@
+server:
+  port: 11003
+
+spring:
+  application:
+    name: rocketmq-produce
+  cloud:
+    stream:
+      rocketmq:
+        binder:
+          # RocketMQ 服务器地址
+          name-server: 192.168.28.130:9876
+        bindings:
+          input2:
+            consumer:
+              #增加tag过滤
+              tags: tagObj
+      bindings:
+        input:
+          destination: test-topic
+          content-type: text/plain
+          group: consume-group1
+          consumer:
+            #并发消费线程数
+            concurrency: 20
+        input2:
+          destination: test-topic
+          content-type: application/json
+          group: consume-group2
+          consumer:
+            #并发消费线程数
+            concurrency: 20
+        input3:
+          destination: test-topic
+          content-type: text/plain
+          group: consume-group3
+          consumer:
+            #并发消费线程数
+            concurrency: 20

@@ -24,7 +24,6 @@
 * **[文档更新日志](https://www.kancloud.cn/zlt2000/microservices-platform/936236)**
 * Gitee地址：https://gitee.com/zlt2000/microservices-platform
 * Github地址：https://github.com/zlt2000/microservices-platform
-
 * 前后端分离的企业级微服务架构
 * 基于`Spring Boot 2.0.X`、`Spring Cloud Finchley`和`Spring Cloud Alibaba`
 * 深度定制`Spring Security`真正实现了基于`RBAC`、`jwt`和`oauth2`的无状态统一权限认证的解决方案
@@ -33,11 +32,13 @@
 * 注重代码规范，严格控制包依赖，每个工程基本都是最小依赖
 * 非常适合学习和企业中使用
 
+> 重构于开源项目OCP&cp：https://gitee.com/owenwangwen/open-capacity-platform
+
 &nbsp;
 
 ## 2. 项目总体架构图
 
-![](https://gitee.com/zlt2000/images/raw/master/springcloud微服务架构图.jpg)
+![](http://processon.com/chart_image/5c7f2ad6e4b02b2ce48d6835.png?_=1554621571250)
 
 &nbsp;
 
@@ -49,30 +50,32 @@
   * 支持手机号加密码登录
   * 支持openId登录
   * 支持第三方系统单点登录
-
 * **分布式系统基础支撑**
-  * 服务注册发现、路由与负载均衡
-  * 服务降级与熔断
-  * 服务限流(url/方法级别)
-  * 统一配置中心
-  * 统一日志中心
-  * 统一分布式缓存操作类、cacheManager配置扩展
-  * 分布式锁
-  * 分布式任务调度器
-  * 支持CI/CD持续集成(包括前端和后端)
-  * 分布式高性能Id生成器
-  * 分布式事务
+  - 服务注册发现、路由与负载均衡
+  - 服务降级与熔断
+  - 服务限流(url/方法级别)
+  - 统一配置中心
+  - 统一日志中心
+  - 统一分布式缓存操作类、cacheManager配置扩展
+  - 分布式锁
+  - 分布式任务调度器
+  - 支持CI/CD持续集成(包括前端和后端)
+  - 分布式Id生成器
+  - 分布式事务(强一致性/最终一致性)
 * **系统监控功能**
-  * 服务调用链监控
-  * 应用拓扑图
-  * 慢服务检测
-  * 服务Metric监控
-  * 应用监控(应用健康、JVM、内存、线程)
-  * 错误日志查询
-  * 慢查询SQL监控
-  * 应用吞吐量监控(qps、rt)
-  * 服务降级、熔断监控
-  * 服务限流监控
+  - 服务调用链监控
+  - 应用拓扑图
+  - 慢查询SQL监控
+  - 应用吞吐量监控(qps、rt)
+  - 服务降级、熔断监控
+  - 服务限流监控
+  - 微服务服务监控
+  - 服务器监控
+  - redis监控
+  - mysql监控
+  - elasticSearch监控
+  - nacos监控
+  - prometheus监控
 * **业务基础功能支撑**
   * 高性能方法级幂等性支持
   * RBAC权限管理，实现细粒度控制(方法、url级别)
@@ -121,7 +124,9 @@ central-platform -- 父项目，公共依赖
 │  ├─zlt-transaction -- 事务一级工程
 │  │  ├─txlcn-tm -- tx-lcn事务管理器[7970]
 │  ├─zlt-demo -- demo一级工程
-│  │  ├─txlcn-demo -- txlcn的demo
+│  │  ├─txlcn-demo -- txlcn分布式事务demo
+│  │  ├─sharding-jdbc-demo -- sharding-jdbc分库分表demo
+│  │  ├─rocketmq-demo -- rocketmq和mq事务demo
 ```
 
 &nbsp;

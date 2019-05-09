@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.zlt</groupId>
     <artifactId>central-platform</artifactId>
-    <version>1.4.0</version>
+    <version>1.6.0</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -22,23 +22,24 @@
         <jjwt.version>0.9.1</jjwt.version>
         <druid-starter>1.1.10</druid-starter>
         <jasypt.version>1.14</jasypt.version>
-        <sharding-jdbc>2.0.3</sharding-jdbc>
+        <sharding-sphere.version>3.1.0</sharding-sphere.version>
         <security-oauth2.version>2.3.5.RELEASE</security-oauth2.version>
         <security-jwt.version>1.0.9.RELEASE</security-jwt.version>
         <redisson.version>3.9.1</redisson.version>
         <kaptcha.version>0.0.9</kaptcha.version>
         <hutool.version>4.3.1</hutool.version>
         <mybatis-plus-boot-starter.version>3.0.6</mybatis-plus-boot-starter.version>
-        <aliyun-sdk-oss>3.4.0</aliyun-sdk-oss>
-        <qiniu-java-sdk>7.2.17</qiniu-java-sdk>
+        <aliyun-sdk-oss>3.4.2</aliyun-sdk-oss>
+        <qiniu-java-sdk>7.2.18</qiniu-java-sdk>
         <easypoi.version>4.0.0</easypoi.version>
         <spring-boot-admin.version>2.0.4</spring-boot-admin.version>
         <velocity.version>1.7</velocity.version>
         <commons-configuration.version>1.10</commons-configuration.version>
         <txlcn.version>5.0.2.RELEASE</txlcn.version>
+        <fastdfs-client.version>1.26.5</fastdfs-client.version>
         <platform-bom>Cairo-SR3</platform-bom>
-        <spring-cloud-alibaba-dependencies.version>0.2.1.RELEASE</spring-cloud-alibaba-dependencies.version>
-        <spring-boot-dependencies.version>2.0.8.RELEASE</spring-boot-dependencies.version>
+        <spring-cloud-alibaba-dependencies.version>0.2.2.RELEASE</spring-cloud-alibaba-dependencies.version>
+        <spring-boot-dependencies.version>2.0.9.RELEASE</spring-boot-dependencies.version>
         <spring-cloud-dependencies.version>Finchley.SR3</spring-cloud-dependencies.version>
         <spring-boot-maven-plugin.version>2.1.1.RELEASE</spring-boot-maven-plugin.version>
         <docker-maven-plugin.version>1.2.0</docker-maven-plugin.version>
@@ -279,6 +280,16 @@
                 <groupId>com.codingapi.txlcn</groupId>
                 <artifactId>txlcn-txmsg-netty</artifactId>
                 <version>${txlcn.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.shardingsphere</groupId>
+                <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
+                <version>${sharding-sphere.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.tobato</groupId>
+                <artifactId>fastdfs-client</artifactId>
+                <version>${fastdfs-client.version}</version>
             </dependency>
 
             <dependency>
