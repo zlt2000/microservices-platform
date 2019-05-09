@@ -283,7 +283,7 @@ menus: [{
     subMenus: [{
         name: '用户管理',
         url: '#!user',  // 这里url不能带斜杠
-        path: 'system/user.html',
+        path: user_search.html,
         auth: 'post:/user/query'
     }, {
         name: '角色管理',

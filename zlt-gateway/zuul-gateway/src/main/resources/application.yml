@@ -108,6 +108,11 @@ zuul:
       path: /api-generator/**
       service-id: code-generator
       strip-prefix: true
+    search:
+      path: /api-search/**
+      service-id: search-center
+      strip-prefix: true
+      custom-sensitive-headers: true
   ssl-hostname-validation-enabled: false
 
 hystrix:

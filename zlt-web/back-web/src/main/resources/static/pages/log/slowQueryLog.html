@@ -9,12 +9,12 @@
     <div class="layui-card-body">
         <div class="layui-form toolbar">
             搜索：
-            <select id="user-search-key">
-                <option value="">-请选择-</option>
+            <select id="slowQueryLog-search-key">
+                <option value="_all">全文搜索</option>
                 <option value="query_str">查询语句</option>
             </select>&emsp;
-            <input id="user-search-value" class="layui-input search-input" type="text" placeholder="输入关键字"/>&emsp;
-            <button id="user-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+            <input id="slowQueryLog-search-value" class="layui-input search-input" style="width: 300px" type="text" placeholder="输入关键字"/>&emsp;
+            <button id="slowQueryLog-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
         </div>
 
         <table class="layui-table" id="slowQueryLog-table" lay-filter="slowQueryLog-table"></table>
@@ -22,14 +22,14 @@
 </div>
 <script>
     layui.use(['form', 'table', 'util', 'config', 'admin'], function () {
-        var table = layui.table;
-        var config = layui.config;
-        var util = layui.util;
+        let table = layui.table;
+        let config = layui.config;
+        let util = layui.util;
 
         // 渲染表格
         table.render({
             elem: '#slowQueryLog-table',
-            url: config.base_server + 'api-log/slowQueryLog?data='+new Date(),
+            url: config.base_server + 'api-log/slowQueryLog',
             method: 'GET',
             where: {
                 access_token: config.getToken().access_token
@@ -51,10 +51,13 @@
         });
 
         // 搜索按钮点击事件
-        $('#user-btn-search').click(function () {
-            var key = $('#user-search-key').val();
-            var value = $('#user-search-value').val();
-            table.reload('slowQueryLog-table', {where: {searchKey: key, searchValue: value}});
+        $('#slowQueryLog-btn-search').click(function () {
+            let key = $('#slowQueryLog-search-key').val();
+            let value = $('#slowQueryLog-search-value').val();
+            if (key != '_all' && value) {
+                value = key + ':' + value;
+            }
+            table.reload('slowQueryLog-table', {where: {queryStr: value}});
         });
     });
 </script>

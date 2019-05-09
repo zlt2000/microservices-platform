@@ -1,0 +1,15 @@
+spring:
+  data:
+    elasticsearch:
+      cluster-name: ${zlt.elasticsearch.cluster-name}
+      cluster-nodes: ${zlt.elasticsearch.cluster-nodes}
+
+zlt:
+  indices:
+    show: sys-log-*, mysql-slowlog-*, sys_user, point-log-*
+  swagger:
+    enabled: true
+    title: 搜索中心
+    description: 搜索中心接口文档
+    version: 1.0
+    base-package: com.central.search.controller

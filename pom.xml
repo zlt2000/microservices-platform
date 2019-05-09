@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.zlt</groupId>
     <artifactId>central-platform</artifactId>
-    <version>1.6.0</version>
+    <version>2.0.0</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -28,7 +28,7 @@
         <redisson.version>3.9.1</redisson.version>
         <kaptcha.version>0.0.9</kaptcha.version>
         <hutool.version>4.3.1</hutool.version>
-        <mybatis-plus-boot-starter.version>3.0.6</mybatis-plus-boot-starter.version>
+        <mybatis-plus-boot-starter.version>3.1.1</mybatis-plus-boot-starter.version>
         <aliyun-sdk-oss>3.4.2</aliyun-sdk-oss>
         <qiniu-java-sdk>7.2.18</qiniu-java-sdk>
         <easypoi.version>4.0.0</easypoi.version>
@@ -37,6 +37,7 @@
         <commons-configuration.version>1.10</commons-configuration.version>
         <txlcn.version>5.0.2.RELEASE</txlcn.version>
         <fastdfs-client.version>1.26.5</fastdfs-client.version>
+        <userAgent.version>1.21</userAgent.version>
         <platform-bom>Cairo-SR3</platform-bom>
         <spring-cloud-alibaba-dependencies.version>0.2.2.RELEASE</spring-cloud-alibaba-dependencies.version>
         <spring-boot-dependencies.version>2.0.9.RELEASE</spring-boot-dependencies.version>
@@ -291,6 +292,16 @@
                 <artifactId>fastdfs-client</artifactId>
                 <version>${fastdfs-client.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.zlt</groupId>
+                <artifactId>search-client</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>eu.bitwalker</groupId>
+                <artifactId>UserAgentUtils</artifactId>
+                <version>${userAgent.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -385,4 +396,18 @@
         <!-- demo -->
         <module>zlt-demo</module>
     </modules>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>LeTao Zhu</name>
+            <email>zltdiablo@163.com</email>
+        </developer>
+    </developers>
 </project>

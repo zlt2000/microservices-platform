@@ -1,0 +1,60 @@
+<!-- index弹窗 -->
+<form id="index-form" lay-filter="index-form" class="layui-form model-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label">索引名</label>
+        <div class="layui-input-block">
+            <input type="text" name="indexName" required  lay-verify="required" placeholder="请输入索引名" maxlength="20" class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">分片数</label>
+        <div class="layui-input-block">
+            <input type="text" name="numberOfShards" placeholder="请输入分片数" maxlength="20" class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">副本数</label>
+        <div class="layui-input-block">
+            <input type="text" name="numberOfReplicas" placeholder="请输入副本数" maxlength="20" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">类型</label>
+        <div class="layui-input-block">
+            <input type="text" name="type" placeholder="请输入类型" maxlength="20" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">mappings</label>
+        <div class="layui-input-block">
+            <textarea name="mappingsSource" placeholder="请输入mappings的JSON内容" class="layui-textarea" style="height: 200px"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item model-form-footer">
+        <button class="layui-btn layui-btn-primary" ew-event="closeDialog" type="button">取消</button>
+        <button class="layui-btn" lay-filter="index-form-submit" lay-submit>保存</button>
+    </div>
+</form>
+
+<script>
+    layui.use(['layer', 'admin', 'form'], function () {
+        let layer = layui.layer;
+        let admin = layui.admin;
+        let form = layui.form;
+
+        // 表单提交事件
+        form.on('submit(index-form-submit)', function (data) {
+            layer.load(2);
+            admin.req('api-search/admin/index', JSON.stringify(data.field), function (data) {
+                layer.closeAll('loading');
+                if (data.resp_code == 0) {
+                    layer.msg(data.resp_msg, {icon: 1, time: 500});
+                    admin.finishPopupCenter();
+                } else {
+                    layer.msg(data.resp_msg, {icon: 2, time: 500});
+                }
+            }, "POST");
+            return false;
+        });
+    });
+</script>

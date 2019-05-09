@@ -7,10 +7,14 @@ import java.util.Map;
 import java.util.Set;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.central.common.annotation.LoginUser;
 import com.central.common.constant.CommonConstant;
 import com.central.common.model.*;
 import com.central.common.utils.ExcelUtil;
+import com.central.search.client.service.IQueryService;
+import com.central.search.model.LogicDelDto;
+import com.central.search.model.SearchDto;
 import com.central.user.model.SysUserExcel;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +44,16 @@ import javax.servlet.http.HttpServletResponse;
 public class SysUserController {
     private static final String ADMIN_CHANGE_MSG = "超级管理员不给予修改";
 
+    /**
+     * 全文搜索逻辑删除Dto
+     */
+    private static final LogicDelDto SEARCH_LOGIC_DEL_DTO = new LogicDelDto("isDel", "否");
+
     @Autowired
     private ISysUserService appUserService;
+
+    @Autowired
+    private IQueryService queryService;
 
     /**
      * 当前登录用户 LoginAppUser
@@ -253,6 +265,19 @@ public class SysUserController {
             }
         }
         return Result.succeed("导入数据成功，一共【"+rowNum+"】行");
+    }
+
+    @ApiOperation(value = "用户全文搜索列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "分页起始位置", required = true, dataType = "Integer"),
+            @ApiImplicitParam(name = "limit", value = "分页结束位置", required = true, dataType = "Integer"),
+            @ApiImplicitParam(name = "queryStr", value = "搜索关键字", dataType = "String")
+    })
+    @GetMapping("/users/search")
+    public PageResult<JSONObject> search(SearchDto searchDto) {
+        searchDto.setIsHighlighter(true);
+        searchDto.setSortCol("createTime");
+        return queryService.strQuery("sys_user", searchDto, SEARCH_LOGIC_DEL_DTO);
     }
 
     /**

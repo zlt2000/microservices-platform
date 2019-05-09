@@ -56,6 +56,7 @@
   - 服务限流(url/方法级别)
   - 统一配置中心
   - 统一日志中心
+  - 统一搜索中心
   - 统一分布式缓存操作类、cacheManager配置扩展
   - 分布式锁
   - 分布式任务调度器
@@ -134,6 +135,10 @@ central-platform -- 父项目，公共依赖
 ## 5. 截图（点击可大图预览）
 
 <table>
+    <tr>
+        <td><img src="https://gitee.com/zlt2000/images/raw/master/首页.png"/></td>
+        <td><img src="https://gitee.com/zlt2000/images/raw/master/用户搜索.png"/></td>
+    </tr>
 	<tr>
         <td><img src="https://gitee.com/zlt2000/images/raw/master/server_metrics.png"/></td>
         <td><img src="https://gitee.com/zlt2000/images/raw/master/application_metrics.png"/></td>

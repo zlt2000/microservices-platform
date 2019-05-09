@@ -1,0 +1,116 @@
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2 class="header-title">索引管理</h2>
+        <span class="layui-breadcrumb pull-right">
+          <a href="#!console">首页</a>
+          <a><cite>索引管理</cite></a>
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-form toolbar">
+            索引名：
+            <input id="index-search-value" class="layui-input search-input" style="width: 300px" type="text" placeholder="输入关键字，模糊搜索需要加通配符*"/>&emsp;
+            <button id="index-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+            <button id="index-btn-add" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+        </div>
+        <table class="layui-table" id="index-table" lay-filter="index-table"></table>
+    </div>
+</div>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="index-table-bar">
+    <a class="layui-btn layui-btn-xs" lay-event="view">查看</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script>
+    layui.use(['table', 'config', 'admin'], function () {
+        let table = layui.table;
+        let config = layui.config;
+        var admin = layui.admin;
+
+        // 渲染表格
+        table.render({
+            elem: '#index-table',
+            url: config.base_server + 'api-search/admin/indices',
+            method: 'GET',
+            where: {
+                access_token: config.getToken().access_token
+            },
+            page: false,
+            cols: [[
+                {type: 'numbers'},
+                {field: 'indexName', sort: true, title: '索引名'},
+                {field: 'docsCount', sort: true, title: '文档数'},
+                {field: 'docsDeleted', sort: true, title: '文档删除数'},
+                {
+                    sort: true, templet: function (d) {
+                        if (d.storeSizeInBytes) {
+                            return parseFloat(d.storeSizeInBytes).toFixed(2);
+                        }
+                        return 0;
+                    }, title: '索引大小(kb)'
+                },
+                {field: 'queryCount', sort: true, title: '总查询数'},
+                {field: 'queryTimeInMillis', sort: true, title: '总查询耗时(s)'},
+                {fixed: 'right', align: 'center', toolbar: '#index-table-bar', title: '操作', width: 120}
+            ]]
+        });
+
+        // 搜索按钮点击事件
+        $('#index-btn-search').click(function () {
+            let value = $('#index-search-value').val();
+            table.reload('index-table', {where: {queryStr: value}});
+        });
+
+        // 添加按钮点击事件
+        $('#index-btn-add').click(function () {
+            showEditModel();
+        });
+
+        //显示索引编辑弹窗
+        var showEditModel = function () {
+            admin.popupCenter({
+                title: '新增索引',
+                path: 'pages/search/index_manager_form.html',
+                finish: function () {
+                    table.reload('index-table', {});
+                }
+            });
+        };
+
+        // 工具条点击事件
+        table.on('tool(index-table)', function (obj) {
+            if (obj.event === 'view') {
+                showViewModel(obj.data);
+            } else if (obj.event === 'del') { //删除
+                doDelete(obj);
+            }
+        });
+
+        //显示索引查看弹窗
+        let showViewModel = function (data) {
+            admin.putTempData('indexName', data.indexName);
+            admin.popupCenter({
+                title: '查看索引',
+                path: 'pages/search/index_manager_view.html'
+            });
+        };
+
+        // 删除
+        let doDelete = function (obj) {
+            layer.confirm('确定要删除吗？', function (i) {
+                layer.close(i);
+                layer.load(2);
+                admin.req('api-search/admin/index/' + obj.data.indexName, {}, function (data) {
+                    layer.closeAll('loading');
+                    if (data.resp_code == 0) {
+                        layer.msg(data.resp_msg, {icon: 1, time: 500});
+                        obj.del();
+                    } else {
+                        layer.msg(data.resp_msg, {icon: 2, time: 500});
+                    }
+                }, 'DELETE');
+            });
+        };
+    });
+</script>

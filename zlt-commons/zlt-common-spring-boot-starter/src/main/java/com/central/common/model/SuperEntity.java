@@ -12,11 +12,12 @@ import java.util.Date;
 
 /**
  * 实体父类
+ *
  * @author zlt
  */
 @Setter
 @Getter
-public class SuperEntity<T extends Model> extends Model<T> {
+public class SuperEntity<T extends Model<?>> extends Model<T> {
     /**
      * 主键ID
      */

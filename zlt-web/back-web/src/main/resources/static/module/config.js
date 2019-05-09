@@ -51,7 +51,7 @@ layui.define(function (exports) {
         //     subMenus: [{
         //         name: '用户管理',
         //         url: '#!user',  // 这里url不能带斜杠，因为是用递归循环进行关键字注册，带斜杠会被q.js理解为其他注册模式
-        //         path: 'system/user.html',
+        //         path: 'system/user_search.html',
         //         auth: 'back:user:query'
         //     }, {
         //         name: '角色管理',

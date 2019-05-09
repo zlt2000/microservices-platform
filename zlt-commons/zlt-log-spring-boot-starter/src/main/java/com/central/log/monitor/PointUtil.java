@@ -27,4 +27,8 @@ public class PointUtil {
     public static void info(String id, String type, String message) {
         log.info(id + SPLIT + type + SPLIT + message);
     }
+
+    public static void debug(String id, String type, String message) {
+        log.debug(id + SPLIT + type + SPLIT + message);
+    }
 }

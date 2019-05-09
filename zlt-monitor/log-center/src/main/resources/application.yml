@@ -1,11 +1,3 @@
-spring:
-  data:
-    elasticsearch:
-      cluster-name: ${zlt.elasticsearch.cluster-name}
-      cluster-nodes: ${zlt.elasticsearch.cluster-nodes}
-      repositories:
-        enabled: true
-
 zlt:
   swagger:
     enabled: true

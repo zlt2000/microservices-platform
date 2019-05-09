@@ -52,7 +52,7 @@
     <appender name="point_log" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_POINT_FILE}/point.log</file>
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss}|${APP_NAME}|%msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}|${APP_NAME}|%msg%n</pattern>
             <charset>UTF-8</charset>
         </encoder>
         <!-- 基于时间的分包策略 -->
@@ -73,7 +73,7 @@
         <discardingThreshold>0</discardingThreshold>
         <appender-ref ref="point_log"/>
     </appender>
-    <logger name="com.central.log.monitor" level="info" addtivity="false">
+    <logger name="com.central.log.monitor" level="debug" addtivity="false">
         <appender-ref ref="point_log_async" />
     </logger>
 

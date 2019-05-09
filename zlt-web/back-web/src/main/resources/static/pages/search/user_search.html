@@ -1,0 +1,69 @@
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2 class="header-title">用户搜索</h2>
+        <span class="layui-breadcrumb pull-right">
+          <a href="#!console">首页</a>
+          <a><cite>用户搜索</cite></a>
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-form toolbar">
+            搜索：
+            <select id="userSearch-search-key">
+                <option value="_all">全文搜索</option>
+                <option value="_id">ID</option>
+                <option value="username">账号</option>
+                <option value="nickname">用户名</option>
+                <option value="mobile">手机号</option>
+                <option value="sex">性别</option>
+                <option value="type">用户类别</option>
+            </select>&emsp;
+            <input id="userSearch-search-value" class="layui-input search-input" style="width: 300px" type="text" placeholder="输入关键字"/>&emsp;
+            <button id="userSearch-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+        </div>
+        <table class="layui-table" id="userSearch-table" lay-filter="userSearch-table"></table>
+    </div>
+</div>
+
+<script>
+    layui.use(['table', 'util', 'config'], function () {
+        let table = layui.table;
+        let config = layui.config;
+        let util = layui.util;
+
+        // 渲染表格
+        table.render({
+            elem: '#userSearch-table',
+            url: config.base_server + 'api-user/users/search',
+            method: 'GET',
+            where: {
+                access_token: config.getToken().access_token
+            },
+            page: true,
+            cols: [[
+                {type: 'numbers'},
+                {field: 'id', sort: true, title: '用户编号'},
+                {field: 'username', sort: true, title: '账号'},
+                {field: 'nickname', sort: true, title: '用户名'},
+                {field: 'mobile', sort: true, title: '手机号'},
+                {field: 'sex', sort: true, title: '性别'},
+                {field: 'type', sort: true, title: '用户类别'},
+                {
+                    sort: true, templet: function (d) {
+                        return util.toDateString(d.createTime);
+                    }, title: '创建时间'
+                }
+            ]]
+        });
+
+        // 搜索按钮点击事件
+        $('#userSearch-btn-search').click(function () {
+            let key = $('#userSearch-search-key').val();
+            let value = $('#userSearch-search-value').val();
+            if (key != '_all' && value) {
+                value = key + ':' + value;
+            }
+            table.reload('userSearch-table', {where: {queryStr: value}});
+        });
+    });
+</script>

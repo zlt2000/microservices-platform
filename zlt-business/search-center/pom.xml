@@ -1,0 +1,19 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.zlt</groupId>
+        <artifactId>zlt-business</artifactId>
+        <version>2.0.0</version>
+    </parent>
+    <artifactId>search-center</artifactId>
+    <description>搜索中心</description>
+    <packaging>pom</packaging>
+    
+    <modules>
+        <!-- 客户端sdk -->
+        <module>search-client</module>
+        <!-- 服务端 -->
+        <module>search-server</module>
+    </modules>
+</project>

@@ -9,15 +9,15 @@
     <div class="layui-card-body">
         <div class="layui-form toolbar">
             搜索：
-            <select id="user-search-key">
-                <option value="">-请选择-</option>
+            <select id="sysLog-search-key">
+                <option value="_all">全文搜索</option>
                 <option value="message">日志信息</option>
                 <option value="logLevel">日志级别</option>
                 <option value="appName">应用名</option>
                 <option value="classname">类名</option>
             </select>&emsp;
-            <input id="user-search-value" class="layui-input search-input" type="text" placeholder="输入关键字"/>&emsp;
-            <button id="user-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+            <input id="sysLog-search-value" class="layui-input search-input" style="width: 300px" type="text" placeholder="输入关键字"/>&emsp;
+            <button id="sysLog-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
         </div>
 
         <table class="layui-table" id="sysLog-table" lay-filter="sysLog-table"></table>
@@ -26,14 +26,14 @@
 
 <script>
     layui.use(['form', 'table', 'util', 'config', 'admin', 'upload'], function () {
-        var table = layui.table;
-        var config = layui.config;
-        var util = layui.util;
+        let table = layui.table;
+        let config = layui.config;
+        let util = layui.util;
 
         // 渲染表格
         table.render({
             elem: '#sysLog-table',
-            url: config.base_server + 'api-log/sysLog?data='+new Date(),
+            url: config.base_server + 'api-log/sysLog?data',
             method: 'GET',
             where: {
                 access_token: config.getToken().access_token
@@ -57,10 +57,13 @@
         });
 
         // 搜索按钮点击事件
-        $('#user-btn-search').click(function () {
-            var key = $('#user-search-key').val();
-            var value = $('#user-search-value').val();
-            table.reload('sysLog-table', {where: {searchKey: key, searchValue: value}});
+        $('#sysLog-btn-search').click(function () {
+            let key = $('#sysLog-search-key').val();
+            let value = $('#sysLog-search-value').val();
+            if (key != '_all' && value) {
+                value = key + ':' + value;
+            }
+            table.reload('sysLog-table', {where: {queryStr: value}});
         });
     });
 </script>

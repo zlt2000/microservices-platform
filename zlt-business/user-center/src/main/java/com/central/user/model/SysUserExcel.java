@@ -1,6 +1,7 @@
 package com.central.user.model;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
+import com.central.common.constant.CommonConstant;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -26,9 +27,9 @@ public class SysUserExcel implements Serializable {
     @Excel(name = "学生性别", replace = { "男_0", "女_1" }, suffix = "生", isImportField = "true_st")
     private Integer sex;
 
-    @Excel(name = "创建时间", format = "yyyy-MM-dd HH:mm:ss", isImportField = "true_st", width = 20)
+    @Excel(name = "创建时间", format = CommonConstant.DATETIME_FORMAT, isImportField = "true_st", width = 20)
     private Date createTime;
 
-    @Excel(name = "修改时间", format = "yyyy-MM-dd HH:mm:ss", isImportField = "true_st", width = 20)
+    @Excel(name = "修改时间", format = CommonConstant.DATETIME_FORMAT, isImportField = "true_st", width = 20)
     private Date updateTime;
 }
