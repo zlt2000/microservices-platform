@@ -98,6 +98,9 @@ central-platform -- 父项目，公共依赖
 │  │  ├─user-center -- 用户中心[7000]
 │  │  ├─file-center -- 文件中心[5000]
 │  │  ├─code-generator -- 代码生成器[7300]
+│  │  ├─search-center -- 搜索中心
+│  │  │  ├─search-client -- 搜索中心客户端
+│  │  │  ├─search-server -- 搜索中心服务端[7100]
 │  │─zlt-commons -- 通用工具一级工程
 │  │  ├─zlt-auth-client-spring-boot-starter -- 封装spring security client端的通用操作逻辑
 │  │  ├─zlt-common-spring-boot-starter -- 封装通用操作逻辑
