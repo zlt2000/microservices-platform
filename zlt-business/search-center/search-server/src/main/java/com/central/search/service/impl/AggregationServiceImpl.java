@@ -128,6 +128,26 @@ public class AggregationServiceImpl implements IAggregationService {
                                 .dateRange("currWeek")
                                 .field("timestamp")
                                 .addRange(currDt.minusDays(7), currDt)
+                                .subAggregation(
+                                        //聚合并且按日期分组查询7天内的数据
+                                        AggregationBuilders
+                                                .dateHistogram("statWeek")
+                                                .field("timestamp")
+                                                .dateHistogramInterval(DateHistogramInterval.DAY)
+                                                .format(CommonConstant.DATE_FORMAT)
+                                                //时区相差8小时
+                                                .timeZone(DateTimeZone.forOffsetHours(8))
+                                                .minDocCount(0L)
+                                                .extendedBounds(new ExtendedBounds(
+                                                        localDate.minusDays(6).format(DateTimeFormatter.ofPattern(CommonConstant.DATE_FORMAT)),
+                                                        localDate.format(DateTimeFormatter.ofPattern(CommonConstant.DATE_FORMAT))
+                                                ))
+                                                .subAggregation(
+                                                        AggregationBuilders
+                                                                .cardinality("uv")
+                                                                .field("ip.keyword")
+                                                )
+                                )
                 )
                 .addAggregation(
                         //聚合查询30天内的数据
@@ -148,29 +168,8 @@ public class AggregationServiceImpl implements IAggregationService {
                                 .terms("operatingSystem")
                                 .field("operatingSystem.keyword")
                 )
-                .addAggregation(
-                        //聚合并且按日期分组查询7天内的数据
-                        AggregationBuilders
-                                .dateHistogram("statWeek")
-                                .field("timestamp")
-                                .dateHistogramInterval(DateHistogramInterval.DAY)
-                                .format(CommonConstant.DATE_FORMAT)
-                                //时区相差8小时
-                                .timeZone(DateTimeZone.forOffsetHours(8))
-                                .minDocCount(0)
-                                .extendedBounds(new ExtendedBounds(
-                                        localDate.minusDays(7).format(DateTimeFormatter.ofPattern(CommonConstant.DATE_FORMAT)),
-                                        localDate.format(DateTimeFormatter.ofPattern(CommonConstant.DATE_FORMAT))
-                                ))
-                                .subAggregation(
-                                        AggregationBuilders
-                                                .cardinality("uv")
-                                                .field("ip.keyword")
-                                )
-                )
                 .setSize(0)
-                .execute().actionGet();
-
+                .get();
         Aggregations aggregations = response.getAggregations();
 
         Map<String, Object> result = new HashMap<>(9);
@@ -179,7 +178,6 @@ public class AggregationServiceImpl implements IAggregationService {
         setCurrMonth(result, aggregations);
         setTermsData(result, aggregations, "browser");
         setTermsData(result, aggregations, "operatingSystem");
-        setStatWeek(result, aggregations);
         return result;
     }
     /**
@@ -199,6 +197,8 @@ public class AggregationServiceImpl implements IAggregationService {
         InternalDateRange currWeek = aggregations.get("currWeek");
         InternalDateRange.Bucket bucket = currWeek.getBuckets().get(0);
         result.put("currWeek_pv", bucket.getDocCount());
+        //赋值周趋势统计
+        setStatWeek(result, bucket.getAggregations());
     }
     /**
      * 赋值月统计
