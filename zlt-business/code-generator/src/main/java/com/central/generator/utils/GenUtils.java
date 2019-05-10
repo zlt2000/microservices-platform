@@ -172,7 +172,7 @@ public class GenUtils {
      */
     public static String tableToJava(String tableName, String tablePrefix) {
         if (StringUtils.isNotBlank(tablePrefix)) {
-            tableName = tableName.replace(tablePrefix, "");
+            tableName = tableName.substring(tablePrefix.length());
         }
         return columnToJava(tableName);
     }
