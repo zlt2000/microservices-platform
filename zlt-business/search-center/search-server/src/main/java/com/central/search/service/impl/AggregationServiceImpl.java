@@ -171,13 +171,15 @@ public class AggregationServiceImpl implements IAggregationService {
                 .setSize(0)
                 .get();
         Aggregations aggregations = response.getAggregations();
-
-        Map<String, Object> result = new HashMap<>(9);
-        setCurrDate(result, aggregations);
-        setCurrWeek(result, aggregations);
-        setCurrMonth(result, aggregations);
-        setTermsData(result, aggregations, "browser");
-        setTermsData(result, aggregations, "operatingSystem");
+        Map<String, Object> result = null;
+        if (aggregations != null) {
+            result = new HashMap<>(9);
+            setCurrDate(result, aggregations);
+            setCurrWeek(result, aggregations);
+            setCurrMonth(result, aggregations);
+            setTermsData(result, aggregations, "browser");
+            setTermsData(result, aggregations, "operatingSystem");
+        }
         return result;
     }
     /**
