@@ -57,6 +57,7 @@ public class DefaultExceptionAdvice {
     }
 
     /**
+     * SQLException sql异常处理
      * 返回状态码:500
      */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -76,8 +77,8 @@ public class DefaultExceptionAdvice {
     }
 
     /**
-     * BusinessException 业务异常处理
-     * 返回状态码:500
+     * IdempotencyException 幂等性异常
+     * 返回状态码:200
      */
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(IdempotencyException.class)
