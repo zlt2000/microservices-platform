@@ -52,6 +52,7 @@ public class AggregationServiceImpl implements IAggregationService {
      *   "currDate_uv": 219,
      *   "currDate_pv": 2730,
      *   "currWeek_pv": 10309,
+     *   "currHour_uv": 20,
      *   "browser_datas": [
      *     {
      *       "name": "CHROME",
@@ -168,6 +169,20 @@ public class AggregationServiceImpl implements IAggregationService {
                                 .terms("operatingSystem")
                                 .field("operatingSystem.keyword")
                 )
+                .addAggregation(
+                        //聚合查询1小时内的数据
+                        AggregationBuilders
+                                .dateRange("currHour")
+                                .field("timestamp")
+                                .addRange(
+                                        currDt.minusHours(1), currDt
+                                )
+                                .subAggregation(
+                                        AggregationBuilders
+                                                .cardinality("uv")
+                                                .field("ip.keyword")
+                                )
+                )
                 .setSize(0)
                 .get();
         Aggregations aggregations = response.getAggregations();
@@ -179,6 +194,7 @@ public class AggregationServiceImpl implements IAggregationService {
             setCurrMonth(result, aggregations);
             setTermsData(result, aggregations, "browser");
             setTermsData(result, aggregations, "operatingSystem");
+            setCurrHour(result, aggregations);
         }
         return result;
     }
@@ -246,5 +262,14 @@ public class AggregationServiceImpl implements IAggregationService {
         result.put("statWeek_items", items);
         result.put("statWeek_uv", uv);
         result.put("statWeek_pv", pv);
+    }
+    /**
+     * 赋值小时内统计-当前在线数
+     */
+    private void setCurrHour(Map<String, Object> result, Aggregations aggregations) {
+        InternalDateRange currDate = aggregations.get("currHour");
+        InternalDateRange.Bucket bucket = currDate.getBuckets().get(0);
+        Cardinality cardinality = bucket.getAggregations().get("uv");
+        result.put("currHour_uv", cardinality.getValue());
     }
 }

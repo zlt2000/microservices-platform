@@ -26,7 +26,17 @@
 
 <div class="layui-card-body" style="text-align: center;">
     <div class="layui-row layui-col-space10">
-        <div class="layui-col-sm3 layui-col-md3">
+        <div class="layui-col-sm2 layui-col-md2">
+            <div class="layui-card">
+                <div class="layui-card-header">在线人数
+                    <span class="layui-badge layui-bg-cyan layuiadmin-badge">时</span>
+                </div>
+                <div class="layui-card-body layuiadmin-card-list">
+                    <p class="big-font" id="userCnt"></p>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-sm2 layui-col-md2">
             <div class="layui-card">
                 <div class="layui-card-header">PV
                     <span class="layui-badge layui-bg-green layuiadmin-badge">天</span>
@@ -36,7 +46,7 @@
                 </div>
             </div>
         </div>
-        <div class="layui-col-sm3 layui-col-md3">
+        <div class="layui-col-sm2 layui-col-md2">
             <div class="layui-card">
                 <div class="layui-card-header">UV
                     <span class="layui-badge layui-bg-green layuiadmin-badge">天</span>
@@ -168,6 +178,7 @@
             $('#uv').html(data.currDate_uv);
             $('#weekPv').html(data.currWeek_pv);
             $('#monthPv').html(data.currMonth_pv);
+            $('#userCnt').html(data.currHour_uv);
 
             browserChart.hideLoading()
             browserChart.setOption({
