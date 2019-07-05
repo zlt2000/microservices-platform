@@ -26,6 +26,7 @@
 * Github地址：https://github.com/zlt2000/microservices-platform
 * 前后端分离的企业级微服务架构
 * 基于`Spring Boot 2.0.X`、`Spring Cloud Finchley`和`Spring Cloud Alibaba`
+* 主要针对解决微服务和业务开发时常见的**非功能性需求**
 * 深度定制`Spring Security`真正实现了基于`RBAC`、`jwt`和`oauth2`的无状态统一权限认证的解决方案
 * 提供应用管理，方便第三方系统接入
 * 引入组件化的思想实现高内聚低耦合，项目代码简洁注释丰富上手容易
