@@ -30,15 +30,15 @@ public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${c
      * @return
      */
     public PageResult<${className}> findList(Map<String, Object> params){
-        Integer page = MapUtils.getInteger(params, "page");
+        Integer curPage = MapUtils.getInteger(params, "page");
         Integer limit = MapUtils.getInteger(params, "limit");
-        if (page == null) {
-            page = 1;
+        if (curPage == null) {
+            curPage = 1;
         }
         if (limit == null) {
             limit = -1;
         }
-        Page<${className}> page = new Page<>(page, limit);
+        Page<${className}> page = new Page<>(curPage, limit);
         List<${className}> list  =  baseMapper.findList(page, params);
         return PageResult.<${className}>builder().data(list).code(0).count(page.getTotal()).build();
     }
