@@ -1,8 +1,8 @@
 package com.central.gateway.config;
 
 import com.central.common.config.DefaultPasswordConfig;
+import com.central.oauth2.common.annotation.EnableTokenStore;
 import com.central.oauth2.common.config.DefaultResourceServerConf;
-import com.central.oauth2.common.config.TokenStoreConfig;
 import com.central.oauth2.common.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -19,7 +19,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 @Configuration
 @EnableResourceServer
 @EnableConfigurationProperties(SecurityProperties.class)
-@Import({DefaultPasswordConfig.class, TokenStoreConfig.class})
+@EnableTokenStore
+@Import({DefaultPasswordConfig.class})
 public class ResourceServerConfiguration extends DefaultResourceServerConf {
     @Autowired
     private SecurityProperties securityProperties;

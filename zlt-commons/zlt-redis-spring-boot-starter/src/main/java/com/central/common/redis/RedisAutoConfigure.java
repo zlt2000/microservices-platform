@@ -29,7 +29,6 @@ import java.util.Map;
  * @author zlt
  * @date 2018/11/6 11:02
  */
-@ConditionalOnClass(RedisRepository.class)
 @EnableConfigurationProperties({RedisProperties.class, CacheManagerProperties.class})
 @EnableCaching
 public class RedisAutoConfigure {

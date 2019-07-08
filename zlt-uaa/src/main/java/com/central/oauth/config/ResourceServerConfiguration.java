@@ -1,10 +1,9 @@
 package com.central.oauth.config;
 
-import com.central.oauth2.common.config.TokenStoreConfig;
+import com.central.oauth2.common.annotation.EnableTokenStore;
 import com.central.oauth2.common.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
@@ -17,7 +16,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
  */
 @Configuration
 @EnableResourceServer
-@Import(TokenStoreConfig.class)
+@EnableTokenStore
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
     @Autowired
     private SecurityProperties securityProperties;
