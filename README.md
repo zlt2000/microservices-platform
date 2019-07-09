@@ -13,8 +13,6 @@
 * **演示地址**
   * url： [http://www.zltdiablo.cn:8066](http://www.zltdiablo.cn:8066)
   * 账号密码：admin/admin
-  * 应用监控账号密码：admin/admin
-  * 配置中心账号密码：nacos/nacos
   * APM监控账号密码：admin/admin
   * Grafana账号：zlt/zlt
   * txlcn事务管理器密码：admin
