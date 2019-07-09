@@ -29,7 +29,7 @@ zlt:
   oauth2:
     token:
       store:
-        type: resJwt
+        type: redis
   security:
     ignore:
       # 忽略认证的地址
@@ -45,6 +45,13 @@ zlt:
       httpUrls: /api-uaa/clients/**
       #是否开启url级别权限
       urlEnabled: false
+      renew:
+        #是否开启token自动续签（目前只有redis实现）
+        enable: true
+        #白名单
+        includeClientIds:
+          - webApp
+
 
 zuul:
   ribbon-isolation-strategy: thread

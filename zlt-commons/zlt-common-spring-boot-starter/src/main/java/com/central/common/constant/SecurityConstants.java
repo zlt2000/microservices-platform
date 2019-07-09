@@ -136,4 +136,8 @@ public interface SecurityConstants {
      * 登出URL
      */
     String LOGOUT_URL = "/oauth/remove/token";
+    /**
+     * 默认token过期时间(1小时)
+     */
+    Integer ACCESS_TOKEN_VALIDITY_SECONDS = 60 * 60;
 }

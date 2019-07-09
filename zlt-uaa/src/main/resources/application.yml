@@ -17,7 +17,7 @@ zlt:
   oauth2:
     token:
       store:
-        type: authJwt
+        type: redis
   swagger:
     enabled: true
     title: 认证中心

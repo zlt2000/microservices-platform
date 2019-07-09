@@ -19,5 +19,10 @@ public class AuthProperties {
     /**
      * 是否开启url权限验证
      */
-    private boolean urlEnabled = false;
+    private Boolean urlEnabled = false;
+
+    /**
+     * token自动续签配置（目前只有redis实现）
+     */
+    private RenewProperties renew = new RenewProperties();
 }

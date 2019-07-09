@@ -49,7 +49,7 @@ public abstract class DefaultPermissionServiceImpl implements IPermissionService
         }
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             //判断是否开启url权限验证
-            if (!securityProperties.getAuth().isUrlEnabled()) {
+            if (!securityProperties.getAuth().getUrlEnabled()) {
                 return true;
             }
             //超级管理员admin不需认证

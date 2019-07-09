@@ -2,10 +2,8 @@ package com.central.oauth.controller;
 
 import com.central.common.constant.SecurityConstants;
 import com.central.common.model.Result;
-import com.central.common.utils.SpringUtil;
 import com.central.oauth.mobile.MobileAuthenticationToken;
 import com.central.oauth.openid.OpenIdAuthenticationToken;
-import com.central.oauth.service.impl.RedisClientDetailsService;
 import com.central.oauth2.common.util.AuthUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.Api;
@@ -22,10 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.exceptions.UnapprovedClientAuthenticationException;
-import org.springframework.security.oauth2.provider.ClientDetails;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.security.oauth2.provider.OAuth2Request;
-import org.springframework.security.oauth2.provider.TokenRequest;
+import org.springframework.security.oauth2.provider.*;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -56,6 +51,9 @@ public class OAuth2Controller {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private ClientDetailsService clientDetailsService;
 
     @ApiOperation(value = "用户名密码获取token")
     @PostMapping(SecurityConstants.PASSWORD_LOGIN_PRO_URL)
@@ -93,7 +91,7 @@ public class OAuth2Controller {
             String clientId = clientInfos[0];
             String clientSecret = clientInfos[1];
 
-            ClientDetails clientDetails = getClient(clientId, clientSecret, null);
+            ClientDetails clientDetails = getClient(clientId, clientSecret);
             TokenRequest tokenRequest = new TokenRequest(MapUtils.EMPTY_MAP, clientId, clientDetails.getScope(), "customer");
             OAuth2Request oAuth2Request = tokenRequest.createOAuth2Request(clientDetails);
             Authentication authentication = authenticationManager.authenticate(token);
@@ -129,10 +127,7 @@ public class OAuth2Controller {
         }
     }
 
-    private ClientDetails getClient(String clientId, String clientSecret, RedisClientDetailsService clientDetailsService) {
-        if (clientDetailsService == null) {
-            clientDetailsService = SpringUtil.getBean(RedisClientDetailsService.class);
-        }
+    private ClientDetails getClient(String clientId, String clientSecret) {
         ClientDetails clientDetails = clientDetailsService.loadClientByClientId(clientId);
 
         if (clientDetails == null) {
