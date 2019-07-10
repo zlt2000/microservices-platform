@@ -170,8 +170,7 @@ public class CustomRedisTokenStore implements TokenStore {
                 //获取过期时长
                 int validitySeconds = getAccessTokenValiditySeconds(clientAuth.getClientId());
                 if (validitySeconds > 0) {
-                    int expiresIn = token.getExpiresIn();
-                    double expiresRatio = expiresIn / (double)validitySeconds;
+                    double expiresRatio = token.getExpiresIn() / (double)validitySeconds;
                     //判断是否需要续签，当前剩余时间小于过期时长的50%则续签
                     if (expiresRatio <= RENEW_RATIO) {
                         //更新AccessToken过期时间
@@ -216,10 +215,13 @@ public class CustomRedisTokenStore implements TokenStore {
         } finally {
             conn.close();
         }
-        ClientDetails clientDetails = deserializeClientDetails(bytes);
-        if (clientDetails != null && clientDetails.getAccessTokenValiditySeconds() != null) {
-            return clientDetails.getAccessTokenValiditySeconds();
+        if (bytes != null) {
+            ClientDetails clientDetails = deserializeClientDetails(bytes);
+            if (clientDetails.getAccessTokenValiditySeconds() != null) {
+                return clientDetails.getAccessTokenValiditySeconds();
+            }
         }
+
         //返回默认值
         return SecurityConstants.ACCESS_TOKEN_VALIDITY_SECONDS;
     }
@@ -258,9 +260,9 @@ public class CustomRedisTokenStore implements TokenStore {
 
     /**
      * 存储token
-     * @param isExpire 是否刷新过期时间
+     * @param isRenew 是否续签
      */
-    private void storeAccessToken(OAuth2AccessToken token, OAuth2Authentication authentication, boolean isExpire) {
+    private void storeAccessToken(OAuth2AccessToken token, OAuth2Authentication authentication, boolean isRenew) {
         byte[] serializedAccessToken = serialize(token);
         byte[] serializedAuth = serialize(authentication);
         byte[] accessKey = serializeKey(ACCESS + token.getValue());
@@ -271,6 +273,12 @@ public class CustomRedisTokenStore implements TokenStore {
 
         RedisConnection conn = getConnection();
         try {
+            byte[] oldAccessToken = null;
+            //续签的话需要查询旧的token，用于集合删除
+            if (isRenew) {
+                oldAccessToken = conn.get(accessKey);
+            }
+
             this.openPipeline(conn);
             if (springDataRedis_2_0) {
                 try {
@@ -285,13 +293,17 @@ public class CustomRedisTokenStore implements TokenStore {
                 conn.set(authKey, serializedAuth);
                 conn.set(authToAccessKey, serializedAccessToken);
             }
-            //如果是刷新token过期时间，不需要再往集合添加token
-            if (!isExpire) {
+            //如果是续签token，需要先删除集合里旧的值
+            if (oldAccessToken != null) {
                 if (!authentication.isClientOnly()) {
-                    conn.sAdd(approvalKey, serializedAccessToken);
+                    conn.sRem(approvalKey, oldAccessToken);
                 }
-                conn.rPush(clientId, serializedAccessToken);
+                conn.lRem(clientId, 1, oldAccessToken);
             }
+            if (!authentication.isClientOnly()) {
+                conn.sAdd(approvalKey, serializedAccessToken);
+            }
+            conn.rPush(clientId, serializedAccessToken);
             if (token.getExpiration() != null) {
                 int seconds = token.getExpiresIn();
                 conn.expire(accessKey, seconds);
