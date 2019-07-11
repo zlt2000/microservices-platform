@@ -69,11 +69,9 @@
         // 渲染表格
         table.render({
             elem: '#app-table',
-            url: config.base_server + 'api-uaa/clients',
+            url: config.base_server + 'api-uaa/clients/list',
             method: 'GET',
-            where: {
-                access_token: config.getToken().access_token
-            },
+            headers:{'Authorization': 'bearer ' + config.getToken().access_token},
             page: true,
             cols: [[
                 {type: 'numbers'},

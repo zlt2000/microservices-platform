@@ -31,9 +31,7 @@
             elem: '#slowQueryLog-table',
             url: config.base_server + 'api-log/slowQueryLog',
             method: 'GET',
-            where: {
-                access_token: config.getToken().access_token
-            },
+            headers:{'Authorization': 'bearer ' + config.getToken().access_token},
             page: true,
             cols: [[
                 {type: 'numbers'},

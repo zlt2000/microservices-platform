@@ -45,9 +45,7 @@
                 treePidName: 'parentId',
                 elem: '#menus-table',
                 url: config.base_server + 'api-user/menus/findAlls',
-                where: {
-                    access_token: config.getToken().access_token
-                },
+                headers:{'Authorization': 'bearer ' + config.getToken().access_token},
                 page: false,
                 cols: [[
                     {type: 'numbers'},

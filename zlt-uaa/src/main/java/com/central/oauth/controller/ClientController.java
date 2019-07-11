@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 角色相关接口
+ * 应用相关接口
  *
  * @author zlt
  */
@@ -26,7 +26,7 @@ public class ClientController {
     @Autowired
     private IClientService clientService;
 
-    @GetMapping
+    @GetMapping("/list")
     @ApiOperation(value = "应用列表")
     public PageResult<Client> list(@RequestParam Map<String, Object> params) {
         return clientService.listClent(params, true);

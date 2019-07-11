@@ -90,10 +90,6 @@ layui.define(['config', 'layer'], function (exports) {
             } else if ('delete' == method.toLowerCase()) {
                 method = 'DELETE';
             }
-            var token = config.getToken();
-            if (token) {
-                data.access_token = token.access_token;
-            }
             //add by owen ajax 执行前置处理器  
             admin.ajax({
                 url: config.base_server + url,
