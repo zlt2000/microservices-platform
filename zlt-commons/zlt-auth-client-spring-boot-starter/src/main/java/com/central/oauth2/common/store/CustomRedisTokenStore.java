@@ -5,8 +5,6 @@ import com.central.oauth2.common.properties.SecurityProperties;
 import org.springframework.data.redis.connection.RedisClusterConnection;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.core.Cursor;
-import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.ExpiringOAuth2RefreshToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -34,8 +32,7 @@ import java.util.List;
  * 优化自Spring Security的RedisTokenStore
  * 1. 支持redis cluster模式
  * 2. 非cluster模式时使用pipeline减少连接次数
- * 3. CLIENT_ID_TO_ACCESS和UNAME_TO_ACCESS集合改为list，方便业务顺序遍历
- * 4. 自动续签token（可配置是否开启）
+ * 3. 自动续签token（可配置是否开启）
  *
  * @author zlt
  * @date 2019/7/7
@@ -47,10 +44,6 @@ public class CustomRedisTokenStore implements TokenStore {
     private static final String ACCESS_TO_REFRESH = "access_to_refresh:";
     private static final String REFRESH = "refresh:";
     private static final String REFRESH_TO_ACCESS = "refresh_to_access:";
-    /**
-     * 续签时间比例，当前剩余时间小于小于过期总时长的50%则续签
-     */
-    private static final Double RENEW_RATIO = 0.5;
 
     private static final boolean springDataRedis_2_0 = ClassUtils.isPresent(
             "org.springframework.data.redis.connection.RedisStandaloneConfiguration",
@@ -169,7 +162,7 @@ public class CustomRedisTokenStore implements TokenStore {
                 if (validitySeconds > 0) {
                     double expiresRatio = token.getExpiresIn() / (double)validitySeconds;
                     //判断是否需要续签，当前剩余时间小于过期时长的50%则续签
-                    if (expiresRatio <= RENEW_RATIO) {
+                    if (expiresRatio <= securityProperties.getAuth().getRenew().getTimeRatio()) {
                         //更新AccessToken过期时间
                         DefaultOAuth2AccessToken oAuth2AccessToken = (DefaultOAuth2AccessToken) token;
                         oAuth2AccessToken.setExpiration(new Date(System.currentTimeMillis() + (validitySeconds * 1000L)));

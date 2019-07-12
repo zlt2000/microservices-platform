@@ -31,4 +31,9 @@ public class RenewProperties {
      * 配置enable为true时才生效
      */
     private List<String> exclusiveClientIds = new ArrayList<>();
+
+    /**
+     * 续签时间比例，当前剩余时间小于小于过期总时长的50%则续签
+     */
+    private Double timeRatio = 0.5;
 }
