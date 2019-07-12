@@ -52,7 +52,9 @@ public class RedisTokensServiceImpl implements ITokensService {
                 tokenVo.setClientId(clientId);
                 tokenVo.setTokenValue(accessToken.getValue());
                 tokenVo.setExpiration(accessToken.getExpiration());
-                tokenVo.setUsername(authentication.getName());
+                if (authentication != null) {
+                    tokenVo.setUsername(authentication.getName());
+                }
                 result.add(tokenVo);
             }
         }

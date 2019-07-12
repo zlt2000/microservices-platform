@@ -2,7 +2,6 @@ package com.central.oauth2.common.store;
 
 import com.central.common.constant.SecurityConstants;
 import com.central.oauth2.common.properties.SecurityProperties;
-import org.springframework.data.redis.connection.RedisClusterConnection;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
@@ -30,8 +29,8 @@ import java.util.List;
 
 /**
  * 优化自Spring Security的RedisTokenStore
- * 1. 支持redis cluster模式
- * 2. 非cluster模式时使用pipeline减少连接次数
+ * 1. 支持redis所有集群模式包括cluster模式
+ * 2. 使用pipeline减少连接次数，提升性能
  * 3. 自动续签token（可配置是否开启）
  *
  * @author zlt
@@ -269,7 +268,7 @@ public class CustomRedisTokenStore implements TokenStore {
                 return;
             }
 
-            this.openPipeline(conn);
+            conn.openPipeline();
             if (springDataRedis_2_0) {
                 try {
                     this.redisConnectionSet_2_0.invoke(conn, accessKey, serializedAccessToken);
@@ -321,7 +320,7 @@ public class CustomRedisTokenStore implements TokenStore {
                 }
                 expireRefreshToken(refreshToken, conn, refreshToAccessKey, accessToRefreshKey);
             }
-            this.closePipeline(conn);
+            conn.closePipeline();
         } finally {
             conn.close();
         }
@@ -361,14 +360,16 @@ public class CustomRedisTokenStore implements TokenStore {
         byte[] accessToRefreshKey = serializeKey(ACCESS_TO_REFRESH + tokenValue);
         RedisConnection conn = getConnection();
         try {
-            byte[] access = conn.get(accessKey);
-            byte[] auth = conn.get(authKey);
-            this.openPipeline(conn);
+            conn.openPipeline();
+            conn.get(accessKey);
+            conn.get(authKey);
             conn.del(accessKey);
             conn.del(accessToRefreshKey);
             // Don't remove the refresh token - it's up to the caller to do that
             conn.del(authKey);
-            this.closePipeline(conn);
+            List<Object> results = conn.closePipeline();
+            byte[] access = (byte[]) results.get(0);
+            byte[] auth = (byte[]) results.get(1);
 
             OAuth2Authentication authentication = deserializeAuthentication(auth);
             if (authentication != null) {
@@ -376,12 +377,12 @@ public class CustomRedisTokenStore implements TokenStore {
                 byte[] authToAccessKey = serializeKey(AUTH_TO_ACCESS + key);
                 byte[] unameKey = serializeKey(SecurityConstants.REDIS_UNAME_TO_ACCESS + getApprovalKey(authentication));
                 byte[] clientId = serializeKey(SecurityConstants.REDIS_CLIENT_ID_TO_ACCESS + authentication.getOAuth2Request().getClientId());
-                this.openPipeline(conn);
+                conn.openPipeline();
                 conn.del(authToAccessKey);
                 conn.lRem(unameKey, 1, access);
                 conn.lRem(clientId, 1, access);
                 conn.del(serialize(ACCESS + key));
-                this.closePipeline(conn);
+                conn.closePipeline();
             }
         } finally {
             conn.close();
@@ -395,7 +396,7 @@ public class CustomRedisTokenStore implements TokenStore {
         byte[] serializedRefreshToken = serialize(refreshToken);
         RedisConnection conn = getConnection();
         try {
-            this.openPipeline(conn);
+            conn.openPipeline();
             if (springDataRedis_2_0) {
                 try {
                     this.redisConnectionSet_2_0.invoke(conn, refreshKey, serializedRefreshToken);
@@ -408,7 +409,7 @@ public class CustomRedisTokenStore implements TokenStore {
                 conn.set(refreshAuthKey, serialize(authentication));
             }
             expireRefreshToken(refreshToken, conn, refreshKey, refreshAuthKey);
-            this.closePipeline(conn);
+            conn.closePipeline();
         } finally {
             conn.close();
         }
@@ -452,12 +453,12 @@ public class CustomRedisTokenStore implements TokenStore {
         byte[] access2RefreshKey = serializeKey(ACCESS_TO_REFRESH + tokenValue);
         RedisConnection conn = getConnection();
         try {
-            this.openPipeline(conn);
+            conn.openPipeline();
             conn.del(refreshKey);
             conn.del(refreshAuthKey);
             conn.del(refresh2AccessKey);
             conn.del(access2RefreshKey);
-            this.closePipeline(conn);
+            conn.closePipeline();
         } finally {
             conn.close();
         }
@@ -470,17 +471,20 @@ public class CustomRedisTokenStore implements TokenStore {
 
     private void removeAccessTokenUsingRefreshToken(String refreshToken) {
         byte[] key = serializeKey(REFRESH_TO_ACCESS + refreshToken);
-        byte[] bytes;
+        List<Object> results = null;
         RedisConnection conn = getConnection();
         try {
-            bytes = conn.get(key);
+            conn.openPipeline();
+            conn.get(key);
             conn.del(key);
+            results = conn.closePipeline();
         } finally {
             conn.close();
         }
-        if (bytes == null) {
+        if (results == null) {
             return;
         }
+        byte[] bytes = (byte[]) results.get(0);
         String accessToken = deserializeString(bytes);
         if (accessToken != null) {
             removeAccessToken(accessToken);
@@ -523,20 +527,5 @@ public class CustomRedisTokenStore implements TokenStore {
             accessTokens.add(accessToken);
         }
         return Collections.unmodifiableCollection(accessTokens);
-    }
-
-    private void openPipeline(RedisConnection conn) {
-        boolean isCluster = conn instanceof RedisClusterConnection;
-        //cluster集群模式不支持pipeline
-        if (!isCluster) {
-            conn.openPipeline();
-        }
-    }
-    private void closePipeline(RedisConnection conn) {
-        boolean isCluster = conn instanceof RedisClusterConnection;
-        //cluster集群模式不支持pipeline
-        if (!isCluster) {
-            conn.closePipeline();
-        }
     }
 }

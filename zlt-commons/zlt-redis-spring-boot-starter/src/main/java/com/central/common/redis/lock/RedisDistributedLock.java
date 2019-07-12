@@ -3,16 +3,15 @@ package com.central.common.redis.lock;
 import com.central.common.lock.AbstractDistributedLock;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.RedisStringCommands;
+import org.springframework.data.redis.connection.ReturnType;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.types.Expiration;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisCluster;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * redis分布式锁实现
@@ -66,23 +65,15 @@ public class RedisDistributedLock extends AbstractDistributedLock {
 
     private boolean setRedis(final String key, final long expire) {
         try {
-            String status = redisTemplate.execute((RedisCallback<String>) connection -> {
-                Object nativeConnection = connection.getNativeConnection();
+            boolean status = redisTemplate.execute((RedisCallback<Boolean>) connection -> {
                 String uuid = UUID.randomUUID().toString();
                 lockFlag.set(uuid);
-                String result = null;
-                // 集群模式和单机模式虽然执行脚本的方法一样，但是没有共同的接口，所以只能分开执行
-                // 集群模式
-                if (nativeConnection instanceof JedisCluster) {
-                    result = ((JedisCluster) nativeConnection).set(key, uuid, "NX", "PX", expire);
-                }
-                // 单机模式
-                else if (nativeConnection instanceof Jedis) {
-                    result = ((Jedis) nativeConnection).set(key, uuid, "NX", "PX", expire);
-                }
+                byte[] keyByte = redisTemplate.getStringSerializer().serialize(key);
+                byte[] uuidByte = redisTemplate.getStringSerializer().serialize(uuid);
+                boolean result = connection.set(keyByte, uuidByte, Expiration.from(expire, TimeUnit.MILLISECONDS), RedisStringCommands.SetOption.ifAbsent());
                 return result;
             });
-            return !StringUtils.isEmpty(status);
+            return status;
         } catch (Exception e) {
             log.error("set redisDistributeLock occured an exception", e);
         }
@@ -93,30 +84,15 @@ public class RedisDistributedLock extends AbstractDistributedLock {
     public boolean releaseLock(String key) {
         // 释放锁的时候，有可能因为持锁之后方法执行时间大于锁的有效期，此时有可能已经被另外一个线程持有锁，所以不能直接删除
         try {
-            final List<String> keys = new ArrayList<>();
-            keys.add(key);
-            final List<String> args = new ArrayList<>();
-            args.add(lockFlag.get());
-
             // 使用lua脚本删除redis中匹配value的key，可以避免由于方法执行时间过长而redis锁自动过期失效的时候误删其他线程的锁
             // spring自带的执行脚本方法中，集群模式直接抛出不支持执行脚本的异常，所以只能拿到原redis的connection来执行脚本
-
-            Long result = redisTemplate.execute((RedisCallback<Long>) connection -> {
-                Object nativeConnection = connection.getNativeConnection();
-                // 集群模式和单机模式虽然执行脚本的方法一样，但是没有共同的接口，所以只能分开执行
-                // 集群模式
-                if (nativeConnection instanceof JedisCluster) {
-                    return (Long) ((JedisCluster) nativeConnection).eval(UNLOCK_LUA, keys, args);
-                }
-
-                // 单机模式
-                else if (nativeConnection instanceof Jedis) {
-                    return (Long) ((Jedis) nativeConnection).eval(UNLOCK_LUA, keys, args);
-                }
-                return 0L;
+            Boolean result = redisTemplate.execute((RedisCallback<Boolean>) connection -> {
+                byte[] scriptByte = redisTemplate.getStringSerializer().serialize(UNLOCK_LUA);
+                return connection.eval(scriptByte,  ReturnType.BOOLEAN, 1
+                        , redisTemplate.getStringSerializer().serialize(key)
+                        , redisTemplate.getStringSerializer().serialize(lockFlag.get()));
             });
-
-            return result != null && result > 0;
+            return result;
         } catch (Exception e) {
             log.error("release redisDistributeLock occured an exception", e);
         } finally {

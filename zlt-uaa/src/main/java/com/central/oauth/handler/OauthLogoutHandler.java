@@ -1,5 +1,6 @@
 package com.central.oauth.handler;
 
+import cn.hutool.core.util.StrUtil;
 import com.central.oauth2.common.util.AuthUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -26,8 +27,11 @@ public class OauthLogoutHandler implements LogoutHandler {
 	@Override
 	public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
 		Assert.notNull(tokenStore, "tokenStore must be set");
-		String token = AuthUtils.extractToken(request);
-		if(StringUtils.isNotBlank(token)){
+		String token = request.getParameter("token");
+		if (StrUtil.isEmpty(token)) {
+			token = AuthUtils.extractToken(request);
+		}
+		if(StrUtil.isNotEmpty(token)){
 			OAuth2AccessToken existingAccessToken = tokenStore.readAccessToken(token);
 			OAuth2RefreshToken refreshToken;
 			if (existingAccessToken != null) {

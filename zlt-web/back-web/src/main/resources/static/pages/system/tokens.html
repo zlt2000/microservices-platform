@@ -63,11 +63,11 @@
             layer.confirm('确定要删除吗？', function (i) {
                 layer.close(i);
                 layer.load(2);
-                admin.req('api-uaa/oauth/remove/token?access_token=' + obj.data.tokenValue, {}, function (data) {
+                admin.req('api-uaa/oauth/remove/token?token=' + obj.data.tokenValue, {}, function (data) {
                     layer.closeAll('loading');
                     layer.msg('成功', {icon: 1, time: 500});
                     obj.del();
-                }, 'DELETE', true);
+                }, 'DELETE');
             });
         };
 
