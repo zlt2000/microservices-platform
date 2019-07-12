@@ -1,6 +1,7 @@
 package com.central.common.config;
 
 import com.central.common.feign.UserService;
+import com.central.common.resolver.ClientArgumentResolver;
 import com.central.common.resolver.TokenArgumentResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -26,6 +27,9 @@ public class LoginArgResolverConfig implements WebMvcConfigurer {
      */
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        //注入用户信息
         argumentResolvers.add(new TokenArgumentResolver(userService));
+        //注入应用信息
+        argumentResolvers.add(new ClientArgumentResolver());
     }
 }

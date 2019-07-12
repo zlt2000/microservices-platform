@@ -84,7 +84,7 @@ layui.define(['config', 'layer'], function (exports) {
             return layer.open(param);
         },
         // 封装ajax请求，返回数据类型为json
-        req: function (url, data, success, method) {
+        req: function (url, data, success, method, noHeaderToken) {
             if ('put' == method.toLowerCase()) {
                 method = 'PUT';
             } else if ('delete' == method.toLowerCase()) {
@@ -99,9 +99,11 @@ layui.define(['config', 'layer'], function (exports) {
                 contentType: "application/json",
                 success: success,
                 beforeSend: function (xhr) {
-                    var token = config.getToken();
-                    if (token) {
-                        xhr.setRequestHeader('Authorization', 'bearer ' + token.access_token);
+                    if (!noHeaderToken) {
+                        let token = config.getToken();
+                        if (token) {
+                            xhr.setRequestHeader('Authorization', 'bearer ' + token.access_token);
+                        }
                     }
                 }
             });

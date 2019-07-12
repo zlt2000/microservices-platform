@@ -42,7 +42,9 @@ zlt:
       menusPaths: /api-user/menus/current
     auth:
       # 配置必需认证的url
-      httpUrls: /api-uaa/clients/**
+      httpUrls: >
+        /api-uaa/clients/**,
+        /api-uaa/tokens/**
       #是否开启url级别权限
       urlEnabled: false
       renew:

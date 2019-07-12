@@ -29,8 +29,8 @@ zlt:
       # 忽略认证的地址
       httpUrls: >
         /validata/**,
-        /clients,
         /clients/**,
+        /tokens/**,
         /login.html,
         /css/**,
         /images/**,
