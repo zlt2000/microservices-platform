@@ -37,7 +37,7 @@
 
 ## 2. 项目总体架构图
 
-![](http://processon.com/chart_image/5c7f2ad6e4b02b2ce48d6835.png?_=1554621571250)
+![](https://gitee.com/zlt2000/images/raw/master/springcloud微服务架构图.jpg)
 
 &nbsp;
 
