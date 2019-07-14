@@ -29,4 +29,8 @@ public class TokenVo implements Serializable {
     * 所属应用
     */
    private String clientId;
+   /**
+    * 授权类型
+    */
+   private String grantType;
 }

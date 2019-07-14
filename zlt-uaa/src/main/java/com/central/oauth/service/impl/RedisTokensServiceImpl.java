@@ -12,6 +12,7 @@ import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.OAuth2Request;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -44,17 +45,21 @@ public class RedisTokensServiceImpl implements ITokensService {
         if (tokenObjs != null) {
             for (Object obj : tokenObjs) {
                 DefaultOAuth2AccessToken accessToken = (DefaultOAuth2AccessToken)obj;
+                //构造token对象
+                TokenVo tokenVo = new TokenVo();
+                tokenVo.setTokenValue(accessToken.getValue());
+                tokenVo.setExpiration(accessToken.getExpiration());
+
                 //获取用户信息
                 Object authObj = redisRepository.get(SecurityConstants.REDIS_TOKEN_AUTH + accessToken.getValue());
                 OAuth2Authentication authentication = (OAuth2Authentication)authObj;
-                //构造token对象
-                TokenVo tokenVo = new TokenVo();
-                tokenVo.setClientId(clientId);
-                tokenVo.setTokenValue(accessToken.getValue());
-                tokenVo.setExpiration(accessToken.getExpiration());
                 if (authentication != null) {
+                    OAuth2Request request = authentication.getOAuth2Request();
                     tokenVo.setUsername(authentication.getName());
+                    tokenVo.setClientId(request.getClientId());
+                    tokenVo.setGrantType(request.getGrantType());
                 }
+
                 result.add(tokenVo);
             }
         }
