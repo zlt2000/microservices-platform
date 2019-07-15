@@ -1,6 +1,7 @@
 package com.central.oauth.mobile;
 
 import com.central.oauth.service.ZltUserDetailsService;
+import com.central.oauth2.common.token.MobileAuthenticationToken;
 import lombok.Setter;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;

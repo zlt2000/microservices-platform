@@ -2,8 +2,8 @@ package com.central.oauth.controller;
 
 import com.central.common.constant.SecurityConstants;
 import com.central.common.model.Result;
-import com.central.oauth.mobile.MobileAuthenticationToken;
-import com.central.oauth.openid.OpenIdAuthenticationToken;
+import com.central.oauth2.common.token.MobileAuthenticationToken;
+import com.central.oauth2.common.token.OpenIdAuthenticationToken;
 import com.central.oauth2.common.util.AuthUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.Api;
