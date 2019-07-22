@@ -157,4 +157,8 @@ public interface SecurityConstants {
      * redis中用户名对应的token集合的key
      */
     String REDIS_UNAME_TO_ACCESS = "uname_to_access:";
+    /**
+     * rsa公钥
+     */
+    String RSA_PUBLIC_KEY = "pubkey.txt";
 }
