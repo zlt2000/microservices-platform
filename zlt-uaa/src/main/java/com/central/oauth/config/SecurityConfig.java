@@ -78,9 +78,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-                    .antMatchers( securityProperties.getIgnore().getUrls())
+					.anyRequest()
+					//授权服务器关闭basic认证
                     .permitAll()
-                    .anyRequest().authenticated()
                     .and()
                 .formLogin()
                     .loginPage(SecurityConstants.LOGIN_PAGE)

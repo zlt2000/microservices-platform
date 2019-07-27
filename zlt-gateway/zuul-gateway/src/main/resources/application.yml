@@ -34,17 +34,17 @@ zlt:
     ignore:
       # 忽略认证的地址
       httpUrls: >
-        /api-uaa/**,
+        /api-uaa/oauth/**,
+        /api-uaa/validata/**,
+        /api-uaa/css/**,
+        /api-uaa/images/**,
+        /api-uaa/js/**,
         /api-user/users-anon/**,
         /login.html,
         /user/login
       # 配置只认证登录，登录后所有角色都能访问的url
       menusPaths: /api-user/menus/current
     auth:
-      # 配置必需认证的url
-      httpUrls: >
-        /api-uaa/clients/**,
-        /api-uaa/tokens/**
       #是否开启url级别权限
       urlEnabled: false
       renew:
