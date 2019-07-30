@@ -1,10 +1,13 @@
 package com.central.user.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.central.common.service.impl.SuperServiceImpl;
+import com.central.user.model.SysRoleMenu;
+import com.central.user.service.ISysRoleMenuService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -25,15 +28,17 @@ import javax.annotation.Resource;
 @Service
 public class SysMenuServiceImpl extends SuperServiceImpl<SysMenuMapper, SysMenu> implements ISysMenuService {
  	@Resource
-	private SysRoleMenuMapper sysRoleMenuMapper;
+	private ISysRoleMenuService roleMenuService;
 
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void setMenuToRole(Long roleId, Set<Long> menuIds) {
-		sysRoleMenuMapper.delete(roleId, null);
+		roleMenuService.delete(roleId, null);
 
 		if (!CollectionUtils.isEmpty(menuIds)) {
-			menuIds.forEach(menuId -> sysRoleMenuMapper.save(roleId, menuId));
+			List<SysRoleMenu> roleMenus = new ArrayList<>(menuIds.size());
+			menuIds.forEach(menuId -> roleMenus.add(new SysRoleMenu(roleId, menuId)));
+			roleMenuService.saveBatch(roleMenus);
 		}
 	}
 
@@ -44,7 +49,7 @@ public class SysMenuServiceImpl extends SuperServiceImpl<SysMenuMapper, SysMenu>
 	 */
 	@Override
 	public List<SysMenu> findByRoles(Set<Long> roleIds) {
-		return sysRoleMenuMapper.findMenusByRoleIds(roleIds, null);
+		return roleMenuService.findMenusByRoleIds(roleIds, null);
 	}
 
 	/**
@@ -55,12 +60,12 @@ public class SysMenuServiceImpl extends SuperServiceImpl<SysMenuMapper, SysMenu>
 	 */
 	@Override
 	public List<SysMenu> findByRoles(Set<Long> roleIds, Integer type) {
-		return sysRoleMenuMapper.findMenusByRoleIds(roleIds, type);
+		return roleMenuService.findMenusByRoleIds(roleIds, type);
 	}
 
 	@Override
 	public List<SysMenu> findByRoleCodes(Set<String> roleCodes, Integer type) {
-		return sysRoleMenuMapper.findMenusByRoleCodes(roleCodes, type);
+		return roleMenuService.findMenusByRoleCodes(roleCodes, type);
 	}
 
     /**

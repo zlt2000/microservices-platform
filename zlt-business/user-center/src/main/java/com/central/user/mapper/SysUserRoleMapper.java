@@ -2,6 +2,8 @@ package com.central.user.mapper;
 
 import java.util.List;
 
+import com.central.db.mapper.SuperMapper;
+import com.central.user.model.SysRoleUser;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -14,7 +16,7 @@ import com.central.common.model.SysRole;
  * 用户角色关系
  */
 @Mapper
-public interface SysUserRoleMapper {
+public interface SysUserRoleMapper extends SuperMapper<SysRoleUser> {
     int deleteUserRole(@Param("userId") Long userId, @Param("roleId") Long roleId);
 
     @Insert("insert into sys_role_user(user_id, role_id) values(#{userId}, #{roleId})")

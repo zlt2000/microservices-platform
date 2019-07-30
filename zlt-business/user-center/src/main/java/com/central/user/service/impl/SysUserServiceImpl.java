@@ -11,8 +11,10 @@ import com.central.common.lock.DistributedLock;
 import com.central.common.model.*;
 import com.central.common.service.impl.SuperServiceImpl;
 import com.central.user.mapper.SysRoleMenuMapper;
+import com.central.user.model.SysRoleUser;
 import com.central.user.model.SysUserExcel;
 import com.central.user.mapper.SysUserMapper;
+import com.central.user.service.ISysRoleUserService;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -23,7 +25,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import com.central.user.mapper.SysUserRoleMapper;
 import com.central.user.service.ISysUserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +43,7 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
     private PasswordEncoder passwordEncoder;
 
     @Resource
-    private SysUserRoleMapper userRoleMapper;
+    private ISysRoleUserService roleUserService;
 
     @Resource
     private SysRoleMenuMapper roleMenuMapper;
@@ -74,7 +75,7 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
             LoginAppUser loginAppUser = new LoginAppUser();
             BeanUtils.copyProperties(sysUser, loginAppUser);
 
-            List<SysRole> sysRoles = userRoleMapper.findRolesByUserId(sysUser.getId());
+            List<SysRole> sysRoles = roleUserService.findRolesByUserId(sysUser.getId());
             // 设置角色
             loginAppUser.setRoles(sysRoles);
 
@@ -82,7 +83,7 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
                 Set<Long> roleIds = sysRoles.parallelStream().map(SuperEntity::getId).collect(Collectors.toSet());
                 List<SysMenu> menus = roleMenuMapper.findMenusByRoleIds(roleIds, CommonConstant.PERMISSION);
                 if (!CollectionUtils.isEmpty(menus)) {
-                    Set<String> permissions = menus.parallelStream().map(p -> p.getPathMethod()+":"+p.getPath())
+                    Set<String> permissions = menus.parallelStream().map(p -> p.getPath())
                             .collect(Collectors.toSet());
                     // 设置权限集合
                     loginAppUser.setPermissions(permissions);
@@ -151,9 +152,11 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
             throw new IllegalArgumentException("用户不存在");
         }
 
-        userRoleMapper.deleteUserRole(id, null);
+        roleUserService.deleteUserRole(id, null);
         if (!CollectionUtils.isEmpty(roleIds)) {
-            roleIds.forEach(roleId -> userRoleMapper.saveUserRoles(id, roleId));
+            List<SysRoleUser> roleUsers = new ArrayList<>(roleIds.size());
+            roleIds.forEach(roleId -> roleUsers.add(new SysRoleUser(id, roleId)));
+            roleUserService.saveBatch(roleUsers);
         }
     }
 
@@ -184,7 +187,7 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
         if (total > 0) {
             List<Long> userIds = list.stream().map(SysUser::getId).collect(Collectors.toList());
 
-            List<SysRole> sysRoles = userRoleMapper.findRolesByUserIds(userIds);
+            List<SysRole> sysRoles = roleUserService.findRolesByUserIds(userIds);
             list.forEach(u -> u.setRoles(sysRoles.stream().filter(r -> !ObjectUtils.notEqual(u.getId(), r.getUserId()))
                     .collect(Collectors.toList())));
         }
@@ -193,7 +196,7 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
 
     @Override
     public List<SysRole> findRolesByUserId(Long userId) {
-        return userRoleMapper.findRolesByUserId(userId);
+        return roleUserService.findRolesByUserId(userId);
     }
 
     @Override
@@ -230,10 +233,12 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
                 , username+"已存在");
         //更新角色
         if (result && StrUtil.isNotEmpty(sysUser.getRoleId())) {
-            userRoleMapper.deleteUserRole(sysUser.getId(), null);
+            roleUserService.deleteUserRole(sysUser.getId(), null);
             List roleIds = Arrays.asList(sysUser.getRoleId().split(","));
             if (!CollectionUtils.isEmpty(roleIds)) {
-                roleIds.forEach(roleId -> userRoleMapper.saveUserRoles(sysUser.getId(), Long.parseLong(roleId.toString())));
+                List<SysRoleUser> roleUsers = new ArrayList<>(roleIds.size());
+                roleIds.forEach(roleId -> roleUsers.add(new SysRoleUser(sysUser.getId(), Long.parseLong(roleId.toString()))));
+                roleUserService.saveBatch(roleUsers);
             }
         }
         return result ? Result.succeed(sysUser, "操作成功") : Result.failed("操作失败");
@@ -242,7 +247,7 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean delUser(Long id) {
-        userRoleMapper.deleteUserRole(id, null);
+        roleUserService.deleteUserRole(id, null);
         return baseMapper.deleteById(id) > 0;
     }
 
@@ -257,11 +262,5 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
             sysUserExcels.add(sysUserExcel);
         }
         return sysUserExcels;
-    }
-
-    @Transactional(rollbackFor = Exception.class)
-    @Override
-    public void saveUsers(List<SysUser> users) {
-        users.forEach(u -> baseMapper.insert(u));
     }
 }

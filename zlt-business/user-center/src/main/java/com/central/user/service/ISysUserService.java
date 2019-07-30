@@ -104,11 +104,4 @@ public interface ISysUserService extends ISuperService<SysUser> {
 	 * 删除用户
 	 */
 	boolean delUser(Long id);
-
-	/**
-	 * 保存用户
-	 *
-	 * @param users
-	 */
-	void saveUsers(List<SysUser> users);
 }

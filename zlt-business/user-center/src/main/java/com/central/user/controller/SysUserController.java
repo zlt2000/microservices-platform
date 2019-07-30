@@ -261,7 +261,7 @@ public class SysUserController {
                     user.setType(UserType.BACKEND.name());
                     users.add(user);
                 });
-                appUserService.saveUsers(users);
+                appUserService.saveBatch(users);
             }
         }
         return Result.succeed("导入数据成功，一共【"+rowNum+"】行");
