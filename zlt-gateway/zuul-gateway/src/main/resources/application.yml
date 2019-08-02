@@ -42,11 +42,18 @@ zlt:
         /api-user/users-anon/**,
         /login.html,
         /user/login
-      # 配置只认证登录，登录后所有角色都能访问的url
-      menusPaths: /api-user/menus/current
     auth:
-      #是否开启url级别权限
-      urlEnabled: false
+      urlPermission:
+        #是否开启url级别权限
+        enable: false
+        #配置只进行登录认证，不进行url权限认证的api
+        ignoreUrls: >
+          /api-user/menus/current,
+          /api-user/users/current,
+          /api-log/requestStat
+        #白名单
+        includeClientIds:
+          - webApp
       renew:
         #是否开启token自动续签（目前只有redis实现）
         enable: true

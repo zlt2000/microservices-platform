@@ -20,7 +20,7 @@
             <button id="user-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
             <button id="user-btn-add" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
             <button id="user-btn-export" class="layui-btn icon-btn"><i class="layui-icon">&#xe601;</i>导出</button>
-            <button type="button" class="layui-btn" id="import">
+            <button type="button" class="layui-btn" id="user-btn-import">
                 <i class="layui-icon">&#xe67c;</i>导入
             </button>
         </div>
@@ -194,7 +194,7 @@
         //上传
         var importUrl = config.base_server + 'api-user/users/import?access_token='+config.getToken().access_token;
         upload.render({
-            elem: '#import'
+            elem: '#user-btn-import'
             ,url: importUrl
             ,accept: 'file' //普通文件
             ,multiple: true
@@ -207,5 +207,13 @@
                 }
             }
         });
+
+        //判断权限，没有权限则隐藏按钮
+        /*let resList = ['user-btn-add','user-btn-export','user-btn-import'];
+        for(let i = 0; i < resList.length; i++){
+            if (!admin.hasPerm(resList[i])) {
+                $('#'+resList[i]).hide();
+            }
+        }*/
     });
 </script>

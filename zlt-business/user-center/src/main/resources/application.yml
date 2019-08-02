@@ -23,6 +23,6 @@ zlt:
   cache-manager:
     configs:
       - key: menu
-        second: 600
+        second: 300
       - key: user
         second: 1800

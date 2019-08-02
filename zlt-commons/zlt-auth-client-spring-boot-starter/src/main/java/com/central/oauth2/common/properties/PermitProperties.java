@@ -33,11 +33,6 @@ public class PermitProperties {
      */
     private String[] httpUrls = {};
 
-    /**
-     * 设置认证后不需要判断具体权限的url，所有登录的人都能访问
-     */
-    private String[] menusPaths = {};
-
     public String[] getUrls() {
         if (httpUrls == null || httpUrls.length == 0) {
             return ENDPOINTS;

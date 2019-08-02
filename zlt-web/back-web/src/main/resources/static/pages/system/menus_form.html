@@ -20,6 +20,7 @@
             <input name="path" placeholder="请输入菜单PATH" type="text" class="layui-input"/>
         </div>
     </div>
+
     <div class="layui-form-item">
         <label class="layui-form-label">菜单图标</label>
         <div class="layui-input-block">
@@ -38,8 +39,20 @@
     <div class="layui-form-item">
         <label class="layui-form-label">是否为菜单</label>
         <div class="layui-input-block">
-            <input type="radio" name="type" value="1" title="是" checked/>
-            <input type="radio" name="type" value="2" title="否"/>
+            <input type="radio" name="type" lay-filter="resourceType" value="1" title="是" checked/>
+            <input type="radio" name="type" lay-filter="resourceType" value="2" title="否"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">请求方法</label>
+        <div class="layui-input-block">
+            <select name="pathMethod" id="pathMethod" disabled="true">
+                <option value="-1"></option>
+                <option>GET</option>
+                <option>POST</option>
+                <option>DELETE</option>
+                <option>PUT</option>
+            </select>
         </div>
     </div>
 
@@ -70,31 +83,34 @@
         var layer = layui.layer;
         var admin = layui.admin;
         var form = layui.form;
-        var formSelects = layui.formSelects;
 
-        form.render('radio');
+        // 修改菜单类型
+        let changeType = function (type) {
+            if (type == 2) {
+                $('#pathMethod').attr('disabled', false);
+            } else {
+                $('#pathMethod').attr('disabled', true);
+                $("#pathMethod").val("");
+            }
+            form.render('select', 'menus-form');
+        };
 
         // 获取一级菜单
         layer.load(2);
         admin.req('api-user/menus/findOnes', {}, function (data) {
             layer.closeAll('loading');
             if (0 == data.code) {
-
                 $.each(data.data,function(index,item){
                     $('#parentId').append(new Option(item.name,item.id));//往下拉菜单里添加元素
                 })
-
-                form.render();  //菜单渲染 把内容加载进去
-
-                // 回显user数据
+                // 回显menu数据
                 var menus = admin.getTempData('t_menus');
-                console.log(menus);
                 $('#menus-form').attr('method', 'POST');
                 if (menus) {
-
                     form.val('menus-form', menus);
-                    $('#menus-form').attr('method', 'POST');
+                    changeType(menus.type);
                 }
+                form.render();  //菜单渲染 把内容加载进去
             } else {
                 layer.msg('获取一级菜单', {icon: 2, time: 500});
             }
@@ -104,7 +120,6 @@
         form.on('submit(menus-form-submit)', function (data) {
             layer.load(2);
             admin.req('api-user/menus/saveOrUpdate', JSON.stringify(data.field), function (data) {
-                
                 if (data.resp_code == 0) {
                 	layer.closeAll('loading');
                     layer.msg(data.resp_msg, {icon: 1, time: 500});
@@ -117,6 +132,8 @@
             return false;
         });
 
-
+        form.on("radio(resourceType)", function (data) {
+            changeType(data.value);
+        });
     });
 </script>

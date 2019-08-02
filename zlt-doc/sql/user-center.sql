@@ -136,6 +136,11 @@ INSERT INTO `sys_menu` VALUES (71, -1, '搜索管理', 'javascript:;', '', NULL,
 INSERT INTO `sys_menu` VALUES (72, 71, '索引管理', '#!index', 'search/index_manager.html', NULL, 'layui-icon-template', 1, '2019-01-10 18:35:55', '2019-01-12 00:27:20', 1, 0);
 INSERT INTO `sys_menu` VALUES (73, 71, '用户搜索', '#!userSearch', 'search/user_search.html', NULL, 'layui-icon-user', 2, '2019-01-10 18:35:55', '2019-01-12 00:27:20', 1, 0);
 INSERT INTO `sys_menu` VALUES (74, 12, 'Token管理', '#!tokens', 'system/tokens.html', NULL, 'layui-icon-unlink', 6, '2019-07-11 16:56:59', '2019-07-11 16:56:59', 1, 0);
+INSERT INTO `sys_menu` VALUES (75, 2, '用户列表', '/api-user/users', 'user-list', 'GET', null, 1, '2019-07-29 16:56:59', '2019-07-29 16:56:59', 2, 0);
+INSERT INTO `sys_menu` VALUES (76, 2, '查询用户角色', '/api-user/roles', 'user-roles', 'GET', null, 2, '2019-07-29 16:56:59', '2019-07-29 16:56:59', 2, 0);
+INSERT INTO `sys_menu` VALUES (77, 2, '用户添加', '/api-user/users/saveOrUpdate', 'user-btn-add', 'POST', null, 3, '2019-07-29 16:56:59', '2019-07-29 16:56:59', 2, 0);
+INSERT INTO `sys_menu` VALUES (78, 2, '用户导出', '/api-user/users/export', 'user-btn-export', 'POST', null, 4, '2019-07-29 16:56:59', '2019-07-29 16:56:59', 2, 0);
+INSERT INTO `sys_menu` VALUES (79, 2, '用户导入', '/api-user/users/import', 'user-btn-import', 'POST', null, 5, '2019-07-29 16:56:59', '2019-07-29 16:56:59', 2, 0);
 
 -- ----------------------------
 -- Table structure for sys_role_menu
@@ -172,6 +177,11 @@ INSERT INTO `sys_role_menu` VALUES (1, 71);
 INSERT INTO `sys_role_menu` VALUES (1, 72);
 INSERT INTO `sys_role_menu` VALUES (1, 73);
 INSERT INTO `sys_role_menu` VALUES (1, 74);
+INSERT INTO `sys_role_menu` VALUES (1, 75);
+INSERT INTO `sys_role_menu` VALUES (1, 76);
+INSERT INTO `sys_role_menu` VALUES (1, 77);
+INSERT INTO `sys_role_menu` VALUES (1, 78);
+INSERT INTO `sys_role_menu` VALUES (1, 79);
 INSERT INTO `sys_role_menu` VALUES (2, 2);
 INSERT INTO `sys_role_menu` VALUES (2, 3);
 INSERT INTO `sys_role_menu` VALUES (2, 4);
