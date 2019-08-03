@@ -18,5 +18,5 @@ public interface BaseDemoMapper {
     void save(Demo demo);
 
     @Delete("delete from t_demo where id=#{id}")
-    void deleteByKId(Long id);
+    void deleteById(Long id);
 }
