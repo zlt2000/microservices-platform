@@ -188,20 +188,17 @@ layui.define(['config', 'admin', 'layer', 'laytpl', 'element', 'form'], function
         // 从服务器获取登录用户的信息
         getUser: function (success) {
             layer.load(2);
-            // admin.req('userInfo.json', {}, function (data) {
             admin.req('api-user/users/current', {}, function (data) {
                 layer.closeAll('loading');
-                if (data) {
-                    var user = data;
+                if (data && data.resp_code === 0) {
+                    let user = data.datas;
                     config.putUser(user);
                     admin.putTempData("permissions",user.permissions);
                     success(user);
                 } else {
                     layer.msg('获取用户失败', {icon: 2});
-                    //add by owen 登录失败重定向到登录页
                     config.removeToken();
                     location.replace('login.html');
-                    return ;
                 }
             }, 'GET');
         },

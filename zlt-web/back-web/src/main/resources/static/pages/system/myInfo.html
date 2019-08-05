@@ -57,10 +57,9 @@
         form.render('radio');
 
         admin.req('api-user/users/current', {}, function (data) {
-            var user = data;
             // 回显user数据
-            $('#user-form').attr('method', 'PUT');
-            if (user) {
+            if (data && data.resp_code === 0) {
+                let user = data.datas;
                 user.sex = user.sex.toString();
                 form.val('user-form', user);
                 $('#user-form').attr('method', 'PUT');

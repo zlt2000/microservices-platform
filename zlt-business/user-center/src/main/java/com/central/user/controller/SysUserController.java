@@ -62,8 +62,8 @@ public class SysUserController {
      */
     @ApiOperation(value = "根据access_token当前登录用户")
     @GetMapping("/users/current")
-    public LoginAppUser getLoginAppUser(@LoginUser(isFull = true) SysUser user) {
-        return appUserService.getLoginAppUser(user);
+    public Result<LoginAppUser> getLoginAppUser(@LoginUser(isFull = true) SysUser user) {
+        return Result.succeed(appUserService.getLoginAppUser(user));
     }
 
     /**

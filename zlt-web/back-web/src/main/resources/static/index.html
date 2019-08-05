@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="assets/css/admin.css"/>
     <link rel="stylesheet" href="module/formSelects/formSelects-v4.css"/>
     <link rel="stylesheet" href="assets/libs/zTree/css/metroStyle/metroStyle.css"/>
-     <!-- 自定义主题，使用EasyWeb主题生成器生成 -->
-	<!--<link rel="stylesheet" href="assets/css/theme-blue.css"/>-->
+    <!-- 自定义主题，使用EasyWeb主题生成器生成 -->
+    <!--<link rel="stylesheet" href="assets/css/theme-blue.css"/>-->
 </head>
 
 <body class="layui-layout-body">
@@ -35,11 +35,11 @@
         <div class="layui-icon admin-tabs-control layui-icon-down">
             <ul class="layui-nav admin-tabs-select" lay-filter="admin-pagetabs-nav">
                 <li class="layui-nav-item" lay-unselect>
-                    <a href="javascript:;"></a>
+                    <a href="javascript:"></a>
                     <dl class="layui-nav-child layui-anim-fadein">
-                        <dd ew-event="closeThisTabs" lay-unselect><a href="javascript:;">关闭当前标签页</a></dd>
-                        <dd ew-event="closeOtherTabs" lay-unselect><a href="javascript:;">关闭其它标签页</a></dd>
-                        <dd ew-event="closeAllTabs" lay-unselect><a href="javascript:;">关闭全部标签页</a></dd>
+                        <dd ew-event="closeThisTabs" lay-unselect><a href="javascript:">关闭当前标签页</a></dd>
+                        <dd ew-event="closeOtherTabs" lay-unselect><a href="javascript:">关闭其它标签页</a></dd>
+                        <dd ew-event="closeAllTabs" lay-unselect><a href="javascript:">关闭全部标签页</a></dd>
                     </dl>
                 </li>
             </ul>
@@ -59,11 +59,6 @@
 <script type="text/javascript" src="assets/libs/pandyle.min.js"></script>
 <script type="text/javascript" src="assets/libs/layui/layui.js"></script>
 <script type="text/javascript" src="assets/libs/zTree/js/jquery.ztree.all-3.5.min.js"></script>
-<!--<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=d6240AoITIcflQ6w1a3ZsUcIkeH1SLDg"></script>
-<script type="text/javascript" src="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.js"></script>
-<script type="text/javascript" src="assets/libs/baidu-map/TextIconOverlay.js"></script>
-<script type="text/javascript" src="assets/libs/baidu-map/MarkerClusterer.js"></script>
-<script type="text/javascript" src="http://api.map.baidu.com/library/TrafficControl/1.4/src/TrafficControl_min.js"></script>-->
 
 <script>
     layui.config({
@@ -72,9 +67,9 @@
         formSelects: 'formSelects/formSelects-v4',
         treetable: 'treetable-lay/treetable'
     }).use(['config', 'index', 'element'], function () {
-        var config = layui.config;
-        var index = layui.index;
-        var element = layui.element;
+        let config = layui.config;
+        let index = layui.index;
+        let element = layui.element;
 
         // 检查是否登录
         if (!config.getToken() || config.getToken() == '') {
@@ -93,7 +88,6 @@
             index.initRouter();
             index.bindEvent();
         });
-
     });
 </script>
 </body>
