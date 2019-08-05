@@ -1,7 +1,7 @@
 package com.central.oauth.controller;
 
 import com.central.common.constant.SecurityConstants;
-import com.central.common.model.Result;
+import com.central.common.utils.ResponseUtil;
 import com.central.oauth2.common.token.MobileAuthenticationToken;
 import com.central.oauth2.common.token.OpenIdAuthenticationToken;
 import com.central.oauth2.common.util.AuthUtils;
@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,7 +28,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.Writer;
 
 /**
  * OAuth2相关操作
@@ -99,7 +97,7 @@ public class OAuth2Controller {
             OAuth2Authentication oAuth2Authentication = new OAuth2Authentication(oAuth2Request, authentication);
             OAuth2AccessToken oAuth2AccessToken = authorizationServerTokenServices.createAccessToken(oAuth2Authentication);
             oAuth2Authentication.setAuthenticated(true);
-            writerObj(response, oAuth2AccessToken);
+            ResponseUtil.responseSucceed(objectMapper, response, oAuth2AccessToken);
         } catch (BadCredentialsException | InternalAuthenticationServiceException e) {
             exceptionHandler(response, badCredenbtialsMsg);
         } catch (Exception e) {
@@ -114,17 +112,7 @@ public class OAuth2Controller {
 
     private void exceptionHandler(HttpServletResponse response, String msg) throws IOException {
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        writerObj(response, Result.failed(msg));
-    }
-
-    private void writerObj(HttpServletResponse response, Object obj) throws IOException {
-        response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
-        try (
-                Writer writer = response.getWriter()
-        ) {
-            writer.write(objectMapper.writeValueAsString(obj));
-            writer.flush();
-        }
+        ResponseUtil.responseFailed(objectMapper, response, msg);
     }
 
     private ClientDetails getClient(String clientId, String clientSecret) {
