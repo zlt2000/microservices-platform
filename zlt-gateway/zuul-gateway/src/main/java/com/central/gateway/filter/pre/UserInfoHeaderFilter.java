@@ -2,6 +2,7 @@ package com.central.gateway.filter.pre;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.central.common.constant.SecurityConstants;
+import com.central.common.model.SysUser;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
@@ -40,12 +41,15 @@ public class UserInfoHeaderFilter extends ZuulFilter {
     public Object run() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
-            String username = authentication.getName();
+            SysUser user = (SysUser)authentication.getPrincipal();
+            Long userId = user.getId();
+            String username = user.getUsername();
 
             OAuth2Authentication oauth2Authentication = (OAuth2Authentication)authentication;
             String clientId = oauth2Authentication.getOAuth2Request().getClientId();
 
             RequestContext ctx = RequestContext.getCurrentContext();
+            ctx.addZuulRequestHeader(SecurityConstants.USER_ID_HEADER, String.valueOf(userId));
             ctx.addZuulRequestHeader(SecurityConstants.USER_HEADER, username);
             ctx.addZuulRequestHeader(SecurityConstants.CLIENT_HEADER, clientId);
             ctx.addZuulRequestHeader(SecurityConstants.ROLE_HEADER, CollectionUtil.join(authentication.getAuthorities(), ","));

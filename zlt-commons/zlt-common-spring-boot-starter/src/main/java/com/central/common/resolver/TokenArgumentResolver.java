@@ -58,6 +58,7 @@ public class TokenArgumentResolver implements HandlerMethodArgumentResolver {
         LoginUser loginUser = methodParameter.getParameterAnnotation(LoginUser.class);
         boolean isFull = loginUser.isFull();
         HttpServletRequest request = nativeWebRequest.getNativeRequest(HttpServletRequest.class);
+        String userId = request.getHeader(SecurityConstants.USER_ID_HEADER);
         String username = request.getHeader(SecurityConstants.USER_HEADER);
         String roles = request.getHeader(SecurityConstants.ROLE_HEADER);
         if (StrUtil.isBlank(username)) {
@@ -69,6 +70,7 @@ public class TokenArgumentResolver implements HandlerMethodArgumentResolver {
             user = userService.selectByUsername(username);
         } else {
             user = new SysUser();
+            user.setId(Long.valueOf(userId));
             user.setUsername(username);
         }
         List<SysRole> sysRoleList = new ArrayList<>();
