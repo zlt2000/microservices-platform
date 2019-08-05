@@ -13,6 +13,13 @@ public interface CommonConstant {
     String TOKEN_HEADER = "Authorization";
 
     /**
+     * The access token issued by the authorization server. This value is REQUIRED.
+     */
+    String ACCESS_TOKEN = "access_token";
+
+    String BEARER_TYPE = "Bearer";
+
+    /**
      * 标签 header key
      */
     String HEADER_LABEL = "x-label";
