@@ -51,8 +51,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">回调地址</label>
             <div class="layui-input-block">
-                <input name="webServerRedirectUri" placeholder="请输入回调地址" type="text" class="layui-input" maxlength="20"
-                       lay-verify="required" required />
+                <input name="webServerRedirectUri" placeholder="请输入回调地址" type="text" class="layui-input" maxlength="20"/>
             </div>
         </div>
         <div class="layui-form-item model-form-footer">
@@ -85,8 +84,8 @@
                 {field: 'clientName',width:200, sort: true, title: '应用名称'},
                 {field: 'clientSecretStr', width:180, sort: true, title: '应用密钥'},
                 {field: 'webServerRedirectUri',sort: true, title: '回调地址'},
-                {field: 'authorizedGrantTypes', sort: true, title: 'oauth授权方式'},
-                {align: 'center',width:250, toolbar: '#app-table-bar', title: '操作'}
+                {field: 'authorizedGrantTypes',width:250, sort: true, title: 'oauth授权方式'},
+                {align: 'center',width:150, toolbar: '#app-table-bar', title: '操作'}
             ]]
         });
 
