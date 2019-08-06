@@ -15,6 +15,10 @@ import lombok.EqualsAndHashCode;
 public class Client extends SuperEntity {
    private static final long serialVersionUID = -8185413579135897885L;
    private String clientId;
+   /**
+    * 应用名称
+    */
+   private String clientName;
    private String resourceIds = "";
    private String clientSecret;
    private String clientSecretStr;

@@ -36,6 +36,12 @@
             </div>
         </div>
         <div class="layui-form-item">
+            <label class="layui-form-label">应用名称</label>
+            <div class="layui-input-block">
+                <input name="clientName" placeholder="请输入应用名称" type="text" class="layui-input" maxlength="20"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label">应用密钥</label>
             <div class="layui-input-block">
                 <input name="clientSecretStr" placeholder="请输入应用密钥" type="text" class="layui-input" maxlength="20"
@@ -76,6 +82,7 @@
             cols: [[
                 {type: 'numbers'},
                 {field: 'clientId',width:180, sort: true, title: '应用标识'},
+                {field: 'clientName',width:200, sort: true, title: '应用名称'},
                 {field: 'clientSecretStr', width:180, sort: true, title: '应用密钥'},
                 {field: 'webServerRedirectUri',sort: true, title: '回调地址'},
                 {field: 'authorizedGrantTypes', sort: true, title: 'oauth授权方式'},
