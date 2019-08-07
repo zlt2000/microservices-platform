@@ -28,14 +28,14 @@ public class FeignInterceptorConfig {
                     .getRequestAttributes();
             HttpServletRequest request = attributes.getRequest();
 
-            //传递access_token
-            String token = extractHeaderToken(request);
-            if (StrUtil.isNotEmpty(token)) {
+            //传递access_token，无网关隔离时需要传递
+            /*String token = extractHeaderToken(request);
+            if (StrUtil.isEmpty(token)) {
                 token = request.getParameter(CommonConstant.ACCESS_TOKEN);
             }
             if (StrUtil.isNotEmpty(token)) {
                 template.header(CommonConstant.TOKEN_HEADER, CommonConstant.BEARER_TYPE + " " + token);
-            }
+            }*/
 
             //传递username
             String username = request.getHeader(SecurityConstants.USER_HEADER);
