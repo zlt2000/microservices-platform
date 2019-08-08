@@ -97,4 +97,9 @@ public interface CommonConstant {
     String DEF_USER_PASSWORD = "123456";
 
     String LOCK_KEY_PREFIX = "LOCK_KEY:";
+
+    /**
+     * 租户id参数
+     */
+    String TENANT_ID_PARAM = "tenantId";
 }

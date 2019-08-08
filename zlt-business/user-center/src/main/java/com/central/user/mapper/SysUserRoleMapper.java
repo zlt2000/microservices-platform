@@ -28,8 +28,7 @@ public interface SysUserRoleMapper extends SuperMapper<SysRoleUser> {
      * @param userId
      * @return
      */
-    @Select("select r.* from sys_role_user ru inner join sys_role r on r.id = ru.role_id where ru.user_id = #{userId}")
-    List<SysRole> findRolesByUserId(Long userId);
+    List<SysRole> findRolesByUserId(@Param("userId") Long userId);
 
     /**
      * 根据用户ids 获取

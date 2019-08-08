@@ -41,15 +41,13 @@
             <if test="params.searchKey != null and params.searchKey != ''">
                 and client_id like concat('%', #{params.searchKey}, '%')
             </if>
-
         </where>
     </sql>
 
     <select id="findList" resultType="com.central.oauth.model.Client">
-        select id , client_id, client_name , resource_ids ,
-        client_secret ,
-        client_secret_str ,
-        web_server_redirect_uri from oauth_client_details t
+        select id, client_id, client_name, resource_ids
+            , client_secret, client_secret_str, web_server_redirect_uri
+        from oauth_client_details
         <include refid="where"/>
     </select>
 </mapper>

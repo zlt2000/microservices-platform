@@ -16,11 +16,13 @@ CREATE TABLE `file_info`  (
   `source` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `create_time` datetime(0) NULL DEFAULT NULL,
   `update_time` datetime(0) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `createTime`(`create_time`) USING BTREE
+  `tenant_id` varchar(32) DEFAULT '' COMMENT '租户字段',
+  PRIMARY KEY (`id`),
+  KEY `idx_create_time` (`create_time`),
+  KEY `idx_tenant_id` (`tenant_id`)
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of file_info
 -- ----------------------------
-INSERT INTO `file_info` VALUES ('2c95b54f4d8356cf8ab40802f496df83', '头像.png', 1, 'image/png', 1290, 'http://pkqtmn0p1.bkt.clouddn.com/头像.png', 'http://pkqtmn0p1.bkt.clouddn.com/头像.png', 'QINIU', '2019-01-08 17:05:36', '2019-01-08 17:05:36');
+INSERT INTO `file_info` VALUES ('2c95b54f4d8356cf8ab40802f496df83', '头像.png', 1, 'image/png', 1290, 'http://pkqtmn0p1.bkt.clouddn.com/头像.png', 'http://pkqtmn0p1.bkt.clouddn.com/头像.png', 'QINIU', '2019-01-08 17:05:36', '2019-01-08 17:05:36', 'webApp');

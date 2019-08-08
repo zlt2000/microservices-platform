@@ -13,6 +13,11 @@
     <description>数据库通用组件</description>
     <dependencies>
         <dependency>
+            <groupId>com.zlt</groupId>
+            <artifactId>zlt-common-spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>

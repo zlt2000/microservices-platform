@@ -20,10 +20,10 @@ CREATE TABLE `sys_user`  (
   `company` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
   `open_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
   `is_del` tinyint(1) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `username`(`username`) USING BTREE,
-  INDEX `mobile`(`mobile`) USING BTREE,
-  INDEX `open_id`(`open_id`) USING BTREE
+  PRIMARY KEY (`id`),
+  KEY `idx_username` (`username`),
+  KEY `idx_mobile` (`mobile`),
+  KEY `idx_open_id` (`open_id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -52,17 +52,20 @@ CREATE TABLE `sys_role`  (
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '角色名',
   `create_time` datetime(0) NULL DEFAULT NULL,
   `update_time` datetime(0) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `code`(`code`) USING BTREE
+  `tenant_id` varchar(32) DEFAULT '' COMMENT '租户字段',
+  PRIMARY KEY (`id`),
+  KEY `idx_code` (`code`),
+  KEY `idx_tenant_id` (`tenant_id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
-INSERT INTO `sys_role` VALUES (1, 'ADMIN', '管理员', '2017-11-17 16:56:59', '2018-09-19 09:39:10');
-INSERT INTO `sys_role` VALUES (2, 'test', '测试', '2018-09-17 10:15:51', '2018-11-15 01:49:14');
-INSERT INTO `sys_role` VALUES (3, '11', '11', '2018-11-15 01:49:19', '2018-11-15 01:49:19');
-INSERT INTO `sys_role` VALUES (4, '123', '1235', '2018-11-15 23:33:39', '2018-12-24 23:53:33');
+INSERT INTO `sys_role` VALUES (1, 'ADMIN', '管理员', '2017-11-17 16:56:59', '2018-09-19 09:39:10', 'webApp');
+INSERT INTO `sys_role` VALUES (2, 'test', '测试', '2018-09-17 10:15:51', '2018-11-15 01:49:14', 'webApp');
+INSERT INTO `sys_role` VALUES (3, '11', '11', '2018-11-15 01:49:19', '2018-11-15 01:49:19', 'webApp');
+INSERT INTO `sys_role` VALUES (4, 'shop_admin', '商城管理员', '2019-08-06 20:02:12.604', '2019-08-06 20:02:12.604', 'zlt');
+INSERT INTO `sys_role` VALUES (5, 'app_admin', '移动管理员', '2019-08-06 20:02:12.604', '2019-08-06 20:02:12.604', 'app');
 
 -- ----------------------------
 -- Table structure for sys_role_user
@@ -71,7 +74,7 @@ DROP TABLE IF EXISTS `sys_role_user`;
 CREATE TABLE `sys_role_user`  (
   `user_id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
-  PRIMARY KEY (`user_id`, `role_id`) USING BTREE
+  PRIMARY KEY (`user_id`, `role_id`)
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -88,7 +91,7 @@ INSERT INTO `sys_role_user` VALUES (8, 2);
 INSERT INTO `sys_role_user` VALUES (9, 3);
 INSERT INTO `sys_role_user` VALUES (10, 3);
 INSERT INTO `sys_role_user` VALUES (11, 4);
-INSERT INTO `sys_role_user` VALUES (12, 4);
+INSERT INTO `sys_role_user` VALUES (12, 5);
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -107,40 +110,47 @@ CREATE TABLE `sys_menu`  (
   `update_time` datetime(0) NULL,
   `type` tinyint(1) NOT NULL,
   `hidden` tinyint(1) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `parent_id`(`parent_id`) USING BTREE
+  `tenant_id` varchar(32) DEFAULT '' COMMENT '租户字段',
+  PRIMARY KEY (`id`),
+  KEY `idx_parent_id` (`parent_id`),
+  KEY `idx_tenant_id` (`tenant_id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 62 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
-INSERT INTO `sys_menu` VALUES (2, 12, '用户管理', '#!user', 'system/user.html', NULL, 'layui-icon-friends', 2, '2017-11-17 16:56:59', '2018-09-19 11:26:14', 1, 0);
-INSERT INTO `sys_menu` VALUES (3, 12, '角色管理', '#!role', 'system/role.html', NULL, 'layui-icon-user', 3, '2017-11-17 16:56:59', '2019-01-14 15:34:40', 1, 0);
-INSERT INTO `sys_menu` VALUES (4, 12, '菜单管理', '#!menus', 'system/menus.html', NULL, 'layui-icon-menu-fill', 4, '2017-11-17 16:56:59', '2018-09-03 02:23:47', 1, 0);
-INSERT INTO `sys_menu` VALUES (9, 37, '文件中心', '#!files', 'files/files.html', NULL, 'layui-icon-file', 3, '2017-11-17 16:56:59', '2019-01-17 20:18:44', 1, 0);
-INSERT INTO `sys_menu` VALUES (10, 37, '文档中心', '#!swagger', 'http://127.0.0.1:9900/swagger-ui.html', NULL, 'layui-icon-app', 4, '2017-11-17 16:56:59', '2019-01-17 20:18:48', 1, 0);
-INSERT INTO `sys_menu` VALUES (11, 12, '我的信息', '#!myInfo', 'system/myInfo.html', NULL, '', 10, '2017-11-17 16:56:59', '2018-09-02 06:12:24', 1, 1);
-INSERT INTO `sys_menu` VALUES (12, -1, '认证管理', 'javascript:;', '', NULL, 'layui-icon-set', 1, '2017-11-17 16:56:59', '2018-12-13 15:02:49', 1, 0);
-INSERT INTO `sys_menu` VALUES (35, 12, '应用管理', '#!app', 'attestation/app.html', NULL, 'layui-icon-link', 5, '2017-11-17 16:56:59', '2019-01-14 15:35:15', 1, 0);
-INSERT INTO `sys_menu` VALUES (37, -1, '系统管理', 'javascript:;', '', NULL, 'layui-icon-set', 2, '2018-08-25 10:41:58', '2019-01-23 14:01:58', 1, 0);
-INSERT INTO `sys_menu` VALUES (62, 63, '应用监控', '#!admin', 'http://127.0.0.1:6500/#/wallboard', NULL, 'layui-icon-chart-screen', 3, '2019-01-08 15:32:19', '2019-01-17 20:22:44', 1, 0);
-INSERT INTO `sys_menu` VALUES (63, -1, '系统监控', 'javascript:;', '', NULL, 'layui-icon-set', 2, '2019-01-10 18:35:05', '2019-01-10 18:35:05', 1, 0);
-INSERT INTO `sys_menu` VALUES (64, 63, '系统日志', '#!sysLog', 'log/sysLog.html', NULL, 'layui-icon-file-b', 1, '2019-01-10 18:35:55', '2019-01-12 00:27:20', 1, 0);
-INSERT INTO `sys_menu` VALUES (65, 37, '代码生成器', '#!generator', 'generator/list.html', NULL, 'layui-icon-template', 2, '2019-01-14 00:47:36', '2019-01-23 14:06:31', 1, 0);
-INSERT INTO `sys_menu` VALUES (66, 63, '慢查询SQL', '#!slowQueryLog', 'log/slowQueryLog.html', NULL, 'layui-icon-snowflake', 2, '2019-01-16 12:00:27', '2019-01-16 15:32:31', 1, 0);
-INSERT INTO `sys_menu` VALUES (67, -1, '任务管理', '#!job', 'http://127.0.0.1:8081/', NULL, 'layui-icon-date', 3, '2019-01-17 20:18:22', '2019-01-23 14:01:53', 1, 0);
-INSERT INTO `sys_menu` VALUES (68, 63, '应用吞吐量监控', '#!sentinel', 'http://127.0.0.1:6999', NULL, 'layui-icon-chart', 4, '2019-01-22 16:31:55', '2019-01-22 16:34:03', 1, 0);
-INSERT INTO `sys_menu` VALUES (69, 37, '配置中心', '#!nacos', 'http://127.0.0.1:8848/nacos', NULL, 'layui-icon-tabs', 1, '2019-01-23 14:06:10', '2019-01-23 14:06:10', 1, 0);
-INSERT INTO `sys_menu` VALUES (70, 63, 'APM监控', '#!apm', 'http://127.0.0.1:8080', null, 'layui-icon-engine', 5, '2019-02-27 10:31:55', '2019-02-27 10:31:55', 1, 0);
-INSERT INTO `sys_menu` VALUES (71, -1, '搜索管理', 'javascript:;', '', NULL, 'layui-icon-set', 3, '2018-08-25 10:41:58', '2019-01-23 15:07:07', 1, 0);
-INSERT INTO `sys_menu` VALUES (72, 71, '索引管理', '#!index', 'search/index_manager.html', NULL, 'layui-icon-template', 1, '2019-01-10 18:35:55', '2019-01-12 00:27:20', 1, 0);
-INSERT INTO `sys_menu` VALUES (73, 71, '用户搜索', '#!userSearch', 'search/user_search.html', NULL, 'layui-icon-user', 2, '2019-01-10 18:35:55', '2019-01-12 00:27:20', 1, 0);
-INSERT INTO `sys_menu` VALUES (74, 12, 'Token管理', '#!tokens', 'system/tokens.html', NULL, 'layui-icon-unlink', 6, '2019-07-11 16:56:59', '2019-07-11 16:56:59', 1, 0);
-INSERT INTO `sys_menu` VALUES (75, 2, '用户列表', '/api-user/users', 'user-list', 'GET', null, 1, '2019-07-29 16:56:59', '2019-07-29 16:56:59', 2, 0);
-INSERT INTO `sys_menu` VALUES (76, 2, '查询用户角色', '/api-user/roles', 'user-roles', 'GET', null, 2, '2019-07-29 16:56:59', '2019-07-29 16:56:59', 2, 0);
-INSERT INTO `sys_menu` VALUES (77, 2, '用户添加', '/api-user/users/saveOrUpdate', 'user-btn-add', 'POST', null, 3, '2019-07-29 16:56:59', '2019-07-29 16:56:59', 2, 0);
-INSERT INTO `sys_menu` VALUES (78, 2, '用户导出', '/api-user/users/export', 'user-btn-export', 'POST', null, 4, '2019-07-29 16:56:59', '2019-07-29 16:56:59', 2, 0);
-INSERT INTO `sys_menu` VALUES (79, 2, '用户导入', '/api-user/users/import', 'user-btn-import', 'POST', null, 5, '2019-07-29 16:56:59', '2019-07-29 16:56:59', 2, 0);
+INSERT INTO `sys_menu` VALUES (2, 12, '用户管理', '#!user', 'system/user.html', NULL, 'layui-icon-friends', 2, '2017-11-17 16:56:59', '2018-09-19 11:26:14', 1, 0, 'webApp');
+INSERT INTO `sys_menu` VALUES (3, 12, '角色管理', '#!role', 'system/role.html', NULL, 'layui-icon-user', 3, '2017-11-17 16:56:59', '2019-01-14 15:34:40', 1, 0, 'webApp');
+INSERT INTO `sys_menu` VALUES (4, 12, '菜单管理', '#!menus', 'system/menus.html', NULL, 'layui-icon-menu-fill', 4, '2017-11-17 16:56:59', '2018-09-03 02:23:47', 1, 0, 'webApp');
+INSERT INTO `sys_menu` VALUES (9, 37, '文件中心', '#!files', 'files/files.html', NULL, 'layui-icon-file', 3, '2017-11-17 16:56:59', '2019-01-17 20:18:44', 1, 0, 'webApp');
+INSERT INTO `sys_menu` VALUES (10, 37, '文档中心', '#!swagger', 'http://127.0.0.1:9900/swagger-ui.html', NULL, 'layui-icon-app', 4, '2017-11-17 16:56:59', '2019-01-17 20:18:48', 1, 0, 'webApp');
+INSERT INTO `sys_menu` VALUES (11, 12, '我的信息', '#!myInfo', 'system/myInfo.html', NULL, '', 10, '2017-11-17 16:56:59', '2018-09-02 06:12:24', 1, 1, 'webApp');
+INSERT INTO `sys_menu` VALUES (12, -1, '认证管理', 'javascript:;', '', NULL, 'layui-icon-set', 1, '2017-11-17 16:56:59', '2018-12-13 15:02:49', 1, 0, 'webApp');
+INSERT INTO `sys_menu` VALUES (35, 12, '应用管理', '#!app', 'attestation/app.html', NULL, 'layui-icon-link', 5, '2017-11-17 16:56:59', '2019-01-14 15:35:15', 1, 0, 'webApp');
+INSERT INTO `sys_menu` VALUES (37, -1, '系统管理', 'javascript:;', '', NULL, 'layui-icon-set', 2, '2018-08-25 10:41:58', '2019-01-23 14:01:58', 1, 0, 'webApp');
+INSERT INTO `sys_menu` VALUES (62, 63, '应用监控', '#!admin', 'http://127.0.0.1:6500/#/wallboard', NULL, 'layui-icon-chart-screen', 3, '2019-01-08 15:32:19', '2019-01-17 20:22:44', 1, 0, 'webApp');
+INSERT INTO `sys_menu` VALUES (63, -1, '系统监控', 'javascript:;', '', NULL, 'layui-icon-set', 2, '2019-01-10 18:35:05', '2019-01-10 18:35:05', 1, 0, 'webApp');
+INSERT INTO `sys_menu` VALUES (64, 63, '系统日志', '#!sysLog', 'log/sysLog.html', NULL, 'layui-icon-file-b', 1, '2019-01-10 18:35:55', '2019-01-12 00:27:20', 1, 0, 'webApp');
+INSERT INTO `sys_menu` VALUES (65, 37, '代码生成器', '#!generator', 'generator/list.html', NULL, 'layui-icon-template', 2, '2019-01-14 00:47:36', '2019-01-23 14:06:31', 1, 0, 'webApp');
+INSERT INTO `sys_menu` VALUES (66, 63, '慢查询SQL', '#!slowQueryLog', 'log/slowQueryLog.html', NULL, 'layui-icon-snowflake', 2, '2019-01-16 12:00:27', '2019-01-16 15:32:31', 1, 0, 'webApp');
+INSERT INTO `sys_menu` VALUES (67, -1, '任务管理', '#!job', 'http://127.0.0.1:8081/', NULL, 'layui-icon-date', 3, '2019-01-17 20:18:22', '2019-01-23 14:01:53', 1, 0, 'webApp');
+INSERT INTO `sys_menu` VALUES (68, 63, '应用吞吐量监控', '#!sentinel', 'http://127.0.0.1:6999', NULL, 'layui-icon-chart', 4, '2019-01-22 16:31:55', '2019-01-22 16:34:03', 1, 0, 'webApp');
+INSERT INTO `sys_menu` VALUES (69, 37, '配置中心', '#!nacos', 'http://127.0.0.1:8848/nacos', NULL, 'layui-icon-tabs', 1, '2019-01-23 14:06:10', '2019-01-23 14:06:10', 1, 0, 'webApp');
+INSERT INTO `sys_menu` VALUES (70, 63, 'APM监控', '#!apm', 'http://127.0.0.1:8080', null, 'layui-icon-engine', 5, '2019-02-27 10:31:55', '2019-02-27 10:31:55', 1, 0, 'webApp');
+INSERT INTO `sys_menu` VALUES (71, -1, '搜索管理', 'javascript:;', '', NULL, 'layui-icon-set', 3, '2018-08-25 10:41:58', '2019-01-23 15:07:07', 1, 0, 'webApp');
+INSERT INTO `sys_menu` VALUES (72, 71, '索引管理', '#!index', 'search/index_manager.html', NULL, 'layui-icon-template', 1, '2019-01-10 18:35:55', '2019-01-12 00:27:20', 1, 0, 'webApp');
+INSERT INTO `sys_menu` VALUES (73, 71, '用户搜索', '#!userSearch', 'search/user_search.html', NULL, 'layui-icon-user', 2, '2019-01-10 18:35:55', '2019-01-12 00:27:20', 1, 0, 'webApp');
+INSERT INTO `sys_menu` VALUES (74, 12, 'Token管理', '#!tokens', 'system/tokens.html', NULL, 'layui-icon-unlink', 6, '2019-07-11 16:56:59', '2019-07-11 16:56:59', 1, 0, 'webApp');
+INSERT INTO `sys_menu` VALUES (75, 2, '用户列表', '/api-user/users', 'user-list', 'GET', null, 1, '2019-07-29 16:56:59', '2019-07-29 16:56:59', 2, 0, 'webApp');
+INSERT INTO `sys_menu` VALUES (76, 2, '查询用户角色', '/api-user/roles', 'user-roles', 'GET', null, 2, '2019-07-29 16:56:59', '2019-07-29 16:56:59', 2, 0, 'webApp');
+INSERT INTO `sys_menu` VALUES (77, 2, '用户添加', '/api-user/users/saveOrUpdate', 'user-btn-add', 'POST', null, 3, '2019-07-29 16:56:59', '2019-07-29 16:56:59', 2, 0, 'webApp');
+INSERT INTO `sys_menu` VALUES (78, 2, '用户导出', '/api-user/users/export', 'user-btn-export', 'POST', null, 4, '2019-07-29 16:56:59', '2019-07-29 16:56:59', 2, 0, 'webApp');
+INSERT INTO `sys_menu` VALUES (79, 2, '用户导入', '/api-user/users/import', 'user-btn-import', 'POST', null, 5, '2019-07-29 16:56:59', '2019-07-29 16:56:59', 2, 0, 'webApp');
+INSERT INTO `sys_menu` VALUES (80, -1, '用户管理', '#!user', '', NULL, NULL, 1, '2019-08-06 20:02:12.604', '2019-08-06 20:02:12.604', 1, 0, 'zlt');
+INSERT INTO `sys_menu` VALUES (81, -1, '商品管理', '#!product', '', NULL, NULL, 2, '2019-08-06 20:02:12.604', '2019-08-06 20:02:12.604', 1, 0, 'zlt');
+INSERT INTO `sys_menu` VALUES (82, -1, '支付管理', '#!pay', '', NULL, NULL, 3, '2019-08-06 20:02:12.604', '2019-08-06 20:02:12.604', 1, 0, 'zlt');
+INSERT INTO `sys_menu` VALUES (83, -1, '交易管理', '#!trading', '', NULL, NULL, 4, '2019-08-06 20:02:12.604', '2019-08-06 20:02:12.604', 1, 0, 'zlt');
+INSERT INTO `sys_menu` VALUES (84, -1, '系统管理', '#!system', '', NULL, NULL, 1, '2019-08-06 20:02:12.604', '2019-08-06 20:02:12.604', 1, 0, 'app');
 
 -- ----------------------------
 -- Table structure for sys_role_menu
@@ -149,7 +159,7 @@ DROP TABLE IF EXISTS `sys_role_menu`;
 CREATE TABLE `sys_role_menu`  (
   `role_id` int(11) NOT NULL,
   `menu_id` int(11) NOT NULL,
-  PRIMARY KEY (`role_id`, `menu_id`) USING BTREE
+  PRIMARY KEY (`role_id`, `menu_id`)
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -192,3 +202,9 @@ INSERT INTO `sys_role_menu` VALUES (3, 2);
 INSERT INTO `sys_role_menu` VALUES (3, 3);
 INSERT INTO `sys_role_menu` VALUES (3, 4);
 INSERT INTO `sys_role_menu` VALUES (3, 12);
+INSERT INTO `sys_role_menu` VALUES (3, 12);
+INSERT INTO `sys_role_menu` VALUES (4, 80);
+INSERT INTO `sys_role_menu` VALUES (4, 81);
+INSERT INTO `sys_role_menu` VALUES (4, 82);
+INSERT INTO `sys_role_menu` VALUES (4, 83);
+INSERT INTO `sys_role_menu` VALUES (5, 84);

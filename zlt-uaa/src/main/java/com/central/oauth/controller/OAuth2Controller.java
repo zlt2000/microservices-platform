@@ -2,6 +2,7 @@ package com.central.oauth.controller;
 
 import com.central.common.constant.SecurityConstants;
 import com.central.common.utils.ResponseUtil;
+import com.central.common.utils.TenantContextHolder;
 import com.central.oauth2.common.token.MobileAuthenticationToken;
 import com.central.oauth2.common.token.OpenIdAuthenticationToken;
 import com.central.oauth2.common.util.AuthUtils;
@@ -90,6 +91,8 @@ public class OAuth2Controller {
             String clientSecret = clientInfos[1];
 
             ClientDetails clientDetails = getClient(clientId, clientSecret);
+            //保存租户id
+            TenantContextHolder.setTenant(clientId);
             TokenRequest tokenRequest = new TokenRequest(MapUtils.EMPTY_MAP, clientId, clientDetails.getScope(), "customer");
             OAuth2Request oAuth2Request = tokenRequest.createOAuth2Request(clientDetails);
             Authentication authentication = authenticationManager.authenticate(token);

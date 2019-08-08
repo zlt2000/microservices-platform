@@ -3,6 +3,7 @@ package com.central.common.ribbon.config;
 import cn.hutool.core.util.StrUtil;
 import com.central.common.constant.CommonConstant;
 import com.central.common.constant.SecurityConstants;
+import com.central.common.utils.TenantContextHolder;
 import feign.RequestInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -28,14 +29,16 @@ public class FeignInterceptorConfig {
                     .getRequestAttributes();
             HttpServletRequest request = attributes.getRequest();
 
-            //传递access_token，无网关隔离时需要传递
-            /*String token = extractHeaderToken(request);
+            //传递access_token，无网络隔离时需要传递
+            /*
+            String token = extractHeaderToken(request);
             if (StrUtil.isEmpty(token)) {
                 token = request.getParameter(CommonConstant.ACCESS_TOKEN);
             }
             if (StrUtil.isNotEmpty(token)) {
                 template.header(CommonConstant.TOKEN_HEADER, CommonConstant.BEARER_TYPE + " " + token);
-            }*/
+            }
+            */
 
             //传递username
             String username = request.getHeader(SecurityConstants.USER_HEADER);
@@ -50,9 +53,9 @@ public class FeignInterceptorConfig {
             }
 
             //传递client
-            String client = request.getHeader(SecurityConstants.CLIENT_HEADER);
-            if (StrUtil.isNotEmpty(client)) {
-                template.header(SecurityConstants.CLIENT_HEADER, client);
+            String tenant = TenantContextHolder.getTenant();
+            if (StrUtil.isNotEmpty(tenant)) {
+                template.header(SecurityConstants.TENANT_HEADER, tenant);
             }
         };
         return requestInterceptor;

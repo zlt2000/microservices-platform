@@ -8,7 +8,8 @@
     </div>
     <div class="layui-card-body">
         <div class="layui-form toolbar">
-            搜索：<input id="menus-edit-search" class="layui-input search-input" type="text" placeholder="输入关键字"/>&emsp;
+            所属应用：<select id="menu_clients" lay-filter="menu_clients"></select>
+            &emsp;搜索：<input id="menus-edit-search" class="layui-input search-input" type="text" placeholder="输入关键字"/>&emsp;
             <button id="menus-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
             <button id="menus-btn-add" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
             <button id="menus-btn-expand" class="layui-btn">全部展开</button>
@@ -30,14 +31,22 @@
 <script>
 
     layui.use(['form', 'table', 'util', 'config', 'admin', 'formSelects', 'treetable'],function () {
-        var table = layui.table;
-        var layer = layui.layer;
-        var admin = layui.admin;
-        var treetable = layui.treetable;
-        var config = layui.config;
+        let table = layui.table;
+        let layer = layui.layer;
+        let admin = layui.admin;
+        let treetable = layui.treetable;
+        let config = layui.config;
+        let form = layui.form;
 
         // 渲染表格
-        var renderTable = function () {
+        var renderTable = function (param) {
+            if (param) {
+                param.access_token = config.getToken().access_token;
+            } else {
+                param = {
+                    access_token: config.getToken().access_token
+                };
+            }
             treetable.render({
                 treeColIndex: 1,
                 treeSpid: -1,
@@ -45,9 +54,7 @@
                 treePidName: 'parentId',
                 elem: '#menus-table',
                 url: config.base_server + 'api-user/menus/findAlls',
-                where: {
-                    access_token: config.getToken().access_token
-                },
+                where: param,
                 page: false,
                 cols: [[
                     {type: 'numbers'},
@@ -58,10 +65,10 @@
                     {field: 'sort', width: 80, align: 'center', title: '排序号'},
                     {
                         field: 'type', width: 80, align: 'center', templet: function (d) {
-                            if (d.type == 2) {
+                            if (d.type === 2) {
                                 return '<span class="layui-badge layui-bg-gray">资源</span>';
                             }
-                            if (d.parentId == -1) {
+                            if (d.parentId === -1) {
                                 return '<span class="layui-badge layui-bg-blue">目录</span>';
                             } else {
                                 return '<span class="layui-badge-rim">菜单</span>';
@@ -72,8 +79,28 @@
                 ]]
             });
         };
+        renderTable({tenantId: config.clientId});
 
-        renderTable();
+        // 获取应用列表
+        layer.load(2);
+        admin.req('api-uaa/clients/all', {}, function (data) {
+            layer.closeAll('loading');
+            if (0 === data.resp_code) {
+                let selected = false;
+                $.each(data.datas,function(index,item){
+                    if (config.clientId === item.clientId) {
+                        selected = true;
+                    } else {
+                        selected = false;
+                    }
+                    //往下拉菜单里添加元素
+                    $('#menu_clients').append(new Option(item.clientName, item.clientId, false, selected));
+                })
+                form.render();
+            } else {
+                layer.msg(data.resp_msg, {icon: 2, time: 500});
+            }
+        }, 'GET');
 
         // 工具条点击事件
         table.on('tool(menus-table)', function (obj) {
@@ -85,38 +112,40 @@
             } else if (layEvent === 'del') {
                 layer.confirm('确定删除此菜单吗？', function () {
                     layer.load(2);
-
-                    admin.req('api-user/menus/'+obj.data.id, {}, function (data) {
+                    let tenantId = $('#menu_clients').val();
+                    admin.req('api-user/menus/'+obj.data.id+'?tenantId='+tenantId, {}, function (data) {
                         layer.closeAll('loading');
-                        if (0 == data.resp_code) {
+                        if (0 === data.resp_code) {
                             layer.msg(data.resp_msg, {icon: 1, time: 500});
-                            renderTable();
+                            renderTable({tenantId: tenantId});
                         } else {
                             layer.msg(data.resp_msg, {icon: 2, time: 500});
                         }
                     }, 'DELETE');
-
                 });
             }
         });
 
         // 显示编辑弹窗
         var showEditModel = function (data) {
+            let tenantId = $('#menu_clients').val();
+            let title = data ? '修改菜单' : '添加菜单';
             if (data){
                 data.type = data.type.toString();
                 data.hidden = data.hidden.toString();
+            } else {
+                data = {};
             }
-            var title = data ? '修改菜单' : '添加菜单';
+            data.tenantId = tenantId;
             admin.putTempData('t_menus', data);
 
             admin.popupCenter({
                 title: title,
                 path: 'pages/system/menus_form.html',
                 finish: function () {
-                    renderTable();
+                    renderTable({tenantId: tenantId});
                 }
             });
-
         };
 
         // 添加按钮点击事件
@@ -131,16 +160,16 @@
             $('#menus-table').next('.treeTable').find('.layui-table-body tbody tr td').each(function () {
                 $(this).css('background-color', 'transparent');
                 var text = $(this).text();
-                if (keyword != '' && text.indexOf(keyword) >= 0) {
+                if (keyword !== '' && text.indexOf(keyword) >= 0) {
                     $(this).css('background-color', 'rgba(250,230,160,0.5)');
-                    if (searchCount == 0) {
+                    if (searchCount === 0) {
                         $('.layui-tab-item.layui-show').stop(true);
                         $('.layui-tab-item.layui-show').animate({scrollTop: $(this).offset().top - 150}, 500);
                     }
                     searchCount++;
                 }
             });
-            if (keyword != '' && searchCount == 0) {
+            if (keyword !== '' && searchCount === 0) {
                 layer.msg("没有匹配结果", {icon: 5, time: 500});
             } else {
                 treetable.expandAll('#menus-table');
@@ -153,6 +182,11 @@
 
         $('#menus-btn-fold').click(function () {
             treetable.foldAll('#menus-table');
+        });
+
+        // 应用下来框点击事件
+        form.on('select(menu_clients)', function(data){
+            renderTable({tenantId: data.value});
         });
     });
 </script>

@@ -23,9 +23,9 @@ public class TokensController {
     @Autowired
     private ITokensService tokensService;
 
-    @GetMapping("/list")
+    @GetMapping("")
     @ApiOperation(value = "token列表")
-    public PageResult<TokenVo> list(@RequestParam Map<String, Object> params, @LoginClient String clientId) {
-        return tokensService.listTokens(params, clientId);
+    public PageResult<TokenVo> list(@RequestParam Map<String, Object> params, String tenantId) {
+        return tokensService.listTokens(params, tenantId);
     }
 }

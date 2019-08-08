@@ -1,6 +1,5 @@
 package com.central;
 
-import com.central.common.annotation.EnableLoginArgResolver;
 import com.central.common.ribbon.annotation.EnableFeignInterceptor;
 import com.central.search.annotation.EnableSearchClient;
 import org.springframework.boot.SpringApplication;
@@ -11,7 +10,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 /**
  * @author 作者 owen E-mail: 624191343@qq.com
  */
-@EnableLoginArgResolver
 @EnableDiscoveryClient
 @EnableSearchClient
 @EnableTransactionManagement

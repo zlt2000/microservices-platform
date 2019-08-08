@@ -40,9 +40,9 @@ public class ClientController {
 
     @GetMapping("/all")
     @ApiOperation(value = "所有应用")
-    public List<Client> allClient() {
+    public Result<List<Client>> allClient() {
         PageResult<Client> page = clientService.listClent(Maps.newHashMap(), false);
-        return page.getData();
+        return Result.succeed(page.getData());
     }
 
     @DeleteMapping("/{id}")

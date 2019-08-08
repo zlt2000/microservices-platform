@@ -13,4 +13,9 @@
 			</if>
 		</where>
 	</delete>
+
+	<select id="findRolesByUserId" resultType="com.central.common.model.SysRole">
+		select r.* from sys_role r
+		inner join sys_role_user ru on r.id = ru.role_id and ru.user_id = #{userId}
+	</select>
 </mapper>

@@ -8,7 +8,8 @@
     </div>
     <div class="layui-card-body">
         <div class="layui-form toolbar">
-        搜索：<input id="tokens-edit-search" class="layui-input search-input" type="text" placeholder="输入用户名"/>&emsp;
+        所属应用：<select id="token_clients" lay-filter="token_clients"></select>
+        &emsp;搜索：<input id="tokens-edit-search" class="layui-input search-input" type="text" placeholder="输入用户名"/>&emsp;
         <button id="tokens-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
         </div>
 
@@ -23,19 +24,21 @@
 </script>
 
 <script>
-    layui.use(['table', 'util', 'config', 'admin'],function () {
+    layui.use(['form', 'table', 'util', 'config', 'admin'],function () {
         let table = layui.table;
         let config = layui.config;
         let layer = layui.layer;
         let util = layui.util;
         let admin = layui.admin;
+        let form = layui.form;
 
         // 渲染表格
         table.render({
             elem: '#tokens-table',
-            url: config.base_server + 'api-uaa/tokens/list',
+            url: config.base_server + 'api-uaa/tokens',
             method: 'GET',
             headers:{'Authorization': 'bearer ' + config.getToken().access_token},
+            where: {tenantId: config.clientId},
             page: true,
             cols: [[
                 {type: 'numbers'},
@@ -51,6 +54,27 @@
                 {align: 'center',width:100, toolbar: '#tokens-table-bar', title: '操作'}
             ]]
         });
+
+        // 获取应用列表
+        layer.load(2);
+        admin.req('api-uaa/clients/all', {}, function (data) {
+            layer.closeAll('loading');
+            if (0 === data.resp_code) {
+                let selected = false;
+                $.each(data.datas,function(index,item){
+                    if (config.clientId === item.clientId) {
+                        selected = true;
+                    } else {
+                        selected = false;
+                    }
+                    //往下拉菜单里添加元素
+                    $('#token_clients').append(new Option(item.clientName, item.clientId, false, selected));
+                })
+                form.render();
+            } else {
+                layer.msg(data.resp_msg, {icon: 2, time: 500});
+            }
+        }, 'GET');
 
         // 工具条点击事件
         table.on('tool(tokens-table)', function (obj) {
@@ -75,7 +99,12 @@
         // 搜索按钮点击事件
         $('#tokens-btn-search').click(function () {
             var key = $('#tokens-edit-search').val();
-            table.reload('tokens-table', {where: {username: key}});
+            table.reload('tokens-table', {where: {username: key, tenantId: $('#token_clients').val()}});
+        });
+
+        // 应用下来框点击事件
+        form.on('select(token_clients)', function(data){
+            table.reload('tokens-table', {where: {tenantId: data.value}});
         });
     });
 </script>

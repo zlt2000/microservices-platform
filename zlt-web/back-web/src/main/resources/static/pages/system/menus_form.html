@@ -95,16 +95,16 @@
             form.render('select', 'menus-form');
         };
 
+        // 回显menu数据
+        let menus = admin.getTempData('t_menus');
         // 获取一级菜单
         layer.load(2);
-        admin.req('api-user/menus/findOnes', {}, function (data) {
+        admin.req('api-user/menus/findOnes', {tenantId: menus.tenantId}, function (data) {
             layer.closeAll('loading');
             if (0 == data.code) {
                 $.each(data.data,function(index,item){
                     $('#parentId').append(new Option(item.name,item.id));//往下拉菜单里添加元素
                 })
-                // 回显menu数据
-                var menus = admin.getTempData('t_menus');
                 $('#menus-form').attr('method', 'POST');
                 if (menus) {
                     form.val('menus-form', menus);
@@ -119,8 +119,8 @@
         // 表单提交事件
         form.on('submit(menus-form-submit)', function (data) {
             layer.load(2);
-            admin.req('api-user/menus/saveOrUpdate', JSON.stringify(data.field), function (data) {
-                if (data.resp_code == 0) {
+            admin.req('api-user/menus/saveOrUpdate?tenantId='+menus.tenantId, JSON.stringify(data.field), function (data) {
+                if (data.resp_code === 0) {
                 	layer.closeAll('loading');
                     layer.msg(data.resp_msg, {icon: 1, time: 500});
                     admin.finishPopupCenter();

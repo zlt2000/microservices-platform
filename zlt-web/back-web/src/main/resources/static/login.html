@@ -87,7 +87,7 @@
                 data: obj.field,
                 type: 'POST',
                 beforeSend: function (xhr) {
-                    xhr.setRequestHeader('Authorization', 'Basic ' + window.btoa("webApp:webApp"));
+                    xhr.setRequestHeader('Authorization', 'Basic ' + window.btoa(config.clientId + ":" + config.clientSecret));
                 },
                 success: function (data) {
                     //console.log(JSON.stringify(data));

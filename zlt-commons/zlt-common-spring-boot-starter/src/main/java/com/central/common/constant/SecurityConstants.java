@@ -27,8 +27,9 @@ public interface SecurityConstants {
     String ROLE_HEADER = "x-role-header";
 
     /**
-     * 应用信息头
+     * 租户信息头(应用)
      */
+    String TENANT_HEADER = "x-tenant-header";
     String CLIENT_HEADER = "x-client-header";
 
     /**

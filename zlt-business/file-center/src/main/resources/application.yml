@@ -31,6 +31,9 @@ zlt:
     description: 文件中心接口文档
     version: 1.0
     base-package: com.central.file.controller
+  #多租户配置
+  tenant:
+    enable: true
 
 #fastDFS配置
 fdfs:

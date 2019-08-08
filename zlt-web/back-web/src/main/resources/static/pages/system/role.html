@@ -10,7 +10,8 @@
     </div>
     <div class="layui-card-body">
         <div class="layui-form toolbar">
-            搜索：
+            所属应用：<select id="role_clients" lay-filter="role_clients"></select>
+            &emsp;搜索：
             <select id="role-search-key">
                 <option value="">-请选择-</option>
                 <option value="name">角色名称</option>
@@ -87,6 +88,27 @@
             ]]
         });
 
+        // 获取应用列表
+        layer.load(2);
+        admin.req('api-uaa/clients/all', {}, function (data) {
+            layer.closeAll('loading');
+            if (0 === data.resp_code) {
+                let selected = false;
+                $.each(data.datas,function(index,item){
+                    if (config.clientId === item.clientId) {
+                        selected = true;
+                    } else {
+                        selected = false;
+                    }
+                    //往下拉菜单里添加元素
+                    $('#role_clients').append(new Option(item.clientName, item.clientId, false, selected));
+                })
+                form.render();
+            } else {
+                layer.msg(data.resp_msg, {icon: 2, time: 500});
+            }
+        }, 'GET');
+
         // 添加按钮点击事件
         $('#role-btn-add').click(function () {
             showEditModel();
@@ -94,11 +116,12 @@
 
         // 表单提交事件
         form.on('submit(role-form-submit)', function (data) {
+            let tenantId = $('#role_clients').val();
             layer.load(2);
-            admin.req('api-user/roles/saveOrUpdate', JSON.stringify(data.field), function (data) {
+            admin.req('api-user/roles/saveOrUpdate?tenantId='+tenantId, JSON.stringify(data.field), function (data) {
                 layer.closeAll('loading');
                 console.log(data);
-                if (data.resp_code == 0) {
+                if (data.resp_code === 0) {
                     layer.msg(data.resp_msg, {icon: 1, time: 500});
                     table.reload('role-table');
                     layer.closeAll('page');
@@ -152,11 +175,12 @@
         // 删除
         var doDelete = function (obj) {
             layer.confirm('确定要删除吗？', function (i) {
+                let tenantId = $('#role_clients').val();
                 layer.close(i);
                 layer.load(2);
-                admin.req('api-user/roles/' + obj.data.id, {}, function (data) {
+                admin.req('api-user/roles/' + obj.data.id+'?tenantId='+tenantId, {}, function (data) {
                     layer.closeAll('loading');
-                    if (data.resp_code == 0) {
+                    if (data.resp_code === 0) {
                         layer.msg(data.resp_msg, {icon: 1, time: 500});
                         obj.del();
                     } else {
@@ -169,6 +193,7 @@
 
         // 菜单管理
         var showMenuDialog = function (roleId) {
+            let tenantId = $('#role_clients').val();
             layer.open({
                 type: 1,
                 title: '菜单管理',
@@ -188,7 +213,7 @@
                             }
                         }
                     };
-                    admin.req('api-user/menus/'+roleId+'/menus', {}, function (data) {
+                    admin.req('api-user/menus/'+roleId+'/menus', {tenantId: tenantId}, function (data) {
                         $.fn.zTree.init($('#treeMenu'), setting, data);
                         layer.closeAll('loading');
                     }, 'GET');
@@ -206,7 +231,7 @@
                     data.roleId = roleId;
                     data.menuIds = ids;
 
-                    admin.req('api-user/menus/granted', JSON.stringify(data) , function (data) {
+                    admin.req('api-user/menus/granted?tenantId='+tenantId, JSON.stringify(data) , function (data) {
                         layer.closeAll('loading');
                         if (0 == data.resp_code) {
                             layer.msg(data.resp_msg, {icon: 1, time: 500});
@@ -218,6 +243,11 @@
                 }
             });
         }
+
+        // 应用下来框点击事件
+        form.on('select(role_clients)', function(data){
+            table.reload('role-table', {where: {tenantId: data.value}});
+        });
     });
 
 </script>
