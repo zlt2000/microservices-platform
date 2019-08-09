@@ -98,7 +98,7 @@
                         });
                     } else {
                         layer.closeAll('loading');
-                        layer.msg('登录失败，请重试', {icon: 5, time: 500});
+                        layer.msg(data.resp_msg, {icon: 5, time: 500});
                     }
                 },
                 error: function (xhr) {

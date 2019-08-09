@@ -3,7 +3,9 @@ package com.central.oauth.controller;
 import com.central.common.constant.SecurityConstants;
 import com.central.common.model.Result;
 import com.central.oauth.service.IValidateCodeService;
-import com.google.code.kaptcha.Producer;
+import com.wf.captcha.Captcha;
+import com.wf.captcha.GifCaptcha;
+import com.wf.captcha.utils.CaptchaUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -11,10 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.imageio.ImageIO;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import java.awt.image.BufferedImage;
 
 /**
  * 验证码提供
@@ -23,9 +22,6 @@ import java.awt.image.BufferedImage;
  */
 @Controller
 public class ValidateCodeController {
-    @Autowired
-    private Producer producer;
-
     @Autowired
     private IValidateCodeService validateCodeService;
 
@@ -37,18 +33,16 @@ public class ValidateCodeController {
     @GetMapping(SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/{deviceId}")
     public void createCode(@PathVariable String deviceId, HttpServletResponse response) throws Exception {
         Assert.notNull(deviceId, "机器码不能为空");
-        response.setHeader("Cache-Control", "no-store, no-cache");
-        response.setContentType("image/jpeg");
-        //生成文字验证码
-        String text = producer.createText();
-        //生成图片验证码
-        BufferedImage image = producer.createImage(text);
-        validateCodeService.saveImageCode(deviceId, text);
-        try (
-                ServletOutputStream out = response.getOutputStream()
-                ) {
-            ImageIO.write(image, "JPEG", out);
-        }
+        // 设置请求头为输出图片类型
+        CaptchaUtil.setHeader(response);
+        // 三个参数分别为宽、高、位数
+        GifCaptcha gifCaptcha = new GifCaptcha(100, 35, 4);
+        // 设置类型：字母数字混合
+        gifCaptcha.setCharType(Captcha.TYPE_DEFAULT);
+        // 保存验证码
+        validateCodeService.saveImageCode(deviceId, gifCaptcha.text().toLowerCase());
+        // 输出图片流
+        gifCaptcha.out(response.getOutputStream());
     }
 
     /**

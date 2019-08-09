@@ -50,10 +50,11 @@
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 		</dependency>
-		<!-- kaptcha 验证码生成工具 -->
+		<!-- 验证码生成工具 -->
 		<dependency>
-			<groupId>com.github.axet</groupId>
-			<artifactId>kaptcha</artifactId>
+			<groupId>com.github.whvcse</groupId>
+			<artifactId>EasyCaptcha</artifactId>
+			<version>1.5.0</version>
 		</dependency>
 
 		<dependency>

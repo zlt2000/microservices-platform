@@ -26,7 +26,7 @@
         <security-oauth2.version>2.3.5.RELEASE</security-oauth2.version>
         <security-jwt.version>1.0.9.RELEASE</security-jwt.version>
         <redisson.version>3.9.1</redisson.version>
-        <kaptcha.version>0.0.9</kaptcha.version>
+        <easyCaptcha.version>1.5.0</easyCaptcha.version>
         <hutool.version>4.6.1</hutool.version>
         <mybatis-plus-boot-starter.version>3.1.2</mybatis-plus-boot-starter.version>
         <aliyun-sdk-oss>3.4.2</aliyun-sdk-oss>
@@ -202,11 +202,11 @@
                 <artifactId>swagger-butler-core</artifactId>
                 <version>${swagger.butler.version}</version>
             </dependency>
-            <!-- kaptcha 验证码生成工具 -->
+            <!-- 验证码生成工具 -->
             <dependency>
-                <groupId>com.github.axet</groupId>
-                <artifactId>kaptcha</artifactId>
-                <version>${kaptcha.version}</version>
+                <groupId>com.github.whvcse</groupId>
+                <artifactId>EasyCaptcha</artifactId>
+                <version>${easyCaptcha.version}</version>
             </dependency>
             <!-- hutool java工具类库  -->
             <dependency>
@@ -358,6 +358,10 @@
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
+        </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
         </repository>
     </repositories>
     <distributionManagement>
