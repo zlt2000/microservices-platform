@@ -40,6 +40,12 @@ public class FeignInterceptorConfig {
             }
             */
 
+            //传递userid
+            String userid = request.getHeader(SecurityConstants.USER_ID_HEADER);
+            if (StrUtil.isNotEmpty(userid)) {
+                template.header(SecurityConstants.USER_ID_HEADER, userid);
+            }
+
             //传递username
             String username = request.getHeader(SecurityConstants.USER_HEADER);
             if (StrUtil.isNotEmpty(username)) {
