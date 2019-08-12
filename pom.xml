@@ -31,7 +31,8 @@
         <mybatis-plus-boot-starter.version>3.1.2</mybatis-plus-boot-starter.version>
         <aliyun-sdk-oss>3.4.2</aliyun-sdk-oss>
         <qiniu-java-sdk>7.2.18</qiniu-java-sdk>
-        <easypoi.version>4.0.0</easypoi.version>
+        <easypoi.version>4.1.0</easypoi.version>
+        <poi.version>4.1.0</poi.version>
         <spring-boot-admin.version>2.0.6</spring-boot-admin.version>
         <velocity.version>1.7</velocity.version>
         <commons-configuration.version>1.10</commons-configuration.version>
@@ -225,26 +226,20 @@
                 <artifactId>qiniu-java-sdk</artifactId>
                 <version>${qiniu-java-sdk}</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
             <!--   easypoi   -->
             <dependency>
                 <groupId>cn.afterturn</groupId>
                 <artifactId>easypoi-base</artifactId>
-                <version>${easypoi.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>com.google.guava</groupId>
-                        <artifactId>guava</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>cn.afterturn</groupId>
-                <artifactId>easypoi-web</artifactId>
-                <version>${easypoi.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.afterturn</groupId>
-                <artifactId>easypoi-annotation</artifactId>
                 <version>${easypoi.version}</version>
             </dependency>
             <dependency>

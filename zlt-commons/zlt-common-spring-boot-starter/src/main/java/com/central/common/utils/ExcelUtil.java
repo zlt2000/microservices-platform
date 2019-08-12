@@ -42,7 +42,7 @@ public class ExcelUtil {
      */
     public static void exportExcel(List<?> list, String title, String sheetName, Class<?> pojoClass, String fileName
             , boolean isCreateHeader, HttpServletResponse response) throws IOException {
-        ExportParams exportParams = new ExportParams(title, sheetName);
+        ExportParams exportParams = new ExportParams(title, sheetName, ExcelType.XSSF);
         exportParams.setCreateHeadRows(isCreateHeader);
         defaultExport(list, pojoClass, fileName, response, exportParams);
 
@@ -61,7 +61,7 @@ public class ExcelUtil {
      */
     public static void exportExcel(List<?> list, String title, String sheetName, Class<?> pojoClass, String fileName
             , HttpServletResponse response) throws IOException {
-        defaultExport(list, pojoClass, fileName, response, new ExportParams(title, sheetName));
+        defaultExport(list, pojoClass, fileName, response, new ExportParams(title, sheetName, ExcelType.XSSF));
     }
 
     /**
@@ -93,7 +93,7 @@ public class ExcelUtil {
 
     private static void downLoadExcel(String fileName, HttpServletResponse response, Workbook workbook) throws IOException {
         response.setCharacterEncoding("UTF-8");
-        response.setHeader("content-Type", "application/vnd.ms-excel");
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
         workbook.write(response.getOutputStream());
     }

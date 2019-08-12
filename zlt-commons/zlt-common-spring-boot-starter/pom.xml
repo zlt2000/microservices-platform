@@ -54,6 +54,14 @@
             <artifactId>spring-cloud-starter-openfeign</artifactId>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+        </dependency>
         <!--   easypoi   -->
         <dependency>
             <groupId>cn.afterturn</groupId>

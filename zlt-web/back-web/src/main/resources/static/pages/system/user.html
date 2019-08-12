@@ -150,12 +150,12 @@
         $('#user-btn-export').click(function () {
             var url = config.base_server + 'api-user/users/export?access_token='+config.getToken().access_token;
             var xhr = new XMLHttpRequest();
-            xhr.open('GET', url, true);
+            xhr.open('POST', url, true);
             xhr.responseType = "blob";
             xhr.setRequestHeader("client_type", "DESKTOP_WEB");
             xhr.onload = function() {
                 if (this.status == 200) {
-                    var fileName = "user.xls";
+                    var fileName = "user.xlsx";
                     var blob = this.response;
                     var a = document.createElement('a');
                     a.innerHTML = fileName;

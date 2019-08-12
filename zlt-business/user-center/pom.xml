@@ -64,15 +64,6 @@
         </dependency>
 
         <dependency>
-            <groupId>cn.afterturn</groupId>
-            <artifactId>easypoi-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cn.afterturn</groupId>
-            <artifactId>easypoi-annotation</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>

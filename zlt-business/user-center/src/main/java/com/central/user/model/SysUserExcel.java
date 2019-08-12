@@ -24,7 +24,7 @@ public class SysUserExcel implements Serializable {
     @Excel(name = "手机号码", height = 20, width = 30, isImportField = "true_st")
     private String mobile;
 
-    @Excel(name = "学生性别", replace = { "男_0", "女_1" }, suffix = "生", isImportField = "true_st")
+    @Excel(name = "性别", replace = { "男_0", "女_1" }, isImportField = "true_st")
     private Integer sex;
 
     @Excel(name = "创建时间", format = CommonConstant.DATETIME_FORMAT, isImportField = "true_st", width = 20)
