@@ -1,5 +1,6 @@
 package com.central.common.config;
 
+import com.central.common.utils.CustomThreadPoolTaskExecutor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,7 +42,7 @@ public class DefaultAsycTaskConfig {
 
     @Bean
     public TaskExecutor taskExecutor() {
-        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        ThreadPoolTaskExecutor executor = new CustomThreadPoolTaskExecutor();
         executor.setCorePoolSize(corePoolSize);
         executor.setMaxPoolSize(maxPoolSize);
         executor.setQueueCapacity(queueCapacity);
