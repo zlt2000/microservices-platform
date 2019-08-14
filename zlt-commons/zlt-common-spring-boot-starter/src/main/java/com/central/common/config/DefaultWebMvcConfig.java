@@ -2,6 +2,7 @@ package com.central.common.config;
 
 import com.central.common.feign.UserService;
 import com.central.common.interceptor.TenantInterceptor;
+import com.central.common.interceptor.TraceInterceptor;
 import com.central.common.resolver.ClientArgumentResolver;
 import com.central.common.resolver.TokenArgumentResolver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,12 @@ public class DefaultWebMvcConfig extends WebMvcConfigurationSupport {
      */
 	@Override
 	protected void addInterceptors(InterceptorRegistry registry) {
+		//租户拦截器
 		registry.addInterceptor(new TenantInterceptor()).addPathPatterns("/**");
+
+		//日志链路追踪拦截器
+		registry.addInterceptor(new TraceInterceptor()).addPathPatterns("/**");
+
 		super.addInterceptors(registry);
 	}
 

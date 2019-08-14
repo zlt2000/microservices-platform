@@ -5,6 +5,7 @@ import com.central.common.constant.CommonConstant;
 import com.central.common.constant.SecurityConstants;
 import com.central.common.utils.TenantContextHolder;
 import feign.RequestInterceptor;
+import org.slf4j.MDC;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -62,6 +63,12 @@ public class FeignInterceptorConfig {
             String tenant = TenantContextHolder.getTenant();
             if (StrUtil.isNotEmpty(tenant)) {
                 template.header(SecurityConstants.TENANT_HEADER, tenant);
+            }
+
+            //传递日志traceId
+            String traceId = MDC.get(CommonConstant.LOG_TRACE_ID);
+            if (StrUtil.isNotEmpty(traceId)) {
+                template.header(CommonConstant.TRACE_ID_HEADER, traceId);
             }
         };
         return requestInterceptor;

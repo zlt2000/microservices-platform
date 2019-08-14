@@ -102,4 +102,14 @@ public interface CommonConstant {
      * 租户id参数
      */
     String TENANT_ID_PARAM = "tenantId";
+
+
+    /**
+     * 日志链路追踪id信息头
+     */
+    String TRACE_ID_HEADER = "x-traceId-header";
+    /**
+     * 日志链路追踪id日志标志
+     */
+    String LOG_TRACE_ID = "traceId";
 }

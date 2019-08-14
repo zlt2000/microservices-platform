@@ -15,6 +15,7 @@
                 <option value="logLevel">日志级别</option>
                 <option value="appName">应用名</option>
                 <option value="classname">类名</option>
+                <option value="traceId">链路追踪id</option>
             </select>&emsp;
             <input id="sysLog-search-value" class="layui-input search-input" style="width: 300px" type="text" placeholder="输入关键字"/>&emsp;
             <button id="sysLog-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
@@ -50,7 +51,8 @@
                 {field: 'serverIp', sort: true, title: '服务ip', width: 130},
                 {field: 'serverPort', sort: true, title: '服务端口', width: 100},
                 {field: 'threadName', sort: true, title: '线程名', width: 150},
-                {field: 'classname', sort: true, title: '类名', width: 250}
+                {field: 'classname', sort: true, title: '类名', width: 250},
+                {field: 'traceId', sort: true, title: '链路追踪id', width: 200}
             ]]
         });
 
