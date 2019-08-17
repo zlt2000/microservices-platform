@@ -146,6 +146,7 @@ central-platform -- 父项目，公共依赖
 * 欢迎提交`ISSUS`，请写清楚问题的具体原因，重现步骤和环境(上下文)
 * 项目/微服务交流请进群：<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=ead54a4656cdd4377071855b016b292b1361103b29e94042e1e57499f6b69c38"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="微服务技术交流群" title="微服务技术交流群"></a>
 * 个人邮箱：zltdiablo@163.com
+* 个人博客：https://blog.csdn.net/zlt2000
 
 &nbsp;
 ## 6. 截图（点击可大图预览）
