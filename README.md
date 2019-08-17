@@ -1,6 +1,13 @@
-# microservices-platform
+#  zlt-microservices-platform
 
-[![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)<a href='https://gitee.com/zlt2000/microservices-platform'><img src='https://gitee.com/zlt2000/microservices-platform/widgets/widget_4.svg' alt='Fork me on Gitee'></img></a><a href='https://gitee.com/zlt2000/microservices-platform/stargazers'><img src='https://gitee.com/zlt2000/microservices-platform/badge/star.svg?theme=dark' alt='star'></img></a>
+<p align="center">
+  <img src='https://img.shields.io/badge/license-Apache%202-4EB1BA.svg' alt='License'/>
+  <img src="https://img.shields.io/badge/Spring%20Boot-2.0.9.RELEASE-blue" alt="Downloads"/>
+  <img src="https://img.shields.io/badge/Spring%20Cloud-Finchley.SR4-blue" alt="Downloads"/>
+  <img src="https://img.shields.io/badge/Spring%20Cloud%20Alibaba-2.0.0.RELEASE-blue" alt="Downloads"/>
+  <img src="https://img.shields.io/badge/Layui-EasyWeb-yellowgreen" alt="Downloads"/>
+</p>
+
 
 ## 如果您觉得有帮助，请点右上角 "Star" 支持一下谢谢
 
@@ -8,10 +15,11 @@
 
 ## 1. 项目介绍
 
-* **技术交流群** [250883130](http://shang.qq.com/wpa/qunwpa?idkey=17544199255998bda0d938fb72b08d076c40c52c9904520b76eb5eb0585da71e) 
+* **技术交流群** [250883130](http://shang.qq.com/wpa/qunwpa?idkey=17544199255998bda0d938fb72b08d076c40c52c9904520b76eb5eb0585da71e) <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=ead54a4656cdd4377071855b016b292b1361103b29e94042e1e57499f6b69c38"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="微服务技术交流群" title="微服务技术交流群"></a>
 * **详细在线文档** [点击查看](https://www.kancloud.cn/zlt2000/microservices-platform/936236)
-* **演示地址**
-  * url： [http://mp.zlt2000.cn](http://mp.zlt2000.cn/)
+  * **[项目更新日志](https://www.kancloud.cn/zlt2000/microservices-platform/936235)**
+  * **[文档更新日志](https://www.kancloud.cn/zlt2000/microservices-platform/936236)**
+* **演示环境地址**： [http://mp.zlt2000.cn](http://mp.zlt2000.cn/)
   * 账号密码：admin/admin
   * APM监控账号密码：admin/admin
   * Grafana账号：zlt/zlt
@@ -19,15 +27,12 @@
   * 任务管理账号密码：admin/123456
   * Sentinel：sentinel/sentinel
 * **演示环境有全方位的监控示例：日志系统 + APM系统 + GPE系统**
-* **[项目更新日志](https://www.kancloud.cn/zlt2000/microservices-platform/936235)**
-* **[文档更新日志](https://www.kancloud.cn/zlt2000/microservices-platform/936236)**
 * Gitee地址：https://gitee.com/zlt2000/microservices-platform
 * Github地址：https://github.com/zlt2000/microservices-platform
 * 前后端分离的企业级微服务架构
-* 基于`Spring Boot 2.0.X`、`Spring Cloud Finchley`和`Spring Cloud Alibaba`
 * 主要针对解决微服务和业务开发时常见的**非功能性需求**
 * 深度定制`Spring Security`真正实现了基于`RBAC`、`jwt`和`oauth2`的无状态统一权限认证的解决方案
-* 提供应用管理，方便第三方系统接入，支持多租户
+* 提供应用管理，方便第三方系统接入，**支持多租户(应用隔离)**
 * 引入组件化的思想实现高内聚低耦合并且高度可配置化
 * 注重代码规范，严格控制包依赖，每个工程基本都是最小依赖
 * 非常适合学习和企业中使用
@@ -63,6 +68,7 @@
   - 支持CI/CD持续集成(包括前端和后端)
   - 分布式Id生成器
   - 分布式事务(强一致性/最终一致性)
+  - 日志链路追踪
 * **系统监控功能**
   - 服务调用链监控
   - 应用拓扑图
@@ -135,8 +141,14 @@ central-platform -- 父项目，公共依赖
 ```
 
 &nbsp;
+## 5. 交流反馈
+* 有问题先看看 [F&Q](https://www.kancloud.cn/zlt2000/microservices-platform/981382) 中有没有相关的回答
+* 欢迎提交`ISSUS`，请写清楚问题的具体原因，重现步骤和环境(上下文)
+* 项目/微服务交流请进群：<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=ead54a4656cdd4377071855b016b292b1361103b29e94042e1e57499f6b69c38"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="微服务技术交流群" title="微服务技术交流群"></a>
+* 个人邮箱：zltdiablo@163.com
 
-## 5. 截图（点击可大图预览）
+&nbsp;
+## 6. 截图（点击可大图预览）
 
 <table>
     <tr>
