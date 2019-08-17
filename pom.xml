@@ -39,6 +39,7 @@
         <txlcn.version>5.0.2.RELEASE</txlcn.version>
         <fastdfs-client.version>1.26.5</fastdfs-client.version>
         <userAgent.version>1.21</userAgent.version>
+        <transmittable.version>2.11.0</transmittable.version>
         <platform-bom>Cairo-SR3</platform-bom>
         <spring-cloud-alibaba-dependencies.version>2.0.0.RELEASE</spring-cloud-alibaba-dependencies.version>
         <spring-boot-dependencies.version>2.0.9.RELEASE</spring-boot-dependencies.version>
@@ -296,6 +297,11 @@
                 <groupId>eu.bitwalker</groupId>
                 <artifactId>UserAgentUtils</artifactId>
                 <version>${userAgent.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>transmittable-thread-local</artifactId>
+                <version>${transmittable.version}</version>
             </dependency>
 
             <dependency>
