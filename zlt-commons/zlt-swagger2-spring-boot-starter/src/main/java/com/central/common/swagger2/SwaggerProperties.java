@@ -33,7 +33,7 @@ public class SwaggerProperties {
     private String licenseUrl = "";
     /**服务条款URL**/
     private String termsOfServiceUrl = "";
-
+    /**联系人**/
     private Contact contact = new Contact();
 
     /**swagger会解析的包路径**/
