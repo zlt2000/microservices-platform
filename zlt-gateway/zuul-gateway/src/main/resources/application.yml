@@ -26,10 +26,6 @@ spring:
             groupId: DEFAULT_GROUP
             rule-type: gw-api-group
 
-  security:
-    sessions: ALWAYS
-
-
 zlt:
   oauth2:
     token:
@@ -39,7 +35,6 @@ zlt:
     ignore:
       # 忽略认证的地址
       httpUrls: >
-        /api-user/test,
         /api-uaa/oauth/**,
         /api-uaa/validata/**,
         /api-uaa/css/**,
