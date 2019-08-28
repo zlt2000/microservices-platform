@@ -8,6 +8,11 @@ package com.central.common.constant;
  */
 public interface CommonConstant {
     /**
+     * 项目版本号(banner使用)
+     */
+    String PROJECT_VERSION = "2.5.0";
+
+    /**
      * token请求头名称
      */
     String TOKEN_HEADER = "Authorization";

@@ -41,6 +41,7 @@
         <userAgent.version>1.21</userAgent.version>
         <transmittable.version>2.11.0</transmittable.version>
         <lettuce.version>5.1.8.RELEASE</lettuce.version>
+        <banner.versio>1.0.2</banner.versio>
         <platform-bom>Cairo-SR3</platform-bom>
         <spring-cloud-alibaba-dependencies.version>2.0.0.RELEASE</spring-cloud-alibaba-dependencies.version>
         <spring-boot-dependencies.version>2.0.9.RELEASE</spring-boot-dependencies.version>
@@ -308,6 +309,11 @@
                 <groupId>io.lettuce</groupId>
                 <artifactId>lettuce-core</artifactId>
                 <version>${lettuce.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.nepxion</groupId>
+                <artifactId>banner</artifactId>
+                <version>${banner.versio}</version>
             </dependency>
 
             <dependency>

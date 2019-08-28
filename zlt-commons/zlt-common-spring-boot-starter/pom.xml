@@ -83,5 +83,10 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
+
+        <dependency>
+            <groupId>com.nepxion</groupId>
+            <artifactId>banner</artifactId>
+        </dependency>
     </dependencies>
 </project>
