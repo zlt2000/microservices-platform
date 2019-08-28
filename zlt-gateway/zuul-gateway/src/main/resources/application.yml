@@ -26,6 +26,10 @@ spring:
             groupId: DEFAULT_GROUP
             rule-type: gw-api-group
 
+  security:
+    sessions: ALWAYS
+
+
 zlt:
   oauth2:
     token:
@@ -35,6 +39,7 @@ zlt:
     ignore:
       # 忽略认证的地址
       httpUrls: >
+        /api-user/test,
         /api-uaa/oauth/**,
         /api-uaa/validata/**,
         /api-uaa/css/**,
@@ -61,6 +66,10 @@ zlt:
         #白名单
         includeClientIds:
           - webApp
+  gateway:
+    #网关动态路由
+    dynamicRoute:
+      enabled: true
 
 
 zuul:
@@ -73,8 +82,6 @@ zuul:
       threadPoolKeyPrefix: api-gateway
   #关闭重试
   retryable: false
-  #/oauth/token需要请求头处理
-  sensitive-headers:
   ignored-headers: Access-Control-Allow-Credentials,Access-Control-Allow-Origin,Access-Control-Allow-Methods
   add-host-header: true
   routes:
@@ -82,53 +89,67 @@ zuul:
       path: /api-uaa/**
       service-id: uaa-server
       strip-prefix: true
+      sensitive-headers: '*'
       custom-sensitive-headers: true
     auth-login-page:
       path: /login.html
       service-id: uaa-server
       strip-prefix: true
+      sensitive-headers: '*'
       custom-sensitive-headers: true
     auth-login-process:
       path: /user/login
       service-id: uaa-server
       strip-prefix: true
+      sensitive-headers: '*'
       custom-sensitive-headers: true
     auth-login-token:
       path: /oauth/token
       service-id: uaa-server
       strip-prefix: true
+      sensitive-headers: '*'
       custom-sensitive-headers: true
     auth-login-authorize:
       path: /oauth/authorize
       service-id: uaa-server
       strip-prefix: true
+      sensitive-headers: '*'
       custom-sensitive-headers: true
     auth-check-process:
       path: /oauth/check_token
       service-id: uaa-server
       strip-prefix: true
+      sensitive-headers: '*'
       custom-sensitive-headers: true
     user:
       path: /api-user/**
       service-id: user-center
       strip-prefix: true
+      sensitive-headers: '*'
       custom-sensitive-headers: true
     file:
       path: /api-file/**
       service-id: file-center
       strip-prefix: true
+      sensitive-headers: '*'
+      custom-sensitive-headers: true
     log:
       path: /api-log/**
       service-id: log-center
       strip-prefix: true
+      sensitive-headers: '*'
+      custom-sensitive-headers: true
     generator:
       path: /api-generator/**
       service-id: code-generator
       strip-prefix: true
+      sensitive-headers: '*'
+      custom-sensitive-headers: true
     search:
       path: /api-search/**
       service-id: search-center
       strip-prefix: true
+      sensitive-headers: '*'
       custom-sensitive-headers: true
   ssl-hostname-validation-enabled: false
 

@@ -28,47 +28,49 @@ public class FeignInterceptorConfig {
         RequestInterceptor requestInterceptor = template -> {
             ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder
                     .getRequestAttributes();
-            HttpServletRequest request = attributes.getRequest();
+            if (attributes != null) {
+                HttpServletRequest request = attributes.getRequest();
 
-            //传递access_token，无网络隔离时需要传递
-            /*
-            String token = extractHeaderToken(request);
-            if (StrUtil.isEmpty(token)) {
-                token = request.getParameter(CommonConstant.ACCESS_TOKEN);
-            }
-            if (StrUtil.isNotEmpty(token)) {
-                template.header(CommonConstant.TOKEN_HEADER, CommonConstant.BEARER_TYPE + " " + token);
-            }
-            */
+                //传递access_token，无网络隔离时需要传递
+                /*
+                String token = extractHeaderToken(request);
+                if (StrUtil.isEmpty(token)) {
+                    token = request.getParameter(CommonConstant.ACCESS_TOKEN);
+                }
+                if (StrUtil.isNotEmpty(token)) {
+                    template.header(CommonConstant.TOKEN_HEADER, CommonConstant.BEARER_TYPE + " " + token);
+                }
+                */
 
-            //传递userid
-            String userid = request.getHeader(SecurityConstants.USER_ID_HEADER);
-            if (StrUtil.isNotEmpty(userid)) {
-                template.header(SecurityConstants.USER_ID_HEADER, userid);
-            }
+                //传递userid
+                String userid = request.getHeader(SecurityConstants.USER_ID_HEADER);
+                if (StrUtil.isNotEmpty(userid)) {
+                    template.header(SecurityConstants.USER_ID_HEADER, userid);
+                }
 
-            //传递username
-            String username = request.getHeader(SecurityConstants.USER_HEADER);
-            if (StrUtil.isNotEmpty(username)) {
-                template.header(SecurityConstants.USER_HEADER, username);
-            }
+                //传递username
+                String username = request.getHeader(SecurityConstants.USER_HEADER);
+                if (StrUtil.isNotEmpty(username)) {
+                    template.header(SecurityConstants.USER_HEADER, username);
+                }
 
-            //传递roles
-            String roles = request.getHeader(SecurityConstants.ROLE_HEADER);
-            if (StrUtil.isNotEmpty(roles)) {
-                template.header(SecurityConstants.ROLE_HEADER, roles);
-            }
+                //传递roles
+                String roles = request.getHeader(SecurityConstants.ROLE_HEADER);
+                if (StrUtil.isNotEmpty(roles)) {
+                    template.header(SecurityConstants.ROLE_HEADER, roles);
+                }
 
-            //传递client
-            String tenant = TenantContextHolder.getTenant();
-            if (StrUtil.isNotEmpty(tenant)) {
-                template.header(SecurityConstants.TENANT_HEADER, tenant);
-            }
+                //传递client
+                String tenant = TenantContextHolder.getTenant();
+                if (StrUtil.isNotEmpty(tenant)) {
+                    template.header(SecurityConstants.TENANT_HEADER, tenant);
+                }
 
-            //传递日志traceId
-            String traceId = MDC.get(CommonConstant.LOG_TRACE_ID);
-            if (StrUtil.isNotEmpty(traceId)) {
-                template.header(CommonConstant.TRACE_ID_HEADER, traceId);
+                //传递日志traceId
+                String traceId = MDC.get(CommonConstant.LOG_TRACE_ID);
+                if (StrUtil.isNotEmpty(traceId)) {
+                    template.header(CommonConstant.TRACE_ID_HEADER, traceId);
+                }
             }
         };
         return requestInterceptor;
