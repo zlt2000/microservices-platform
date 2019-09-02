@@ -26,7 +26,7 @@
         <security-oauth2.version>2.3.5.RELEASE</security-oauth2.version>
         <security-jwt.version>1.0.9.RELEASE</security-jwt.version>
         <redisson.version>3.9.1</redisson.version>
-        <easyCaptcha.version>1.5.0</easyCaptcha.version>
+        <easyCaptcha.version>1.6.2</easyCaptcha.version>
         <hutool.version>4.6.1</hutool.version>
         <mybatis-plus-boot-starter.version>3.1.2</mybatis-plus-boot-starter.version>
         <aliyun-sdk-oss>3.4.2</aliyun-sdk-oss>
@@ -209,7 +209,7 @@
             <!-- 验证码生成工具 -->
             <dependency>
                 <groupId>com.github.whvcse</groupId>
-                <artifactId>EasyCaptcha</artifactId>
+                <artifactId>easy-captcha</artifactId>
                 <version>${easyCaptcha.version}</version>
             </dependency>
             <!-- hutool java工具类库  -->

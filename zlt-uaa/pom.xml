@@ -53,8 +53,8 @@
 		<!-- 验证码生成工具 -->
 		<dependency>
 			<groupId>com.github.whvcse</groupId>
-			<artifactId>EasyCaptcha</artifactId>
-			<version>1.5.0</version>
+			<artifactId>easy-captcha</artifactId>
+			<!--<version>1.5.0</version>-->
 		</dependency>
 
 		<dependency>
