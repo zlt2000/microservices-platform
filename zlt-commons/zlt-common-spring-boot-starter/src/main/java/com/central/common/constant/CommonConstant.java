@@ -117,4 +117,12 @@ public interface CommonConstant {
      * 日志链路追踪id日志标志
      */
     String LOG_TRACE_ID = "traceId";
+    /**
+     * 负载均衡策略-版本号 信息头
+     */
+    String Z_L_T_VERSION = "z-l-t-version";
+    /**
+     * 注册中心元数据 版本号
+     */
+    String METADATA_VERSION = "version";
 }
