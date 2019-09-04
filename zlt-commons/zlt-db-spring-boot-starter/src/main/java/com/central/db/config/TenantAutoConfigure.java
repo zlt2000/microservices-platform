@@ -3,7 +3,7 @@ package com.central.db.config;
 import com.baomidou.mybatisplus.core.parser.ISqlParserFilter;
 import com.baomidou.mybatisplus.core.parser.SqlParserHelper;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler;
-import com.central.common.utils.TenantContextHolder;
+import com.central.common.context.TenantContextHolder;
 import com.central.common.properties.TenantProperties;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.NullValue;

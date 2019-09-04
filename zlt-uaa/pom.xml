@@ -54,7 +54,6 @@
 		<dependency>
 			<groupId>com.github.whvcse</groupId>
 			<artifactId>easy-captcha</artifactId>
-			<!--<version>1.5.0</version>-->
 		</dependency>
 
 		<dependency>

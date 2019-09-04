@@ -2,7 +2,7 @@ package com.central.oauth.controller;
 
 import com.central.common.constant.SecurityConstants;
 import com.central.common.utils.ResponseUtil;
-import com.central.common.utils.TenantContextHolder;
+import com.central.common.context.TenantContextHolder;
 import com.central.oauth2.common.token.MobileAuthenticationToken;
 import com.central.oauth2.common.token.OpenIdAuthenticationToken;
 import com.central.oauth2.common.util.AuthUtils;

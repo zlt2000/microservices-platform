@@ -19,7 +19,7 @@ public interface SecurityConstants {
     /**
      * 用户id信息头
      */
-    String USER_ID_HEADER = "x-userId-header";
+    String USER_ID_HEADER = "x-userid-header";
 
     /**
      * 角色信息头
@@ -30,7 +30,6 @@ public interface SecurityConstants {
      * 租户信息头(应用)
      */
     String TENANT_HEADER = "x-tenant-header";
-    String CLIENT_HEADER = "x-client-header";
 
     /**
      * 基础角色

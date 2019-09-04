@@ -3,7 +3,7 @@ package com.central.common.interceptor;
 import cn.hutool.core.util.StrUtil;
 import com.central.common.constant.CommonConstant;
 import com.central.common.constant.SecurityConstants;
-import com.central.common.utils.TenantContextHolder;
+import com.central.common.context.TenantContextHolder;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
