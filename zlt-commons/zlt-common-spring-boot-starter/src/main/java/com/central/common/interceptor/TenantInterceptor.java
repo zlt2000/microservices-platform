@@ -26,6 +26,8 @@ public class TenantInterceptor implements HandlerInterceptor {
         //保存租户id
         if(StrUtil.isNotEmpty(tenantId)){
             TenantContextHolder.setTenant(tenantId);
+        } else {
+            TenantContextHolder.clear();
         }
         return true;
     }
