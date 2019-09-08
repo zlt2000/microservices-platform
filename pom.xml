@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>8</java.version>
         <commons-collections4.version>4.2</commons-collections4.version>
-        <fastjson.version>1.2.54</fastjson.version>
+        <fastjson.version>1.2.60</fastjson.version>
         <swagger.version>2.9.2</swagger.version>
         <swagger.ui.version>1.8.7</swagger.ui.version>
         <swagger.mg.ui.version>1.0.6</swagger.mg.ui.version>
