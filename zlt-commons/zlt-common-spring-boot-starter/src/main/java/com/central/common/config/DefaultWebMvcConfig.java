@@ -10,6 +10,7 @@ import com.central.common.resolver.TokenArgumentResolver;
 import com.central.log.properties.TraceProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -24,6 +25,7 @@ import java.util.List;
  * @date 2019/8/5
  */
 public class DefaultWebMvcConfig extends WebMvcConfigurationSupport {
+	@Lazy
 	@Autowired
 	private UserService userService;
 
