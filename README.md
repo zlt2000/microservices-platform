@@ -136,6 +136,7 @@ central-platform -- 父项目，公共依赖
 │  │  ├─txlcn-tm -- tx-lcn事务管理器[7970]
 │  ├─zlt-demo -- demo一级工程
 │  │  ├─txlcn-demo -- txlcn分布式事务demo
+│  │  ├─seata-demo -- seata分布式事务demo
 │  │  ├─sharding-jdbc-demo -- sharding-jdbc分库分表demo
 │  │  ├─rocketmq-demo -- rocketmq和mq事务demo
 ```
