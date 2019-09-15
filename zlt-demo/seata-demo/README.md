@@ -13,8 +13,11 @@
 
 &nbsp;
 **提供以下两个测试接口**
-1. `http://localhost:9090/placeOrder`：成功下单
-2. `http://localhost:9090/placeOrder`：测试异常回滚，`storage-service`和`order-service`的事务已提交，`account-service`出异常后全局回滚
+
+1. 事务成功：扣除库存成功 > 创建订单成功 > 扣减账户余额成功
+http://localhost:9090/placeOrder 
+1. 事务失败：扣除库存成功 > 创建订单成功 > 扣减账户余额失败，事务回滚
+http://localhost:9090/placeOrderFallBack
 
 &nbsp;
 ## 二、运行步骤

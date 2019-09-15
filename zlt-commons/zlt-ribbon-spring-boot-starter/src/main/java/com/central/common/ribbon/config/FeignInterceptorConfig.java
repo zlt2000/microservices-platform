@@ -37,7 +37,7 @@ public class FeignInterceptorConfig {
      */
     @Bean
     public RequestInterceptor requestInterceptor() {
-        RequestInterceptor requestInterceptor = template -> {
+        return template -> {
             ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder
                     .getRequestAttributes();
             if (attributes != null) {
@@ -77,7 +77,6 @@ public class FeignInterceptorConfig {
                 template.header(CommonConstant.TRACE_ID_HEADER, traceId);
             }
         };
-        return requestInterceptor;
     }
 
     /**
