@@ -1,0 +1,24 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.zlt</groupId>
+        <artifactId>zlt-demo</artifactId>
+        <version>2.6.0</version>
+    </parent>
+    <artifactId>seata-demo</artifactId>
+    <description>seata分布式事务demo</description>
+    <packaging>pom</packaging>
+    <modules>
+        <!-- 业务服务(TM) -->
+        <module>business-service</module>
+        <!-- 订单服务(RM) -->
+        <module>order-service</module>
+        <!-- 库存服务(RM) -->
+        <module>storage-service</module>
+        <!-- 账号服务(RM) -->
+        <module>account-service</module>
+        <!-- 通用配置 -->
+        <module>seata-common-starter</module>
+    </modules>
+</project>

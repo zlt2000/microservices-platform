@@ -1,0 +1,6 @@
+spring:
+  cloud:
+    alibaba:
+      seata:
+        # seata 服务分组，要与服务端nacos-config.txt中service.vgroup_mapping的后缀对应，默认是${spring.application.name}-fescar-service-group
+        tx-service-group: business-service-group

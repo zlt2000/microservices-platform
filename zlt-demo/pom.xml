@@ -16,5 +16,7 @@
         <module>sharding-jdbc-demo</module>
         <!-- rocketmq消息队列demo -->
         <module>rocketmq-demo</module>
+        <!-- seata分布式事务demo -->
+        <module>seata-demo</module>
     </modules>
 </project>
