@@ -18,7 +18,7 @@
         <swagger.version>2.9.2</swagger.version>
         <swagger.ui.version>1.8.7</swagger.ui.version>
         <swagger.mg.ui.version>1.0.6</swagger.mg.ui.version>
-        <swagger.butler.version>1.2.0</swagger.butler.version>
+        <swagger.butler.version>2.0.0</swagger.butler.version>
         <jjwt.version>0.9.1</jjwt.version>
         <druid-starter>1.1.10</druid-starter>
         <jasypt.version>1.14</jasypt.version>
