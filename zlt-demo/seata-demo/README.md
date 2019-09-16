@@ -1,6 +1,13 @@
-[TOC]
-## 一、说明
+## **详细的原理和部署细节请查看**
+[Spring Cloud同步场景分布式事务怎样做？试试Seata](https://mp.weixin.qq.com/s/0yCmHzlXDC9BkbUuEt0_fQ)
+
+
+
+## 说明
+
+
 **包括以下5个模块，分别是**
+
 * `business-service`：业务服务
 * `storage-service`：库存服务
 * `order-service`：订单服务
@@ -18,16 +25,3 @@
 http://localhost:9090/placeOrder 
 1. 事务失败：扣除库存成功 > 创建订单成功 > 扣减账户余额失败，事务回滚
 http://localhost:9090/placeOrderFallBack
-
-&nbsp;
-## 二、运行步骤
-### 2.1. 部署运行seata-server
-`seata`的注册中心和配置中心需改成`nacos`
-**下载地址：**https://github.com/seata/seata/releases
-
-### 2.2. 初始化demo的数据库脚本
-[seata-demo.sql](seata-demo.sql)
-
-### 2.3. 修改各个服务的配置
-* 修改`bootstrap.yml`中的nacos地址
-* 修改`application.yml`中的数据库配置
