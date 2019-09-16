@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.zlt</groupId>
         <artifactId>zlt-demo</artifactId>
-        <version>2.6.0</version>
+        <version>2.7.0</version>
     </parent>
     <artifactId>rocketmq-demo</artifactId>
     <packaging>pom</packaging>
