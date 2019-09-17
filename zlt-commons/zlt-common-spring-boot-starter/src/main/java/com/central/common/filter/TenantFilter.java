@@ -29,7 +29,7 @@ public class TenantFilter extends OncePerRequestFilter {
                 tenantId = request.getHeader(SecurityConstants.TENANT_HEADER);
             }
             //保存租户id
-            if (StrUtil.isEmpty(tenantId)) {
+            if (StrUtil.isNotEmpty(tenantId)) {
                 TenantContextHolder.setTenant(tenantId);
             }
 
