@@ -3,7 +3,7 @@ package com.central.oauth.controller;
 import com.central.common.constant.SecurityConstants;
 import com.central.common.model.Result;
 import com.central.oauth.service.IValidateCodeService;
-import com.wf.captcha.Captcha;
+import com.wf.captcha.base.Captcha;
 import com.wf.captcha.GifCaptcha;
 import com.wf.captcha.utils.CaptchaUtil;
 import org.springframework.beans.factory.annotation.Autowired;

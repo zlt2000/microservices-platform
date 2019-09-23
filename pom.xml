@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.zlt</groupId>
     <artifactId>central-platform</artifactId>
-    <version>2.5.0</version>
+    <version>2.7.0</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -14,11 +14,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>8</java.version>
         <commons-collections4.version>4.2</commons-collections4.version>
-        <fastjson.version>1.2.54</fastjson.version>
+        <fastjson.version>1.2.60</fastjson.version>
         <swagger.version>2.9.2</swagger.version>
         <swagger.ui.version>1.8.7</swagger.ui.version>
         <swagger.mg.ui.version>1.0.6</swagger.mg.ui.version>
-        <swagger.butler.version>1.2.0</swagger.butler.version>
+        <swagger.butler.version>2.0.0</swagger.butler.version>
         <jjwt.version>0.9.1</jjwt.version>
         <druid-starter>1.1.10</druid-starter>
         <jasypt.version>1.14</jasypt.version>
@@ -26,7 +26,7 @@
         <security-oauth2.version>2.3.5.RELEASE</security-oauth2.version>
         <security-jwt.version>1.0.9.RELEASE</security-jwt.version>
         <redisson.version>3.9.1</redisson.version>
-        <easyCaptcha.version>1.5.0</easyCaptcha.version>
+        <easyCaptcha.version>1.6.2</easyCaptcha.version>
         <hutool.version>4.6.1</hutool.version>
         <mybatis-plus-boot-starter.version>3.1.2</mybatis-plus-boot-starter.version>
         <aliyun-sdk-oss>3.4.2</aliyun-sdk-oss>
@@ -40,6 +40,8 @@
         <fastdfs-client.version>1.26.5</fastdfs-client.version>
         <userAgent.version>1.21</userAgent.version>
         <transmittable.version>2.11.0</transmittable.version>
+        <lettuce.version>5.1.8.RELEASE</lettuce.version>
+        <banner.versio>1.0.2</banner.versio>
         <platform-bom>Cairo-SR3</platform-bom>
         <spring-cloud-alibaba-dependencies.version>2.0.0.RELEASE</spring-cloud-alibaba-dependencies.version>
         <spring-boot-dependencies.version>2.0.9.RELEASE</spring-boot-dependencies.version>
@@ -207,7 +209,7 @@
             <!-- 验证码生成工具 -->
             <dependency>
                 <groupId>com.github.whvcse</groupId>
-                <artifactId>EasyCaptcha</artifactId>
+                <artifactId>easy-captcha</artifactId>
                 <version>${easyCaptcha.version}</version>
             </dependency>
             <!-- hutool java工具类库  -->
@@ -303,6 +305,16 @@
                 <artifactId>transmittable-thread-local</artifactId>
                 <version>${transmittable.version}</version>
             </dependency>
+            <dependency>
+                <groupId>io.lettuce</groupId>
+                <artifactId>lettuce-core</artifactId>
+                <version>${lettuce.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.nepxion</groupId>
+                <artifactId>banner</artifactId>
+                <version>${banner.versio}</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -359,10 +371,6 @@
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
-        </repository>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
         </repository>
     </repositories>
     <distributionManagement>

@@ -1,0 +1,6 @@
+org.springframework.context.ApplicationContextInitializer=\
+com.central.common.config.BannerInitializer
+
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.central.common.filter.TenantFilter,\
+com.central.common.filter.TraceFilter

@@ -136,6 +136,7 @@ central-platform -- 父项目，公共依赖
 │  │  ├─txlcn-tm -- tx-lcn事务管理器[7970]
 │  ├─zlt-demo -- demo一级工程
 │  │  ├─txlcn-demo -- txlcn分布式事务demo
+│  │  ├─seata-demo -- seata分布式事务demo
 │  │  ├─sharding-jdbc-demo -- sharding-jdbc分库分表demo
 │  │  ├─rocketmq-demo -- rocketmq和mq事务demo
 ```
@@ -143,14 +144,20 @@ central-platform -- 父项目，公共依赖
 &nbsp;
 ## 5. 交流反馈
 * 有问题先看看 [F&Q](https://www.kancloud.cn/zlt2000/microservices-platform/981382) 中有没有相关的回答
+
 * 欢迎提交`ISSUS`，请写清楚问题的具体原因，重现步骤和环境(上下文)
+
 * 项目/微服务交流请进群：<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=ead54a4656cdd4377071855b016b292b1361103b29e94042e1e57499f6b69c38"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="微服务技术交流群" title="微服务技术交流群"></a>
-* 个人邮箱：zltdiablo@163.com
+
 * 个人博客：https://blog.csdn.net/zlt2000
+
+* 个人邮箱：zltdiablo@163.com
+
+* 个人公众号：[陶陶技术笔记](https://gitee.com/zlt2000/images/raw/master/公众号.jpg)
+
 
 &nbsp;
 ## 6. 截图（点击可大图预览）
-
 <table>
     <tr>
         <td><img src="https://gitee.com/zlt2000/images/raw/master/首页.png"/></td>

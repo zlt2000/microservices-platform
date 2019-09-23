@@ -84,6 +84,9 @@
             layer.load(2);
             $.ajax({
                 url: config.base_server + 'api-uaa/oauth/user/token',
+                xhrFields: {
+                    withCredentials: true
+                },
                 data: obj.field,
                 type: 'POST',
                 beforeSend: function (xhr) {

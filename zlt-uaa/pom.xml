@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.zlt</groupId>
 		<artifactId>central-platform</artifactId>
-		<version>2.5.0</version>
+		<version>2.7.0</version>
 	</parent>
 	<artifactId>zlt-uaa</artifactId>
 	<description>认证中心</description>
@@ -53,8 +53,7 @@
 		<!-- 验证码生成工具 -->
 		<dependency>
 			<groupId>com.github.whvcse</groupId>
-			<artifactId>EasyCaptcha</artifactId>
-			<version>1.5.0</version>
+			<artifactId>easy-captcha</artifactId>
 		</dependency>
 
 		<dependency>

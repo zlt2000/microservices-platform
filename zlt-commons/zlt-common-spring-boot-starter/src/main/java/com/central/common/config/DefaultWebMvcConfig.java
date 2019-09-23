@@ -1,13 +1,12 @@
 package com.central.common.config;
 
 import com.central.common.feign.UserService;
-import com.central.common.interceptor.TenantInterceptor;
-import com.central.common.interceptor.TraceInterceptor;
 import com.central.common.resolver.ClientArgumentResolver;
 import com.central.common.resolver.TokenArgumentResolver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 import java.util.List;
@@ -19,22 +18,9 @@ import java.util.List;
  * @date 2019/8/5
  */
 public class DefaultWebMvcConfig extends WebMvcConfigurationSupport {
+	@Lazy
 	@Autowired
 	private UserService userService;
-
-    /**
-     * 配置SpringMVC拦截器，添加租户拦截器
-     */
-	@Override
-	protected void addInterceptors(InterceptorRegistry registry) {
-		//租户拦截器
-		registry.addInterceptor(new TenantInterceptor()).addPathPatterns("/**");
-
-		//日志链路追踪拦截器
-		registry.addInterceptor(new TraceInterceptor()).addPathPatterns("/**");
-
-		super.addInterceptors(registry);
-	}
 
 	/**
 	 * Token参数解析
@@ -47,5 +33,18 @@ public class DefaultWebMvcConfig extends WebMvcConfigurationSupport {
 		argumentResolvers.add(new TokenArgumentResolver(userService));
 		//注入应用信息
 		argumentResolvers.add(new ClientArgumentResolver());
+	}
+
+	/**
+	 * 设置资源文件目录
+	 * @param registry
+	 */
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/**")
+				.addResourceLocations("classpath:/resources/")
+				.addResourceLocations("classpath:/static/")
+				.addResourceLocations("classpath:/public/");
+		super.addResourceHandlers(registry);
 	}
 }

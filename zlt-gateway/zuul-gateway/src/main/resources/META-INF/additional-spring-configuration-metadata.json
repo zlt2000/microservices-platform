@@ -1,0 +1,16 @@
+{
+  "properties": [
+    {
+      "name": "zlt.gateway.dynamicRoute.enabled",
+      "description": "是否开启动态路由.",
+      "type": "java.lang.Boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "zlt.gateway.dynamicRoute.dataType",
+      "description": "动态路由的数据类型.",
+      "type": "java.lang.String",
+      "defaultValue": "nacos"
+    }
+  ]
+}

@@ -46,8 +46,6 @@ public class ClientServiceImpl extends SuperServiceImpl<ClientMapper, Client> im
                 , LOCK_KEY_CLIENTID+clientId
                 , new QueryWrapper<Client>().eq("client_id", clientId)
                 , clientId + "已存在");
-        // 写入redis缓存
-        redisRepository.set(clientRedisKey(client.getClientId()), client);
         return Result.succeed("操作成功");
     }
 

@@ -3,6 +3,7 @@ package com.central.oauth2.common.service.impl;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.central.common.constant.CommonConstant;
+import com.central.common.context.TenantContextHolder;
 import com.central.common.model.SysMenu;
 import com.central.oauth2.common.properties.SecurityProperties;
 import com.central.oauth2.common.service.IPermissionService;
@@ -77,6 +78,10 @@ public abstract class DefaultPermissionServiceImpl implements IPermissionService
                 log.warn("角色列表为空：{}", authentication.getPrincipal());
                 return false;
             }
+
+            //保存租户信息
+            String clientId = auth2Authentication.getOAuth2Request().getClientId();
+            TenantContextHolder.setTenant(clientId);
 
             String roleCodes = grantedAuthorityList.stream().map(SimpleGrantedAuthority::getAuthority).collect(Collectors.joining(", "));
             List<SysMenu> menuList = findMenuByRoleCodes(roleCodes);

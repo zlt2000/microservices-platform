@@ -1,30 +1,30 @@
-spring:
+#spring:
   # sentinel动态配置规则
-  cloud:
-    sentinel:
-      zuul:
-        enabled: true
-        order:
-          pre: 2000
-          post: 500
-          error: -100
-      filter:
-        enabled: false
-      datasource:
+#  cloud:
+#    sentinel:
+#      zuul:
+#        enabled: true
+#        order:
+#          pre: 2000
+#          post: 500
+#          error: -100
+#      filter:
+#        enabled: false
+#      datasource:
         # 限流
-        ds1:
-          nacos:
-            server-addr: ${zlt.nacos.server-addr}
-            dataId: ${spring.application.name}-sentinel-gw-flow
-            groupId: DEFAULT_GROUP
-            rule-type: gw-flow
+#        ds1:
+#          nacos:
+#            server-addr: ${zlt.nacos.server-addr}
+#            dataId: ${spring.application.name}-sentinel-gw-flow
+#            groupId: DEFAULT_GROUP
+#            rule-type: gw-flow
         # api分组
-        ds2:
-          nacos:
-            server-addr: ${zlt.nacos.server-addr}
-            dataId: ${spring.application.name}-sentinel-gw-api-group
-            groupId: DEFAULT_GROUP
-            rule-type: gw-api-group
+#        ds2:
+#          nacos:
+#            server-addr: ${zlt.nacos.server-addr}
+#            dataId: ${spring.application.name}-sentinel-gw-api-group
+#            groupId: DEFAULT_GROUP
+#            rule-type: gw-api-group
 
 zlt:
   oauth2:
@@ -61,6 +61,10 @@ zlt:
         #白名单
         includeClientIds:
           - webApp
+  gateway:
+    #网关动态路由
+    dynamicRoute:
+      enabled: true
 
 
 zuul:
@@ -73,8 +77,6 @@ zuul:
       threadPoolKeyPrefix: api-gateway
   #关闭重试
   retryable: false
-  #/oauth/token需要请求头处理
-  sensitive-headers:
   ignored-headers: Access-Control-Allow-Credentials,Access-Control-Allow-Origin,Access-Control-Allow-Methods
   add-host-header: true
   routes:
@@ -82,53 +84,67 @@ zuul:
       path: /api-uaa/**
       service-id: uaa-server
       strip-prefix: true
+      sensitive-headers: '*'
       custom-sensitive-headers: true
     auth-login-page:
       path: /login.html
       service-id: uaa-server
       strip-prefix: true
+      sensitive-headers: '*'
       custom-sensitive-headers: true
     auth-login-process:
       path: /user/login
       service-id: uaa-server
       strip-prefix: true
+      sensitive-headers: '*'
       custom-sensitive-headers: true
     auth-login-token:
       path: /oauth/token
       service-id: uaa-server
       strip-prefix: true
+      sensitive-headers: '*'
       custom-sensitive-headers: true
     auth-login-authorize:
       path: /oauth/authorize
       service-id: uaa-server
       strip-prefix: true
+      sensitive-headers: '*'
       custom-sensitive-headers: true
     auth-check-process:
       path: /oauth/check_token
       service-id: uaa-server
       strip-prefix: true
+      sensitive-headers: '*'
       custom-sensitive-headers: true
     user:
       path: /api-user/**
       service-id: user-center
       strip-prefix: true
+      sensitive-headers: '*'
       custom-sensitive-headers: true
     file:
       path: /api-file/**
       service-id: file-center
       strip-prefix: true
+      sensitive-headers: '*'
+      custom-sensitive-headers: true
     log:
       path: /api-log/**
       service-id: log-center
       strip-prefix: true
+      sensitive-headers: '*'
+      custom-sensitive-headers: true
     generator:
       path: /api-generator/**
       service-id: code-generator
       strip-prefix: true
+      sensitive-headers: '*'
+      custom-sensitive-headers: true
     search:
       path: /api-search/**
       service-id: search-center
       strip-prefix: true
+      sensitive-headers: '*'
       custom-sensitive-headers: true
   ssl-hostname-validation-enabled: false
 

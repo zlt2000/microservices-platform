@@ -1,0 +1,10 @@
+server:
+  port: 9090
+
+spring:
+  application:
+    name: business-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.28.130:8848

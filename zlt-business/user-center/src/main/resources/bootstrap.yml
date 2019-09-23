@@ -17,3 +17,5 @@ spring:
         refreshable-dataids: common.yml
       discovery:
         server-addr: ${zlt.nacos.server-addr}
+#        metadata:
+#          version: zlt
