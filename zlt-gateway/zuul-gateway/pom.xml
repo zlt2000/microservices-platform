@@ -64,7 +64,7 @@
         </dependency>
         <!-- swagger -->
         <dependency>
-            <groupId>com.didispace</groupId>
+            <groupId>com.github.zlt2000</groupId>
             <artifactId>swagger-butler-core</artifactId>
         </dependency>
 
