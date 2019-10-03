@@ -10,7 +10,7 @@ public interface CommonConstant {
     /**
      * 项目版本号(banner使用)
      */
-    String PROJECT_VERSION = "2.7.1";
+    String PROJECT_VERSION = "2.7.2";
 
     /**
      * token请求头名称
