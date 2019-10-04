@@ -1,9 +1,8 @@
 package ${package}.${moduleName}.service;
 
-import ${package}.${moduleName}.entity.${className};
+import ${package}.${moduleName}.model.${className};
 import com.central.common.model.PageResult;
-import com.central.common.model.Result;
-import com.baomidou.mybatisplus.extension.service.IService;
+import ${package}.common.service.ISuperService;
 
 import java.util.Map;
 
@@ -13,7 +12,7 @@ import java.util.Map;
  * @author ${author}
  * @date ${datetime}
  */
-public interface I${className}Service extends IService<${className}> {
+public interface I${className}Service extends ISuperService<${className}> {
     /**
      * 列表
      * @param params

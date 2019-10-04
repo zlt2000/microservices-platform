@@ -11,7 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
 import ${package}.${moduleName}.model.${className};
-import ${package}.${moduleName}.service.${className}Service;
+import ${package}.${moduleName}.service.I${className}Service;
 import com.central.common.model.PageResult;
 import com.central.common.model.Result;
 
@@ -37,7 +37,7 @@ public class ${className}Controller {
             @ApiImplicitParam(name = "page", value = "分页起始位置", required = true, dataType = "Integer"),
             @ApiImplicitParam(name = "limit", value = "分页结束位置", required = true, dataType = "Integer")
     })
-    @GetMapping("/${className}")
+    @GetMapping
     public PageResult list(@RequestParam Map<String, Object> params) {
         return ${classname}Service.findList(params);
     }
@@ -46,9 +46,9 @@ public class ${className}Controller {
      * 查询
      */
     @ApiOperation(value = "查询")
-    @GetMapping("/${className}/{id}")
+    @GetMapping("/{${pk.attrname}}")
     public Result findUserById(@PathVariable Long ${pk.attrname}) {
-        ${className} model = ${classname}Service.getById(id);
+        ${className} model = ${classname}Service.getById(${pk.attrname});
         return Result.succeed(model, "查询成功");
     }
 
@@ -56,9 +56,9 @@ public class ${className}Controller {
      * 新增or更新
      */
     @ApiOperation(value = "保存")
-    @PostMapping("/${className}")
+    @PostMapping
     public Result save(@RequestBody ${className} ${classname}) {
-        ${classname}Service.saveOrUpdateUser(${classname});
+        ${classname}Service.saveOrUpdate(${classname});
         return Result.succeed("保存成功");
     }
 
@@ -66,7 +66,7 @@ public class ${className}Controller {
      * 删除
      */
     @ApiOperation(value = "删除")
-    @DeleteMapping("/${className}/{id}")
+    @DeleteMapping("/{id}")
     public Result delete(@PathVariable Long ${pk.attrname}) {
         ${classname}Service.removeById(${pk.attrname});
         return Result.succeed("删除成功");
