@@ -41,11 +41,15 @@
         <userAgent.version>1.21</userAgent.version>
         <transmittable.version>2.11.0</transmittable.version>
         <lettuce.version>5.1.8.RELEASE</lettuce.version>
-        <banner.versio>1.0.2</banner.versio>
-        <platform-bom>Cairo-SR3</platform-bom>
-        <spring-cloud-alibaba-dependencies.version>2.0.0.RELEASE</spring-cloud-alibaba-dependencies.version>
-        <spring-boot-dependencies.version>2.0.9.RELEASE</spring-boot-dependencies.version>
-        <spring-cloud-dependencies.version>Finchley.SR4</spring-cloud-dependencies.version>
+        <banner.version>1.0.2</banner.version>
+        <commons-beanutils.version>1.9.4</commons-beanutils.version>
+        <spring-social-security.version>1.1.6.RELEASE</spring-social-security.version>
+        <commons-io.version>2.6</commons-io.version>
+        <servlet-api.version>4.0.1</servlet-api.version>
+        <!--<platform-bom>Cairo-SR3</platform-bom>-->
+        <spring-cloud-alibaba-dependencies.version>2.1.0.RELEASE</spring-cloud-alibaba-dependencies.version>
+        <spring-boot-dependencies.version>2.1.8.RELEASE</spring-boot-dependencies.version>
+        <spring-cloud-dependencies.version>Greenwich.SR3</spring-cloud-dependencies.version>
         <spring-boot-maven-plugin.version>2.1.1.RELEASE</spring-boot-maven-plugin.version>
         <docker-maven-plugin.version>1.2.0</docker-maven-plugin.version>
         <sonar.exclusions>zlt-job/**/*, zlt-register/**/*, zlt-web/**/*</sonar.exclusions>
@@ -69,6 +73,7 @@
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
+            <version>${commons-beanutils.version}</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -313,7 +318,22 @@
             <dependency>
                 <groupId>com.nepxion</groupId>
                 <artifactId>banner</artifactId>
-                <version>${banner.versio}</version>
+                <version>${banner.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.social</groupId>
+                <artifactId>spring-social-security</artifactId>
+                <version>${spring-social-security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>${servlet-api.version}</version>
             </dependency>
 
             <dependency>
@@ -323,13 +343,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
+            <!--<dependency>
                 <groupId>io.spring.platform</groupId>
                 <artifactId>platform-bom</artifactId>
                 <version>${platform-bom}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
+            </dependency>-->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>

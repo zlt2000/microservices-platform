@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Import;
  *
  * @author zlt
  */
+@Configuration
 public class TokenStoreConfig {
     @Configuration
     @ConditionalOnProperty(prefix = "zlt.oauth2.token.store", name = "type", havingValue = "db")

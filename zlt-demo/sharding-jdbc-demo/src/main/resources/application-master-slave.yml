@@ -4,19 +4,19 @@ sharding:
       names: ds-master,ds-slave-0,ds-slave-1
       ds-master:
         type: com.alibaba.druid.pool.DruidDataSource
-        driver-class-name: com.mysql.jdbc.Driver
+        driver-class-name: com.mysql.cj.jdbc.Driver
         url: jdbc:mysql://${zlt.datasource.ip}:3306/demo_ds_master?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
         username: ${zlt.datasource.username}
         password: ${zlt.datasource.password}
       ds-slave-0:
         type: com.alibaba.druid.pool.DruidDataSource
-        driver-class-name: com.mysql.jdbc.Driver
+        driver-class-name: com.mysql.cj.jdbc.Driver
         url: jdbc:mysql://${zlt.datasource.ip}:3306/demo_ds_slave_0?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
         username: ${zlt.datasource.username}
         password: ${zlt.datasource.password}
       ds-slave-1:
         type: com.alibaba.druid.pool.DruidDataSource
-        driver-class-name: com.mysql.jdbc.Driver
+        driver-class-name: com.mysql.cj.jdbc.Driver
         url: jdbc:mysql://${zlt.datasource.ip}:3306/demo_ds_slave_1?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
         username: ${zlt.datasource.username}
         password: ${zlt.datasource.password}

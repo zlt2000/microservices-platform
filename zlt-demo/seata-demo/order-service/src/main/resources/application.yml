@@ -3,7 +3,7 @@ spring:
     url: jdbc:mysql://192.168.28.130:3306/seata-demo?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
     username: root
     password: 1q2w3e4r
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
   cloud:
     alibaba:
       seata:

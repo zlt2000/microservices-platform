@@ -21,7 +21,7 @@
         // 回显user数据
         let indexName = admin.getTempData('indexName');
         if (indexName) {
-            admin.req('api-search/admin/index/'+indexName, {}, function (data) {
+            admin.req('api-search/admin/index', {'indexName':indexName}, function (data) {
                 layer.closeAll('loading');
                 if (0 == data.resp_code) {
                     $('#data').html(syntaxHighlight(data.datas));

@@ -1,7 +1,6 @@
 package com.central.oauth.config;
 
 import com.central.oauth.service.impl.RedisClientDetailsService;
-import com.central.oauth2.common.annotation.EnableTokenStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.annotation.Configuration;
@@ -30,7 +29,6 @@ import java.util.Arrays;
  */
 @Configuration
 @EnableAuthorizationServer
-@EnableTokenStore
 @AutoConfigureAfter(AuthorizationServerEndpointsConfigurer.class)
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
     /**

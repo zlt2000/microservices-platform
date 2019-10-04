@@ -3,7 +3,7 @@ spring:
     url: jdbc:mysql://${zlt.datasource.ip}:3306/user-center?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
     username: ${zlt.datasource.username}
     password: ${zlt.datasource.password}
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
 mybatis-plus:
   mapper-locations: classpath:/mapper/*Mapper.xml

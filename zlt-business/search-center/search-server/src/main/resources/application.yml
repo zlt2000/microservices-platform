@@ -2,7 +2,10 @@ spring:
   data:
     elasticsearch:
       cluster-name: ${zlt.elasticsearch.cluster-name}
-      cluster-nodes: ${zlt.elasticsearch.cluster-nodes}
+      cluster-nodes: ${zlt.elasticsearch.cluster-nodes}:9300
+  elasticsearch:
+    rest:
+      uris: ${zlt.elasticsearch.cluster-nodes}:9200
 
 zlt:
   indices:

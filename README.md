@@ -2,11 +2,12 @@
 
 <p align="center">
   <img src='https://img.shields.io/badge/license-Apache%202-4EB1BA.svg' alt='License'/>
-  <img src="https://img.shields.io/badge/Spring%20Boot-2.0.9.RELEASE-blue" alt="Downloads"/>
-  <img src="https://img.shields.io/badge/Spring%20Cloud-Finchley.SR4-blue" alt="Downloads"/>
-  <img src="https://img.shields.io/badge/Spring%20Cloud%20Alibaba-2.0.0.RELEASE-blue" alt="Downloads"/>
+  <img src="https://img.shields.io/badge/Spring%20Boot-2.1.8.RELEASE-blue" alt="Downloads"/>
+  <img src="https://img.shields.io/badge/Spring%20Cloud-Greenwich.SR3-blue" alt="Downloads"/>
+  <img src="https://img.shields.io/badge/Spring%20Cloud%20Alibaba-2.1.0.RELEASE-blue" alt="Downloads"/>
   <img src="https://img.shields.io/badge/Layui-EasyWeb-yellowgreen" alt="Downloads"/>
 </p>
+
 
 
 ## 如果您觉得有帮助，请点右上角 "Star" 支持一下谢谢
@@ -36,8 +37,6 @@
 * 引入组件化的思想实现高内聚低耦合并且高度可配置化
 * 注重代码规范，严格控制包依赖，每个工程基本都是最小依赖
 * 非常适合学习和企业中使用
-
-> 重构于开源项目OCP&cp：https://gitee.com/owenwangwen/open-capacity-platform
 
 &nbsp;
 

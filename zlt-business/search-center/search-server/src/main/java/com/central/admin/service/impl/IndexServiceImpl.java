@@ -1,6 +1,7 @@
 package com.central.admin.service.impl;
 
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.carrotsearch.hppc.cursors.ObjectCursor;
 import com.central.admin.model.IndexDto;
 import com.central.admin.model.IndexVo;
@@ -115,7 +116,12 @@ public class IndexServiceImpl implements IIndexService {
 
         IndexMetaData indexMetaData = stat.get(indexName);
         //获取settings数据
-        Map<String, String> settMap = indexMetaData.getSettings().getAsMap();
+        String settingsStr = indexMetaData.getSettings().toString();
+        Object settingsObj = null;
+        if (StrUtil.isNotEmpty(settingsStr)) {
+            settingsObj = JSONObject.parse(settingsStr);
+        }
+
         ImmutableOpenMap<String, MappingMetaData> mappOpenMap = indexMetaData.getMappings();
         ImmutableOpenMap<String, AliasMetaData> aliasesOpenMap = indexMetaData.getAliases();
         Map<String, Object> result = new HashMap<>(1);
@@ -123,7 +129,7 @@ public class IndexServiceImpl implements IIndexService {
         Map<String, Object> mappMap = new HashMap<>(mappOpenMap.size());
         Map<String, Object> aliasesMap = new HashMap<>(aliasesOpenMap.size());
         indexMap.put("aliases", aliasesMap);
-        indexMap.put("settings", settMap);
+        indexMap.put("settings", settingsObj);
         indexMap.put("mappings", mappMap);
         result.put(indexName, indexMap);
         //获取mappings数据

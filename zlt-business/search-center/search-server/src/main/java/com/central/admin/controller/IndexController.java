@@ -52,8 +52,8 @@ public class IndexController {
     /**
      * 索引明细
      */
-    @GetMapping("/index/{indexName}")
-    public Result<Map<String, Object>> showIndex(@PathVariable String indexName) {
+    @GetMapping("/index")
+    public Result<Map<String, Object>> showIndex(String indexName) {
         Map<String, Object> result = indexService.show(indexName);
         return Result.succeed(result);
     }
@@ -61,8 +61,8 @@ public class IndexController {
     /**
      * 删除索引
      */
-    @DeleteMapping("/index/{indexName}")
-    public Result deleteIndex(@PathVariable String indexName) {
+    @DeleteMapping("/index")
+    public Result deleteIndex(String indexName) {
         indexService.delete(indexName);
         return Result.succeed("操作成功");
     }
