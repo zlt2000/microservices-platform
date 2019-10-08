@@ -1,6 +1,6 @@
-package ${package}.${moduleName}.dao;
+package ${package}.${moduleName}.mapper;
 
-import ${package}.${moduleName}.entity.${className};
+import ${package}.${moduleName}.model.${className};
 import com.central.db.mapper.SuperMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
@@ -14,7 +14,6 @@ import java.util.Map;
  * @author ${author}
  * @date ${datetime}
  */
-@Mapper
 public interface ${className}Mapper extends SuperMapper<${className}> {
     /**
      * 分页查询用户列表

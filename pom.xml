@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.zlt</groupId>
     <artifactId>central-platform</artifactId>
-    <version>2.7.0</version>
+    <version>2.7.2</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -18,7 +18,7 @@
         <swagger.version>2.9.2</swagger.version>
         <swagger.ui.version>1.8.7</swagger.ui.version>
         <swagger.mg.ui.version>1.0.6</swagger.mg.ui.version>
-        <swagger.butler.version>2.0.0</swagger.butler.version>
+        <swagger.butler.version>2.0.1</swagger.butler.version>
         <jjwt.version>0.9.1</jjwt.version>
         <druid-starter>1.1.10</druid-starter>
         <jasypt.version>1.14</jasypt.version>
@@ -202,7 +202,7 @@
                 <version>${swagger.mg.ui.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.didispace</groupId>
+                <groupId>com.github.zlt2000</groupId>
                 <artifactId>swagger-butler-core</artifactId>
                 <version>${swagger.butler.version}</version>
             </dependency>

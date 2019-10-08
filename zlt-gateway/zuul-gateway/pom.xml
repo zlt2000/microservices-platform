@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.zlt</groupId>
         <artifactId>zlt-gateway</artifactId>
-        <version>2.7.0</version>
+        <version>2.7.2</version>
     </parent>
     <artifactId>zuul-gateway</artifactId>
     <description>zuul网关</description>
@@ -64,7 +64,7 @@
         </dependency>
         <!-- swagger -->
         <dependency>
-            <groupId>com.didispace</groupId>
+            <groupId>com.github.zlt2000</groupId>
             <artifactId>swagger-butler-core</artifactId>
         </dependency>
 

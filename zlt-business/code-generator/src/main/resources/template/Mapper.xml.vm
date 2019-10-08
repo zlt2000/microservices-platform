@@ -4,6 +4,5 @@
 <mapper namespace="${package}.${moduleName}.mapper.${className}Mapper">
     <select id="findList" resultType="${package}.${moduleName}.model.${className}">
         select * from ${tableName} t
-        order by t.id desc
     </select>
 </mapper>

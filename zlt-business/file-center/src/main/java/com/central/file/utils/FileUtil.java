@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 
+import cn.hutool.core.util.IdUtil;
 import com.central.file.model.FileInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -22,10 +23,10 @@ public class FileUtil {
 	}
 
 	public static FileInfo getFileInfo(MultipartFile file) throws Exception {
-		String md5 = fileMd5(file.getInputStream());
+		//String md5 = fileMd5(file.getInputStream());
 		FileInfo fileInfo = new FileInfo();
 		// 将文件的md5设置为文件表的id
-		fileInfo.setId(md5);
+		fileInfo.setId(IdUtil.fastSimpleUUID());
 		fileInfo.setName(file.getOriginalFilename());
 		fileInfo.setContentType(file.getContentType());
 		fileInfo.setIsImg(fileInfo.getContentType().startsWith("image/"));

@@ -1,13 +1,13 @@
 package ${package}.${moduleName}.model;
 
-import com.baomidou.mybatisplus.annotations.TableName;
+import ${package}.common.model.SuperEntity;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.EqualsAndHashCode;
 #if(${hasBigDecimal})
 import java.math.BigDecimal;
 #end
-import java.io.Serializable;
 import java.util.Date;
 
 /**
