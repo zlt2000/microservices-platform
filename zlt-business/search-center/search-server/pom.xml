@@ -16,7 +16,15 @@
         </dependency>
         <dependency>
             <groupId>com.zlt</groupId>
+            <artifactId>zlt-common-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.zlt</groupId>
             <artifactId>search-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
         <dependency>

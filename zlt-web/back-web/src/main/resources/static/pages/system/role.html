@@ -72,7 +72,7 @@
         table.render({
             elem: '#role-table',
             url: config.base_server + 'api-user/roles',
-            headers:{'Authorization': 'bearer ' + config.getToken().access_token},
+            headers:{'Authorization': 'Bearer ' + config.getToken().access_token},
             page: true,
             cols: [[
                 {type: 'numbers'},

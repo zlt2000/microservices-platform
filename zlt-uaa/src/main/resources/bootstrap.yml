@@ -1,5 +1,9 @@
 server:
   port: 8000
+  servlet:
+    session:
+      cookie:
+        name: OAUTH2SESSION
 
 zlt:
   nacos:

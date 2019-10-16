@@ -4,9 +4,7 @@ import com.central.common.constant.SecurityConstants;
 import com.central.oauth.mobile.MobileAuthenticationSecurityConfig;
 import com.central.oauth.openid.OpenIdAuthenticationSecurityConfig;
 import com.central.common.config.DefaultPasswordConfig;
-import com.central.oauth2.common.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -32,7 +30,6 @@ import javax.annotation.Resource;
  * @author zlt
  */
 @Configuration
-@EnableConfigurationProperties(SecurityProperties.class)
 @Import(DefaultPasswordConfig.class)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -52,9 +49,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Resource
 	private LogoutHandler oauthLogoutHandler;
-
-	@Autowired
-	private SecurityProperties securityProperties;
 
 	@Autowired
 	private ValidateCodeSecurityConfig validateCodeSecurityConfig;

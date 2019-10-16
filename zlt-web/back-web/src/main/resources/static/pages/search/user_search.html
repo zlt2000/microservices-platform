@@ -36,7 +36,7 @@
             elem: '#userSearch-table',
             url: config.base_server + 'api-user/users/search',
             method: 'GET',
-            headers:{'Authorization': 'bearer ' + config.getToken().access_token},
+            headers:{'Authorization': 'Bearer ' + config.getToken().access_token},
             page: true,
             cols: [[
                 {type: 'numbers'},

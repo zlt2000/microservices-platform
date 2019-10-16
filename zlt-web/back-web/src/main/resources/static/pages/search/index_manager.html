@@ -33,7 +33,7 @@
             elem: '#index-table',
             url: config.base_server + 'api-search/admin/indices',
             method: 'GET',
-            headers:{'Authorization': 'bearer ' + config.getToken().access_token},
+            headers:{'Authorization': 'Bearer ' + config.getToken().access_token},
             page: false,
             cols: [[
                 {type: 'numbers'},

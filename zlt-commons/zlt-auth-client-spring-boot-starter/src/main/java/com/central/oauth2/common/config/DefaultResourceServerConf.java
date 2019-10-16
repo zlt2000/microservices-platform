@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
@@ -52,12 +53,14 @@ public class DefaultResourceServerConf extends ResourceServerConfigurerAdapter {
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyRequest();
         setAuthenticate(authorizedUrl);
-        //允许使用iframe 嵌套，避免swagger-ui 不被加载的问题
-        http.headers()
-                    .frameOptions()
-                    .disable()
-                    .and()
-                .csrf().disable();
+
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                .and()
+                    .httpBasic().disable()
+                    .headers()
+                    .frameOptions().disable()
+                .and()
+                    .csrf().disable();
     }
 
     /**

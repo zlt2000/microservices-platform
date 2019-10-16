@@ -15,6 +15,10 @@
 		</dependency>
 		<dependency>
 			<groupId>com.zlt</groupId>
+			<artifactId>zlt-common-spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.zlt</groupId>
 			<artifactId>zlt-auth-client-spring-boot-starter</artifactId>
 		</dependency>
 		<dependency>
@@ -32,6 +36,10 @@
 		<dependency>
 			<groupId>com.zlt</groupId>
 			<artifactId>zlt-sentinel-spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.zlt</groupId>
+			<artifactId>zlt-redis-spring-boot-starter</artifactId>
 		</dependency>
 
 		<dependency>

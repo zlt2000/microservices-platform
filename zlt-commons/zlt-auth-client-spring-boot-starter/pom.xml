@@ -13,16 +13,13 @@
     <description>认证客户端通用组件</description>
     <dependencies>
         <dependency>
-            <groupId>com.zlt</groupId>
-            <artifactId>zlt-common-spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-oauth2</artifactId>
         </dependency>
         <dependency>
             <groupId>com.zlt</groupId>
             <artifactId>zlt-redis-spring-boot-starter</artifactId>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>

@@ -76,7 +76,7 @@
             elem: '#app-table',
             url: config.base_server + 'api-uaa/clients/list',
             method: 'GET',
-            headers:{'Authorization': 'bearer ' + config.getToken().access_token},
+            headers:{'Authorization': 'Bearer ' + config.getToken().access_token},
             page: true,
             cols: [[
                 {type: 'numbers'},

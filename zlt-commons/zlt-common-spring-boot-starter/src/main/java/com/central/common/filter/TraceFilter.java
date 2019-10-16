@@ -4,9 +4,11 @@ import cn.hutool.core.util.StrUtil;
 import com.central.common.constant.CommonConstant;
 import com.central.log.properties.TraceProperties;
 import org.slf4j.MDC;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.annotation.Resource;
+import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +21,7 @@ import java.io.IOException;
  * @author zlt
  * @date 2019/9/15
  */
+@ConditionalOnClass(Filter.class)
 public class TraceFilter extends OncePerRequestFilter {
     @Resource
     private TraceProperties traceProperties;

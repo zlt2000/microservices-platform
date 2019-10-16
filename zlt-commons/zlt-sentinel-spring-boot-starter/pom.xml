@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>com.zlt</groupId>
-            <artifactId>zlt-common-spring-boot-starter</artifactId>
+            <artifactId>zlt-common-core</artifactId>
         </dependency>
         <dependency>
             <groupId>com.alibaba.cloud</groupId>

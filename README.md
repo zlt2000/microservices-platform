@@ -109,6 +109,7 @@ central-platform -- 父项目，公共依赖
 │  │  │  ├─search-server -- 搜索中心服务端[7100]
 │  │─zlt-commons -- 通用工具一级工程
 │  │  ├─zlt-auth-client-spring-boot-starter -- 封装spring security client端的通用操作逻辑
+│  │  ├─zlt-common-core -- 封装通用操作逻辑
 │  │  ├─zlt-common-spring-boot-starter -- 封装通用操作逻辑
 │  │  ├─zlt-db-spring-boot-starter -- 封装数据库通用操作逻辑
 │  │  ├─zlt-log-spring-boot-starter -- 封装log通用操作逻辑
@@ -119,6 +120,7 @@ central-platform -- 父项目，公共依赖
 │  ├─zlt-config -- 配置中心
 │  ├─zlt-doc -- 项目文档
 │  ├─zlt-gateway -- api网关一级工程
+│  │  ├─sc-gateway -- spring-cloud-gateway[9900]
 │  │  ├─zuul-gateway -- netflix-zuul[9900]
 │  ├─zlt-job -- 分布式任务调度一级工程
 │  │  ├─job-admin -- 任务管理器[8081]

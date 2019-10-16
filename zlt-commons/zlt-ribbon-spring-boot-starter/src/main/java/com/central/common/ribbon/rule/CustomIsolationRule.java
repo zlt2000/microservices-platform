@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
  * @date 2019/9/3
  */
 public class CustomIsolationRule extends RoundRobinRule {
+    private final static String KEY_DEFAULT = "default";
     /**
      * 优先根据版本号取实例
      */
@@ -26,7 +27,13 @@ public class CustomIsolationRule extends RoundRobinRule {
         if (lb == null) {
             return null;
         }
-        String version = LbIsolationContextHolder.getVersion();
+        String version;
+        if (key != null && !KEY_DEFAULT.equals(key)) {
+            version = key.toString();
+        } else {
+            version = LbIsolationContextHolder.getVersion();
+        }
+
         List<Server> targetList = null;
         List<Server> upList = lb.getReachableServers();
         if (StrUtil.isNotEmpty(version)) {

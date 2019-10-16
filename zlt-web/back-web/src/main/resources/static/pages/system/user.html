@@ -59,7 +59,7 @@
             elem: '#user-table',
             url: config.base_server + 'api-user/users',
             method: 'GET',
-            headers:{'Authorization': 'bearer ' + config.getToken().access_token},
+            headers:{'Authorization': 'Bearer ' + config.getToken().access_token},
             page: true,
             cols: [[
                 {type: 'numbers'},
@@ -148,11 +148,12 @@
 
         // 导出
         $('#user-btn-export').click(function () {
-            var url = config.base_server + 'api-user/users/export?access_token='+config.getToken().access_token;
+            var url = config.base_server + 'api-user/users/export';
             var xhr = new XMLHttpRequest();
             xhr.open('POST', url, true);
             xhr.responseType = "blob";
             xhr.setRequestHeader("client_type", "DESKTOP_WEB");
+            xhr.setRequestHeader("Authorization", "Bearer " + config.getToken().access_token);
             xhr.onload = function() {
                 if (this.status == 200) {
                     var fileName = "user.xlsx";
@@ -192,12 +193,13 @@
         });
 
         //上传
-        var importUrl = config.base_server + 'api-user/users/import?access_token='+config.getToken().access_token;
+        var importUrl = config.base_server + 'api-user/users/import';
         upload.render({
             elem: '#user-btn-import'
             ,url: importUrl
             ,accept: 'file' //普通文件
-            ,multiple: true
+            ,multiple: false
+            ,headers: {"Authorization" : "Bearer " + config.getToken().access_token}
             ,done: function(data){
                 if (data.resp_code == 0) {
                     layer.msg(data.resp_msg, {icon: 1, time: 500});

@@ -1,0 +1,133 @@
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          lowerCaseServiceId: true
+          enabled: true
+      routes:
+        - id: auth
+          uri: lb://uaa-server
+          predicates:
+            - Path=/api-uaa/**
+          filters:
+            - StripPrefix=1
+            - PreserveHostHeader
+        - id: auth-login-page
+          uri: lb://uaa-server
+          predicates:
+            - Path=/login.html
+          filters:
+            - PreserveHostHeader
+        - id: auth-login-process
+          uri: lb://uaa-server
+          predicates:
+            - Path=/user/login
+          filters:
+            - PreserveHostHeader
+        - id: auth-login-token
+          uri: lb://uaa-server
+          predicates:
+            - Path=/oauth/token
+          filters:
+            - PreserveHostHeader
+        - id: auth-login-authorize
+          uri: lb://uaa-server
+          predicates:
+            - Path=/oauth/authorize
+          filters:
+            - PreserveHostHeader
+        - id: auth-check-process
+          uri: lb://uaa-server
+          predicates:
+            - Path=/oauth/check_token
+          filters:
+            - PreserveHostHeader
+        - id: user
+          uri: lb://user-center
+          predicates:
+            - Path=/api-user/**
+          filters:
+            - StripPrefix=1
+        - id: file
+          uri: lb://file-center
+          predicates:
+            - Path=/api-file/**
+          filters:
+            - StripPrefix=1
+        - id: log
+          uri: lb://log-center
+          predicates:
+            - Path=/api-log/**
+          filters:
+            - StripPrefix=1
+        - id: generator
+          uri: lb://code-generator
+          predicates:
+            - Path=/api-generator/**
+          filters:
+            - StripPrefix=1
+        - id: search
+          uri: lb://search-center
+          predicates:
+            - Path=/api-search/**
+          filters:
+            - StripPrefix=1
+#    sentinel:
+#      datasource.ds1.nacos:
+#        server-addr: ${zlt.nacos.server-addr}
+#        data-id: ${spring.application.name}-sentinel-gw-flow
+#        group-id: DEFAULT_GROUP
+#        ruleType: gw-flow
+#      filter:
+#        enabled: true
+
+zlt:
+  swagger-agg:
+    generate-routes: user,file
+  oauth2:
+    token:
+      store:
+        type: redis
+  security:
+    ignore:
+      # 忽略认证的地址
+      httpUrls: >
+        /api-uaa/oauth/**,
+        /api-uaa/validata/**,
+        /api-uaa/css/**,
+        /api-uaa/images/**,
+        /api-uaa/js/**,
+        /api-user/users-anon/**,
+        /login.html,
+        /user/login
+    auth:
+      urlPermission:
+        #是否开启url级别权限
+        enable: false
+        #配置只进行登录认证，不进行url权限认证的api
+        ignoreUrls: >
+          /api-user/menus/current,
+          /api-user/users/current,
+          /api-log/requestStat
+        #白名单
+        includeClientIds:
+          - webApp
+      renew:
+        #是否开启token自动续签（目前只有redis实现）
+        enable: true
+        #白名单
+        includeClientIds:
+          - webApp
+  gateway:
+    #网关动态路由
+    dynamicRoute:
+      enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1000

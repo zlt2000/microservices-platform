@@ -6,7 +6,6 @@ import com.central.common.constant.CommonConstant;
 import com.central.common.context.TenantContextHolder;
 import com.central.common.model.SysMenu;
 import com.central.oauth2.common.properties.SecurityProperties;
-import com.central.oauth2.common.service.IPermissionService;
 import com.central.oauth2.common.util.AuthUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -18,7 +17,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.util.AntPathMatcher;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,7 +27,7 @@ import java.util.stream.Collectors;
  * @date 2018/10/28
  */
 @Slf4j
-public abstract class DefaultPermissionServiceImpl implements IPermissionService {
+public abstract class DefaultPermissionServiceImpl {
 
     @Autowired
     private SecurityProperties securityProperties;
@@ -43,10 +41,9 @@ public abstract class DefaultPermissionServiceImpl implements IPermissionService
      */
     public abstract List<SysMenu> findMenuByRoleCodes(String roleCodes);
 
-    @Override
-    public boolean hasPermission(HttpServletRequest request, Authentication authentication) {
+    public boolean hasPermission(Authentication authentication, String requestMethod, String requestURI) {
         // 前端跨域OPTIONS请求预检放行 也可通过前端配置代理实现
-        if (HttpMethod.OPTIONS.name().equalsIgnoreCase(request.getMethod())) {
+        if (HttpMethod.OPTIONS.name().equalsIgnoreCase(requestMethod)) {
             return true;
         }
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
@@ -68,7 +65,7 @@ public abstract class DefaultPermissionServiceImpl implements IPermissionService
 
             //判断不进行url权限认证的api，所有已登录用户都能访问的url
             for (String path : securityProperties.getAuth().getUrlPermission().getIgnoreUrls()) {
-                if (antPathMatcher.match(path, request.getRequestURI())) {
+                if (antPathMatcher.match(path, requestURI)) {
                     return true;
                 }
             }
@@ -86,9 +83,9 @@ public abstract class DefaultPermissionServiceImpl implements IPermissionService
             String roleCodes = grantedAuthorityList.stream().map(SimpleGrantedAuthority::getAuthority).collect(Collectors.joining(", "));
             List<SysMenu> menuList = findMenuByRoleCodes(roleCodes);
             for (SysMenu menu : menuList) {
-                if (StringUtils.isNotEmpty(menu.getUrl()) && antPathMatcher.match(menu.getUrl(), request.getRequestURI())) {
+                if (StringUtils.isNotEmpty(menu.getUrl()) && antPathMatcher.match(menu.getUrl(), requestURI)) {
                     if (StrUtil.isNotEmpty(menu.getPathMethod())) {
-                        return request.getMethod().equalsIgnoreCase(menu.getPathMethod());
+                        return requestMethod.equalsIgnoreCase(menu.getPathMethod());
                     } else {
                         return true;
                     }

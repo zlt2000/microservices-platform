@@ -102,7 +102,7 @@ layui.define(['config', 'layer'], function (exports) {
                     if (!noHeaderToken) {
                         let token = config.getToken();
                         if (token) {
-                            xhr.setRequestHeader('Authorization', 'bearer ' + token.access_token);
+                            xhr.setRequestHeader('Authorization', 'Bearer ' + token.access_token);
                         }
                     }
                     let isolationVersion = config.isolationVersion;
