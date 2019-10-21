@@ -41,13 +41,12 @@
 &nbsp;
 
 ## 2. 项目总体架构图
-
-![](https://gitee.com/zlt2000/images/raw/master/springcloud微服务架构图.jpg)
+![mark](http://qiniu.zlt2000.cn/blog/20191021/IyNU3skYNIMf.jpg?imageslim)
 
 &nbsp;
 
 ## 3. 功能介绍
-![](https://gitee.com/zlt2000/images/raw/master/ZLT-MP微服务平台功能图.jpg)
+![mark](http://qiniu.zlt2000.cn/blog/20191021/LP9z1FK31yDC.jpg?imageslim)
 
 &nbsp;
 
@@ -109,42 +108,38 @@ central-platform -- 父项目，公共依赖
 
 * 个人邮箱：zltdiablo@163.com
 
-* 个人公众号：[陶陶技术笔记](https://gitee.com/zlt2000/images/raw/master/公众号.jpg)
+* 个人公众号：[陶陶技术笔记](http://qiniu.zlt2000.cn/blog/20190902/M56cWjw7uNsc.png?imageslim)
 
 
 &nbsp;
 ## 6. 截图（点击可大图预览）
 <table>
     <tr>
-        <td><img src="https://gitee.com/zlt2000/images/raw/master/首页.png"/></td>
-        <td><img src="https://gitee.com/zlt2000/images/raw/master/用户搜索.png"/></td>
+        <td><img alt="首页" src="http://qiniu.zlt2000.cn/blog/20191021/9wd5JIuXMtFW.png?imageslim"/></td>
+        <td><img alt="用户搜索" src="http://qiniu.zlt2000.cn/blog/20191021/UaHM4w4kPVT9.png?imageslim"/></td>
     </tr>
 	<tr>
-        <td><img src="https://gitee.com/zlt2000/images/raw/master/server_metrics.png"/></td>
-        <td><img src="https://gitee.com/zlt2000/images/raw/master/application_metrics.png"/></td>
+        <td><img alt="server_metrics" src="http://qiniu.zlt2000.cn/blog/20191021/9KsjcCgYqgBB.png?imageslim"/></td>
+        <td><img alt="application_metrics" src="http://qiniu.zlt2000.cn/blog/20191021/4VH2z1BW3sWN.png?imageslim"/></td>
     </tr>
 	<tr>
-        <td><img src="https://gitee.com/zlt2000/images/raw/master/持续集成2.png"/></td>
-        <td><img src="https://gitee.com/zlt2000/images/raw/master/sonar结果.png"/></td>
+        <td><img alt="持续集成2" src="http://qiniu.zlt2000.cn/blog/20191021/8Ew3z2kDe8bj.png?imageslim"/></td>
+        <td><img alt="sonar结果" src="http://qiniu.zlt2000.cn/blog/20191021/AEEPnTLBz4P4.png?imageslim"/></td>
     </tr>
     <tr>
-        <td><img src="https://gitee.com/zlt2000/images/raw/master/skywalking首页.png"/></td>
-        <td><img src="https://gitee.com/zlt2000/images/raw/master/skywalking应用拓扑图.png"/></td>
+        <td><img alt="skywalking首页.png" src="http://qiniu.zlt2000.cn/blog/20191021/GhDqEUdDDfhV.png?imageslim"/></td>
+        <td><img alt="skywalking应用拓扑图" src="http://qiniu.zlt2000.cn/blog/20191021/xLi5mvhzWfWt.png?imageslim"/></td>
     </tr>
     <tr>
-        <td><img src="https://gitee.com/zlt2000/images/raw/master/elk.png"/></td>
-        <td><img src="https://gitee.com/zlt2000/images/raw/master/任务中心.png"/></td>
+        <td><img alt="elk" src="http://qiniu.zlt2000.cn/blog/20191021/5lrHQb2xNF4o.png?imageslim"/></td>
+        <td><img alt="任务中心" src="http://qiniu.zlt2000.cn/blog/20191021/A0YLCT1BHCed.png?imageslim"/></td>
     </tr>
     <tr>
-        <td><img src="https://gitee.com/zlt2000/images/raw/master/日志中心02.png"/></td>
-        <td><img src="https://gitee.com/zlt2000/images/raw/master/慢查询sql.png"/></td>
+        <td><img alt="日志中心02" src="http://qiniu.zlt2000.cn/blog/20191021/f7bdpM1To8wT.png?imageslim"/></td>
+        <td><img alt="慢查询sql" src="http://qiniu.zlt2000.cn/blog/20191021/Yqr4Dnb9BwSy.png?imageslim"/></td>
     </tr>
     <tr>
-        <td><img src="https://gitee.com/zlt2000/images/raw/master/应用监控01.png"/></td>
-        <td><img src="https://gitee.com/zlt2000/images/raw/master/应用监控02.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://gitee.com/zlt2000/images/raw/master/nacos-discovery.png"/></td>
-        <td><img src="https://gitee.com/zlt2000/images/raw/master/应用吞吐量监控.png"/></td>
+        <td><img alt="nacos-discovery" src="http://qiniu.zlt2000.cn/blog/20191021/spAnWiDcwch5.png?imageslim"/></td>
+        <td><img alt="应用吞吐量监控" src="http://qiniu.zlt2000.cn/blog/20191021/vBhLkLma3dwC.png?imageslim"/></td>
     </tr>
 </table>
