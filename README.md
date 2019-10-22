@@ -16,7 +16,7 @@
 
 ## 1. 项目介绍
 
-* **技术交流群** [250883130](http://shang.qq.com/wpa/qunwpa?idkey=17544199255998bda0d938fb72b08d076c40c52c9904520b76eb5eb0585da71e) <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=ead54a4656cdd4377071855b016b292b1361103b29e94042e1e57499f6b69c38"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="微服务技术交流群" title="微服务技术交流群"></a>
+* **技术交流群** [250883130](http://shang.qq.com/wpa/qunwpa?idkey=17544199255998bda0d938fb72b08d076c40c52c9904520b76eb5eb0585da71e)
 * **详细在线文档** [点击查看](https://www.kancloud.cn/zlt2000/microservices-platform/936236)
   * **[项目更新日志](https://www.kancloud.cn/zlt2000/microservices-platform/936235)**
   * **[文档更新日志](https://www.kancloud.cn/zlt2000/microservices-platform/936236)**
@@ -102,7 +102,7 @@ central-platform -- 父项目，公共依赖
 
 * 欢迎提交`ISSUS`，请写清楚问题的具体原因，重现步骤和环境(上下文)
 
-* 项目/微服务交流请进群：<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=ead54a4656cdd4377071855b016b292b1361103b29e94042e1e57499f6b69c38"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="微服务技术交流群" title="微服务技术交流群"></a>
+* 项目/微服务交流请进群：[250883130](http://shang.qq.com/wpa/qunwpa?idkey=17544199255998bda0d938fb72b08d076c40c52c9904520b76eb5eb0585da71e)
 
 * 个人博客：https://blog.csdn.net/zlt2000
 
