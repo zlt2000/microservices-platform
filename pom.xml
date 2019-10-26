@@ -33,7 +33,7 @@
         <qiniu-java-sdk>7.2.18</qiniu-java-sdk>
         <easypoi.version>4.1.0</easypoi.version>
         <poi.version>4.1.0</poi.version>
-        <spring-boot-admin.version>2.0.6</spring-boot-admin.version>
+        <spring-boot-admin.version>2.1.6</spring-boot-admin.version>
         <velocity.version>1.7</velocity.version>
         <commons-configuration.version>1.10</commons-configuration.version>
         <txlcn.version>5.0.2.RELEASE</txlcn.version>
