@@ -46,7 +46,7 @@
 &nbsp;
 
 ## 3. 功能介绍
-![mark](http://qiniu.zlt2000.cn/blog/20191021/LP9z1FK31yDC.jpg?imageslim)
+![mark](http://qiniu.zlt2000.cn/blog/20191026/JMENnTzOtvr3.jpg?imageslim)
 
 &nbsp;
 
