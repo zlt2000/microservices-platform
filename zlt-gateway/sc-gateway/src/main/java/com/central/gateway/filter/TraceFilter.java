@@ -1,9 +1,7 @@
 package com.central.gateway.filter;
 
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.IdUtil;
 import com.central.common.constant.CommonConstant;
-import com.central.common.constant.SecurityConstants;
 import com.central.log.properties.TraceProperties;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;

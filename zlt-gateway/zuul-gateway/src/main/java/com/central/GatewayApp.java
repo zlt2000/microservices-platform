@@ -1,5 +1,6 @@
 package com.central;
 
+import com.central.common.ribbon.annotation.EnableBaseFeignInterceptor;
 import com.central.common.ribbon.annotation.EnableFeignInterceptor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,7 +13,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  */
 @EnableZuulProxy
 @EnableFeignClients
-@EnableFeignInterceptor
+@EnableBaseFeignInterceptor
 @EnableDiscoveryClient
 @SpringBootApplication
 public class GatewayApp {
