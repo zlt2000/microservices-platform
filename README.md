@@ -23,7 +23,7 @@
 * **演示环境地址**： [http://mp.zlt2000.cn](http://mp.zlt2000.cn/)
   * 账号密码：admin/admin
   * APM监控账号密码：admin/admin
-  * Grafana账号：zlt/zlt
+  * Grafana账号：zlt/zlt123
   * txlcn事务管理器密码：admin
   * 任务管理账号密码：admin/123456
   * Sentinel：sentinel/sentinel
