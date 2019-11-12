@@ -37,6 +37,7 @@
 * 引入组件化的思想实现高内聚低耦合并且高度可配置化
 * 注重代码规范，严格控制包依赖，每个工程基本都是最小依赖
 * 非常适合学习和企业中使用
+>重构于开源项目OCP&cp：https://gitee.com/owenwangwen/open-capacity-platform
 
 &nbsp;
 
