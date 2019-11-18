@@ -46,7 +46,7 @@
         <spring-social-security.version>1.1.6.RELEASE</spring-social-security.version>
         <commons-io.version>2.6</commons-io.version>
         <servlet-api.version>4.0.1</servlet-api.version>
-        <spring-cloud-alibaba-dependencies.version>2.1.0.RELEASE</spring-cloud-alibaba-dependencies.version>
+        <spring-cloud-alibaba-dependencies.version>2.1.1.RELEASE</spring-cloud-alibaba-dependencies.version>
         <spring-boot-dependencies.version>2.1.8.RELEASE</spring-boot-dependencies.version>
         <spring-cloud-dependencies.version>Greenwich.SR3</spring-cloud-dependencies.version>
         <spring-boot-maven-plugin.version>2.1.1.RELEASE</spring-boot-maven-plugin.version>
