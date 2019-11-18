@@ -1,10 +1,6 @@
 server:
   port: 6500
 
-zlt:
-  nacos:
-    server-addr: 192.168.28.130:8848
-
 spring:
   application:
     name: sc-admin
@@ -14,13 +10,7 @@ spring:
       password: 'admin'
   cloud:
     nacos:
-      config:
-        server-addr: ${zlt.nacos.server-addr}
-        file-extension: yml
-        shared-dataids: common.yml
-        refreshable-dataids: common.yml
       discovery:
-        server-addr: ${zlt.nacos.server-addr}
         metadata:
           user.name: ${spring.security.user.name}
           user.password: ${spring.security.user.password}

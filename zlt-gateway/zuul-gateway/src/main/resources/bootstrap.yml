@@ -4,19 +4,6 @@ server:
     buffer-size: 1024
     direct-buffers: true
 
-zlt:
-  nacos:
-    server-addr: 192.168.28.130:8848
-
 spring:
   application:
     name: api-gateway
-  cloud:
-    nacos:
-      config:
-        server-addr: ${zlt.nacos.server-addr}
-        file-extension: yml
-        shared-dataids: common.yml
-        refreshable-dataids: common.yml
-      discovery:
-        server-addr: ${zlt.nacos.server-addr}

@@ -1,21 +1,11 @@
 server:
   port: 7000
 
-zlt:
-  nacos:
-    server-addr: 192.168.28.130:8848
-
 spring:
   application:
     name: user-center
-  cloud:
-    nacos:
-      config:
-        server-addr: ${zlt.nacos.server-addr}
-        file-extension: yml
-        shared-dataids: common.yml
-        refreshable-dataids: common.yml
-      discovery:
-        server-addr: ${zlt.nacos.server-addr}
+#  cloud:
+#    nacos:
+#      discovery:
 #        metadata:
 #          version: zlt
