@@ -41,16 +41,16 @@ public class UserInfoHeaderFilter extends ZuulFilter {
     public Object run() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
-            SysUser user = (SysUser)authentication.getPrincipal();
-            Long userId = user.getId();
-            String username = user.getUsername();
-
+            Object principal = authentication.getPrincipal();
+            RequestContext ctx = RequestContext.getCurrentContext();
+            //客户端模式只返回一个clientId
+            if (principal instanceof SysUser) {
+                SysUser user = (SysUser)authentication.getPrincipal();
+                ctx.addZuulRequestHeader(SecurityConstants.USER_ID_HEADER, String.valueOf(user.getId()));
+                ctx.addZuulRequestHeader(SecurityConstants.USER_HEADER, user.getUsername());
+            }
             OAuth2Authentication oauth2Authentication = (OAuth2Authentication)authentication;
             String clientId = oauth2Authentication.getOAuth2Request().getClientId();
-
-            RequestContext ctx = RequestContext.getCurrentContext();
-            ctx.addZuulRequestHeader(SecurityConstants.USER_ID_HEADER, String.valueOf(userId));
-            ctx.addZuulRequestHeader(SecurityConstants.USER_HEADER, username);
             ctx.addZuulRequestHeader(SecurityConstants.TENANT_HEADER, clientId);
             ctx.addZuulRequestHeader(SecurityConstants.ROLE_HEADER, CollectionUtil.join(authentication.getAuthorities(), ","));
         }
