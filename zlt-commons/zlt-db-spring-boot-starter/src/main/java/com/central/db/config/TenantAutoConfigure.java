@@ -31,7 +31,7 @@ public class TenantAutoConfigure {
              * 获取租户id
              */
             @Override
-            public Expression getTenantId() {
+            public Expression getTenantId(boolean where) {
                 String tenant = TenantContextHolder.getTenant();
                 if (tenant != null) {
                     return new StringValue(TenantContextHolder.getTenant());

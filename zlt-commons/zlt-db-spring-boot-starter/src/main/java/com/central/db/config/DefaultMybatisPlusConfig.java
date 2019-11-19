@@ -3,7 +3,6 @@ package com.central.db.config;
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.parser.ISqlParserFilter;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantSqlParser;
 
@@ -44,15 +43,5 @@ public class DefaultMybatisPlusConfig {
             paginationInterceptor.setSqlParserFilter(sqlParserFilter);
         }
         return paginationInterceptor;
-    }
-
-    /**
-     * 打印 sql，性能分析拦截器，不建议生产使用
-     * 设置 dev test 环境开启
-     */
-    @Bean
-    @Profile({"dev","test"})
-    public PerformanceInterceptor performanceInterceptor() {
-        return new PerformanceInterceptor();
     }
 }
