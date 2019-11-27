@@ -2,9 +2,9 @@
 
 <p align="center">
   <img src='https://img.shields.io/badge/license-Apache%202-4EB1BA.svg' alt='License'/>
-  <img src="https://img.shields.io/badge/Spring%20Boot-2.1.8.RELEASE-blue" alt="Downloads"/>
+  <img src="https://img.shields.io/badge/Spring%20Boot-2.1.9.RELEASE-blue" alt="Downloads"/>
   <img src="https://img.shields.io/badge/Spring%20Cloud-Greenwich.SR3-blue" alt="Downloads"/>
-  <img src="https://img.shields.io/badge/Spring%20Cloud%20Alibaba-2.1.0.RELEASE-blue" alt="Downloads"/>
+  <img src="https://img.shields.io/badge/Spring%20Cloud%20Alibaba-2.1.1.RELEASE-blue" alt="Downloads"/>
   <img src="https://img.shields.io/badge/Layui-EasyWeb-yellowgreen" alt="Downloads"/>
 </p>
 
