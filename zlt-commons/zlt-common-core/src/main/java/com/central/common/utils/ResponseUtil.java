@@ -78,6 +78,8 @@ public class ResponseUtil {
     public static Mono<Void> responseWriter(ServerWebExchange exchange, int httpStatus, String msg) {
         Result result = Result.succeedWith(null, httpStatus, msg);
         ServerHttpResponse response = exchange.getResponse();
+        response.getHeaders().setAccessControlAllowCredentials(true);
+        response.getHeaders().setAccessControlAllowOrigin("*");
         response.setStatusCode(HttpStatus.valueOf(result.getResp_code()));
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON_UTF8);
         DataBufferFactory dataBufferFactory = response.bufferFactory();
