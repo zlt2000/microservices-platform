@@ -5,3 +5,5 @@ target/
 
 *.iml
 *.versionsBackup
+
+zlt-register/nacos/
