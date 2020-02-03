@@ -1,5 +1,6 @@
 package com.central.user.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.central.common.model.PageResult;
@@ -28,4 +29,10 @@ public interface ISysRoleService extends ISuperService<SysRole> {
 	 * @return Result
 	 */
 	Result saveOrUpdateRole(SysRole sysRole);
+
+	/**
+	 * 查询所有角色
+	 * @return
+	 */
+	List<SysRole> findAll();
 }

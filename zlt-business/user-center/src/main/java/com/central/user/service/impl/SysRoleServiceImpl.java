@@ -75,4 +75,9 @@ public class SysRoleServiceImpl extends SuperServiceImpl<SysRoleMapper, SysRole>
         }
         return Result.succeed("操作成功");
     }
+
+    @Override
+    public List<SysRole> findAll() {
+        return baseMapper.findAll();
+    }
 }

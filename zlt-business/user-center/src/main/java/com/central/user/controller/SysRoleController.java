@@ -1,5 +1,6 @@
 package com.central.user.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +41,17 @@ public class SysRoleController {
     @GetMapping("/roles")
     public PageResult<SysRole> findRoles(@RequestParam Map<String, Object> params) {
         return sysRoleService.findRoles(params);
+    }
+
+    /**
+     * 用户管理查询所有角色
+     * @return
+     */
+    @ApiOperation(value = "后台管理查询角色")
+    @GetMapping("/allRoles")
+    public Result<List<SysRole>> findAll() {
+        List<SysRole> result = sysRoleService.findAll();
+        return Result.succeed(result);
     }
 
     /**
