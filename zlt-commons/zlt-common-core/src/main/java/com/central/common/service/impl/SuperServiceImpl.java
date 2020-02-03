@@ -103,7 +103,7 @@ public class SuperServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M,
         if (null != entity) {
             Class<?> cls = entity.getClass();
             TableInfo tableInfo = TableInfoHelper.getTableInfo(cls);
-            if (null != tableInfo && StringUtils.isNotEmpty(tableInfo.getKeyProperty())) {
+            if (null != tableInfo && StrUtil.isNotEmpty(tableInfo.getKeyProperty())) {
                 Object idVal = ReflectionKit.getMethodValue(cls, entity, tableInfo.getKeyProperty());
                 if (StringUtils.checkValNull(idVal) || Objects.isNull(getById((Serializable) idVal))) {
                     if (StrUtil.isEmpty(msg)) {
