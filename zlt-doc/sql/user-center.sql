@@ -151,7 +151,7 @@ INSERT INTO `sys_menu` VALUES (81, -1, '商品管理', '#!product', '', NULL, NU
 INSERT INTO `sys_menu` VALUES (82, -1, '支付管理', '#!pay', '', NULL, NULL, 3, '2019-08-06 20:02:12.604', '2019-08-06 20:02:12.604', 1, 0, 'zlt');
 INSERT INTO `sys_menu` VALUES (83, -1, '交易管理', '#!trading', '', NULL, NULL, 4, '2019-08-06 20:02:12.604', '2019-08-06 20:02:12.604', 1, 0, 'zlt');
 INSERT INTO `sys_menu` VALUES (84, -1, '系统管理', '#!system', '', NULL, NULL, 1, '2019-08-06 20:02:12.604', '2019-08-06 20:02:12.604', 1, 0, 'app');
-INSERT INTO `sys_menu` VALUES (85, 63, '审计日志', '#!auditLog', 'log/auditLog.html', NULL, 'layui-icon-snowflake', 3, '2020-02-04 12:00:27', '2020-02-04 15:32:31', 1, 0, 'webApp');
+INSERT INTO `sys_menu` VALUES (85, 63, '审计日志', '#!auditLog', 'log/auditLog.html', NULL, 'layui-icon-file-b', 3, '2020-02-04 12:00:27', '2020-02-04 15:32:31', 1, 0, 'webApp');
 
 -- ----------------------------
 -- Table structure for sys_role_menu
