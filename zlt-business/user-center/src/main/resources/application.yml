@@ -35,3 +35,6 @@ zlt:
       - sys_role_menu
     ignoreSqls:
       - com.central.user.mapper.SysRoleMapper.findAll
+  #审计日志
+#  audit-log:
+#    enabled: true

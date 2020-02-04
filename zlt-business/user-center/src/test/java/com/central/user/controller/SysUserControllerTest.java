@@ -2,6 +2,8 @@ package com.central.user.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -80,7 +82,36 @@ public class SysUserControllerTest {
 	@Transactional
 	public void whenDeleteSuccess() throws Exception {
 		mockMvc.perform(delete("/users/1")
+				.header("x-userid-header", 1)
+				.header("x-user-header", "admin")
+				.header("x-tenant-header", "webApp")
 				.contentType(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(status().isOk());
+	}
+
+	@Test
+	@Transactional
+	public void whenSaveOrUpdateSuccess() throws Exception {
+		String content = "{\"id\":1, \"username\":\"admin\", \"roleId\":\"1,2,3\"}";
+		mockMvc.perform(post("/users/saveOrUpdate")
+				.header("x-userid-header", 1)
+				.header("x-user-header", "admin")
+				.header("x-tenant-header", "webApp")
+				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.content(content))
+				.andExpect(status().isOk());
+	}
+
+	@Test
+	@Transactional
+	public void whenUpdateSuccess() throws Exception {
+		String content = "{\"id\":1, \"username\":\"admin\", \"roleId\":\"1,2,3\"}";
+		mockMvc.perform(put("/users")
+				.header("x-userid-header", 1)
+				.header("x-user-header", "admin")
+				.header("x-tenant-header", "webApp")
+				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.content(content))
 				.andExpect(status().isOk());
 	}
 }

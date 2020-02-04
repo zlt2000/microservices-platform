@@ -12,6 +12,8 @@ import com.central.common.annotation.LoginUser;
 import com.central.common.constant.CommonConstant;
 import com.central.common.model.*;
 import com.central.common.utils.ExcelUtil;
+//import com.central.log.annotation.AuditLog;
+import com.central.log.annotation.AuditLog;
 import com.central.search.client.service.IQueryService;
 import com.central.search.model.LogicDelDto;
 import com.central.search.model.SearchDto;
@@ -118,7 +120,8 @@ public class SysUserController {
      * @param sysUser
      */
     @PutMapping("/users")
-    @CachePut(value = "user", key = "#sysUser.username")
+    @CachePut(value = "user", key = "#sysUser.username", unless="#result == null")
+    //@AuditLog(operation = "'更新用户:' + #sysUser")
     public void updateSysUser(@RequestBody SysUser sysUser) {
         appUserService.updateById(sysUser);
     }
@@ -187,6 +190,7 @@ public class SysUserController {
      * @param id
      */
     @PutMapping(value = "/users/{id}/password")
+    //@AuditLog(operation = "'重置用户密码:' + #id")
     public Result resetPassword(@PathVariable Long id) {
         if (checkAdmin(id)) {
             return Result.failed(ADMIN_CHANGE_MSG);
@@ -213,6 +217,7 @@ public class SysUserController {
      * @param id
      */
     @DeleteMapping(value = "/users/{id}")
+    //@AuditLog(operation = "'删除用户:' + #id")
     public Result delete(@PathVariable Long id) {
         if (checkAdmin(id)) {
             return Result.failed(ADMIN_CHANGE_MSG);
@@ -230,6 +235,7 @@ public class SysUserController {
      */
     @CacheEvict(value = "user", key = "#sysUser.username")
     @PostMapping("/users/saveOrUpdate")
+    @AuditLog(operation = "'新增或更新用户:' + #sysUser.username")
     public Result saveOrUpdate(@RequestBody SysUser sysUser) {
         return appUserService.saveOrUpdateUser(sysUser);
     }

@@ -1,0 +1,70 @@
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2 class="header-title">审计日志</h2>
+        <span class="layui-breadcrumb pull-right">
+          <a href="#!console">首页</a>
+          <a><cite>审计日志</cite></a>
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-form toolbar">
+            搜索：
+            <select id="auditLog-search-key">
+                <option value="_all">全文搜索</option>
+                <option value="appName">应用名</option>
+                <option value="className">类名</option>
+                <option value="methodName">方法名</option>
+                <option value="userId">用户id</option>
+                <option value="userName">用户名</option>
+                <option value="clientId">租户id</option>
+                <option value="operation">操作信息</option>
+            </select>&emsp;
+            <input id="auditLog-search-value" class="layui-input search-input" style="width: 300px" type="text" placeholder="输入关键字"/>&emsp;
+            <button id="auditLog-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+        </div>
+
+        <table class="layui-table" id="auditLog-table" lay-filter="auditLog-table"></table>
+    </div>
+</div>
+
+<script>
+    layui.use(['form', 'table', 'util', 'config', 'admin', 'upload'], function () {
+        let table = layui.table;
+        let config = layui.config;
+        let util = layui.util;
+
+        // 渲染表格
+        table.render({
+            elem: '#auditLog-table',
+            url: config.base_server + 'api-log/auditLog',
+            method: 'GET',
+            headers:{'Authorization': 'Bearer ' + config.getToken().access_token},
+            page: true,
+            cols: [[
+                {type: 'numbers'},
+                {
+                    field: 'timestamp', width: 170, sort: true, templet: function (d) {
+                        return util.toDateString(d.timestamp, 'yyyy-MM-dd HH:mm:ss');
+                    }, title: '日志时间'
+                },
+                {field: 'userId', sort: true, title: '用户id', width: 80},
+                {field: 'userName', sort: true, title: '用户名', width: 100},
+                {field: 'clientId', sort: true, title: '租户id', width: 80},
+                {field: 'operation', sort: true, title: '操作信息', width: 350},
+                {field: 'appName', sort: true, title: '应用名', width: 120},
+                {field: 'className', sort: true, title: '类名', width: 250},
+                {field: 'methodName', sort: true, title: '方法名', width: 130}
+            ]]
+        });
+
+        // 搜索按钮点击事件
+        $('#auditLog-btn-search').click(function () {
+            let key = $('#auditLog-search-key').val();
+            let value = $('#auditLog-search-value').val();
+            if (key != '_all' && value) {
+                value = key + ':' + value;
+            }
+            table.reload('auditLog-table', {where: {queryStr: value}});
+        });
+    });
+</script>
