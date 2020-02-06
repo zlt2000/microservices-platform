@@ -4,7 +4,6 @@ import com.central.log.model.Audit;
 import com.central.log.service.IAuditService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Service;
 
 import java.time.format.DateTimeFormatter;
 
@@ -18,7 +17,6 @@ import java.time.format.DateTimeFormatter;
  * Github: https://github.com/zlt2000
  */
 @Slf4j
-@Service
 @ConditionalOnProperty(name = "zlt.audit-log.log-type", havingValue = "logger", matchIfMissing = true)
 public class LoggerAuditServiceImpl implements IAuditService {
     private static final String MSG_PATTERN = "{}|{}|{}|{}|{}|{}|{}|{}";
