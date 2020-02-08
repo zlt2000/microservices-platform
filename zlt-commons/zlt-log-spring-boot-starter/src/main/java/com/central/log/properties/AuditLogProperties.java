@@ -27,4 +27,9 @@ public class AuditLogProperties {
      * 日志记录类型(logger/redis/db/es)
      */
     private String logType;
+    /**
+     * 数据源配置
+     * logType=db时生效(非必须)，如果不配置则使用当前数据源
+     */
+    private LogDbProperties datasource = new LogDbProperties();
 }

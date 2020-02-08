@@ -38,3 +38,9 @@ zlt:
   #审计日志
 #  audit-log:
 #    enabled: true
+#    log-type: db
+#    datasource:
+#      driver-class-name: com.mysql.cj.jdbc.Driver
+#      jdbc-url: jdbc:mysql://${zlt.datasource.ip}:3306/logger-center?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
+#      username: ${zlt.datasource.username}
+#      password: ${zlt.datasource.password}
