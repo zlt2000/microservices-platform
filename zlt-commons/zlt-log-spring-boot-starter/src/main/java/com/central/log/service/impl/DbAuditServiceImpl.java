@@ -2,10 +2,12 @@ package com.central.log.service.impl;
 
 import com.central.log.model.Audit;
 import com.central.log.properties.AuditLogProperties;
+import com.central.log.properties.LogDbProperties;
 import com.central.log.service.IAuditService;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -33,10 +35,10 @@ public class DbAuditServiceImpl implements IAuditService {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public DbAuditServiceImpl(AuditLogProperties auditLogProperties, DataSource dataSource) {
+    public DbAuditServiceImpl(@Autowired(required = false) LogDbProperties logDbProperties, DataSource dataSource) {
         //优先使用配置的日志数据源，否则使用默认的数据源
-        if (StringUtils.isNotEmpty(auditLogProperties.getDatasource().getJdbcUrl())) {
-            dataSource = new HikariDataSource(auditLogProperties.getDatasource());
+        if (logDbProperties != null && StringUtils.isNotEmpty(logDbProperties.getJdbcUrl())) {
+            dataSource = new HikariDataSource(logDbProperties);
         }
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
