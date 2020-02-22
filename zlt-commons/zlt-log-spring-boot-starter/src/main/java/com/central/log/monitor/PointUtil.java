@@ -9,11 +9,11 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class PointUtil {
+    private static final String MSG_PATTERN = "{}|{}|{}";
+
     private PointUtil() {
         throw new IllegalStateException("Utility class");
     }
-
-    public static final String SPLIT = "|";
 
     /**
      * 格式为：{时间}|{来源}|{对象id}|{类型}|{对象属性(以&分割)}
@@ -25,10 +25,10 @@ public class PointUtil {
      * @param message 对象属性
      */
     public static void info(String id, String type, String message) {
-        log.info(id + SPLIT + type + SPLIT + message);
+        log.info(MSG_PATTERN, id, type, message);
     }
 
     public static void debug(String id, String type, String message) {
-        log.debug(id + SPLIT + type + SPLIT + message);
+        log.debug(MSG_PATTERN, id, type, message);
     }
 }

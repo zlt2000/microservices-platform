@@ -2,6 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.central.user.mapper.SysRoleMapper">
+	<sql id="Column_List">
+			id,
+			code,
+			name,
+			create_time,
+			update_time,
+			tenant_id
+	</sql>
+
 	<sql id="where">
 		<where>
 			<if test="r.name != null and r.name != ''">
@@ -15,8 +24,15 @@
 	</sql>
 
 	<select id="findList" resultType="com.central.common.model.SysRole">
-		select * from sys_role t
+		select <include refid="Column_List"/>
+		from sys_role t
 		<include refid="where" />
-		order by t.id desc
+		order by t.create_time desc
+	</select>
+
+	<select id="findAll" resultType="com.central.common.model.SysRole">
+		select <include refid="Column_List"/>
+		from sys_role
+		order by create_time desc
 	</select>
 </mapper>

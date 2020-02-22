@@ -15,4 +15,6 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface SysRoleMapper extends SuperMapper<SysRole> {
 	List<SysRole> findList(Page<SysRole> page, @Param("r") Map<String, Object> params);
+
+	List<SysRole> findAll();
 }

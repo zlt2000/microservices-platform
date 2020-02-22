@@ -9,7 +9,7 @@ spring:
 
 zlt:
   indices:
-    show: sys-log-*, mysql-slowlog-*, sys_user, point-log-*
+    show: sys-log-*, mysql-slowlog-*, sys_user, point-log-*, audit-log-*
   swagger:
     enabled: true
     title: 搜索中心

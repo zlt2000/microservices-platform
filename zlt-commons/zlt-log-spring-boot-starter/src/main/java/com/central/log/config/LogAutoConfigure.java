@@ -1,5 +1,6 @@
 package com.central.log.config;
 
+import com.central.log.properties.AuditLogProperties;
 import com.central.log.properties.TraceProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
@@ -9,7 +10,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
  * @author zlt
  * @date 2019/8/13
  */
-@EnableConfigurationProperties(TraceProperties.class)
+@EnableConfigurationProperties({TraceProperties.class, AuditLogProperties.class})
 public class LogAutoConfigure {
 
 }

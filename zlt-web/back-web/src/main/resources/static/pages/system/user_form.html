@@ -53,13 +53,13 @@
 
         // 获取所有角色
         layer.load(2);
-        admin.req('api-user/roles', {}, function (data) {
+        admin.req('api-user/allRoles', {}, function (data) {
             layer.closeAll('loading');
-            if (0 == data.code) {
+            if (0 == data.resp_code) {
                 // 渲染多选下拉框
                 var roleSelectData = new Array();
-                for (var i = 0; i < data.data.length; i++) {
-                    roleSelectData.push({name: data.data[i].name, value: data.data[i].id});
+                for (var i = 0; i < data.datas.length; i++) {
+                    roleSelectData.push({name: data.datas[i].name, value: data.datas[i].id});
                 }
                 formSelects.data('roleId', 'local', {arr: roleSelectData});
 
