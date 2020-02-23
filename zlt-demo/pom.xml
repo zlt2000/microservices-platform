@@ -18,5 +18,7 @@
         <module>rocketmq-demo</module>
         <!-- seata分布式事务demo -->
         <module>seata-demo</module>
+        <!-- 单点登录demo -->
+        <module>sso-demo</module>
     </modules>
 </project>

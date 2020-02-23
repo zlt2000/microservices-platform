@@ -1,0 +1,22 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: sso-demo
+
+zlt:
+  api-uaa:
+    url: http://127.0.0.1:9900/api-uaa/oauth
+
+security:
+  oauth2:
+    sso:
+      login-path: /singleLogin
+    client:
+      client-id: zlt
+      client-secret: zlt
+      access-token-uri: ${zlt.api-uaa.url}/token
+      user-authorization-uri: ${zlt.api-uaa.url}/authorize
+    resource:
+      token-info-uri: ${zlt.api-uaa.url}/check_token

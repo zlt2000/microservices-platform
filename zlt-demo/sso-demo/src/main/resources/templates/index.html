@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="text/html;charset=UTF-8">
+    <title>SSO单点登录demo</title>
+</head>
+<body>
+<div>
+    登录者: <span th:text="${username}"></span>
+    <br/>
+    权限: <span th:text="${authorities}"></span>
+    <br/>
+    应用id: <span th:text="${clientId}"></span>
+    <br/>
+    token: <span th:text="${token}"></span>
+</div>
+</body>
+</html>
