@@ -27,7 +27,7 @@
         <security-jwt.version>1.1.0.RELEASE</security-jwt.version>
         <redisson.version>3.9.1</redisson.version>
         <easyCaptcha.version>1.6.2</easyCaptcha.version>
-        <hutool.version>5.1.2</hutool.version>
+        <hutool.version>5.1.4</hutool.version>
         <mybatis-plus-boot-starter.version>3.3.1</mybatis-plus-boot-starter.version>
         <aliyun-sdk-oss>3.8.1</aliyun-sdk-oss>
         <qiniu-java-sdk>7.2.28</qiniu-java-sdk>
@@ -40,7 +40,7 @@
         <fastdfs-client.version>1.26.7</fastdfs-client.version>
         <userAgent.version>1.21</userAgent.version>
         <transmittable.version>2.11.4</transmittable.version>
-        <lettuce.version>5.2.1.RELEASE</lettuce.version>
+        <lettuce.version>5.2.2.RELEASE</lettuce.version>
         <banner.version>1.0.2</banner.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <spring-social-security.version>1.1.6.RELEASE</spring-social-security.version>

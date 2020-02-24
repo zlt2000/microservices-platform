@@ -102,6 +102,7 @@ central-platform -- 父项目，公共依赖
 │  │  ├─seata-demo -- seata分布式事务demo
 │  │  ├─sharding-jdbc-demo -- sharding-jdbc分库分表demo
 │  │  ├─rocketmq-demo -- rocketmq和mq事务demo
+│  │  ├─sso-demo -- 单点登录demo
 ```
 
 &nbsp;
