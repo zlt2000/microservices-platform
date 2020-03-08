@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://${zlt.datasource.ip}:3306/oauth-center?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
+    url: jdbc:mysql://${zlt.datasource.ip}:3306/oauth-center?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
     username: ${zlt.datasource.username}
     password: ${zlt.datasource.password}
     driver-class-name: com.mysql.cj.jdbc.Driver
