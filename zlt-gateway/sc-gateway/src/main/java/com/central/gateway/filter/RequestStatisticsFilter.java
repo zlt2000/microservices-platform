@@ -1,5 +1,6 @@
 package com.central.gateway.filter;
 
+import cn.hutool.core.util.StrUtil;
 import eu.bitwalker.useragentutils.UserAgent;
 import com.central.gateway.utils.ReactiveAddrUtil;
 import com.central.log.monitor.PointUtil;
@@ -32,8 +33,8 @@ public class RequestStatisticsFilter implements GlobalFilter, Ordered {
         //埋点
         PointUtil.debug("1", "request-statistics",
                 "ip=" + ReactiveAddrUtil.getRemoteAddr(request)
-                        + "&browser=" + userAgent.getBrowser()
-                        + "&operatingSystem=" + userAgent.getOperatingSystem());
+                        + "&browser=" + getBrowser(userAgent.getBrowser().name())
+                        + "&operatingSystem=" + getOperatingSystem(userAgent.getOperatingSystem().name()));
 
         return chain.filter(exchange);
     }
@@ -41,5 +42,27 @@ public class RequestStatisticsFilter implements GlobalFilter, Ordered {
     @Override
     public int getOrder() {
         return 0;
+    }
+
+    private String getBrowser(String browser) {
+        if (StrUtil.isNotEmpty(browser)) {
+            if (browser.contains("CHROME")) {
+                return "CHROME";
+            } else if (browser.contains("FIREFOX")) {
+                return "FIREFOX";
+            }
+        }
+        return browser;
+    }
+
+    private String getOperatingSystem(String operatingSystem) {
+        if (StrUtil.isNotEmpty(operatingSystem)) {
+            if (operatingSystem.contains("MAC_OS_X")) {
+                return "MAC_OS_X";
+            } else if (operatingSystem.contains("ANDROID")) {
+                return "ANDROID";
+            }
+        }
+        return operatingSystem;
     }
 }
