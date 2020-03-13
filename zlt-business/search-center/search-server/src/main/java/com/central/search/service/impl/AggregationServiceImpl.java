@@ -126,6 +126,13 @@ public class AggregationServiceImpl implements IAggregationService {
                                                 .cardinality("uv")
                                                 .field("ip.keyword")
                                 )
+                )
+                .addAggregation(
+                        //聚合查询7天内的数据
+                        AggregationBuilders
+                                .dateRange("curr24Hour")
+                                .field("timestamp")
+                                .addRange(currDt.minusDays(1), currDt)
                                 .subAggregation(
                                         //聚合并且按小时分组查询当天内的数据
                                         AggregationBuilders
@@ -214,6 +221,7 @@ public class AggregationServiceImpl implements IAggregationService {
         Map<String, Object> result = new HashMap<>(15);
         if (aggregations != null) {
             setCurrDate(result, aggregations);
+            setCurr24Hour(result, aggregations);
             setCurrWeek(result, aggregations);
             setCurrMonth(result, aggregations);
             setTermsData(result, aggregations, "browser");
@@ -231,6 +239,13 @@ public class AggregationServiceImpl implements IAggregationService {
         Cardinality cardinality = bucket.getAggregations().get("uv");
         result.put("currDate_pv", bucket.getDocCount());
         result.put("currDate_uv", cardinality.getValue());
+    }
+    /**
+     * 赋值周统计
+     */
+    private void setCurr24Hour(Map<String, Object> result, Aggregations aggregations) {
+        InternalDateRange curr24Hour = aggregations.get("curr24Hour");
+        InternalDateRange.Bucket bucket = curr24Hour.getBuckets().get(0);
         //赋值天趋势统计
         setStatDate(result, bucket.getAggregations());
     }
