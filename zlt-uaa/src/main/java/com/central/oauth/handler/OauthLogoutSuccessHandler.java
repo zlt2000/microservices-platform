@@ -29,7 +29,7 @@ public class OauthLogoutSuccessHandler implements LogoutSuccessHandler {
 
 	@Override
 	public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
-		String redirectUri = request.getParameter("redirectUri");
+		String redirectUri = request.getParameter("redirect_uri");
 		if (StrUtil.isNotEmpty(redirectUri)) {
 			//重定向指定的地址
 			redirectStrategy.sendRedirect(request, response, redirectUri);

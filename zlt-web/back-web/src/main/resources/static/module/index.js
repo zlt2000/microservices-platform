@@ -219,7 +219,7 @@ layui.define(['config', 'admin', 'layer', 'laytpl', 'element', 'form'], function
                         accessToken = token.access_token;
                     }
                     config.removeToken();
-                    window.location = config.base_server + 'api-uaa/oauth/remove/token?redirectUri=http://127.0.0.1:8066/login.html&access_token='+accessToken;
+                    window.location = config.base_server + 'api-uaa/oauth/remove/token?redirect_uri=http://127.0.0.1:8066/login.html&access_token='+accessToken;
                 });
             });
             // 修改密码
