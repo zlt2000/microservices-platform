@@ -3,6 +3,16 @@
 
 
 
+## oauth-center数据库执行以下sql
+```sql
+update oauth_client_details set 
+    authorized_grant_types = 'authorization_code,password,refresh_token', 
+    web_server_redirect_uri = 'http://127.0.0.1:8081/login.html'
+where client_id = 'app'
+```
+
+
+
 ## 启动以下服务
 
 1. zlt-uaa：统一认证中心
