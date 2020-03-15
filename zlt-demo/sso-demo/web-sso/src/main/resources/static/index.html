@@ -28,7 +28,7 @@
             $('#clientId').html(clientId);
         } else {//未登录
             sessionStorage.setItem("visitUri", window.location.href);
-            window.location = uaaUri+'authorize?client_id='+clientId+'&redirect_uri=http://127.0.0.1:8081/login.html&response_type=code';
+            window.location = uaaUri+'authorize?client_id='+clientId+'&redirect_uri=http://127.0.0.1:8081/callback.html&response_type=code';
         }
     };
 

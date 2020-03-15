@@ -7,7 +7,7 @@
 ```sql
 update oauth_client_details set 
     authorized_grant_types = 'authorization_code,password,refresh_token', 
-    web_server_redirect_uri = 'http://127.0.0.1:8081/login.html'
+    web_server_redirect_uri = 'http://127.0.0.1:8081/callback.html'
 where client_id = 'app'
 ```
 
