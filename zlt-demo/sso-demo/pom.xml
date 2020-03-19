@@ -4,47 +4,15 @@
     <parent>
         <groupId>com.zlt</groupId>
         <artifactId>zlt-demo</artifactId>
-        <version>3.3.0</version>
+        <version>3.4.0</version>
     </parent>
     <artifactId>sso-demo</artifactId>
-    <description>单点登录demo</description>
-    
-    <dependencies>
-        <dependency>
-            <groupId>com.zlt</groupId>
-            <artifactId>zlt-common-spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-oauth2</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-extension</artifactId>
-        </dependency>
-    </dependencies>
+    <packaging>pom</packaging>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+    <modules>
+        <!-- springSecurity单点登录demo -->
+        <module>ss-sso</module>
+        <!-- 前后端分离单点登录demo -->
+        <module>web-sso</module>
+    </modules>
 </project>

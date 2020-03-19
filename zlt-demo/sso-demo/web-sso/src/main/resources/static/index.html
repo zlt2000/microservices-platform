@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="utf-8"/>
+    <title>zlt</title>
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+<div>
+    <p>用户名：<span id="userName"></span></p>
+    <p>应用id：<span id="clientId"></span></p>
+    <p>token：<span id="accessToken"></span></p>
+    <p><input type="button" value="登出" onclick="logout()"/></p>
+</div>
+<script>
+    //应用id
+    let clientId = 'app';
+    //授权中心地址
+    let uaaUri = 'http://127.0.0.1:9900/api-uaa/oauth/';
+
+    window.onload = function() {
+        let accessToken = sessionStorage.getItem('access_token');
+        if (accessToken) {//已登录
+            let username = sessionStorage.getItem('username');
+            $('#accessToken').html(accessToken);
+            $('#userName').html(username);
+            $('#clientId').html(clientId);
+        } else {//未登录
+            sessionStorage.setItem("visitUri", window.location.href);
+            window.location = uaaUri+'authorize?client_id='+clientId+'&redirect_uri=http://127.0.0.1:8081/callback.html&response_type=code';
+        }
+    };
+
+    function logout() {
+        let accessToken = sessionStorage.getItem('access_token');
+        sessionStorage.removeItem('access_token');
+        sessionStorage.removeItem('username');
+        window.location = uaaUri+'remove/token?redirect_uri=http://127.0.0.1:8081/index.html&access_token='+accessToken;
+    }
+</script>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package com.central.gateway.filter.pre;
 
+import cn.hutool.core.util.StrUtil;
 import com.central.common.utils.AddrUtil;
 import com.central.log.monitor.PointUtil;
 import com.netflix.zuul.ZuulFilter;
@@ -44,9 +45,31 @@ public class RequestStatisticsFilter extends ZuulFilter {
         //埋点
         PointUtil.debug("0", "request-statistics",
                 "ip=" + AddrUtil.getRemoteAddr(req)
-                        + "&browser=" + userAgent.getBrowser()
-                        + "&operatingSystem=" + userAgent.getOperatingSystem());
+                        + "&browser=" + getBrowser(userAgent.getBrowser().getName())
+                        + "&operatingSystem=" + getOperatingSystem(userAgent.getOperatingSystem().getName()));
 
         return null;
+    }
+
+    private String getBrowser(String browser) {
+        if (StrUtil.isNotEmpty(browser)) {
+            if (browser.contains("CHROME")) {
+                return "CHROME";
+            } else if (browser.contains("FIREFOX")) {
+                return "FIREFOX";
+            }
+        }
+        return browser;
+    }
+
+    private String getOperatingSystem(String operatingSystem) {
+        if (StrUtil.isNotEmpty(operatingSystem)) {
+            if (operatingSystem.contains("MAC_OS_X")) {
+                return "MAC_OS_X";
+            } else if (operatingSystem.contains("ANDROID")) {
+                return "ANDROID";
+            }
+        }
+        return operatingSystem;
     }
 }

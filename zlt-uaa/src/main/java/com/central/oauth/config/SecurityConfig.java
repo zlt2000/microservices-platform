@@ -1,6 +1,7 @@
 package com.central.oauth.config;
 
 import com.central.common.constant.SecurityConstants;
+import com.central.oauth.handler.OauthLogoutSuccessHandler;
 import com.central.oauth.mobile.MobileAuthenticationSecurityConfig;
 import com.central.oauth.openid.OpenIdAuthenticationSecurityConfig;
 import com.central.common.config.DefaultPasswordConfig;
@@ -84,8 +85,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
 				.logout()
 					.logoutUrl(SecurityConstants.LOGOUT_URL)
-					.logoutSuccessUrl(SecurityConstants.LOGIN_PAGE)
-					.logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler())
+					.logoutSuccessHandler(new OauthLogoutSuccessHandler())
 					.addLogoutHandler(oauthLogoutHandler)
 					.clearAuthentication(true)
 					.and()

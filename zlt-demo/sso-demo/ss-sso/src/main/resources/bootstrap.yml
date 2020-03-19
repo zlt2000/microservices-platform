@@ -8,6 +8,7 @@ spring:
 zlt:
   api-uaa:
     url: http://127.0.0.1:9900/api-uaa/oauth
+  logout-uri: ${zlt.api-uaa.url}/remove/token?redirect_uri=http://127.0.0.1:8080&access_token=
 
 security:
   oauth2:
