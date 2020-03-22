@@ -107,11 +107,10 @@ central-platform -- 父项目，公共依赖
 
 <table>
     <tr>
-        <td><img alt="阿里云" src="http://qiniu.zlt2000.cn/blog/20200322/SWD7J71xdsac.jpg?imageslim"/></td>
-        <td><img alt="腾讯云" src="http://qiniu.zlt2000.cn/blog/20200322/Sifh4jDFqKi4.jpg?imageslim"/></td>
+        <td><a href="https://www.aliyun.com/minisite/goods?userCode=dickv1kw&share_source=copy_link"><img width="460px" height="177px" alt="阿里云" src="http://qiniu.zlt2000.cn/blog/20200322/V9QNHBliYiNt.jpg?imageslim"/></a></td>
+        <td><a href="https://url.cn/5RW4JfN"><img width="460px" height="177px"  alt="腾讯云" src="http://qiniu.zlt2000.cn/blog/20200322/9YiTdwL7ilT7.jpg?imageslim"/></a></td>
     </tr>
 </table>
-
 
 &nbsp;
 ## 5. 交流反馈
