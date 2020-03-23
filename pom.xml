@@ -23,7 +23,7 @@
         <druid-starter>1.1.21</druid-starter>
         <jasypt.version>1.14</jasypt.version>
         <sharding-sphere.version>3.1.0</sharding-sphere.version>
-        <security-oauth2.version>2.4.0.RELEASE</security-oauth2.version>
+        <security-oauth2.version>2.3.8.RELEASE</security-oauth2.version>
         <security-jwt.version>1.1.0.RELEASE</security-jwt.version>
         <redisson.version>3.9.1</redisson.version>
         <easyCaptcha.version>1.6.2</easyCaptcha.version>
