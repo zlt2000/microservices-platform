@@ -3,6 +3,7 @@ package com.central.oauth.service.impl;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.code.RandomValueAuthorizationCodeServices;
+import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
 
@@ -10,15 +11,11 @@ import java.util.concurrent.TimeUnit;
  * @author zlt
  * JdbcAuthorizationCodeServices替换
  */
+@Service
 public class RedisAuthorizationCodeServices extends RandomValueAuthorizationCodeServices {
-
     private RedisTemplate<String, Object> redisTemplate;
 
-    public RedisTemplate<String, Object> getRedisTemplate() {
-        return redisTemplate;
-    }
-
-    public void setRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
+    public RedisAuthorizationCodeServices(RedisTemplate<String, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 
