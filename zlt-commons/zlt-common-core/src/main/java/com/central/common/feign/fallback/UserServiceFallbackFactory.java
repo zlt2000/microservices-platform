@@ -5,7 +5,6 @@ import com.central.common.model.LoginAppUser;
 import com.central.common.model.SysUser;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 /**
  * userService降级工场
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Component;
  * @date 2019/1/18
  */
 @Slf4j
-@Component
 public class UserServiceFallbackFactory implements FallbackFactory<UserService> {
     @Override
     public UserService create(Throwable throwable) {

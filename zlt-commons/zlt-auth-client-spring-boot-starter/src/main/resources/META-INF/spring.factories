@@ -1,2 +1,6 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.central.oauth2.common.config.SecurityPropertiesConfig
+com.central.oauth2.common.config.SecurityPropertiesConfig,\
+com.central.oauth2.common.store.AuthDbTokenStore,\
+com.central.oauth2.common.store.AuthRedisTokenStore,\
+com.central.oauth2.common.store.AuthJwtTokenStore,\
+com.central.oauth2.common.store.ResJwtTokenStore

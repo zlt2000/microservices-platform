@@ -20,7 +20,6 @@ import java.util.concurrent.TimeUnit;
  * @date 2018/5/29 14:16
  */
 @Slf4j
-@Component
 public class RedisDistributedLock extends AbstractDistributedLock {
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;

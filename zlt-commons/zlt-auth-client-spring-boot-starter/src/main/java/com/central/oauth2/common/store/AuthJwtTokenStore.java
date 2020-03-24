@@ -2,6 +2,7 @@ package com.central.oauth2.common.store;
 
 import com.central.common.model.SysUser;
 import com.central.oauth2.common.converter.CustomUserAuthenticationConverter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.bootstrap.encrypt.KeyProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
@@ -23,6 +24,7 @@ import java.util.Map;
  * @author zlt
  * @date 2018/7/24 16:21
  */
+@ConditionalOnProperty(prefix = "zlt.oauth2.token.store", name = "type", havingValue = "authJwt")
 public class AuthJwtTokenStore {
 
     @Bean("keyProp")

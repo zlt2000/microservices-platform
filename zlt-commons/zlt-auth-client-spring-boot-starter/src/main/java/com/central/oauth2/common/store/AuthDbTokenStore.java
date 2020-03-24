@@ -1,6 +1,7 @@
 package com.central.oauth2.common.store;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
@@ -13,8 +14,8 @@ import javax.sql.DataSource;
  * @author zlt
  * @date 2018/7/24 16:23
  */
+@ConditionalOnProperty(prefix = "zlt.oauth2.token.store", name = "type", havingValue = "db")
 public class AuthDbTokenStore {
-
     @Autowired
     private DataSource dataSource;
 
