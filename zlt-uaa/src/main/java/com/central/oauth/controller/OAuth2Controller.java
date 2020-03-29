@@ -100,6 +100,7 @@ public class OAuth2Controller {
             OAuth2Authentication oAuth2Authentication = new OAuth2Authentication(oAuth2Request, authentication);
             OAuth2AccessToken oAuth2AccessToken = authorizationServerTokenServices.createAccessToken(oAuth2Authentication);
             oAuth2Authentication.setAuthenticated(true);
+            TenantContextHolder.clear();
             ResponseUtil.responseSucceed(objectMapper, response, oAuth2AccessToken);
         } catch (BadCredentialsException | InternalAuthenticationServiceException e) {
             exceptionHandler(response, badCredenbtialsMsg);
