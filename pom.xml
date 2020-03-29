@@ -46,6 +46,7 @@
         <spring-social-security.version>1.1.6.RELEASE</spring-social-security.version>
         <commons-io.version>2.6</commons-io.version>
         <servlet-api.version>4.0.1</servlet-api.version>
+        <spring-data-elasticsearch.version>3.2.5.RELEASE</spring-data-elasticsearch.version>
         <spring-cloud-alibaba-dependencies.version>2.1.1.RELEASE</spring-cloud-alibaba-dependencies.version>
         <spring-boot-dependencies.version>2.1.12.RELEASE</spring-boot-dependencies.version>
         <spring-cloud-dependencies.version>Greenwich.SR5</spring-cloud-dependencies.version>
@@ -142,6 +143,11 @@
             <dependency>
                 <groupId>com.zlt</groupId>
                 <artifactId>zlt-common-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zlt</groupId>
+                <artifactId>zlt-elasticsearch-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -337,6 +343,11 @@
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
                 <version>${servlet-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-elasticsearch</artifactId>
+                <version>${spring-data-elasticsearch.version}</version>
             </dependency>
 
             <dependency>
