@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.central.common.model.PageResult;
 import com.central.search.model.SearchDto;
 
+import java.io.IOException;
+
 /**
  * @author zlt
  * @date 2019/4/24
@@ -15,5 +17,5 @@ public interface ISearchService {
      * @param searchDto 搜索Dto
      * @return
      */
-    PageResult<JSONObject> strQuery(String indexName, SearchDto searchDto);
+    PageResult<JSONObject> strQuery(String indexName, SearchDto searchDto) throws IOException;
 }

@@ -18,5 +18,5 @@ public class IndexProperties {
     /**
      * 配置过滤的索引名：默认只显示这些索引
      */
-    private String[] show;
+    private String show;
 }

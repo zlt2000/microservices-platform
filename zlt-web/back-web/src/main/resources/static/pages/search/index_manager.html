@@ -37,19 +37,12 @@
             page: false,
             cols: [[
                 {type: 'numbers'},
-                {field: 'indexName', sort: true, title: '索引名'},
+                {field: 'health', sort: true, title: '索引健康'},
+                {field: 'status', sort: true, title: '索引状态'},
+                {field: 'index', sort: true, title: '索引名'},
                 {field: 'docsCount', sort: true, title: '文档数'},
                 {field: 'docsDeleted', sort: true, title: '文档删除数'},
-                {
-                    sort: true, templet: function (d) {
-                        if (d.storeSizeInBytes) {
-                            return parseFloat(d.storeSizeInBytes).toFixed(2);
-                        }
-                        return 0;
-                    }, title: '索引大小(kb)'
-                },
-                {field: 'queryCount', sort: true, title: '总查询数'},
-                {field: 'queryTimeInMillis', sort: true, title: '总查询耗时(s)'},
+                {field: 'storeSize', sort: true, title: '索引大小'},
                 {fixed: 'right', align: 'center', toolbar: '#index-table-bar', title: '操作', width: 120}
             ]]
         });
@@ -87,7 +80,7 @@
 
         //显示索引查看弹窗
         let showViewModel = function (data) {
-            admin.putTempData('indexName', data.indexName);
+            admin.putTempData('indexName', data.index);
             admin.popupCenter({
                 title: '查看索引',
                 path: 'pages/search/index_manager_view.html'
@@ -99,7 +92,7 @@
             layer.confirm('确定要删除吗？', function (i) {
                 layer.close(i);
                 layer.load(2);
-                admin.req('api-search/admin/index?indexName='+obj.data.indexName, {}, function (data) {
+                admin.req('api-search/admin/index?indexName='+obj.data.index, {}, function (data) {
                     layer.closeAll('loading');
                     if (data.resp_code == 0) {
                         layer.msg(data.resp_msg, {icon: 1, time: 500});

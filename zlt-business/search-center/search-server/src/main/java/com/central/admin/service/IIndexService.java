@@ -1,9 +1,9 @@
 package com.central.admin.service;
 
 import com.central.admin.model.IndexDto;
-import com.central.admin.model.IndexVo;
 import com.central.common.model.PageResult;
 
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -16,24 +16,24 @@ public interface IIndexService {
     /**
      * 创建索引
      */
-    void create(IndexDto indexDto);
+    boolean create(IndexDto indexDto) throws IOException;
 
     /**
      * 删除索引
      * @param indexName 索引名
      */
-    void delete(String indexName);
+    boolean delete(String indexName) throws IOException;
 
     /**
      * 索引列表
      * @param queryStr 搜索字符串
      * @param indices 默认显示的索引名
      */
-    PageResult<IndexVo> list(String queryStr, String... indices);
+    PageResult<Map<String, String>> list(String queryStr, String indices) throws IOException;
 
     /**
      * 显示索引明细
      * @param indexName 索引名
      */
-    Map<String, Object> show(String indexName);
+    Map<String, Object> show(String indexName) throws IOException;
 }

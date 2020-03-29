@@ -57,6 +57,8 @@ public class RequestStatisticsFilter extends ZuulFilter {
                 return "CHROME";
             } else if (browser.contains("FIREFOX")) {
                 return "FIREFOX";
+            } else if (browser.contains("SAFARI")) {
+                return "SAFARI";
             }
         }
         return browser;

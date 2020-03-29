@@ -1,7 +1,6 @@
 package com.central.admin.controller;
 
 import com.central.admin.model.IndexDto;
-import com.central.admin.model.IndexVo;
 import com.central.admin.properties.IndexProperties;
 import com.central.admin.service.IIndexService;
 import com.central.common.model.PageResult;
@@ -11,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -30,7 +30,7 @@ public class IndexController {
     private IndexProperties indexProperties;
 
     @PostMapping("/index")
-    public Result createIndex(@RequestBody IndexDto indexDto) {
+    public Result createIndex(@RequestBody IndexDto indexDto) throws IOException {
         if (indexDto.getNumberOfShards() == null) {
             indexDto.setNumberOfShards(1);
         }
@@ -45,7 +45,7 @@ public class IndexController {
      * 索引列表
      */
     @GetMapping("/indices")
-    public PageResult<IndexVo> list(@RequestParam(required = false) String queryStr) {
+    public PageResult<Map<String, String>> list(@RequestParam(required = false) String queryStr) throws IOException {
         return indexService.list(queryStr, indexProperties.getShow());
     }
 
@@ -53,7 +53,7 @@ public class IndexController {
      * 索引明细
      */
     @GetMapping("/index")
-    public Result<Map<String, Object>> showIndex(String indexName) {
+    public Result<Map<String, Object>> showIndex(String indexName) throws IOException {
         Map<String, Object> result = indexService.show(indexName);
         return Result.succeed(result);
     }
@@ -62,7 +62,7 @@ public class IndexController {
      * 删除索引
      */
     @DeleteMapping("/index")
-    public Result deleteIndex(String indexName) {
+    public Result deleteIndex(String indexName) throws IOException {
         indexService.delete(indexName);
         return Result.succeed("操作成功");
     }
