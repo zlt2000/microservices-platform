@@ -21,6 +21,6 @@ import reactor.core.publisher.Mono;
 public class JsonAccessDeniedHandler implements ServerAccessDeniedHandler {
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, AccessDeniedException e) {
-        return ResponseUtil.responseWriter(exchange, HttpStatus.FORBIDDEN.value(), e.getMessage());
+        return ResponseUtil.responseFailed(exchange, HttpStatus.FORBIDDEN.value(), e.getMessage());
     }
 }

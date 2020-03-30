@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
@@ -65,6 +64,7 @@ public class OauthTokenAspect {
                         .body(Result.succeed(body));
             }
         } catch (Exception e) {
+            log.error("授权错误", e);
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
                     .body(Result.failed(e.getMessage()));

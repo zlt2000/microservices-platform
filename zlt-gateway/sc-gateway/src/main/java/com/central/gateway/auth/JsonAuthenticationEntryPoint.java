@@ -21,6 +21,6 @@ import reactor.core.publisher.Mono;
 public class JsonAuthenticationEntryPoint implements ServerAuthenticationEntryPoint {
     @Override
     public Mono<Void> commence(ServerWebExchange exchange, AuthenticationException e) {
-        return ResponseUtil.responseWriter(exchange, HttpStatus.UNAUTHORIZED.value(), e.getMessage());
+        return ResponseUtil.responseFailed(exchange, HttpStatus.UNAUTHORIZED.value(), e.getMessage());
     }
 }

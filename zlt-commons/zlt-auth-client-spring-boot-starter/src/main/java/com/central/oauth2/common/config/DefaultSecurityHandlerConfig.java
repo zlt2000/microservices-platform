@@ -4,7 +4,6 @@ import com.central.common.utils.ResponseUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
 import org.springframework.security.oauth2.provider.expression.OAuth2WebSecurityExpressionHandler;
@@ -30,7 +29,7 @@ public class DefaultSecurityHandlerConfig {
      */
     @Bean
     public AuthenticationEntryPoint authenticationEntryPoint() {
-        return (request, response, authException) -> ResponseUtil.responseWriter(objectMapper, response, authException.getMessage(), HttpStatus.UNAUTHORIZED.value());
+        return (request, response, authException) -> ResponseUtil.responseFailed(objectMapper, response, authException.getMessage());
     }
 
     @Bean
@@ -49,7 +48,7 @@ public class DefaultSecurityHandlerConfig {
 
             @Override
             public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException authException) throws IOException, ServletException {
-                ResponseUtil.responseWriter(objectMapper, response, authException.getMessage(), HttpStatus.FORBIDDEN.value());
+                ResponseUtil.responseFailed(objectMapper, response, authException.getMessage());
             }
         };
     }

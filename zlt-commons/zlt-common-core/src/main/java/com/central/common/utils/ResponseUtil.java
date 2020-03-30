@@ -35,7 +35,7 @@ public class ResponseUtil {
      * @throws IOException
      */
     public static void responseWriter(ObjectMapper objectMapper, HttpServletResponse response, String msg, int httpStatus) throws IOException {
-        Result result = Result.succeedWith(null, httpStatus, msg);
+        Result result = Result.of(null, httpStatus, msg);
         responseWrite(objectMapper, response, result);
     }
 
@@ -76,11 +76,28 @@ public class ResponseUtil {
      * webflux的response返回json对象
      */
     public static Mono<Void> responseWriter(ServerWebExchange exchange, int httpStatus, String msg) {
-        Result result = Result.succeedWith(null, httpStatus, msg);
+        Result result = Result.of(null, httpStatus, msg);
+        return responseWrite(exchange, httpStatus, result);
+    }
+
+    public static Mono<Void> responseFailed(ServerWebExchange exchange, String msg) {
+        Result result = Result.failed(msg);
+        return responseWrite(exchange, HttpStatus.INTERNAL_SERVER_ERROR.value(), result);
+    }
+
+    public static Mono<Void> responseFailed(ServerWebExchange exchange, int httpStatus, String msg) {
+        Result result = Result.failed(msg);
+        return responseWrite(exchange, httpStatus, result);
+    }
+
+    public static Mono<Void> responseWrite(ServerWebExchange exchange, int httpStatus, Result result) {
+        if (httpStatus == 0) {
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR.value();
+        }
         ServerHttpResponse response = exchange.getResponse();
         response.getHeaders().setAccessControlAllowCredentials(true);
         response.getHeaders().setAccessControlAllowOrigin("*");
-        response.setStatusCode(HttpStatus.valueOf(result.getResp_code()));
+        response.setStatusCode(HttpStatus.valueOf(httpStatus));
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON_UTF8);
         DataBufferFactory dataBufferFactory = response.bufferFactory();
         DataBuffer buffer = dataBufferFactory.wrap(JSONObject.toJSONString(result).getBytes(Charset.defaultCharset()));
