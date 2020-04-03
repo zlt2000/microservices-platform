@@ -52,6 +52,8 @@ public class RequestStatisticsFilter implements GlobalFilter, Ordered {
                 return "FIREFOX";
             } else if (browser.contains("SAFARI")) {
                 return "SAFARI";
+            } else if (browser.contains("EDGE")) {
+                return "EDGE";
             }
         }
         return browser;

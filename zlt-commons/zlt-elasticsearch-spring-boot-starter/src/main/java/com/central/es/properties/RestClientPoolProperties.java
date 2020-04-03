@@ -20,15 +20,15 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 @RefreshScope
 public class RestClientPoolProperties {
     /**
-     * 连接超时时间
+     * 链接建立超时时间
      */
     private Integer connectTimeOut = 1000;
     /**
-     * 连接超时时间
+     * 等待数据超时时间
      */
     private Integer socketTimeOut = 30000;
     /**
-     * 获取连接的超时时间
+     * 连接池获取连接的超时时间
      */
     private Integer connectionRequestTimeOut = 500;
     /**
