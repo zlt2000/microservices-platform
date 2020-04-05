@@ -27,7 +27,7 @@
 * **详细在线文档** [点击查看](https://www.kancloud.cn/zlt2000/microservices-platform/936236)
   * **[项目更新日志](https://www.kancloud.cn/zlt2000/microservices-platform/936235)**
   * **[文档更新日志](https://www.kancloud.cn/zlt2000/microservices-platform/936236)**
-* **演示环境地址**： [http://mp.zlt2000.cn](http://mp.zlt2000.cn/)
+* **演示环境地址**： [http://zlt2000.cn](http://zlt2000.cn/)
   * 账号密码：admin/admin
   * APM监控账号密码：admin/admin
   * Grafana账号：zlt/zlt123
