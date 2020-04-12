@@ -1,9 +1,9 @@
 package com.central.oauth.filter;
 
 import cn.hutool.core.util.ArrayUtil;
-import com.alibaba.nacos.common.util.HttpMethod;
 import com.central.common.constant.SecurityConstants;
 import com.central.common.context.TenantContextHolder;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.web.savedrequest.DefaultSavedRequest;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
@@ -29,7 +29,7 @@ public class LoginProcessSetTenantFilter extends OncePerRequestFilter {
 
     private RequestMatcher requiresAuthenticationRequestMatcher;
     public LoginProcessSetTenantFilter() {
-        requiresAuthenticationRequestMatcher = new AntPathRequestMatcher(SecurityConstants.OAUTH_LOGIN_PRO_URL, HttpMethod.POST);
+        requiresAuthenticationRequestMatcher = new AntPathRequestMatcher(SecurityConstants.OAUTH_LOGIN_PRO_URL, HttpMethod.POST.name());
     }
 
     /**

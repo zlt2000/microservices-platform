@@ -50,8 +50,7 @@ public class JsonErrorWebExceptionHandler extends DefaultErrorWebExceptionHandle
      */
     @Override
     protected HttpStatus getHttpStatus(Map<String, Object> errorAttributes) {
-        int statusCode = (int) errorAttributes.get("code");
-        return HttpStatus.valueOf(statusCode);
+        return HttpStatus.INTERNAL_SERVER_ERROR;
     }
 
     /**
