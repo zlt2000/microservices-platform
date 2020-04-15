@@ -5,8 +5,10 @@
   <img src="https://img.shields.io/badge/Spring%20Boot-2.1.12.RELEASE-blue" alt="Downloads"/>
   <img src="https://img.shields.io/badge/Spring%20Cloud-Greenwich.SR5-blue" alt="Downloads"/>
   <img src="https://img.shields.io/badge/Spring%20Cloud%20Alibaba-2.1.1.RELEASE-blue" alt="Downloads"/>
+  <img src="https://img.shields.io/badge/Elasticsearch-6.x-brightgreen" alt="Downloads"/>
   <img src="https://img.shields.io/badge/Layui-EasyWeb-yellowgreen" alt="Downloads"/>
 </p>
+
 
 
 
@@ -29,7 +31,7 @@
 </table>
 
 
-* **详细在线文档** [点击查看](https://www.kancloud.cn/zlt2000/microservices-platform/936236)
+* **详细在线文档** ：https://www.kancloud.cn/zlt2000/microservices-platform/919418
   * **[项目更新日志](https://www.kancloud.cn/zlt2000/microservices-platform/936235)**
   * **[文档更新日志](https://www.kancloud.cn/zlt2000/microservices-platform/936236)**
 * **演示环境地址**： [http://zlt2000.cn](http://zlt2000.cn/)
