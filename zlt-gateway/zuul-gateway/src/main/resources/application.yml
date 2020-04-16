@@ -14,14 +14,14 @@
         # 限流
 #        ds1:
 #          nacos:
-#            server-addr: ${zlt.nacos.server-addr}
+#            server-addr: ${spring.cloud.nacos.server-addr}
 #            dataId: ${spring.application.name}-sentinel-gw-flow
 #            groupId: DEFAULT_GROUP
 #            rule-type: gw-flow
         # api分组
 #        ds2:
 #          nacos:
-#            server-addr: ${zlt.nacos.server-addr}
+#            server-addr: ${spring.cloud.nacos.server-addr}
 #            dataId: ${spring.application.name}-sentinel-gw-api-group
 #            groupId: DEFAULT_GROUP
 #            rule-type: gw-api-group
