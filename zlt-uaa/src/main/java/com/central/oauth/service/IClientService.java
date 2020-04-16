@@ -18,7 +18,7 @@ public interface IClientService extends ISuperService<Client> {
      * @param params
      * @param isPage 是否分页
      */
-    PageResult<Client> listClent(Map<String, Object> params, boolean isPage);
+    PageResult<Client> listClient(Map<String, Object> params, boolean isPage);
 
     void delClient(long id);
 }

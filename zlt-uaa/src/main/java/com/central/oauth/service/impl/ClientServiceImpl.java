@@ -50,7 +50,7 @@ public class ClientServiceImpl extends SuperServiceImpl<ClientMapper, Client> im
     }
 
     @Override
-    public PageResult<Client> listClent(Map<String, Object> params, boolean isPage) {
+    public PageResult<Client> listClient(Map<String, Object> params, boolean isPage) {
         Page<Client> page;
         if (isPage) {
             page = new Page<>(MapUtils.getInteger(params, "page"), MapUtils.getInteger(params, "limit"));
