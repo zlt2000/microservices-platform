@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
  * @author zlt
  * @date 2019/10/26
  * <p>
- * Blog: https://blog.csdn.net/zlt2000
+ * Blog: https://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 @Target(ElementType.TYPE)

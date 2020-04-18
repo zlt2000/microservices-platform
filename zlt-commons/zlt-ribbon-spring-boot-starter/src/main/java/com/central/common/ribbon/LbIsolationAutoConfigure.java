@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Bean;
  * @author zlt
  * @date 2019/9/3
  * <p>
- * Blog: https://blog.csdn.net/zlt2000
+ * Blog: https://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 @ConditionalOnProperty(value = ConfigConstants.CONFIG_RIBBON_ISOLATION_ENABLED, havingValue = "true")
