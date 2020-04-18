@@ -17,7 +17,7 @@ import java.util.Map;
  * @author zlt
  * @date 2020/3/30
  * <p>
- * Blog: https://blog.csdn.net/zlt2000
+ * Blog: https://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 public class JsonErrorWebExceptionHandler extends DefaultErrorWebExceptionHandler {
