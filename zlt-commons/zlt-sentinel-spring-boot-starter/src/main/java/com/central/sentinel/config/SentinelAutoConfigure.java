@@ -28,8 +28,8 @@ public class SentinelAutoConfigure {
     /**
      * 限流、熔断统一处理类
      */
-    @Configuration
-    @ConditionalOnClass(HttpServletRequest.class)
+    /*@Configuration
+    @ConditionalOnClass(HttpServletRequest.class)*/
     public static class WebmvcHandler {
         public WebmvcHandler(SentinelWebMvcConfig config) {
             config.setBlockExceptionHandler(webmvcBlockExceptionHandler());
@@ -48,8 +48,8 @@ public class SentinelAutoConfigure {
     /**
      * 限流、熔断统一处理类
      */
-    @Configuration
-    @ConditionalOnClass(ServerResponse.class)
+    /*@Configuration
+    @ConditionalOnClass(ServerResponse.class)*/
     public static class WebfluxHandler {
         public WebfluxHandler() {
             WebFluxCallbackManager.setBlockHandler(webfluxBlockExceptionHandler());
