@@ -9,15 +9,17 @@
   <img src="https://img.shields.io/badge/Layui-EasyWeb-yellowgreen" alt="Downloads"/>
 </p>
 
-
-
-
 ## 如果您觉得有帮助，请点右上角 "Star" 支持一下谢谢
+&nbsp;
+## 1. 总体架构图
+![mark](http://qiniu.zlt2000.cn/blog/20191021/IyNU3skYNIMf.jpg?imageslim)
 
-[TOC]
+&nbsp;
+## 2. 功能介绍
+![mark](http://qiniu.zlt2000.cn/blog/20200207/rpBztRCvwvQD.jpg?imageslim)
 
-## 1. 项目介绍
-
+&nbsp;
+## 3. 项目介绍
 * **技术交流群** 
 <table>
     <tr>
@@ -54,19 +56,7 @@
 >重构于开源项目OCP&cp：https://gitee.com/owenwangwen/open-capacity-platform
 
 &nbsp;
-
-## 2. 项目总体架构图
-![mark](http://qiniu.zlt2000.cn/blog/20191021/IyNU3skYNIMf.jpg?imageslim)
-
-&nbsp;
-
-## 3. 功能介绍
-![mark](http://qiniu.zlt2000.cn/blog/20200207/rpBztRCvwvQD.jpg?imageslim)
-
-&nbsp;
-
 ## 4. 模块说明
-
 ```lua
 central-platform -- 父项目，公共依赖
 │  ├─zlt-business -- 业务模块一级工程
@@ -118,7 +108,6 @@ central-platform -- 父项目，公共依赖
         <td><a target="_blank" href="https://url.cn/55zzbhR"><img width="460px" height="177px"  alt="腾讯云" src="http://qiniu.zlt2000.cn/blog/20200411/GNTLAuv4EDaA.jpg?imageslim"/></a></td>
     </tr>
 </table>
-
 
 ## 5. 交流反馈
 * 有问题先看看 [F&Q](https://www.kancloud.cn/zlt2000/microservices-platform/981382) 中有没有相关的回答
