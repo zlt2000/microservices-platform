@@ -28,7 +28,7 @@
         <sharding-sphere.version>3.1.0</sharding-sphere.version>
         <security-oauth2.version>2.3.8.RELEASE</security-oauth2.version>
         <security-jwt.version>1.1.0.RELEASE</security-jwt.version>
-        <redisson.version>3.9.1</redisson.version>
+        <redisson-starter.version>3.11.5</redisson-starter.version>
         <easyCaptcha.version>1.6.2</easyCaptcha.version>
         <hutool.version>5.1.4</hutool.version>
         <mybatis-plus-boot-starter.version>3.3.1</mybatis-plus-boot-starter.version>
@@ -43,7 +43,6 @@
         <fastdfs-client.version>1.26.7</fastdfs-client.version>
         <userAgent.version>1.21</userAgent.version>
         <transmittable.version>2.11.4</transmittable.version>
-        <lettuce.version>5.2.2.RELEASE</lettuce.version>
         <banner.version>1.0.2</banner.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <spring-social-security.version>1.1.6.RELEASE</spring-social-security.version>
@@ -186,8 +185,8 @@
             <!-- 在Redis基础上的一个Java实用工具包 -->
             <dependency>
                 <groupId>org.redisson</groupId>
-                <artifactId>redisson</artifactId>
-                <version>${redisson.version}</version>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson-starter.version}</version>
             </dependency>
             <!-- swagger -->
             <dependency>
@@ -318,11 +317,6 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>transmittable-thread-local</artifactId>
                 <version>${transmittable.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.lettuce</groupId>
-                <artifactId>lettuce-core</artifactId>
-                <version>${lettuce.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.nepxion</groupId>
