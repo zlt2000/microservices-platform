@@ -1,6 +1,6 @@
 package com.central.gateway.auth;
 
-import com.central.common.utils.ResponseUtil;
+import com.central.common.utils.WebfluxResponseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
@@ -21,6 +21,6 @@ import reactor.core.publisher.Mono;
 public class JsonAccessDeniedHandler implements ServerAccessDeniedHandler {
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, AccessDeniedException e) {
-        return ResponseUtil.responseFailed(exchange, HttpStatus.FORBIDDEN.value(), e.getMessage());
+        return WebfluxResponseUtil.responseFailed(exchange, HttpStatus.FORBIDDEN.value(), e.getMessage());
     }
 }
