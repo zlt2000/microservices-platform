@@ -19,6 +19,8 @@ import com.central.search.model.LogicDelDto;
 import com.central.search.model.SearchDto;
 import com.central.user.model.SysUserExcel;
 import org.apache.commons.collections4.MapUtils;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -57,6 +59,9 @@ public class SysUserController {
     @Autowired
     private IQueryService queryService;
 
+    @Autowired
+    private RedissonClient redisson;
+
     /**
      * 当前登录用户 LoginAppUser
      *
@@ -65,6 +70,9 @@ public class SysUserController {
     @ApiOperation(value = "根据access_token当前登录用户")
     @GetMapping("/users/current")
     public Result<LoginAppUser> getLoginAppUser(@LoginUser(isFull = true) SysUser user) {
+        RLock lock = redisson.getLock("test");
+        lock.lock();
+
         return Result.succeed(appUserService.getLoginAppUser(user));
     }
 
@@ -236,7 +244,7 @@ public class SysUserController {
     @CacheEvict(value = "user", key = "#sysUser.username")
     @PostMapping("/users/saveOrUpdate")
     @AuditLog(operation = "'新增或更新用户:' + #sysUser.username")
-    public Result saveOrUpdate(@RequestBody SysUser sysUser) {
+    public Result saveOrUpdate(@RequestBody SysUser sysUser) throws Exception {
         return appUserService.saveOrUpdateUser(sysUser);
     }
 
