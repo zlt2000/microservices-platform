@@ -61,7 +61,7 @@ public class SysRoleController {
      * @return
      */
     @PostMapping("/roles/saveOrUpdate")
-    public Result saveOrUpdate(@RequestBody SysRole sysRole) {
+    public Result saveOrUpdate(@RequestBody SysRole sysRole) throws Exception {
         return sysRoleService.saveOrUpdateRole(sysRole);
     }
 
