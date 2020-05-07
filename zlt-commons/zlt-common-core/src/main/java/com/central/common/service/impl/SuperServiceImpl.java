@@ -36,7 +36,7 @@ public class SuperServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M,
         if (StrUtil.isEmpty(lockKey)) {
             throw new LockException("lockKey is null");
         }
-        Object lock;
+        Object lock = null;
         try {
             //加锁
             lock = locker.tryLock(lockKey, 10, 60, TimeUnit.SECONDS);
@@ -55,7 +55,7 @@ public class SuperServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M,
                 throw new LockException("锁等待超时");
             }
         } finally {
-            locker.unlock(lockKey);
+            locker.unlock(lock);
         }
     }
 
