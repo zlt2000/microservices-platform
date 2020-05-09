@@ -70,9 +70,6 @@ public class SysUserController {
     @ApiOperation(value = "根据access_token当前登录用户")
     @GetMapping("/users/current")
     public Result<LoginAppUser> getLoginAppUser(@LoginUser(isFull = true) SysUser user) {
-        RLock lock = redisson.getLock("test");
-        lock.lock();
-
         return Result.succeed(appUserService.getLoginAppUser(user));
     }
 
