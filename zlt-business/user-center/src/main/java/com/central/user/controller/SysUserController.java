@@ -19,8 +19,6 @@ import com.central.search.model.LogicDelDto;
 import com.central.search.model.SearchDto;
 import com.central.user.model.SysUserExcel;
 import org.apache.commons.collections4.MapUtils;
-import org.redisson.api.RLock;
-import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -58,9 +56,6 @@ public class SysUserController {
 
     @Autowired
     private IQueryService queryService;
-
-    @Autowired
-    private RedissonClient redisson;
 
     /**
      * 当前登录用户 LoginAppUser
