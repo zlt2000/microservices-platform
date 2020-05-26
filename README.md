@@ -12,11 +12,11 @@
 ## 如果您觉得有帮助，请点右上角 "Star" 支持一下谢谢
 &nbsp;
 ## 1. 总体架构图
-![mark](http://qiniu.zlt2000.cn/blog/20191021/IyNU3skYNIMf.jpg?imageslim)
+![mark](https://gitee.com/zlt2000/images/raw/master/springcloud%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84%E5%9B%BE.jpg)
 
 &nbsp;
 ## 2. 功能介绍
-![mark](http://qiniu.zlt2000.cn/blog/20200207/rpBztRCvwvQD.jpg?imageslim)
+![mark](https://gitee.com/zlt2000/images/raw/master/ZLT-MP%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%B9%B3%E5%8F%B0%E5%8A%9F%E8%83%BD%E5%9B%BE.jpg)
 
 &nbsp;
 ## 3. 项目介绍
@@ -27,8 +27,8 @@
         <td><center><strong><a href="https://shang.qq.com/wpa/qunwpa?idkey=41988facbc02f678942a7ee7ae03122f2ef0a10c948b3d07319f070bfb0d3a98" target="_blank">交流二群</a></strong></center></td>
 	</tr>
     <tr>
-        <td><a href="http://shang.qq.com/wpa/qunwpa?idkey=17544199255998bda0d938fb72b08d076c40c52c9904520b76eb5eb0585da71e" target="_blank"><img width=300px height=300px alt="交流一群(已满)" src="http://qiniu.zlt2000.cn/blog/20200205/fzWCboU4Fshn.png?imageslim"/></a></td>
-        <td><a href="https://shang.qq.com/wpa/qunwpa?idkey=41988facbc02f678942a7ee7ae03122f2ef0a10c948b3d07319f070bfb0d3a98" target="_blank"><img width=300px height=300px alt="交流二群" src="http://qiniu.zlt2000.cn/blog/20200205/zbzMGVGNopY0.png?imageslim"/></a></td>
+        <td><a href="http://shang.qq.com/wpa/qunwpa?idkey=17544199255998bda0d938fb72b08d076c40c52c9904520b76eb5eb0585da71e" target="_blank"><img width=300px height=300px alt="交流一群(已满)" src="https://gitee.com/zlt2000/images/raw/master/%E4%BA%A4%E6%B5%81%E4%B8%80%E7%BE%A4.png"/></a></td>
+        <td><a href="https://shang.qq.com/wpa/qunwpa?idkey=41988facbc02f678942a7ee7ae03122f2ef0a10c948b3d07319f070bfb0d3a98" target="_blank"><img width=300px height=300px alt="交流二群" src="https://gitee.com/zlt2000/images/raw/master/%E4%BA%A4%E6%B5%81%E4%BA%8C%E7%BE%A4.png"/></a></td>
     </tr>
 </table>
 
@@ -104,8 +104,8 @@ central-platform -- 父项目，公共依赖
 
 <table>
     <tr>
-        <td><a target="_blank" href="https://www.aliyun.com/minisite/goods?userCode=dickv1kw&share_source=copy_link"><img width="460px" height="177px" alt="阿里云" src="http://qiniu.zlt2000.cn/blog/20200322/V9QNHBliYiNt.jpg?imageslim"/></a></td>
-        <td><a target="_blank" href="https://url.cn/55zzbhR"><img width="460px" height="177px"  alt="腾讯云" src="http://qiniu.zlt2000.cn/blog/20200411/GNTLAuv4EDaA.jpg?imageslim"/></a></td>
+        <td><a target="_blank" href="https://www.aliyun.com/minisite/goods?userCode=dickv1kw&share_source=copy_link"><img width="460px" height="177px" alt="阿里云" src="https://gitee.com/zlt2000/images/raw/master/aly.jpg"/></a></td>
+        <td><a target="_blank" href="https://url.cn/55zzbhR"><img width="460px" height="177px"  alt="腾讯云" src="https://gitee.com/zlt2000/images/raw/master/txy.jpg"/></a></td>
     </tr>
 </table>
 
@@ -124,31 +124,31 @@ central-platform -- 父项目，公共依赖
 ## 6. 截图（点击可大图预览）
 <table>
     <tr>
-        <td><img alt="首页" src="http://qiniu.zlt2000.cn/blog/20200322/20gQsMNw7eh3.png?imageslim"/></td>
-        <td><img alt="用户搜索" src="http://qiniu.zlt2000.cn/blog/20191021/UaHM4w4kPVT9.png?imageslim"/></td>
+        <td><img alt="首页" src="https://gitee.com/zlt2000/images/raw/master/%E9%A6%96%E9%A1%B5.png"/></td>
+        <td><img alt="用户搜索" src="https://gitee.com/zlt2000/images/raw/master/%E7%94%A8%E6%88%B7%E6%90%9C%E7%B4%A2.png"/></td>
     </tr>
 	<tr>
-        <td><img alt="server_metrics" src="http://qiniu.zlt2000.cn/blog/20191021/9KsjcCgYqgBB.png?imageslim"/></td>
-        <td><img alt="application_metrics" src="http://qiniu.zlt2000.cn/blog/20191021/4VH2z1BW3sWN.png?imageslim"/></td>
+        <td><img alt="server_metrics" src="https://gitee.com/zlt2000/images/raw/master/server_metrics.png"/></td>
+        <td><img alt="application_metrics" src="https://gitee.com/zlt2000/images/raw/master/application_metrics.png"/></td>
     </tr>
 	<tr>
-        <td><img alt="持续集成2" src="http://qiniu.zlt2000.cn/blog/20191021/8Ew3z2kDe8bj.png?imageslim"/></td>
-        <td><img alt="sonar结果" src="http://qiniu.zlt2000.cn/blog/20191021/AEEPnTLBz4P4.png?imageslim"/></td>
+        <td><img alt="持续集成2" src="https://gitee.com/zlt2000/images/raw/master/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%902.png"/></td>
+        <td><img alt="sonar结果" src="https://gitee.com/zlt2000/images/raw/master/sonar%E7%BB%93%E6%9E%9C.png"/></td>
     </tr>
     <tr>
-        <td><img alt="skywalking首页.png" src="http://qiniu.zlt2000.cn/blog/20191021/GhDqEUdDDfhV.png?imageslim"/></td>
-        <td><img alt="skywalking应用拓扑图" src="http://qiniu.zlt2000.cn/blog/20191021/xLi5mvhzWfWt.png?imageslim"/></td>
+        <td><img alt="skywalking首页.png" src="https://gitee.com/zlt2000/images/raw/master/skywalking%E9%A6%96%E9%A1%B5.png"/></td>
+        <td><img alt="skywalking应用拓扑图" src="https://gitee.com/zlt2000/images/raw/master/skywalking%E5%BA%94%E7%94%A8%E6%8B%93%E6%89%91%E5%9B%BE.png"/></td>
     </tr>
     <tr>
-        <td><img alt="elk" src="http://qiniu.zlt2000.cn/blog/20191021/5lrHQb2xNF4o.png?imageslim"/></td>
-        <td><img alt="任务中心" src="http://qiniu.zlt2000.cn/blog/20191021/A0YLCT1BHCed.png?imageslim"/></td>
+        <td><img alt="elk" src="https://gitee.com/zlt2000/images/raw/master/elk.png"/></td>
+        <td><img alt="任务中心" src="https://gitee.com/zlt2000/images/raw/master/%E4%BB%BB%E5%8A%A1%E4%B8%AD%E5%BF%83.png"/></td>
     </tr>
     <tr>
-        <td><img alt="日志中心02" src="http://qiniu.zlt2000.cn/blog/20191021/f7bdpM1To8wT.png?imageslim"/></td>
-        <td><img alt="慢查询sql" src="http://qiniu.zlt2000.cn/blog/20191021/Yqr4Dnb9BwSy.png?imageslim"/></td>
+        <td><img alt="日志中心02" src="https://gitee.com/zlt2000/images/raw/master/%E6%97%A5%E5%BF%97%E4%B8%AD%E5%BF%8302.png"/></td>
+        <td><img alt="慢查询sql" src="https://gitee.com/zlt2000/images/raw/master/%E6%85%A2%E6%9F%A5%E8%AF%A2sql.png"/></td>
     </tr>
     <tr>
-        <td><img alt="nacos-discovery" src="http://qiniu.zlt2000.cn/blog/20191021/spAnWiDcwch5.png?imageslim"/></td>
-        <td><img alt="应用吞吐量监控" src="http://qiniu.zlt2000.cn/blog/20191021/vBhLkLma3dwC.png?imageslim"/></td>
+        <td><img alt="nacos-discovery" src="https://gitee.com/zlt2000/images/raw/master/nacos-discovery.png"/></td>
+        <td><img alt="应用吞吐量监控" src="https://gitee.com/zlt2000/images/raw/master/%E5%BA%94%E7%94%A8%E5%90%9E%E5%90%90%E9%87%8F%E7%9B%91%E6%8E%A7.png"/></td>
     </tr>
 </table>
