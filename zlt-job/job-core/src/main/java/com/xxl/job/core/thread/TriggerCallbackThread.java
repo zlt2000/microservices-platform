@@ -215,7 +215,7 @@ public class TriggerCallbackThread {
         }
 
         // retry callback, 100 lines per page
-        if (failCallbackParamList!=null && failCallbackParamList.size()>0) {
+        if (failCallbackParamList.size()>0) {
             int pagesize = 100;
             List<HandleCallbackParam> pageData = new ArrayList<>();
             for (int i = 0; i < failCallbackParamList.size(); i++) {
