@@ -34,4 +34,9 @@ $(function(){
 			$(this).parent().next().hide();
 		}
 	});
+
+	let query = location.search;
+	if (query === '?error') {
+		$('#loginError').show();
+	}
 });
