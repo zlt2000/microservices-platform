@@ -18,7 +18,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
@@ -37,8 +36,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private AuthenticationSuccessHandler authenticationSuccessHandler;
-	@Autowired
-	private AuthenticationFailureHandler authenticationFailureHandler;
 
 	@Autowired(required = false)
 	private AuthenticationEntryPoint authenticationEntryPoint;
@@ -82,7 +79,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .loginPage(SecurityConstants.LOGIN_PAGE)
                     .loginProcessingUrl(SecurityConstants.OAUTH_LOGIN_PRO_URL)
                     .successHandler(authenticationSuccessHandler)
-                    .failureHandler(authenticationFailureHandler)
                     .and()
 				.logout()
 					.logoutUrl(SecurityConstants.LOGOUT_URL)

@@ -1,17 +1,20 @@
 package com.central.oauth.filter;
 
 import com.central.common.constant.SecurityConstants;
+import com.central.common.utils.ResponseUtil;
 import com.central.oauth.exception.ValidateCodeException;
 import com.central.oauth.service.IValidateCodeService;
 import com.central.oauth2.common.properties.SecurityProperties;
 import com.central.oauth2.common.util.AuthUtils;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import javax.annotation.Resource;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -31,11 +34,8 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
     @Autowired
     private SecurityProperties securityProperties;
 
-    /**
-     * 验证码校验失败处理器
-     */
-    @Autowired
-    private AuthenticationFailureHandler authenticationFailureHandler;
+    @Resource
+    private ObjectMapper objectMapper;
 
     /**
      * 验证请求url与配置的url是否匹配的工具类
@@ -73,7 +73,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
         try {
             validateCodeService.validate(request);
         } catch (ValidateCodeException e) {
-            authenticationFailureHandler.onAuthenticationFailure(request, response, e);
+            ResponseUtil.responseWriter(objectMapper, response, e.getMessage(), HttpStatus.BAD_REQUEST.value());
             return;
         }
         chain.doFilter(request, response);
