@@ -23,11 +23,14 @@ import java.util.Map;
 
 /**
  * @author zlt
+ * <p>
+ * Blog: https://zlt2000.gitee.io
+ * Github: https://github.com/zlt2000
  */
 @Slf4j
 @Service
 public class ClientServiceImpl extends SuperServiceImpl<ClientMapper, Client> implements IClientService {
-    private final static String LOCK_KEY_CLIENTID = CommonConstant.LOCK_KEY_PREFIX+"clientId:";
+    private final static String LOCK_KEY_CLIENTID = "clientId:";
 
     @Autowired
     private RedisRepository redisRepository;
@@ -39,7 +42,7 @@ public class ClientServiceImpl extends SuperServiceImpl<ClientMapper, Client> im
     private DistributedLock lock;
 
     @Override
-    public Result saveClient(Client client) {
+    public Result saveClient(Client client) throws Exception {
         client.setClientSecret(passwordEncoder.encode(client.getClientSecretStr()));
         String clientId = client.getClientId();
         super.saveOrUpdateIdempotency(client, lock
@@ -50,7 +53,7 @@ public class ClientServiceImpl extends SuperServiceImpl<ClientMapper, Client> im
     }
 
     @Override
-    public PageResult<Client> listClent(Map<String, Object> params, boolean isPage) {
+    public PageResult<Client> listClient(Map<String, Object> params, boolean isPage) {
         Page<Client> page;
         if (isPage) {
             page = new Page<>(MapUtils.getInteger(params, "page"), MapUtils.getInteger(params, "limit"));

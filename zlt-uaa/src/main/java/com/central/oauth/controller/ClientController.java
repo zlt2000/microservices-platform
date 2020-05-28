@@ -18,6 +18,9 @@ import java.util.Map;
  * 应用相关接口
  *
  * @author zlt
+ * <p>
+ * Blog: https://zlt2000.gitee.io
+ * Github: https://github.com/zlt2000
  */
 @Api(tags = "应用")
 @RestController
@@ -29,7 +32,7 @@ public class ClientController {
     @GetMapping("/list")
     @ApiOperation(value = "应用列表")
     public PageResult<Client> list(@RequestParam Map<String, Object> params) {
-        return clientService.listClent(params, true);
+        return clientService.listClient(params, true);
     }
 
     @GetMapping("/{id}")
@@ -41,7 +44,7 @@ public class ClientController {
     @GetMapping("/all")
     @ApiOperation(value = "所有应用")
     public Result<List<Client>> allClient() {
-        PageResult<Client> page = clientService.listClent(Maps.newHashMap(), false);
+        PageResult<Client> page = clientService.listClient(Maps.newHashMap(), false);
         return Result.succeed(page.getData());
     }
 
@@ -53,7 +56,7 @@ public class ClientController {
 
     @PostMapping("/saveOrUpdate")
     @ApiOperation(value = "保存或者修改应用")
-    public Result saveOrUpdate(@RequestBody ClientDto clientDto) {
+    public Result saveOrUpdate(@RequestBody ClientDto clientDto) throws Exception {
         return clientService.saveClient(clientDto);
     }
 }

@@ -214,12 +214,26 @@ layui.define(['config', 'admin', 'layer', 'laytpl', 'element', 'form'], function
             $('#btnLogout').click(function () {
                 layer.confirm('确定退出登录？', function () {
                     let token = config.getToken();
-                    let accessToken;
+                    let isExistsToken = false;
                     if (token) {
-                        accessToken = token.access_token;
+                        let accessToken = token.access_token;
+                        config.removeToken();
+
+                        if (accessToken) {
+                            isExistsToken = true;
+                            admin.req('api-uaa/oauth/check_token?token='+accessToken, {}, function (data) {
+                                if (data.active) {
+                                    let loginPageUrl = window.location.protocol + '//' + window.location.host + '/login.html';
+                                    window.location = config.base_server + 'api-uaa/oauth/remove/token?redirect_uri='+loginPageUrl+'&access_token='+accessToken;
+                                } else {
+                                    location.replace('login.html');
+                                }
+                            }, 'POST');
+                        }
                     }
-                    config.removeToken();
-                    window.location = config.base_server + 'api-uaa/oauth/remove/token?redirect_uri=http://127.0.0.1:8066/login.html&access_token='+accessToken;
+                    if (!isExistsToken) {
+                        location.replace('login.html');
+                    }
                 });
             });
             // 修改密码

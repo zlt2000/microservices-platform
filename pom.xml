@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.zlt</groupId>
     <artifactId>central-platform</artifactId>
-    <version>3.5.0</version>
+    <version>3.6.1</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -13,7 +13,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>8</java.version>
-        <spring-cloud-alibaba-dependencies.version>2.1.1.RELEASE</spring-cloud-alibaba-dependencies.version>
+        <spring-cloud-alibaba-dependencies.version>2.1.2.RELEASE</spring-cloud-alibaba-dependencies.version>
         <spring-boot-dependencies.version>2.1.12.RELEASE</spring-boot-dependencies.version>
         <spring-cloud-dependencies.version>Greenwich.SR5</spring-cloud-dependencies.version>
         <commons-collections4.version>4.4</commons-collections4.version>
@@ -28,7 +28,7 @@
         <sharding-sphere.version>3.1.0</sharding-sphere.version>
         <security-oauth2.version>2.3.8.RELEASE</security-oauth2.version>
         <security-jwt.version>1.1.0.RELEASE</security-jwt.version>
-        <redisson.version>3.9.1</redisson.version>
+        <redisson-starter.version>3.11.5</redisson-starter.version>
         <easyCaptcha.version>1.6.2</easyCaptcha.version>
         <hutool.version>5.1.4</hutool.version>
         <mybatis-plus-boot-starter.version>3.3.1</mybatis-plus-boot-starter.version>
@@ -36,20 +36,20 @@
         <qiniu-java-sdk>7.2.28</qiniu-java-sdk>
         <easypoi.version>4.1.3</easypoi.version>
         <poi.version>4.1.1</poi.version>
-        <spring-boot-admin.version>2.2.2</spring-boot-admin.version>
+        <spring-boot-admin.version>2.1.6</spring-boot-admin.version>
         <velocity.version>1.7</velocity.version>
-        <commons-configuration2.version>2.6</commons-configuration2.version>
+        <commons-configuration2.version>2.7</commons-configuration2.version>
         <txlcn.version>5.0.2.RELEASE</txlcn.version>
         <fastdfs-client.version>1.26.7</fastdfs-client.version>
         <userAgent.version>1.21</userAgent.version>
         <transmittable.version>2.11.4</transmittable.version>
-        <lettuce.version>5.2.2.RELEASE</lettuce.version>
         <banner.version>1.0.2</banner.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <spring-social-security.version>1.1.6.RELEASE</spring-social-security.version>
         <commons-io.version>2.6</commons-io.version>
         <servlet-api.version>4.0.1</servlet-api.version>
         <spring-data-elasticsearch.version>3.2.5.RELEASE</spring-data-elasticsearch.version>
+        <elasticsearch.version>6.8.8</elasticsearch.version>
         <docker-maven-plugin.version>1.2.2</docker-maven-plugin.version>
         <sonar.exclusions>zlt-job/**/*, zlt-register/**/*, zlt-web/**/*</sonar.exclusions>
         <docker.baseImage>openjdk:8-jre-alpine</docker.baseImage>
@@ -185,8 +185,8 @@
             <!-- 在Redis基础上的一个Java实用工具包 -->
             <dependency>
                 <groupId>org.redisson</groupId>
-                <artifactId>redisson</artifactId>
-                <version>${redisson.version}</version>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson-starter.version}</version>
             </dependency>
             <!-- swagger -->
             <dependency>
@@ -319,11 +319,6 @@
                 <version>${transmittable.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.lettuce</groupId>
-                <artifactId>lettuce-core</artifactId>
-                <version>${lettuce.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.nepxion</groupId>
                 <artifactId>banner</artifactId>
                 <version>${banner.version}</version>
@@ -347,6 +342,21 @@
                 <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-elasticsearch</artifactId>
                 <version>${spring-data-elasticsearch.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>elasticsearch-rest-high-level-client</artifactId>
+                <version>${elasticsearch.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>elasticsearch-rest-client</artifactId>
+                <version>${elasticsearch.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.elasticsearch</groupId>
+                <artifactId>elasticsearch</artifactId>
+                <version>${elasticsearch.version}</version>
             </dependency>
 
             <dependency>

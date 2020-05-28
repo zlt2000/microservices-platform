@@ -9,10 +9,13 @@ import com.central.common.model.SysRole;
 import com.central.common.service.ISuperService;
 
 /**
-* @author zlt
+ * @author zlt
+ * <p>
+ * Blog: https://zlt2000.gitee.io
+ * Github: https://github.com/zlt2000
  */
 public interface ISysRoleService extends ISuperService<SysRole> {
-	void saveRole(SysRole sysRole);
+	void saveRole(SysRole sysRole) throws Exception;
 
 	void deleteRole(Long id);
 
@@ -28,7 +31,7 @@ public interface ISysRoleService extends ISuperService<SysRole> {
 	 * @param sysRole
 	 * @return Result
 	 */
-	Result saveOrUpdateRole(SysRole sysRole);
+	Result saveOrUpdateRole(SysRole sysRole) throws Exception;
 
 	/**
 	 * 查询所有角色

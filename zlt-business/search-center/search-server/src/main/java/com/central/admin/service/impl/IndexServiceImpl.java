@@ -12,9 +12,9 @@ import org.apache.http.util.EntityUtils;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
 import org.elasticsearch.action.admin.indices.get.GetIndexRequest;
 import org.elasticsearch.action.admin.indices.get.GetIndexResponse;
+import org.elasticsearch.action.support.master.AcknowledgedResponse;
 import org.elasticsearch.client.Request;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.Response;
@@ -66,7 +66,7 @@ public class IndexServiceImpl implements IIndexService {
     @Override
     public boolean delete(String indexName) throws IOException {
         DeleteIndexRequest request = new DeleteIndexRequest(indexName);
-        DeleteIndexResponse response = elasticsearchRestTemplate.getClient().indices().delete(request, RequestOptions.DEFAULT);
+        AcknowledgedResponse response = elasticsearchRestTemplate.getClient().indices().delete(request, RequestOptions.DEFAULT);
         return response.isAcknowledged();
     }
 

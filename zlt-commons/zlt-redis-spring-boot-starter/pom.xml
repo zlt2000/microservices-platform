@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.zlt</groupId>
         <artifactId>zlt-commons</artifactId>
-        <version>3.5.0</version>
+        <version>3.6.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
@@ -16,19 +16,10 @@
             <groupId>com.zlt</groupId>
             <artifactId>zlt-common-core</artifactId>
         </dependency>
+
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>io.lettuce</groupId>
-                    <artifactId>lettuce-core</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>io.lettuce</groupId>
-            <artifactId>lettuce-core</artifactId>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson-spring-boot-starter</artifactId>
         </dependency>
 
         <dependency>

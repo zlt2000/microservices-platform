@@ -10,7 +10,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @author zlt
  * @date 2019/10/5
  * <p>
- * Blog: https://blog.csdn.net/zlt2000
+ * Blog: https://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 @EnableFeignClients

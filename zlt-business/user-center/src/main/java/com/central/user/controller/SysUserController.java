@@ -236,7 +236,7 @@ public class SysUserController {
     @CacheEvict(value = "user", key = "#sysUser.username")
     @PostMapping("/users/saveOrUpdate")
     @AuditLog(operation = "'新增或更新用户:' + #sysUser.username")
-    public Result saveOrUpdate(@RequestBody SysUser sysUser) {
+    public Result saveOrUpdate(@RequestBody SysUser sysUser) throws Exception {
         return appUserService.saveOrUpdateUser(sysUser);
     }
 

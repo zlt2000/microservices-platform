@@ -37,7 +37,7 @@ import javax.annotation.Resource;
 @Slf4j
 @Service
 public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser> implements ISysUserService {
-    private final static String LOCK_KEY_USERNAME = CommonConstant.LOCK_KEY_PREFIX+"username:";
+    private final static String LOCK_KEY_USERNAME = "username:";
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -219,7 +219,7 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public Result saveOrUpdateUser(SysUser sysUser) {
+    public Result saveOrUpdateUser(SysUser sysUser) throws Exception {
         if (sysUser.getId() == null) {
             if (StringUtils.isBlank(sysUser.getType())) {
                 sysUser.setType(UserType.BACKEND.name());
