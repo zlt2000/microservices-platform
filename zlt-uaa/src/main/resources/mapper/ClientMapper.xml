@@ -47,6 +47,9 @@
     <select id="findList" resultType="com.central.oauth.model.Client">
         select id, client_id, client_name, resource_ids
             , client_secret, client_secret_str, web_server_redirect_uri
+            , scope, authorized_grant_types, autoapprove
+            , access_token_validity accessTokenValiditySeconds
+            , refresh_token_validity refreshTokenValiditySeconds
         from oauth_client_details
         <include refid="where"/>
     </select>

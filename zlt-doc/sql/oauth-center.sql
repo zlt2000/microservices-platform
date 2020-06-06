@@ -18,7 +18,7 @@ CREATE TABLE `oauth_client_details`  (
   `access_token_validity` int(11) NULL DEFAULT NULL COMMENT 'access_token有效期',
   `refresh_token_validity` int(11) NULL DEFAULT NULL COMMENT 'refresh_token有效期',
   `additional_information` varchar(4096) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '{}' COMMENT '{}',
-  `autoapprove` char(4) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'true' COMMENT '是否自动授权 是-true',
+  `autoapprove` char(5) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'true' COMMENT '是否自动授权 是-true',
   `create_time` datetime(0) NULL DEFAULT NULL,
   `update_time` datetime(0) NULL DEFAULT NULL,
   `client_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '' COMMENT '应用名称',
