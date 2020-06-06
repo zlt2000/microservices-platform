@@ -22,10 +22,8 @@ public class FileUtil {
 		throw new IllegalStateException("Utility class");
 	}
 
-	public static FileInfo getFileInfo(MultipartFile file) throws Exception {
-		//String md5 = fileMd5(file.getInputStream());
+	public static FileInfo getFileInfo(MultipartFile file) {
 		FileInfo fileInfo = new FileInfo();
-		// 将文件的md5设置为文件表的id
 		fileInfo.setId(IdUtil.fastSimpleUUID());
 		fileInfo.setName(file.getOriginalFilename());
 		fileInfo.setContentType(file.getContentType());
