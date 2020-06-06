@@ -98,7 +98,6 @@ zlt:
         /api-uaa/css/**,
         /api-uaa/images/**,
         /api-uaa/js/**,
-        /api-user/users-anon/**,
         /login.html,
         /user/login
     auth:
