@@ -7,6 +7,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.DefaultParameterNameDiscoverer;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.Expression;
@@ -25,11 +26,8 @@ import org.springframework.expression.spel.support.StandardEvaluationContext;
 @Slf4j
 @Aspect
 public class LockAspect {
+    @Autowired(required = false)
     private DistributedLock locker;
-
-    public LockAspect(DistributedLock locker) {
-        this.locker = locker;
-    }
 
     /**
      * 用于SpEL表达式解析.
