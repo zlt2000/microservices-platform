@@ -28,3 +28,8 @@ zlt:
     code:
       # 忽略验证码的应用编号
       ignoreClientCode: app
+  #多租户配置
+  tenant:
+    enable: true
+    ignoreTables:
+      - oauth_client_details
