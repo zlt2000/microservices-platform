@@ -1,8 +1,11 @@
 package com.central.oauth.config;
 
 import com.central.common.constant.SecurityConstants;
+import com.central.common.properties.TenantProperties;
 import com.central.oauth.filter.LoginProcessSetTenantFilter;
 import com.central.oauth.handler.OauthLogoutSuccessHandler;
+import com.central.oauth.tenant.TenantAuthenticationSecurityConfig;
+import com.central.oauth.tenant.TenantUsernamePasswordAuthenticationFilter;
 import com.central.oauth.mobile.MobileAuthenticationSecurityConfig;
 import com.central.oauth.openid.OpenIdAuthenticationSecurityConfig;
 import com.central.common.config.DefaultPasswordConfig;
@@ -58,6 +61,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private MobileAuthenticationSecurityConfig mobileAuthenticationSecurityConfig;
 
+	@Autowired
+	private AuthenticationManager authenticationManager;
+
+	@Autowired
+	private TenantAuthenticationSecurityConfig tenantAuthenticationSecurityConfig;
+
+	@Autowired
+	private TenantProperties tenantProperties;
+
 	/**
 	 * 这一步的配置是必不可少的，否则SpringBoot会自动配置一个AuthenticationManager,覆盖掉内存中的用户
 	 * @return 认证管理对象
@@ -68,17 +80,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return super.authenticationManagerBean();
 	}
 
+	@Bean
+	public TenantUsernamePasswordAuthenticationFilter tenantAuthenticationFilter(AuthenticationManager authenticationManager) {
+		TenantUsernamePasswordAuthenticationFilter filter = new TenantUsernamePasswordAuthenticationFilter();
+		filter.setAuthenticationManager(authenticationManager);
+		filter.setFilterProcessesUrl(SecurityConstants.OAUTH_LOGIN_PRO_URL);
+		filter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
+		return filter;
+	}
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 					.anyRequest()
 					//授权服务器关闭basic认证
                     .permitAll()
-                    .and()
-                .formLogin()
-                    .loginPage(SecurityConstants.LOGIN_PAGE)
-                    .loginProcessingUrl(SecurityConstants.OAUTH_LOGIN_PRO_URL)
-                    .successHandler(authenticationSuccessHandler)
                     .and()
 				.logout()
 					.logoutUrl(SecurityConstants.LOGOUT_URL)
@@ -96,6 +112,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
 				// 解决不允许显示在iframe的问题
 				.headers().frameOptions().disable().cacheControl();
+
+		if (tenantProperties.getEnable()) {
+			//解决不同租户单点登录时角色没变化
+			http.formLogin()
+					.loginPage(SecurityConstants.LOGIN_PAGE)
+						.and()
+					.addFilterAt(tenantAuthenticationFilter(authenticationManager), UsernamePasswordAuthenticationFilter.class)
+					.apply(tenantAuthenticationSecurityConfig);
+		} else {
+			http.formLogin()
+					.loginPage(SecurityConstants.LOGIN_PAGE)
+					.loginProcessingUrl(SecurityConstants.OAUTH_LOGIN_PRO_URL)
+					.successHandler(authenticationSuccessHandler);
+		}
+
 
 		// 基于密码 等模式可以无session,不支持授权码模式
 		if (authenticationEntryPoint != null) {

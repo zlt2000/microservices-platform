@@ -27,6 +27,7 @@
             console.log(result);
             sessionStorage.setItem('access_token', result.tokenInfo.access_token);
             sessionStorage.setItem('username', result.userInfo.username);
+            sessionStorage.setItem('roles', result.roles);
             window.location = sessionStorage.getItem('visitUri');
         }});
     };
