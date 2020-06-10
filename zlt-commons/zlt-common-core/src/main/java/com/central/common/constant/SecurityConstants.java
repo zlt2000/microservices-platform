@@ -135,6 +135,10 @@ public interface SecurityConstants {
      */
     String LOGIN_PAGE = "/login.html";
     /**
+     * 登录失败页面
+     */
+    String LOGIN_FAILURE_PAGE = LOGIN_PAGE + "?error";
+    /**
      * 默认的OPENID登录请求处理url
      */
     String OPENID_TOKEN_URL = "/oauth/openId/token";
