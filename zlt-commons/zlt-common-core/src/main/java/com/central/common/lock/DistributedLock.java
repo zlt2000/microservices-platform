@@ -29,7 +29,7 @@ public interface DistributedLock {
     /**
      * 尝试获取锁，如果锁不可用则等待最多waitTime时间后放弃
      * @param key 锁的key
-     * @param waitTime 获取锁的最大尝试时间(单位毫秒)
+     * @param waitTime 获取锁的最大尝试时间(单位 {@code unit})
      * @param leaseTime 加锁的时间，超过这个时间后锁便自动解锁；
      *                  如果leaseTime为-1，则保持锁定直到显式解锁
      * @param unit {@code waitTime} 和 {@code leaseTime} 参数的时间单位
