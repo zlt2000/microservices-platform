@@ -42,7 +42,7 @@
         <txlcn.version>5.0.2.RELEASE</txlcn.version>
         <fastdfs-client.version>1.27.2</fastdfs-client.version>
         <userAgent.version>1.21</userAgent.version>
-        <transmittable.version>2.11.4</transmittable.version>
+        <transmittable.version>2.11.5</transmittable.version>
         <banner.version>1.0.2</banner.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <spring-social-security.version>1.1.6.RELEASE</spring-social-security.version>
