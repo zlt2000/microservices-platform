@@ -105,9 +105,10 @@ central-platform -- 父项目，公共依赖
 <table>
     <tr>
         <td><a target="_blank" href="https://www.aliyun.com/minisite/goods?userCode=dickv1kw&share_source=copy_link"><img width="460px" height="177px" alt="阿里云" src="https://gitee.com/zlt2000/images/raw/master/aly.jpg"/></a></td>
-        <td><a target="_blank" href="https://url.cn/55zzbhR"><img width="460px" height="177px"  alt="腾讯云" src="https://gitee.com/zlt2000/images/raw/master/txy.jpg"/></a></td>
+        <td><a target="_blank" href="https://url.cn/e2NLAJ9r"><img width="460px" height="177px"  alt="腾讯云" src="https://gitee.com/zlt2000/images/raw/master/txy.jpg"/></a></td>
     </tr>
 </table>
+
 
 ## 5. 交流反馈
 * 有问题先看看 [F&Q](https://www.kancloud.cn/zlt2000/microservices-platform/981382) 中有没有相关的回答
