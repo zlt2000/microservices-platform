@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author zlt
  * @date 2018/12/10
+ * <p>
+ * Blog: https://zlt2000.gitee.io
+ * Github: https://github.com/zlt2000
  */
 public interface IValidateCodeService {
     /**
@@ -33,5 +36,5 @@ public interface IValidateCodeService {
     /**
      * 验证验证码
      */
-    void validate(HttpServletRequest request);
+    void validate(String deviceId, String validCode);
 }
