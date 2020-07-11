@@ -31,7 +31,7 @@ public class SentinelAutoConfigure {
     @ConditionalOnClass(HttpServletRequest.class)
     public static class WebmvcHandler {
         @Bean
-        public BlockExceptionHandler blockExceptionHandler() {
+        public BlockExceptionHandler webmvcBlockExceptionHandler() {
             return (request, response, e) -> {
                 response.setStatus(429);
                 Result result = Result.failed(e.getMessage());
@@ -48,11 +48,11 @@ public class SentinelAutoConfigure {
     @ConditionalOnClass(ServerResponse.class)
     public static class WebfluxHandler {
         @Bean
-        public BlockRequestHandler blockRequestHandler() {
+        public BlockRequestHandler webfluxBlockExceptionHandler() {
             return (exchange, t) ->
                     ServerResponse.status(HttpStatus.TOO_MANY_REQUESTS)
                             .contentType(MediaType.APPLICATION_JSON)
-                            .body(BodyInserters.fromObject(Result.failed(t.getMessage())));
+                            .body(BodyInserters.fromValue(Result.failed(t.getMessage())));
         }
     }
 }

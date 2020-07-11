@@ -81,7 +81,7 @@ public class IndexServiceImpl implements IIndexService {
         List<Map<String, String>> listOfIndicesFromEs = null;
         if (response != null) {
             String rawBody = EntityUtils.toString(response.getEntity());
-            TypeReference<List<HashMap<String, String>>> typeRef = new TypeReference<List<HashMap<String, String>>>() {};
+            TypeReference<List<Map<String, String>>> typeRef = new TypeReference<List<Map<String, String>>>() {};
             listOfIndicesFromEs = mapper.readValue(rawBody, typeRef);
         }
         return PageResult.<Map<String, String>>builder().data(listOfIndicesFromEs).code(0).build();
