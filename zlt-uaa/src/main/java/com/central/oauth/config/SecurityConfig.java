@@ -33,6 +33,9 @@ import javax.annotation.Resource;
  * 在WebSecurityConfigurerAdapter不拦截oauth要开放的资源
  * 
  * @author zlt
+ * <p>
+ * Blog: https://zlt2000.gitee.io
+ * Github: https://github.com/zlt2000
  */
 @Configuration
 @Import(DefaultPasswordConfig.class)
@@ -52,9 +55,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Resource
 	private LogoutHandler oauthLogoutHandler;
-
-	@Autowired
-	private ValidateCodeSecurityConfig validateCodeSecurityConfig;
 
 	@Autowired
 	private OpenIdAuthenticationSecurityConfig openIdAuthenticationSecurityConfig;
@@ -104,8 +104,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					.addLogoutHandler(oauthLogoutHandler)
 					.clearAuthentication(true)
 					.and()
-                .apply(validateCodeSecurityConfig)
-                    .and()
                 .apply(openIdAuthenticationSecurityConfig)
                     .and()
 				.apply(mobileAuthenticationSecurityConfig)
