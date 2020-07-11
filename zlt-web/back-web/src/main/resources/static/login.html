@@ -47,6 +47,7 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
+                    <input name="grant_type" type="hidden" value="password_code"/>
                     <button lay-filter="login-submit" class="layui-btn layui-btn-fluid" lay-submit>登 录</button>
                 </div>
             </form>
@@ -83,7 +84,7 @@
         form.on('submit(login-submit)', function (obj) {
             layer.load(2);
             $.ajax({
-                url: config.base_server + 'api-uaa/oauth/user/token',
+                url: config.base_server + 'api-uaa/oauth/token',
                 xhrFields: {
                     withCredentials: true
                 },
