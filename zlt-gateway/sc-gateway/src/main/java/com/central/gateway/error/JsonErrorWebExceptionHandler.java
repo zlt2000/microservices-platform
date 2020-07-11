@@ -49,8 +49,8 @@ public class JsonErrorWebExceptionHandler extends DefaultErrorWebExceptionHandle
      * @param errorAttributes
      */
     @Override
-    protected HttpStatus getHttpStatus(Map<String, Object> errorAttributes) {
-        return HttpStatus.INTERNAL_SERVER_ERROR;
+    protected int getHttpStatus(Map<String, Object> errorAttributes) {
+        return HttpStatus.INTERNAL_SERVER_ERROR.value();
     }
 
     /**
