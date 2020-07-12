@@ -17,6 +17,7 @@ import org.springframework.security.oauth2.provider.client.ClientCredentialsToke
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeTokenGranter;
 import org.springframework.security.oauth2.provider.code.InMemoryAuthorizationCodeServices;
+import org.springframework.security.oauth2.provider.code.RandomValueAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.implicit.ImplicitTokenGranter;
 import org.springframework.security.oauth2.provider.password.ResourceOwnerPasswordTokenGranter;
 import org.springframework.security.oauth2.provider.refresh.RefreshTokenGranter;
@@ -60,7 +61,8 @@ public class TokenGranterConfig {
     @Autowired
     private IValidateCodeService validateCodeService;
 
-    private AuthorizationCodeServices authorizationCodeServices;
+    @Autowired
+    private RandomValueAuthorizationCodeServices authorizationCodeServices;
 
     private boolean reuseRefreshToken = true;
 
