@@ -119,9 +119,24 @@ public class SearchBuilder {
      * @param limit 每页显示数
      */
     public SearchBuilder setPage(Integer page, Integer limit) {
+        setPage(page, limit, false);
+        return this;
+    }
+
+    /**
+     * 设置分页
+     * @param page 当前页数
+     * @param limit 每页显示数
+     * @param trackTotalHits 分页总数是否显示所有条数，默认只显示10000
+     */
+    public SearchBuilder setPage(Integer page, Integer limit, boolean trackTotalHits) {
         if (page != null && limit != null) {
             searchBuilder.from((page - 1) * limit)
                     .size(limit);
+            if (trackTotalHits) {
+                searchBuilder.trackTotalHits(trackTotalHits);
+            }
+
         }
         return this;
     }
@@ -207,7 +222,7 @@ public class SearchBuilder {
         this.setPage(page, limit);
         SearchResponse response = this.get();
         SearchHits searchHits = response.getHits();
-        long totalCnt = searchHits.getTotalHits();
+        long totalCnt = searchHits.getTotalHits().value;
         List<JSONObject> list = getList(searchHits);
         return PageResult.<JSONObject>builder().data(list).code(0).count(totalCnt).build();
     }

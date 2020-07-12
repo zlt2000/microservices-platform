@@ -14,16 +14,16 @@ import org.elasticsearch.search.aggregations.bucket.histogram.*;
 import org.elasticsearch.search.aggregations.bucket.range.ParsedDateRange;
 import org.elasticsearch.search.aggregations.bucket.range.Range;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
-import org.elasticsearch.search.aggregations.metrics.cardinality.Cardinality;
+import org.elasticsearch.search.aggregations.metrics.ParsedCardinality;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,6 +35,9 @@ import java.util.Map;
  *
  * @author zlt
  * @date 2019/5/7
+ * <p>
+ * Blog: https://zlt2000.gitee.io
+ * Github: https://github.com/zlt2000
  */
 @Service
 public class AggregationServiceImpl implements IAggregationService {
@@ -113,7 +116,7 @@ public class AggregationServiceImpl implements IAggregationService {
      */
     @Override
     public Map<String, Object> requestStatAgg(String indexName, String routing) throws IOException {
-        DateTime currDt = DateTime.now();
+        ZonedDateTime zonedDateTime = ZonedDateTime.now();
         LocalDate localDate = LocalDate.now();
         LocalDateTime curDateTime = LocalDateTime.now();
 
@@ -126,7 +129,7 @@ public class AggregationServiceImpl implements IAggregationService {
                     .dateRange("currDate")
                     .field("timestamp")
                     .addRange(
-                            currDt.withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0).withMillisOfSecond(0), currDt.plusDays(1)
+                            zonedDateTime.withHour(0).withMinute(0).withSecond(0).withNano(0), zonedDateTime.plusDays(1)
                     )
                     .subAggregation(
                             AggregationBuilders
@@ -138,16 +141,16 @@ public class AggregationServiceImpl implements IAggregationService {
             AggregationBuilders
                     .dateRange("curr24Hour")
                     .field("timestamp")
-                    .addRange(currDt.minusDays(1), currDt)
+                    .addRange(zonedDateTime.minusDays(1), zonedDateTime)
                     .subAggregation(
                             //聚合并且按小时分组查询当天内的数据
                             AggregationBuilders
                                     .dateHistogram("statDate")
                                     .field("timestamp")
-                                    .dateHistogramInterval(new DateHistogramInterval("90m"))
+                                    .fixedInterval(new DateHistogramInterval("90m"))
                                     .format(CommonConstant.DATETIME_FORMAT)
                                     //时区相差8小时
-                                    .timeZone(DateTimeZone.forOffsetHours(8))
+                                    .timeZone(ZoneId.of("GMT+8"))
                                     .minDocCount(0L)
                                     .extendedBounds(new ExtendedBounds(
                                             curDateTime.minusDays(1).format(DateTimeFormatter.ofPattern(CommonConstant.DATETIME_FORMAT)),
@@ -164,16 +167,16 @@ public class AggregationServiceImpl implements IAggregationService {
             AggregationBuilders
                     .dateRange("currWeek")
                     .field("timestamp")
-                    .addRange(currDt.minusDays(7), currDt)
+                    .addRange(zonedDateTime.minusDays(7), zonedDateTime)
                     .subAggregation(
                             //聚合并且按日期分组查询7天内的数据
                             AggregationBuilders
                                     .dateHistogram("statWeek")
                                     .field("timestamp")
-                                    .dateHistogramInterval(DateHistogramInterval.DAY)
+                                    .calendarInterval(DateHistogramInterval.DAY)
                                     .format(CommonConstant.DATE_FORMAT)
                                     //时区相差8小时
-                                    .timeZone(DateTimeZone.forOffsetHours(8))
+                                    .timeZone(ZoneId.of("GMT+8"))
                                     .minDocCount(0L)
                                     .extendedBounds(new ExtendedBounds(
                                             localDate.minusDays(6).format(DateTimeFormatter.ofPattern(CommonConstant.DATE_FORMAT)),
@@ -190,7 +193,7 @@ public class AggregationServiceImpl implements IAggregationService {
             AggregationBuilders
                     .dateRange("currMonth")
                     .field("timestamp")
-                    .addRange(currDt.minusDays(30), currDt)
+                    .addRange(zonedDateTime.minusDays(30), zonedDateTime)
         ).aggregation(
             //聚合查询浏览器的数据
             AggregationBuilders
@@ -207,7 +210,7 @@ public class AggregationServiceImpl implements IAggregationService {
                     .dateRange("currHour")
                     .field("timestamp")
                     .addRange(
-                            currDt.minusHours(1), currDt
+                            zonedDateTime.minusHours(1), zonedDateTime
                     )
                     .subAggregation(
                             AggregationBuilders
@@ -237,7 +240,7 @@ public class AggregationServiceImpl implements IAggregationService {
     private void setCurrDate(Map<String, Object> result, Aggregations aggregations) {
         ParsedDateRange currDate = aggregations.get("currDate");
         Range.Bucket bucket = currDate.getBuckets().get(0);
-        Cardinality cardinality = bucket.getAggregations().get("uv");
+        ParsedCardinality cardinality = bucket.getAggregations().get("uv");
         result.put("currDate_pv", bucket.getDocCount());
         result.put("currDate_uv", cardinality.getValue());
     }
@@ -293,7 +296,7 @@ public class AggregationServiceImpl implements IAggregationService {
         List<String> items = new ArrayList<>();
         List<Long> uv = new ArrayList<>();
         List<Long> pv = new ArrayList<>();
-        Cardinality cardinality;
+        ParsedCardinality cardinality;
         for (Histogram.Bucket bucket : agg.getBuckets()) {
             items.add(bucket.getKeyAsString());
             pv.add(bucket.getDocCount());
@@ -311,7 +314,7 @@ public class AggregationServiceImpl implements IAggregationService {
     private void setCurrHour(Map<String, Object> result, Aggregations aggregations) {
         ParsedDateRange currDate = aggregations.get("currHour");
         Range.Bucket bucket = currDate.getBuckets().get(0);
-        Cardinality cardinality = bucket.getAggregations().get("uv");
+        ParsedCardinality cardinality = bucket.getAggregations().get("uv");
         result.put("currHour_uv", cardinality.getValue());
     }
     /**
@@ -322,7 +325,7 @@ public class AggregationServiceImpl implements IAggregationService {
         List<String> items = new ArrayList<>();
         List<Long> uv = new ArrayList<>();
         List<Long> pv = new ArrayList<>();
-        Cardinality cardinality;
+        ParsedCardinality cardinality;
         for (Histogram.Bucket bucket : agg.getBuckets()) {
             items.add(getTimeByDatetimeStr(bucket.getKeyAsString()));
             pv.add(bucket.getDocCount());
