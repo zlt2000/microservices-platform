@@ -360,16 +360,14 @@ public class CustomRedisTokenStore implements TokenStore {
         byte[] accessToRefreshKey = serializeKey(ACCESS_TO_REFRESH + tokenValue);
         RedisConnection conn = getConnection();
         try {
+            byte[] access = conn.get(accessKey);
+            byte[] auth = conn.get(authKey);
             conn.openPipeline();
-            conn.get(accessKey);
-            conn.get(authKey);
             conn.del(accessKey);
             conn.del(accessToRefreshKey);
             // Don't remove the refresh token - it's up to the caller to do that
             conn.del(authKey);
-            List<Object> results = conn.closePipeline();
-            byte[] access = (byte[]) results.get(0);
-            byte[] auth = (byte[]) results.get(1);
+            conn.closePipeline();
 
             OAuth2Authentication authentication = deserializeAuthentication(auth);
             if (authentication != null) {
@@ -471,20 +469,17 @@ public class CustomRedisTokenStore implements TokenStore {
 
     private void removeAccessTokenUsingRefreshToken(String refreshToken) {
         byte[] key = serializeKey(REFRESH_TO_ACCESS + refreshToken);
-        List<Object> results = null;
         RedisConnection conn = getConnection();
+        byte[] bytes = null;
         try {
-            conn.openPipeline();
-            conn.get(key);
+            bytes = conn.get(key);
             conn.del(key);
-            results = conn.closePipeline();
         } finally {
             conn.close();
         }
-        if (results == null) {
+        if (bytes == null) {
             return;
         }
-        byte[] bytes = (byte[]) results.get(0);
         String accessToken = deserializeString(bytes);
         if (accessToken != null) {
             removeAccessToken(accessToken);
