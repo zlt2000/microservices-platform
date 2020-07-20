@@ -4,7 +4,15 @@ server:
 spring:
   application:
     name: business-service
+  main:
+    allow-bean-definition-overriding: true
   cloud:
     nacos:
-      discovery:
-        server-addr: 192.168.28.130:8848
+      server-addr: 192.168.28.130:8848
+      username: nacos
+      password: nacos
+
+ribbon:
+  ConnectTimeout: 100000
+  ReadTimeout: 1000000
+  OkToRetryOnAllOperations: false

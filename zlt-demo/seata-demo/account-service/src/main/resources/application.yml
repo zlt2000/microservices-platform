@@ -4,8 +4,20 @@ spring:
     username: root
     password: 1q2w3e4r
     driver-class-name: com.mysql.cj.jdbc.Driver
-  cloud:
-    alibaba:
-      seata:
-        # seata 服务分组，要与服务端nacos-config.txt中service.vgroup_mapping的后缀对应，默认是${spring.application.name}-fescar-service-group
-        tx-service-group: account-service-group
+
+seata:
+  tx-service-group: test_tx_service_group
+  config:
+    type: nacos
+    nacos:
+      serverAddr: ${spring.cloud.nacos.server-addr}
+      group: SEATA_GROUP
+      username: nacos
+      password: nacos
+  registry:
+    type: nacos
+    nacos:
+      server-addr: ${spring.cloud.nacos.server-addr}
+      group: SEATA_GROUP
+      username: nacos
+      password: nacos

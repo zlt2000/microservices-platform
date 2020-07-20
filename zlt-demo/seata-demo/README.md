@@ -1,11 +1,70 @@
 ## **详细的原理和部署细节请查看**
 [Spring Cloud同步场景分布式事务怎样做？试试Seata](https://mp.weixin.qq.com/s/0yCmHzlXDC9BkbUuEt0_fQ)
 
+&nbsp;
+## 测试环境
+* mysql 5.7
+* seata 1.3
+* nacos 1.3
+> **注意**：如果nacos使用低于1.3的版本不需要配置username和password；如果使用1.3以上版本必需开启 `nacos.core.auth.enabled=true` 并且配置username和password，否则读取不到seata-server
 
+&nbsp;
+## 配置中心的配置如下
+**config.txt**
+```properties
+service.vgroupMapping.test_tx_service_group=default
+store.mode=db
+store.db.datasource=druid
+store.db.dbType=mysql
+store.db.url=jdbc:mysql://192.168.28.130:3306/seata?useUnicode=true
+store.db.driverClassName=com.mysql.jdbc.Driver
+store.db.user=root
+store.db.password=root
+store.db.minConn=5
+store.db.maxConn=30
+store.db.globalTable=global_table
+store.db.branchTable=branch_table
+store.db.queryLimit=100
+store.db.lockTable=lock_table
+store.db.maxWait=5000
+```
+>根据自己的环境修改 url、user、password 配置值
 
+&nbsp;
+## seata的配置如下
+**registry.conf**
+```json
+registry {
+  # file 、nacos 、eureka、redis、zk、consul、etcd3、sofa
+  type = "nacos"
+
+  nacos {
+    application = "seata-server"
+    serverAddr = "192.168.28.130:8848"
+    group = "SEATA_GROUP"
+    namespace = ""
+    cluster = "default"
+    username = "nacos"
+    password = "nacos"
+  }
+}
+
+config {
+  # file、nacos 、apollo、zk、consul、etcd3
+  type = "nacos"
+
+  nacos {
+    serverAddr = "192.168.28.130:8848"
+    namespace = ""
+    group = "SEATA_GROUP"
+    username = "nacos"
+    password = "nacos"
+  }
+}
+```
+
+&nbsp;
 ## 说明
-
-
 **包括以下5个模块，分别是**
 
 * `business-service`：业务服务
