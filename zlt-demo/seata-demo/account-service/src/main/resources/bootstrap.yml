@@ -4,7 +4,10 @@ server:
 spring:
   application:
     name: account-service
+  main:
+    allow-bean-definition-overriding: true
   cloud:
     nacos:
-      discovery:
-        server-addr: 192.168.28.130:8848
+      server-addr: 192.168.28.130:8848
+      username: nacos
+      password: nacos
