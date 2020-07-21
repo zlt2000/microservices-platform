@@ -22,10 +22,7 @@ import org.springframework.security.oauth2.provider.implicit.ImplicitTokenGrante
 import org.springframework.security.oauth2.provider.password.ResourceOwnerPasswordTokenGranter;
 import org.springframework.security.oauth2.provider.refresh.RefreshTokenGranter;
 import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory;
-import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
-import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
-import org.springframework.security.oauth2.provider.token.TokenEnhancer;
-import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.*;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 
 import java.util.ArrayList;
@@ -56,7 +53,7 @@ public class TokenGranterConfig {
     private TokenStore tokenStore;
 
     @Autowired(required = false)
-    private TokenEnhancer tokenEnhancer;
+    private List<TokenEnhancer> tokenEnhancer;
 
     @Autowired
     private IValidateCodeService validateCodeService;
@@ -157,9 +154,18 @@ public class TokenGranterConfig {
         tokenServices.setSupportRefreshToken(true);
         tokenServices.setReuseRefreshToken(reuseRefreshToken);
         tokenServices.setClientDetailsService(clientDetailsService);
-        tokenServices.setTokenEnhancer(tokenEnhancer);
+        tokenServices.setTokenEnhancer(tokenEnhancer());
         addUserDetailsService(tokenServices, this.userDetailsService);
         return tokenServices;
+    }
+
+    private TokenEnhancer tokenEnhancer() {
+        if (tokenEnhancer != null) {
+            TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+            tokenEnhancerChain.setTokenEnhancers(tokenEnhancer);
+            return tokenEnhancerChain;
+        }
+        return null;
     }
 
     private void addUserDetailsService(DefaultTokenServices tokenServices, UserDetailsService userDetailsService) {

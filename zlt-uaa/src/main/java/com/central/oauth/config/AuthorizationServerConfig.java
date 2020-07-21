@@ -14,13 +14,9 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.TokenGranter;
 import org.springframework.security.oauth2.provider.code.RandomValueAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.error.WebResponseExceptionTranslator;
-import org.springframework.security.oauth2.provider.token.TokenEnhancer;
-import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
 import javax.annotation.Resource;
-import java.util.Arrays;
 
 /**
  * OAuth2 授权服务器配置
@@ -47,12 +43,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private TokenStore tokenStore;
 
-    @Autowired(required = false)
-    private JwtAccessTokenConverter jwtAccessTokenConverter;
-
-    @Autowired(required = false)
-    private TokenEnhancer tokenEnhancer;
-
     @Autowired
     private WebResponseExceptionTranslator webResponseExceptionTranslator;
 
@@ -71,16 +61,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
-        if (jwtAccessTokenConverter != null) {
-            if (tokenEnhancer != null) {
-                TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
-                tokenEnhancerChain.setTokenEnhancers(
-                        Arrays.asList(tokenEnhancer, jwtAccessTokenConverter));
-                endpoints.tokenEnhancer(tokenEnhancerChain);
-            } else {
-                endpoints.accessTokenConverter(jwtAccessTokenConverter);
-            }
-        }
         endpoints.tokenStore(tokenStore)
                 .authenticationManager(authenticationManager)
                 .userDetailsService(userDetailsService)
