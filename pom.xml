@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>8</java.version>
         <spring-cloud-alibaba-dependencies.version>2.2.1.RELEASE</spring-cloud-alibaba-dependencies.version>
-        <spring-boot-dependencies.version>2.2.8.RELEASE</spring-boot-dependencies.version>
+        <spring-boot-dependencies.version>2.2.9.RELEASE</spring-boot-dependencies.version>
         <spring-cloud-dependencies.version>Hoxton.SR6</spring-cloud-dependencies.version>
         <commons-collections4.version>4.4</commons-collections4.version>
         <fastjson.version>1.2.70</fastjson.version>
