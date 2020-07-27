@@ -29,10 +29,6 @@ public abstract class AbstractIFileService extends ServiceImpl<FileMapper, FileI
     @Override
     public FileInfo upload(MultipartFile file) throws Exception {
         FileInfo fileInfo = FileUtil.getFileInfo(file);
-        FileInfo oldFileInfo = baseMapper.selectById(fileInfo.getId());
-        if (oldFileInfo != null) {
-            return oldFileInfo;
-        }
         if (!fileInfo.getName().contains(FILE_SPLIT)) {
             throw new IllegalArgumentException("缺少后缀名");
         }

@@ -34,7 +34,10 @@ zlt:
       - sys_role_user
       - sys_role_menu
     ignoreSqls:
+      # 用户关联角色时，显示所有角色
       - com.central.user.mapper.SysRoleMapper.findAll
+      # 用户列表显示用户所关联的所有角色
+      - com.central.user.mapper.SysUserRoleMapper.findRolesByUserIds
   #审计日志
 #  audit-log:
 #    enabled: true

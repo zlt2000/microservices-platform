@@ -11,21 +11,21 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.TokenGranter;
 import org.springframework.security.oauth2.provider.code.RandomValueAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.error.WebResponseExceptionTranslator;
-import org.springframework.security.oauth2.provider.token.TokenEnhancer;
-import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
 import javax.annotation.Resource;
-import java.util.Arrays;
 
 /**
  * OAuth2 授权服务器配置
  *
  * @author zlt
  * @date 2018/10/24
+ * <p>
+ * Blog: https://zlt2000.gitee.io
+ * Github: https://github.com/zlt2000
  */
 @Configuration
 @EnableAuthorizationServer
@@ -43,12 +43,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private TokenStore tokenStore;
 
-    @Autowired(required = false)
-    private JwtAccessTokenConverter jwtAccessTokenConverter;
-
-    @Autowired(required = false)
-    private TokenEnhancer tokenEnhancer;
-
     @Autowired
     private WebResponseExceptionTranslator webResponseExceptionTranslator;
 
@@ -58,27 +52,21 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private RandomValueAuthorizationCodeServices authorizationCodeServices;
 
+    @Autowired
+    private TokenGranter tokenGranter;
+
     /**
      * 配置身份认证器，配置认证方式，TokenStore，TokenGranter，OAuth2RequestFactory
      * @param endpoints
      */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
-        if (jwtAccessTokenConverter != null) {
-            if (tokenEnhancer != null) {
-                TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
-                tokenEnhancerChain.setTokenEnhancers(
-                        Arrays.asList(tokenEnhancer, jwtAccessTokenConverter));
-                endpoints.tokenEnhancer(tokenEnhancerChain);
-            } else {
-                endpoints.accessTokenConverter(jwtAccessTokenConverter);
-            }
-        }
         endpoints.tokenStore(tokenStore)
                 .authenticationManager(authenticationManager)
                 .userDetailsService(userDetailsService)
                 .authorizationCodeServices(authorizationCodeServices)
-                .exceptionTranslator(webResponseExceptionTranslator);
+                .exceptionTranslator(webResponseExceptionTranslator)
+                .tokenGranter(tokenGranter);
     }
 
     /**

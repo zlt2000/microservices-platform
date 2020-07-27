@@ -88,7 +88,7 @@ public class RedisClientDetailsService extends JdbcClientDetailsService {
      * @param clientId
      */
     private void removeRedisCache(String clientId) {
-        redisTemplate.opsForValue().get(clientRedisKey(clientId));
+        redisTemplate.delete(clientRedisKey(clientId));
     }
 
     /**

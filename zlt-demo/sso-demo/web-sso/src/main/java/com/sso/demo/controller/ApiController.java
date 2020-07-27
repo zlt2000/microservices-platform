@@ -1,5 +1,6 @@
 package com.sso.demo.controller;
 
+import cn.hutool.core.collection.CollectionUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -14,7 +15,9 @@ import org.springframework.web.client.RestTemplate;
 import sun.misc.BASE64Encoder;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -48,10 +51,12 @@ public class ApiController {
         String accessToken = (String)tokenMap.get("access_token");
         //获取用户信息
         Map userMap = getUserInfo(accessToken);
+        List<String> roles = getRoles(userMap);
 
         Map result = new HashMap(2);
         result.put("tokenInfo", tokenMap);
         result.put("userInfo", userMap);
+        result.put("roles", roles);
         return result;
     }
 
@@ -85,5 +90,16 @@ public class ApiController {
         RestTemplate restTemplate = new RestTemplate();
         Map result = restTemplate.getForObject(userInfoUri+"?access_token="+accessToken, Map.class);
         return (Map)result.get("datas");
+    }
+
+    private List<String> getRoles(Map userMap) {
+        List<Map<String, String>> roles = (List<Map<String, String>>)userMap.get("roles");
+        List<String> result = new ArrayList<>();
+        if (CollectionUtil.isNotEmpty(roles)) {
+            roles.forEach(e -> {
+                result.add(e.get("code"));
+            });
+        }
+        return result;
     }
 }

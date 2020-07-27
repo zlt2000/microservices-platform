@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.zlt</groupId>
         <artifactId>search-center</artifactId>
-        <version>3.6.1</version>
+        <version>4.0.0</version>
     </parent>
     <artifactId>search-client</artifactId>
     <description>搜索中心客户端</description>

@@ -26,7 +26,7 @@
 
 <!-- 表单弹窗 -->
 <script type="text/html" id="app-model">
-    <form id="app-form" lay-filter="app-form" class="layui-form model-form">
+    <form id="app-form" method="POST" lay-filter="app-form" class="layui-form model-form">
         <input name="id" type="hidden"/>
         <div class="layui-form-item">
             <label class="layui-form-label">应用标识</label>
@@ -52,6 +52,38 @@
             <label class="layui-form-label">回调地址</label>
             <div class="layui-input-block">
                 <input name="webServerRedirectUri" placeholder="请输入回调地址" type="text" class="layui-input" maxlength="20"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">自动审批</label>
+            <div class="layui-input-block">
+                <input type="radio" name="autoapprove" value="true" title="是" checked/>
+                <input type="radio" name="autoapprove" value="false" title="否"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">授权模式</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="authorizedGrantTypes" lay-skin="primary" title="授权码模式" value="authorization_code" checked>
+                <input type="checkbox" name="authorizedGrantTypes" lay-skin="primary" title="密码模式" value="password" checked>
+                <input type="checkbox" name="authorizedGrantTypes" lay-skin="primary" title="客户端模式" value="client_credentials" checked>
+                <input type="checkbox" name="authorizedGrantTypes" lay-skin="primary" title="简化模式" value="implicit" checked>
+                <input type="checkbox" name="authorizedGrantTypes" lay-skin="primary" title="刷新Token" value="refresh_token" checked>
+                <input type="checkbox" name="authorizedGrantTypes" lay-skin="primary" title="密码验证码模式" value="password_code" checked>
+                <input type="checkbox" name="authorizedGrantTypes" lay-skin="primary" title="openId模式" value="openId" checked>
+                <input type="checkbox" name="authorizedGrantTypes" lay-skin="primary" title="手机号密码模式" value="mobile_password" checked>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">令牌时效(s)</label>
+            <div class="layui-input-block">
+                <input name="accessTokenValiditySeconds" lay-verify="number" type="text" class="layui-input" maxlength="20" value="18000"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">刷新时效(s)</label>
+            <div class="layui-input-block">
+                <input name="refreshTokenValiditySeconds" lay-verify="number" type="text" class="layui-input" maxlength="20" value="28800"/>
             </div>
         </div>
         <div class="layui-form-item model-form-footer">
@@ -81,11 +113,15 @@
             cols: [[
                 {type: 'numbers'},
                 {field: 'clientId',width:180, sort: true, title: '应用标识'},
-                {field: 'clientName',width:200, sort: true, title: '应用名称'},
-                {field: 'clientSecretStr', width:180, sort: true, title: '应用密钥'},
-                {field: 'webServerRedirectUri',sort: true, title: '回调地址'},
+                {field: 'clientName',width:180, sort: true, title: '应用名称'},
+                {field: 'webServerRedirectUri', width:250,sort: true, title: '回调地址'},
                 {field: 'authorizedGrantTypes',width:250, sort: true, title: 'oauth授权方式'},
-                {align: 'center',width:150, toolbar: '#app-table-bar', title: '操作'}
+                {width:110, sort: true, title: '自动审批', templet:function (d) {
+                    return d.autoapprove=='true'?"是":"否"
+                }},
+                {field: 'accessTokenValiditySeconds',width:130, sort: true, title: '令牌时效(s)'},
+                {field: 'refreshTokenValiditySeconds',width:130, sort: true, title: '刷新时效(s)'},
+                {fixed: 'right', align: 'center',width:150, toolbar: '#app-table-bar', title: '操作'}
             ]]
         });
 
@@ -132,18 +168,29 @@
                 type: 1,
                 title: data ? '修改应用' : '添加应用',
                 area: '450px',
-                offset: '120px',
+                offset: '80px',
                 content: $('#app-model').html(),
                 success: function () {
                     $('#app-form')[0].reset();
-                    $('#app-form').attr('method', 'POST');
                     if (data) {
                         $("input[name='clientId']").attr('disabled',true);
                         $("input[name='clientId']").attr('class',"layui-input layui-disabled");
                         $("input[name='webServerRedirectUri']").attr('disabled',true);
                         $("input[name='webServerRedirectUri']").attr('class',"layui-input layui-disabled");
                         form.val('app-form', data);
-                        $('#app-form').attr('method', 'POST');
+
+                        let authorizedGrantTypesArr = data.authorizedGrantTypes.split(",");
+                        $('input[type=checkbox][name=authorizedGrantTypes]').each(function() {
+                            let typeValue = $(this).val();
+                            let isCheck = false;
+                            for (var i = 0; i < authorizedGrantTypesArr.length; i++) {
+                                if (typeValue === authorizedGrantTypesArr[i]) {
+                                    isCheck = true;
+                                    break;
+                                }
+                            }
+                            $(this).prop("checked", isCheck);
+                        });
                     }
                 }
             });
@@ -151,10 +198,14 @@
 
         // 表单提交事件
         form.on('submit(app-form-submit)', function (data) {
+            let authorizedGrantTypesArr = [];
+            $('input[type=checkbox][name=authorizedGrantTypes]:checked').each(function() {
+                authorizedGrantTypesArr.push($(this).val());
+            });
+            data.field.authorizedGrantTypes = authorizedGrantTypesArr.join(",");
             layer.load(2);
             admin.req('api-uaa/clients/saveOrUpdate', JSON.stringify(data.field), function (data) {
                 layer.closeAll('loading');
-                console.log(data);
                 if (data.resp_code == 0) {
                     layer.msg(data.resp_msg, {icon: 1, time: 500});
                     table.reload('app-table');

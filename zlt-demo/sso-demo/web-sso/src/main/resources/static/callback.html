@@ -5,28 +5,30 @@
     <meta charset="utf-8"/>
     <title>zlt</title>
     <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/sso.js"></script>
 </head>
 <body>
 <script>
     window.onload = function() {
-        //获取url参数
-        function getQueryVariable(variable) {
-            var query = window.location.search.substring(1);
-            var vars = query.split("&");
-            for (var i=0;i<vars.length;i++) {
-                var pair = vars[i].split("=");
-                if(pair[0] == variable){return pair[1];}
-            }
-            return '';
+        //url获取state
+        let state = getQueryVariable('state');
+        let localState = sessionStorage.getItem("state");
+        //判断state防止CSRF攻击
+        if (localState !== state) {
+            alert('state参数无效！');
+            let state = getState();
+            sessionStorage.setItem("state", state);
+            window.location = getAuthorizeUri(state);
         }
-
         //url获取code
         let code = getQueryVariable('code');
+
         //获取token和用户信息
         $.ajax({url:'http://127.0.0.1:8081/token/'+code, success:function(result) {
             console.log(result);
             sessionStorage.setItem('access_token', result.tokenInfo.access_token);
             sessionStorage.setItem('username', result.userInfo.username);
+            sessionStorage.setItem('roles', result.roles);
             window.location = sessionStorage.getItem('visitUri');
         }});
     };

@@ -4,11 +4,22 @@
     <parent>
         <groupId>com.zlt</groupId>
         <artifactId>zlt-demo</artifactId>
-        <version>3.6.1</version>
+        <version>4.0.0</version>
     </parent>
     <artifactId>seata-demo</artifactId>
     <description>seata分布式事务demo</description>
     <packaging>pom</packaging>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.seata</groupId>
+                <artifactId>seata-spring-boot-starter</artifactId>
+                <version>1.3.0</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <modules>
         <!-- 业务服务(TM) -->
         <module>business-service</module>
