@@ -173,7 +173,6 @@ public class Sequence {
             // 相同毫秒内，序列号自增
             sequence = (sequence + 1) & sequenceMask;
             if (sequence == 0) {
-                sequence = ThreadLocalRandom.current().nextLong(1, 101);
                 // 同一毫秒的序列数已经达到最大
                 timestamp = tilNextMillis(lastTimestamp);
             }
