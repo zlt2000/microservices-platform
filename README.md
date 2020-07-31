@@ -1,12 +1,10 @@
 #  zlt-microservices-platform
 
 <p align="center">
-  <img src='https://img.shields.io/badge/license-Apache%202-4EB1BA.svg' alt='License'/>
   <img src="https://img.shields.io/badge/Spring%20Boot-2.2.9.RELEASE-blue" alt="Downloads"/>
   <img src="https://img.shields.io/badge/Spring%20Cloud-Hoxton.SR6-blue" alt="Downloads"/>
   <img src="https://img.shields.io/badge/Spring%20Cloud%20Alibaba-2.2.1.RELEASE-blue" alt="Downloads"/>
   <img src="https://img.shields.io/badge/Elasticsearch-7.x-brightgreen" alt="Downloads"/>
-  <img src="https://img.shields.io/badge/Layui-EasyWeb-yellowgreen" alt="Downloads"/>
   <a target="_blank" href='https://gitee.com/zlt2000/microservices-platform'>
     <img src='https://gitee.com/zlt2000/microservices-platform/badge/star.svg' alt='star'/>
   </a>
