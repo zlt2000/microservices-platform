@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.central.common.exception.IdempotencyException;
 import com.central.common.exception.LockException;
 import com.central.common.lock.DistributedLock;
+import com.central.common.lock.ZLock;
 import com.central.common.service.ISuperService;
 
 import java.io.Serializable;
@@ -36,10 +37,9 @@ public class SuperServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M,
         if (StrUtil.isEmpty(lockKey)) {
             throw new LockException("lockKey is null");
         }
-        Object lock = null;
-        try {
-            //加锁
-            lock = locker.tryLock(lockKey, 10, 60, TimeUnit.SECONDS);
+        try (
+                ZLock lock = locker.tryLock(lockKey, 10, 60, TimeUnit.SECONDS);
+                ) {
             if (lock != null) {
                 //判断记录是否已存在
                 int count = super.count(countWrapper);
@@ -54,8 +54,6 @@ public class SuperServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M,
             } else {
                 throw new LockException("锁等待超时");
             }
-        } finally {
-            locker.unlock(lock);
         }
     }
 
