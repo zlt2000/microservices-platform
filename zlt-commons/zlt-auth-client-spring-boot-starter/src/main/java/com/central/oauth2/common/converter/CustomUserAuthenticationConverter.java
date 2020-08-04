@@ -1,5 +1,6 @@
 package com.central.oauth2.common.converter;
 
+import com.central.common.model.LoginAppUser;
 import com.central.common.model.SysUser;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -68,7 +69,7 @@ public class CustomUserAuthenticationConverter implements UserAuthenticationConv
                 principal = user;
             } else {
                 Integer id = (Integer)map.get("id");
-                SysUser user = new SysUser();
+                LoginAppUser user = new LoginAppUser();
                 user.setUsername((String)principal);
                 user.setId(Long.valueOf(id));
                 principal = user;
