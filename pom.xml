@@ -50,6 +50,7 @@
         <servlet-api.version>4.0.1</servlet-api.version>
         <spring-data-elasticsearch.version>3.2.7.RELEASE</spring-data-elasticsearch.version>
         <elasticsearch.version>7.8.0</elasticsearch.version>
+        <knife4j.version>2.0.4</knife4j.version>
         <docker-maven-plugin.version>1.2.2</docker-maven-plugin.version>
         <sonar.exclusions>zlt-job/**/*, zlt-register/**/*, zlt-web/**/*</sonar.exclusions>
         <docker.baseImage>openjdk:8-jre-alpine</docker.baseImage>
@@ -357,6 +358,16 @@
                 <groupId>org.elasticsearch</groupId>
                 <artifactId>elasticsearch</artifactId>
                 <version>${elasticsearch.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-micro-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
             </dependency>
 
             <dependency>
