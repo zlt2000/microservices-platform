@@ -1,5 +1,5 @@
 ## **详细的原理和部署细节请查看**
-[Spring Cloud同步场景分布式事务怎样做？试试Seata](https://mp.weixin.qq.com/s/0yCmHzlXDC9BkbUuEt0_fQ)
+[SEATA同步场景事务(v1.3)](https://www.kancloud.cn/zlt2000/microservices-platform/1280566)
 
 &nbsp;
 ## 测试环境
