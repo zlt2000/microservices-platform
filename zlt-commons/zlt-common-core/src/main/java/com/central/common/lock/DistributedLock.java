@@ -65,6 +65,8 @@ public interface DistributedLock {
      * @param zLock 锁抽象对象
      */
     default void unlock(ZLock zLock) throws Exception {
-        this.unlock(zLock.getLock());
+        if (zLock != null) {
+            this.unlock(zLock.getLock());
+        }
     }
 }
