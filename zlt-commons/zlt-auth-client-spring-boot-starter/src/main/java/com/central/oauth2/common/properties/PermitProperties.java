@@ -23,6 +23,7 @@ public class PermitProperties {
             "/*/v2/api-docs",
             "/swagger/api-docs",
             "/swagger-ui.html",
+            "/doc.html",
             "/swagger-resources/**",
             "/webjars/**",
             "/druid/**"

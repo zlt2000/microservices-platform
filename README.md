@@ -1,12 +1,16 @@
 #  zlt-microservices-platform
 
 <p align="center">
-  <img src='https://img.shields.io/badge/license-Apache%202-4EB1BA.svg' alt='License'/>
   <img src="https://img.shields.io/badge/Spring%20Boot-2.2.9.RELEASE-blue" alt="Downloads"/>
   <img src="https://img.shields.io/badge/Spring%20Cloud-Hoxton.SR6-blue" alt="Downloads"/>
   <img src="https://img.shields.io/badge/Spring%20Cloud%20Alibaba-2.2.1.RELEASE-blue" alt="Downloads"/>
   <img src="https://img.shields.io/badge/Elasticsearch-7.x-brightgreen" alt="Downloads"/>
-  <img src="https://img.shields.io/badge/Layui-EasyWeb-yellowgreen" alt="Downloads"/>
+  <a target="_blank" href='https://gitee.com/zlt2000/microservices-platform'>
+    <img src='https://gitee.com/zlt2000/microservices-platform/badge/star.svg' alt='star'/>
+  </a>
+  <a target="_blank" href='https://github.com/zlt2000/microservices-platform'>
+    <img src="https://img.shields.io/github/stars/zlt2000/microservices-platform.svg?style=social" alt="github star"/>
+  </a>
 </p>
 
 
@@ -106,7 +110,7 @@ central-platform -- 父项目，公共依赖
 <table>
     <tr>
         <td><a target="_blank" href="https://activity.huaweicloud.com/discount_area_v5/index.html?fromacct=a87e1945-e6c4-4e04-bb43-e0472a54e454&utm_source=V1g3MDY4NTY=&utm_medium=cps&utm_campaign=201905"><img width="460px" height="177px" alt="华为云" src="https://gitee.com/zlt2000/images/raw/master/hwy.jpg"/></a></td>
-        <td><a target="_blank" href="https://url.cn/e2NLAJ9r"><img width="460px" height="177px"  alt="腾讯云" src="https://gitee.com/zlt2000/images/raw/master/txy.jpg"/></a></td>
+        <td><a target="_blank" href="https://url.cn/7a8mAUfO"><img width="460px" height="177px"  alt="腾讯云" src="https://gitee.com/zlt2000/images/raw/master/txy.jpg"/></a></td>
     </tr>
 </table>
 

@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.zlt</groupId>
         <artifactId>sso-demo</artifactId>
-        <version>4.0.0</version>
+        <version>4.1.0</version>
     </parent>
     <artifactId>ss-sso</artifactId>
     <description>springSecurity单点登录demo</description>

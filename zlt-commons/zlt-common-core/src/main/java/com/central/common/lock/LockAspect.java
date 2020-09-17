@@ -40,7 +40,6 @@ public class LockAspect {
 
     @Around("@within(lock) || @annotation(lock)")
     public Object aroundLock(ProceedingJoinPoint point, Lock lock) throws Throwable {
-        Object lockObj = null;
         if (lock == null) {
             // 获取类上的注解
             lock = point.getTarget().getClass().getDeclaredAnnotation(Lock.class);
@@ -59,6 +58,7 @@ public class LockAspect {
             Object[] args = point.getArgs();
             lockKey = getValBySpEL(lockKey, methodSignature, args);
         }
+        ZLock lockObj = null;
         try {
             //加锁
             if (lock.waitTime() > 0) {
