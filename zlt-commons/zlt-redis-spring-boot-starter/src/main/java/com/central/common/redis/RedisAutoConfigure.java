@@ -41,7 +41,7 @@ public class RedisAutoConfigure {
 
     @Bean
     public RedisSerializer<Object> redisValueSerializer() {
-        return RedisSerializer.java();
+        return RedisSerializer.json();
     }
 
     /**

@@ -4,6 +4,7 @@ import com.central.common.constant.SecurityConstants;
 import com.central.oauth2.common.properties.SecurityProperties;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.ExpiringOAuth2RefreshToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -61,9 +62,15 @@ public class CustomRedisTokenStore implements TokenStore {
      */
     private SecurityProperties securityProperties;
 
-    public CustomRedisTokenStore(RedisConnectionFactory connectionFactory, SecurityProperties securityProperties) {
+    /**
+     * 业务redis的value序列化
+     */
+    private RedisSerializer<Object> redisValueSerializer;
+
+    public CustomRedisTokenStore(RedisConnectionFactory connectionFactory, SecurityProperties securityProperties, RedisSerializer<Object> redisValueSerializer) {
         this.connectionFactory = connectionFactory;
         this.securityProperties = securityProperties;
+        this.redisValueSerializer = redisValueSerializer;
         if (springDataRedis_2_0) {
             this.loadRedisConnectionMethods_2_0();
         }
@@ -111,7 +118,7 @@ public class CustomRedisTokenStore implements TokenStore {
     }
 
     private ClientDetails deserializeClientDetails(byte[] bytes) {
-        return serializationStrategy.deserialize(bytes, ClientDetails.class);
+        return (ClientDetails)redisValueSerializer.deserialize(bytes);
     }
 
     private byte[] serialize(String string) {

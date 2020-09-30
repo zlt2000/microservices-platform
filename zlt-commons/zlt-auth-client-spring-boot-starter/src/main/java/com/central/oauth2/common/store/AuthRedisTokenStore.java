@@ -21,7 +21,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 @ConditionalOnProperty(prefix = "zlt.oauth2.token.store", name = "type", havingValue = "redis", matchIfMissing = true)
 public class AuthRedisTokenStore {
     @Bean
-    public TokenStore tokenStore(RedisConnectionFactory connectionFactory, SecurityProperties securityProperties) {
-        return new CustomRedisTokenStore(connectionFactory, securityProperties);
+    public TokenStore tokenStore(RedisConnectionFactory connectionFactory, SecurityProperties securityProperties, RedisSerializer<Object> redisValueSerializer) {
+        return new CustomRedisTokenStore(connectionFactory, securityProperties, redisValueSerializer);
     }
 }
