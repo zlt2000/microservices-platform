@@ -8,6 +8,9 @@ import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.SerializationUtils;
+import org.springframework.util.Assert;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -145,6 +148,17 @@ public class RedisRepository {
      */
     public Object get(final String key) {
         return redisTemplate.opsForValue().get(key);
+    }
+    /**
+     * 根据key获取对象
+     *
+     * @param key the key
+     * @param valueSerializer 序列化
+     * @return the string
+     */
+    public Object get(final String key, RedisSerializer<Object> valueSerializer) {
+        byte[] rawKey = rawKey(key);
+        return redisTemplate.execute(connection -> deserializeValue(connection.get(rawKey), valueSerializer), true);
     }
 
     /**
@@ -362,6 +376,20 @@ public class RedisRepository {
     }
 
     /**
+     * redis List数据结构 : 返回列表 key 中指定区间内的元素，区间以偏移量 start 和 end 指定。
+     *
+     * @param key   the key
+     * @param start the start
+     * @param end   the end
+     * @param valueSerializer 序列化
+     * @return the list
+     */
+    public List<Object> getList(String key, int start, int end, RedisSerializer<Object> valueSerializer) {
+        byte[] rawKey = rawKey(key);
+        return redisTemplate.execute(connection -> deserializeValues(connection.lRange(rawKey, start, end), valueSerializer), true);
+    }
+
+    /**
      * redis List数据结构 : 批量存储
      *
      * @param key  the key
@@ -381,5 +409,29 @@ public class RedisRepository {
      */
     public void insert(String key, long index, Object value) {
         opsForList().set(key, index, value);
+    }
+
+    private byte[] rawKey(Object key) {
+        Assert.notNull(key, "non null key required");
+
+        if (key instanceof byte[]) {
+            return (byte[]) key;
+        }
+        RedisSerializer<Object> redisSerializer = (RedisSerializer<Object>)redisTemplate.getKeySerializer();
+        return redisSerializer.serialize(key);
+    }
+
+    private List deserializeValues(List<byte[]> rawValues, RedisSerializer<Object> valueSerializer) {
+        if (valueSerializer == null) {
+            return rawValues;
+        }
+        return SerializationUtils.deserialize(rawValues, valueSerializer);
+    }
+
+    private Object deserializeValue(byte[] value, RedisSerializer<Object> valueSerializer) {
+        if (valueSerializer == null) {
+            return value;
+        }
+        return valueSerializer.deserialize(value);
     }
 }
