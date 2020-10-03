@@ -25,6 +25,9 @@ import java.util.Map;
  *
  * @author zlt
  * @date 2019/7/12
+ * <p>
+ * Blog: https://zlt2000.gitee.io
+ * Github: https://github.com/zlt2000
  */
 @Slf4j
 @Service
@@ -43,7 +46,6 @@ public class RedisTokensServiceImpl implements ITokensService {
         List<TokenVo> result = new ArrayList<>(limit);
         RedisSerializer<Object> valueSerializer = RedisSerializer.java();
         //查询token集合
-        //redisRepository.getRedisTemplate().e
         List<Object> tokenObjs = redisRepository.getList(redisKey, startEnds[0], startEnds[1]-1, valueSerializer);
         if (tokenObjs != null) {
             for (Object obj : tokenObjs) {
