@@ -1,13 +1,12 @@
 package com.central.common.redis.template;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisClusterNode;
+import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisServerCommands;
-import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.ListOperations;
-import org.springframework.data.redis.core.RedisCallback;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.*;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationUtils;
 import org.springframework.util.Assert;
@@ -77,10 +76,40 @@ public class RedisRepository {
      *
      * @param key   redis主键
      * @param value 值
-     * @param time  过期时间(单位秒)
+     * @param time  过期时间
+     * @param timeUnit  过期时间单位
      */
+    public void setExpire(final String key, final Object value, final long time, final TimeUnit timeUnit) {
+        redisTemplate.opsForValue().set(key, value, time, timeUnit);
+    }
     public void setExpire(final String key, final Object value, final long time) {
-        redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
+        this.setExpire(key, value, time, TimeUnit.SECONDS);
+    }
+    public void setExpire(final String key, final Object value, final long time, final TimeUnit timeUnit, RedisSerializer<Object> valueSerializer) {
+        byte[] rawKey = rawKey(key);
+        byte[] rawValue = rawValue(value, valueSerializer);
+
+        redisTemplate.execute(new RedisCallback<Object>() {
+            @Override
+            public Object doInRedis(RedisConnection connection) throws DataAccessException {
+                potentiallyUsePsetEx(connection);
+                return null;
+            }
+            public void potentiallyUsePsetEx(RedisConnection connection) {
+                if (!TimeUnit.MILLISECONDS.equals(timeUnit) || !failsafeInvokePsetEx(connection)) {
+                    connection.setEx(rawKey, TimeoutUtils.toSeconds(time, timeUnit), rawValue);
+                }
+            }
+            private boolean failsafeInvokePsetEx(RedisConnection connection) {
+                boolean failed = false;
+                try {
+                    connection.pSetEx(rawKey, time, rawValue);
+                } catch (UnsupportedOperationException e) {
+                    failed = true;
+                }
+                return !failed;
+            }
+        }, true);
     }
 
     /**
@@ -419,6 +448,13 @@ public class RedisRepository {
         }
         RedisSerializer<Object> redisSerializer = (RedisSerializer<Object>)redisTemplate.getKeySerializer();
         return redisSerializer.serialize(key);
+    }
+    private byte[] rawValue(Object value, RedisSerializer valueSerializer) {
+        if (value instanceof byte[]) {
+            return (byte[]) value;
+        }
+
+        return valueSerializer.serialize(value);
     }
 
     private List deserializeValues(List<byte[]> rawValues, RedisSerializer<Object> valueSerializer) {
