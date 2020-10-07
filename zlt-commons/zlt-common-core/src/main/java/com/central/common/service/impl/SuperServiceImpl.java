@@ -68,7 +68,7 @@ public class SuperServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M,
             Class<?> cls = entity.getClass();
             TableInfo tableInfo = TableInfoHelper.getTableInfo(cls);
             if (null != tableInfo && StrUtil.isNotEmpty(tableInfo.getKeyProperty())) {
-                Object idVal = ReflectionKit.getMethodValue(cls, entity, tableInfo.getKeyProperty());
+                Object idVal = ReflectionKit.getFieldValue(entity, tableInfo.getKeyProperty());
                 if (StringUtils.checkValNull(idVal) || Objects.isNull(getById((Serializable) idVal))) {
                     if (StrUtil.isEmpty(msg)) {
                         msg = "已存在";
