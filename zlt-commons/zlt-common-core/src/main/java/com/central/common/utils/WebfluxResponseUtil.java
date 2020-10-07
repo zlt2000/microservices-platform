@@ -47,7 +47,7 @@ public class WebfluxResponseUtil {
         response.getHeaders().setAccessControlAllowCredentials(true);
         response.getHeaders().setAccessControlAllowOrigin("*");
         response.setStatusCode(HttpStatus.valueOf(httpStatus));
-        response.getHeaders().setContentType(MediaType.APPLICATION_JSON_UTF8);
+        response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
         DataBufferFactory dataBufferFactory = response.bufferFactory();
         DataBuffer buffer = dataBufferFactory.wrap(JSONObject.toJSONString(result).getBytes(Charset.defaultCharset()));
         return response.writeWith(Mono.just(buffer)).doOnError((error) -> {
