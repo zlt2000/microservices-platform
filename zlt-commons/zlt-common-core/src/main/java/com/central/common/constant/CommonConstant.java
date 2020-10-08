@@ -98,6 +98,7 @@ public interface CommonConstant {
     String SIMPLE_MONTH_FORMAT = "yyyyMM";
     String SIMPLE_DATE_FORMAT = "yyyyMMdd";
     String SIMPLE_DATETIME_FORMAT = "yyyyMMddHHmmss";
+    String TIME_ZONE_GMT8 = "GMT+8";
 
     String DEF_USER_PASSWORD = "123456";
 

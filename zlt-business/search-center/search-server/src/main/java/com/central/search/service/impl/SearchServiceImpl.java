@@ -1,10 +1,10 @@
 package com.central.search.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
 import com.central.common.model.PageResult;
 import com.central.es.utils.SearchBuilder;
 import com.central.search.model.SearchDto;
 import com.central.search.service.ISearchService;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ public class SearchServiceImpl implements ISearchService {
      * @return
      */
     @Override
-    public PageResult<JSONObject> strQuery(String indexName, SearchDto searchDto) throws IOException {
+    public PageResult<JsonNode> strQuery(String indexName, SearchDto searchDto) throws IOException {
         return SearchBuilder.builder(elasticsearchRestTemplate, indexName)
                 .setStringQuery(searchDto.getQueryStr())
                 .addSort(searchDto.getSortCol(), SortOrder.DESC)

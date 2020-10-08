@@ -1,9 +1,9 @@
 package com.central.log.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.central.common.model.PageResult;
 import com.central.search.client.service.IQueryService;
 import com.central.search.model.SearchDto;
+import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -34,7 +34,7 @@ public class AuditLogController {
             @ApiImplicitParam(name = "queryStr", value = "搜索关键字", dataType = "String")
     })
     @GetMapping(value = "/auditLog")
-    public PageResult<JSONObject> getPage(SearchDto searchDto) {
+    public PageResult<JsonNode> getPage(SearchDto searchDto) {
         searchDto.setIsHighlighter(true);
         searchDto.setSortCol("timestamp");
         return queryService.strQuery("audit-log-*", searchDto);

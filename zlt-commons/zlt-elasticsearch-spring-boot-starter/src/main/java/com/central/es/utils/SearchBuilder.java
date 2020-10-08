@@ -3,9 +3,10 @@ package com.central.es.utils;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.central.common.model.PageResult;
+import com.central.common.utils.JsonUtil;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.beanutils.PropertyUtils;
@@ -200,16 +201,16 @@ public class SearchBuilder {
     }
 
     /**
-     * 返回列表结果 List<JSONObject>
+     * 返回列表结果 List<JsonNode>
      */
-    public List<JSONObject> getList() throws IOException {
+    public List<JsonNode> getList() throws IOException {
         return getList(this.get().getHits());
     }
 
     /**
      * 返回分页结果 PageResult<JSONObject>
      */
-    public PageResult<JSONObject> getPage() throws IOException {
+    public PageResult<JsonNode> getPage() throws IOException {
         return this.getPage(null, null);
     }
 
@@ -218,30 +219,31 @@ public class SearchBuilder {
      * @param page 当前页数
      * @param limit 每页显示
      */
-    public PageResult<JSONObject> getPage(Integer page, Integer limit) throws IOException {
+    public PageResult<JsonNode> getPage(Integer page, Integer limit) throws IOException {
         this.setPage(page, limit);
         SearchResponse response = this.get();
         SearchHits searchHits = response.getHits();
         long totalCnt = searchHits.getTotalHits().value;
-        List<JSONObject> list = getList(searchHits);
-        return PageResult.<JSONObject>builder().data(list).code(0).count(totalCnt).build();
+        List<JsonNode> list = getList(searchHits);
+        return PageResult.<JsonNode>builder().data(list).code(0).count(totalCnt).build();
     }
 
     /**
      * 返回JSON列表数据
      */
-    private List<JSONObject> getList(SearchHits searchHits) {
-        List<JSONObject> list = new ArrayList<>();
+    private List<JsonNode> getList(SearchHits searchHits) {
+        List<JsonNode> list = new ArrayList<>();
         if (searchHits != null) {
             searchHits.forEach(item -> {
-                JSONObject jsonObject = JSON.parseObject(item.getSourceAsString());
-                jsonObject.put("id", item.getId());
+                JsonNode jsonNode = JsonUtil.parse(item.getSourceAsString());
+                ObjectNode objectNode = (ObjectNode)jsonNode;
+                objectNode.put("id", item.getId());
 
                 Map<String, HighlightField> highlightFields = item.getHighlightFields();
                 if (highlightFields != null) {
-                    populateHighLightedFields(jsonObject, highlightFields);
+                    populateHighLightedFields(objectNode, highlightFields);
                 }
-                list.add(jsonObject);
+                list.add(objectNode);
             });
         }
         return list;
@@ -257,7 +259,11 @@ public class SearchBuilder {
             try {
                 String name = field.getName();
                 if (!name.endsWith(".keyword")) {
-                    PropertyUtils.setProperty(result, field.getName(), concat(field.fragments()));
+                    if (result instanceof ObjectNode) {
+                        ((ObjectNode)result).put(field.getName(), concat(field.fragments()));
+                    } else {
+                        PropertyUtils.setProperty(result, field.getName(), concat(field.fragments()));
+                    }
                 }
             } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
                 throw new ElasticsearchException("failed to set highlighted value for field: " + field.getName()

@@ -1,8 +1,8 @@
 package com.central.search.service;
 
-import com.alibaba.fastjson.JSONObject;
 import com.central.common.model.PageResult;
 import com.central.search.model.SearchDto;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
 
@@ -17,5 +17,5 @@ public interface ISearchService {
      * @param searchDto 搜索Dto
      * @return
      */
-    PageResult<JSONObject> strQuery(String indexName, SearchDto searchDto) throws IOException;
+    PageResult<JsonNode> strQuery(String indexName, SearchDto searchDto) throws IOException;
 }
