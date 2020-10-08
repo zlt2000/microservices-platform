@@ -1,10 +1,10 @@
 package com.central.search.client.feign;
 
-import com.alibaba.fastjson.JSONObject;
 import com.central.common.constant.ServiceNameConstants;
 import com.central.common.model.PageResult;
 import com.central.search.client.feign.fallback.SearchServiceFallbackFactory;
 import com.central.search.model.SearchDto;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,5 +19,5 @@ public interface SearchService {
      * @param searchDto 搜索Dto
      */
     @PostMapping(value = "/search/{indexName}")
-    PageResult<JSONObject> strQuery(@PathVariable("indexName") String indexName, @RequestBody SearchDto searchDto);
+    PageResult<JsonNode> strQuery(@PathVariable("indexName") String indexName, @RequestBody SearchDto searchDto);
 }

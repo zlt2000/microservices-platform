@@ -1,10 +1,10 @@
 package com.central.admin.service.impl;
 
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSONObject;
 import com.central.admin.model.IndexDto;
 import com.central.admin.service.IIndexService;
 import com.central.common.model.PageResult;
+import com.central.common.utils.JsonUtil;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.util.EntityUtils;
@@ -72,6 +72,9 @@ public class IndexServiceImpl implements IIndexService {
 
     @Override
     public PageResult<Map<String, String>> list(String queryStr, String indices) throws IOException {
+        if (StrUtil.isNotEmpty(queryStr)) {
+            indices = queryStr;
+        }
         Response response = elasticsearchRestTemplate.getClient().getLowLevelClient()
                 .performRequest(new Request(
                         "GET",
@@ -99,7 +102,7 @@ public class IndexServiceImpl implements IIndexService {
         String settingsStr = getIndexResponse.getSettings().get(indexName).toString();
         Object settingsObj = null;
         if (StrUtil.isNotEmpty(settingsStr)) {
-            settingsObj = JSONObject.parse(settingsStr);
+            settingsObj = JsonUtil.parse(settingsStr);
         }
         Map<String, Object> result = new HashMap<>(1);
         Map<String, Object> indexMap = new HashMap<>(3);

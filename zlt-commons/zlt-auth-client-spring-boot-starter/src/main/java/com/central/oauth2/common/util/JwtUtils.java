@@ -1,8 +1,9 @@
 package com.central.oauth2.common.util;
 
-import com.alibaba.fastjson.JSONObject;
 import com.central.common.constant.SecurityConstants;
+import com.central.common.utils.JsonUtil;
 import com.central.common.utils.RsaUtils;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.security.jwt.Jwt;
@@ -46,10 +47,10 @@ public class JwtUtils {
      * @param rsaPublicKey 公钥
      * @return
      */
-    public static JSONObject decodeAndVerify(String jwtToken, RSAPublicKey rsaPublicKey) {
+    public static JsonNode decodeAndVerify(String jwtToken, RSAPublicKey rsaPublicKey) {
         SignatureVerifier rsaVerifier = new RsaVerifier(rsaPublicKey);
         Jwt jwt = JwtHelper.decodeAndVerify(jwtToken, rsaVerifier);
-        return JSONObject.parseObject(jwt.getClaims());
+        return JsonUtil.parse(jwt.getClaims());
     }
 
     /**
@@ -57,7 +58,7 @@ public class JwtUtils {
      * @param jwtToken token值
      * @return
      */
-    public static JSONObject decodeAndVerify(String jwtToken) {
+    public static JsonNode decodeAndVerify(String jwtToken) {
         return decodeAndVerify(jwtToken, getPubKeyObj());
     }
 
@@ -67,8 +68,8 @@ public class JwtUtils {
      * @param currTime 当前时间
      * @return 未过期：true，已过期：false
      */
-    public static boolean checkExp(JSONObject claims, long currTime) {
-        long exp = claims.getLong("exp");
+    public static boolean checkExp(JsonNode claims, long currTime) {
+        long exp = claims.get("exp").asLong();
         if (exp < currTime) {
             return false;
         }
@@ -80,7 +81,7 @@ public class JwtUtils {
      * @param claims jwt内容
      * @return 未过期：true，已过期：false
      */
-    public static boolean checkExp(JSONObject claims) {
+    public static boolean checkExp(JsonNode claims) {
         return checkExp(claims, System.currentTimeMillis());
     }
 }

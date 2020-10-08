@@ -150,7 +150,7 @@ public class AggregationServiceImpl implements IAggregationService {
                                     .fixedInterval(new DateHistogramInterval("90m"))
                                     .format(CommonConstant.DATETIME_FORMAT)
                                     //时区相差8小时
-                                    .timeZone(ZoneId.of("GMT+8"))
+                                    .timeZone(ZoneId.of(CommonConstant.TIME_ZONE_GMT8))
                                     .minDocCount(0L)
                                     .extendedBounds(new ExtendedBounds(
                                             curDateTime.minusDays(1).format(DateTimeFormatter.ofPattern(CommonConstant.DATETIME_FORMAT)),
@@ -176,7 +176,7 @@ public class AggregationServiceImpl implements IAggregationService {
                                     .calendarInterval(DateHistogramInterval.DAY)
                                     .format(CommonConstant.DATE_FORMAT)
                                     //时区相差8小时
-                                    .timeZone(ZoneId.of("GMT+8"))
+                                    .timeZone(ZoneId.of(CommonConstant.TIME_ZONE_GMT8))
                                     .minDocCount(0L)
                                     .extendedBounds(new ExtendedBounds(
                                             localDate.minusDays(6).format(DateTimeFormatter.ofPattern(CommonConstant.DATE_FORMAT)),

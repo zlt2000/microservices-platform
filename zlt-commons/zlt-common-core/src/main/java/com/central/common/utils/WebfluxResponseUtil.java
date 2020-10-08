@@ -1,6 +1,5 @@
 package com.central.common.utils;
 
-import com.alibaba.fastjson.JSONObject;
 import com.central.common.model.Result;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferFactory;
@@ -49,7 +48,7 @@ public class WebfluxResponseUtil {
         response.setStatusCode(HttpStatus.valueOf(httpStatus));
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
         DataBufferFactory dataBufferFactory = response.bufferFactory();
-        DataBuffer buffer = dataBufferFactory.wrap(JSONObject.toJSONString(result).getBytes(Charset.defaultCharset()));
+        DataBuffer buffer = dataBufferFactory.wrap(JsonUtil.toJSONString(result).getBytes(Charset.defaultCharset()));
         return response.writeWith(Mono.just(buffer)).doOnError((error) -> {
             DataBufferUtils.release(buffer);
         });
