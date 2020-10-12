@@ -1,6 +1,5 @@
 package com.central.common.utils;
 
-
 import com.central.common.constant.CommonConstant;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -85,7 +84,7 @@ public class JsonUtil {
     }
 
     /**
-     * 字符串转换为自定义对象
+     * 字符串转换为指定对象
      * @param json json字符串
      * @param cls 目标对象
      */
@@ -101,7 +100,26 @@ public class JsonUtil {
     }
 
     /**
-     * 字符串转换为自定义对象
+     * 字符串转换为指定对象，并增加泛型转义
+     * 例如：List<Integer> test = toObject(jsonStr, List.class, Integer.class);
+     * @param json json字符串
+     * @param parametrized 目标对象
+     * @param parameterClasses 泛型对象
+     */
+    public static <T> T toObject(String json, Class<?> parametrized, Class<?>... parameterClasses) {
+        if(StringUtils.isBlank(json) || parametrized == null){
+            return null;
+        }
+        try {
+            JavaType javaType = MAPPER.getTypeFactory().constructParametricType(parametrized, parameterClasses);
+            return MAPPER.readValue(json, javaType);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 字符串转换为指定对象
      * @param json json字符串
      * @param typeReference 目标对象类型
      */
@@ -146,7 +164,7 @@ public class JsonUtil {
     }
 
     /**
-     * 字符串转换为list对象
+     * json字符串转换为list对象
      * @param json json字符串
      */
     public static <T> List<T> toList(String json) {
@@ -161,7 +179,7 @@ public class JsonUtil {
     }
 
     /**
-     * json字符串转换为list
+     * json字符串转换为list对象，并指定元素类型
      * @param json json字符串
      * @param cls list的元素类型
      */
