@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.zlt</groupId>
         <artifactId>sso-demo</artifactId>
-        <version>4.1.0</version>
+        <version>4.2.0</version>
     </parent>
     <artifactId>web-sso</artifactId>
     <description>前后端分离单点登录demo</description>
