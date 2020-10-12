@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.zlt</groupId>
         <artifactId>zlt-gateway</artifactId>
-        <version>4.1.0</version>
+        <version>4.2.0</version>
     </parent>
     <artifactId>zuul-gateway</artifactId>
     <description>zuul网关</description>
