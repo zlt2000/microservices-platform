@@ -63,11 +63,6 @@ public class OauthTokenAspect {
                         .status(HttpStatus.OK)
                         .body(Result.succeed(body));
             }
-        } catch (Exception e) {
-            log.error("授权错误", e);
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body(Result.failed(e.getMessage()));
         } finally {
             TenantContextHolder.clear();
         }
