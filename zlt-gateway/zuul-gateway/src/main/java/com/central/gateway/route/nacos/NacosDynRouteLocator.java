@@ -3,9 +3,9 @@ package com.central.gateway.route.nacos;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.cloud.nacos.NacosConfigProperties;
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.nacos.api.config.listener.Listener;
 import com.alibaba.nacos.api.exception.NacosException;
+import com.central.common.utils.JsonUtil;
 import com.central.gateway.config.ZuulRouteEntity;
 import com.central.gateway.route.AbstractDynRouteLocator;
 import lombok.Setter;
@@ -106,7 +106,7 @@ public class NacosDynRouteLocator extends AbstractDynRouteLocator {
 
     public List<ZuulRouteEntity> getListByStr(String content) {
         if (StrUtil.isNotEmpty(content)) {
-            return JSONObject.parseArray(content, ZuulRouteEntity.class);
+            return JsonUtil.toList(content, ZuulRouteEntity.class);
         }
         return new ArrayList<>(0);
     }

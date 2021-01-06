@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Set;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.alibaba.fastjson.JSONObject;
 import com.central.common.annotation.LoginUser;
 import com.central.common.constant.CommonConstant;
 import com.central.common.model.*;
@@ -18,6 +17,7 @@ import com.central.search.client.service.IQueryService;
 import com.central.search.model.LogicDelDto;
 import com.central.search.model.SearchDto;
 import com.central.user.model.SysUserExcel;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -280,7 +280,7 @@ public class SysUserController {
             @ApiImplicitParam(name = "queryStr", value = "搜索关键字", dataType = "String")
     })
     @GetMapping("/users/search")
-    public PageResult<JSONObject> search(SearchDto searchDto) {
+    public PageResult<JsonNode> search(SearchDto searchDto) {
         searchDto.setIsHighlighter(true);
         searchDto.setSortCol("createTime");
         return queryService.strQuery("sys_user", searchDto, SEARCH_LOGIC_DEL_DTO);

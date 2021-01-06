@@ -1,10 +1,10 @@
 package com.central.search.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.central.common.model.*;
 
 import com.central.search.model.SearchDto;
 import com.central.search.service.ISearchService;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.web.bind.annotation.*;
 
 import io.swagger.annotations.Api;
@@ -34,7 +34,7 @@ public class SearchController {
      * @param searchDto 搜索Dto
      */
     @PostMapping("/{indexName}")
-    public PageResult<JSONObject> strQuery(@PathVariable String indexName, @RequestBody(required = false) SearchDto searchDto) throws IOException {
+    public PageResult<JsonNode> strQuery(@PathVariable String indexName, @RequestBody(required = false) SearchDto searchDto) throws IOException {
         if (searchDto == null) {
             searchDto = new SearchDto();
         }

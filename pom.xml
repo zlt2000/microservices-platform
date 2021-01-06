@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.zlt</groupId>
     <artifactId>central-platform</artifactId>
-    <version>4.1.0</version>
+    <version>4.2.0</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -13,11 +13,10 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>8</java.version>
-        <spring-cloud-alibaba-dependencies.version>2.2.1.RELEASE</spring-cloud-alibaba-dependencies.version>
-        <spring-boot-dependencies.version>2.2.9.RELEASE</spring-boot-dependencies.version>
-        <spring-cloud-dependencies.version>Hoxton.SR7</spring-cloud-dependencies.version>
+        <spring-cloud-alibaba-dependencies.version>2.2.3.RELEASE</spring-cloud-alibaba-dependencies.version>
+        <spring-boot-dependencies.version>2.2.10.RELEASE</spring-boot-dependencies.version>
+        <spring-cloud-dependencies.version>Hoxton.SR8</spring-cloud-dependencies.version>
         <commons-collections4.version>4.4</commons-collections4.version>
-        <fastjson.version>1.2.70</fastjson.version>
         <swagger.version>2.9.2</swagger.version>
         <swagger.ui.version>1.8.7</swagger.ui.version>
         <swagger.mg.ui.version>1.0.6</swagger.mg.ui.version>
@@ -31,7 +30,7 @@
         <redisson-starter.version>3.11.5</redisson-starter.version>
         <easyCaptcha.version>1.6.2</easyCaptcha.version>
         <hutool.version>5.1.4</hutool.version>
-        <mybatis-plus-boot-starter.version>3.3.1</mybatis-plus-boot-starter.version>
+        <mybatis-plus-boot-starter.version>3.4.0</mybatis-plus-boot-starter.version>
         <aliyun-sdk-oss>3.8.1</aliyun-sdk-oss>
         <qiniu-java-sdk>7.2.28</qiniu-java-sdk>
         <easypoi.version>4.1.3</easypoi.version>
@@ -48,9 +47,9 @@
         <spring-social-security.version>1.1.6.RELEASE</spring-social-security.version>
         <commons-io.version>2.6</commons-io.version>
         <servlet-api.version>4.0.1</servlet-api.version>
-        <spring-data-elasticsearch.version>3.2.7.RELEASE</spring-data-elasticsearch.version>
+        <spring-data-elasticsearch.version>3.2.10.RELEASE</spring-data-elasticsearch.version>
         <elasticsearch.version>7.8.0</elasticsearch.version>
-        <knife4j.version>2.0.4</knife4j.version>
+        <knife4j.version>2.0.5</knife4j.version>
         <docker-maven-plugin.version>1.2.2</docker-maven-plugin.version>
         <sonar.exclusions>zlt-job/**/*, zlt-register/**/*, zlt-web/**/*</sonar.exclusions>
         <docker.baseImage>openjdk:8-jre-alpine</docker.baseImage>
@@ -74,11 +73,6 @@
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
             <version>${commons-beanutils.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>${fastjson.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -172,6 +166,11 @@
                 <artifactId>mybatis-plus-extension</artifactId>
                 <version>${mybatis-plus-boot-starter.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus</artifactId>
+                <version>${mybatis-plus-boot-starter.version}</version>
+            </dependency>
             <!-- 加入spring security spring security oauth2的处理 -->
             <dependency>
                 <groupId>org.springframework.security.oauth</groupId>
@@ -258,11 +257,6 @@
                 <groupId>cn.afterturn</groupId>
                 <artifactId>easypoi-base</artifactId>
                 <version>${easypoi.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus</artifactId>
-                <version>${mybatis-plus-boot-starter.version}</version>
             </dependency>
             <dependency>
                 <groupId>de.codecentric</groupId>

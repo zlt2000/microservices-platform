@@ -1,8 +1,8 @@
 package com.central.oauth.handler;
 
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSON;
 import com.central.common.model.Result;
+import com.central.common.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -36,9 +36,9 @@ public class OauthLogoutSuccessHandler implements LogoutSuccessHandler {
 		} else {
 			response.setStatus(HttpStatus.OK.value());
 			response.setCharacterEncoding("UTF-8");
-			response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+			response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 			PrintWriter writer = response.getWriter();
-			String jsonStr = JSON.toJSONString(Result.succeed("登出成功"));
+			String jsonStr = JsonUtil.toJSONString(Result.succeed("登出成功"));
 			writer.write(jsonStr);
 			writer.flush();
 		}

@@ -42,7 +42,7 @@ public class TraceFilter extends OncePerRequestFilter {
 
             filterChain.doFilter(request, response);
         } finally {
-            MDC.clear();
+            MDC.remove(CommonConstant.LOG_TRACE_ID);
         }
     }
 }

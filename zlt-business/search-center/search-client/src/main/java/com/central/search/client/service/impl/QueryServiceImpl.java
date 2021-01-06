@@ -1,13 +1,13 @@
 package com.central.search.client.service.impl;
 
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSONObject;
 import com.central.common.model.PageResult;
 import com.central.search.client.feign.AggregationService;
 import com.central.search.client.feign.SearchService;
 import com.central.search.client.service.IQueryService;
 import com.central.search.model.LogicDelDto;
 import com.central.search.model.SearchDto;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import javax.annotation.Resource;
 import java.util.Map;
@@ -26,12 +26,12 @@ public class QueryServiceImpl implements IQueryService {
     private AggregationService aggregationService;
 
     @Override
-    public PageResult<JSONObject> strQuery(String indexName, SearchDto searchDto) {
+    public PageResult<JsonNode> strQuery(String indexName, SearchDto searchDto) {
         return strQuery(indexName, searchDto, null);
     }
 
     @Override
-    public PageResult<JSONObject> strQuery(String indexName, SearchDto searchDto, LogicDelDto logicDelDto) {
+    public PageResult<JsonNode> strQuery(String indexName, SearchDto searchDto, LogicDelDto logicDelDto) {
         setLogicDelQueryStr(searchDto, logicDelDto);
         return searchService.strQuery(indexName, searchDto);
     }

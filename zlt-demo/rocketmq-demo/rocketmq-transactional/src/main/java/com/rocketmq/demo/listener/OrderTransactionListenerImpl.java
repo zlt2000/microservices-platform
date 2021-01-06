@@ -1,6 +1,6 @@
 package com.rocketmq.demo.listener;
 
-import com.alibaba.fastjson.JSON;
+import com.central.common.utils.JsonUtil;
 import com.rocketmq.demo.model.Order;
 import com.rocketmq.demo.service.IOrderService;
 import org.apache.rocketmq.spring.annotation.RocketMQTransactionListener;
@@ -24,7 +24,7 @@ public class OrderTransactionListenerImpl implements RocketMQLocalTransactionLis
     public RocketMQLocalTransactionState executeLocalTransaction(Message message, Object arg) {
         //插入订单数据
         String orderJson =  new String(((byte[])message.getPayload()));
-        Order order = JSON.parseObject(orderJson, Order.class);
+        Order order = JsonUtil.toObject(orderJson, Order.class);
         orderService.save(order);
 
         String produceError = (String)message.getHeaders().get("produceError");
