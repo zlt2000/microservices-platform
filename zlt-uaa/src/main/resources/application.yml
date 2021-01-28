@@ -33,3 +33,6 @@ zlt:
     enable: true
     ignoreTables:
       - oauth_client_details
+  #是否登录同应用同账号互踢
+  uaa:
+    isSingleLogin: false

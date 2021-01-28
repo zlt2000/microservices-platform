@@ -4,7 +4,9 @@ import com.central.oauth.granter.MobilePwdGranter;
 import com.central.oauth.granter.OpenIdGranter;
 import com.central.oauth.granter.PwdImgCodeGranter;
 import com.central.oauth.service.IValidateCodeService;
+import com.central.oauth.service.impl.CustomTokenServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -66,6 +68,12 @@ public class TokenGranterConfig {
     private AuthorizationServerTokenServices tokenServices;
 
     private TokenGranter tokenGranter;
+
+    /**
+     * 是否登录同应用同账号互踢
+     */
+    @Value("${zlt.uaa.isSingleLogin:false}")
+    private boolean isSingleLogin;
 
     /**
      * 授权模式
@@ -149,7 +157,7 @@ public class TokenGranterConfig {
     }
 
     private DefaultTokenServices createDefaultTokenServices() {
-        DefaultTokenServices tokenServices = new DefaultTokenServices();
+        DefaultTokenServices tokenServices = new CustomTokenServices(isSingleLogin);
         tokenServices.setTokenStore(tokenStore);
         tokenServices.setSupportRefreshToken(true);
         tokenServices.setReuseRefreshToken(reuseRefreshToken);
