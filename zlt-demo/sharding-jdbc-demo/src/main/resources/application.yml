@@ -6,10 +6,12 @@ spring:
     active: sharding-databases
   application:
     name: sharding-jdbc-demo
+  main:
+    allow-bean-definition-overriding: true
 
 zlt:
   datasource:
-    ip: 192.168.28.131
+    ip: 192.168.28.130
     username: root
     password: 1q2w3e4r
 
