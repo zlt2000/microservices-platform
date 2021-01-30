@@ -1,0 +1,19 @@
+dubbo:
+  scan:
+    base-packages: org.zlt.service
+  protocols:
+    dubbo:
+      name: dubbo
+      port: -1
+  registry:
+    address: spring-cloud://localhost
+  consumer:
+    timeout: 5000
+    check: false
+    retries: 0
+  cloud:
+    subscribed-services:
+
+zlt:
+  trace:
+    enable: true

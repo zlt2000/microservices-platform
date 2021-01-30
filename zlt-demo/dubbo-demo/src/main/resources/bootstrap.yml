@@ -1,0 +1,11 @@
+server:
+  port: 8091
+
+spring:
+  application:
+    name: zlt-web-dubbo
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      server-addr: 192.168.28.130:8848
