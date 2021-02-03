@@ -1,7 +1,6 @@
 package com.central.oauth.granter;
 
 import com.central.oauth2.common.token.MobileAuthenticationToken;
-import com.central.oauth2.common.token.OpenIdAuthenticationToken;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
