@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.zlt</groupId>
     <artifactId>central-platform</artifactId>
-    <version>4.2.0</version>
+    <version>4.3.0</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -13,7 +13,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>8</java.version>
-        <spring-cloud-alibaba-dependencies.version>2.2.5.RC1</spring-cloud-alibaba-dependencies.version>
+        <spring-cloud-alibaba-dependencies.version>2.2.5.RELEASE</spring-cloud-alibaba-dependencies.version>
         <spring-boot-dependencies.version>2.3.8.RELEASE</spring-boot-dependencies.version>
         <spring-cloud-dependencies.version>Hoxton.SR9</spring-cloud-dependencies.version>
         <commons-collections4.version>4.4</commons-collections4.version>
