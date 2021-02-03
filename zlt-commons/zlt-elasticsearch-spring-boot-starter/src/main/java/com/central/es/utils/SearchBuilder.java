@@ -22,8 +22,7 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 import org.elasticsearch.search.sort.SortOrder;
-import org.springframework.data.elasticsearch.ElasticsearchException;
-import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
+import org.springframework.data.elasticsearch.UncategorizedElasticsearchException;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -65,26 +64,24 @@ public class SearchBuilder {
 
     /**
      * 生成SearchBuilder实例
-     * @param elasticsearchTemplate
+     * @param client
      * @param indexName
      */
-    public static SearchBuilder builder(ElasticsearchRestTemplate elasticsearchTemplate, String indexName) {
+    public static SearchBuilder builder(RestHighLevelClient client, String indexName) {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         SearchRequest searchRequest = new SearchRequest(indexName);
         searchRequest.source(searchSourceBuilder);
-        RestHighLevelClient client = elasticsearchTemplate.getClient();
         return new SearchBuilder(searchRequest, searchSourceBuilder, client);
     }
 
     /**
      * 生成SearchBuilder实例
-     * @param elasticsearchTemplate
+     * @param client
      */
-    public static SearchBuilder builder(ElasticsearchRestTemplate elasticsearchTemplate) {
+    public static SearchBuilder builder(RestHighLevelClient client) {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         SearchRequest searchRequest = new SearchRequest();
         searchRequest.source(searchSourceBuilder);
-        RestHighLevelClient client = elasticsearchTemplate.getClient();
         return new SearchBuilder(searchRequest, searchSourceBuilder, client);
     }
 
@@ -266,7 +263,7 @@ public class SearchBuilder {
                     }
                 }
             } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-                throw new ElasticsearchException("failed to set highlighted value for field: " + field.getName()
+                throw new UncategorizedElasticsearchException("failed to set highlighted value for field: " + field.getName()
                         + " with value: " + Arrays.toString(field.getFragments()), e);
             }
         }
