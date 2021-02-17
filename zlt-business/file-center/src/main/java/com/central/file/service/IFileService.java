@@ -1,5 +1,6 @@
 package com.central.file.service;
 
+import java.io.OutputStream;
 import java.util.Map;
 
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -19,4 +20,6 @@ public interface IFileService extends IService<FileInfo> {
 	PageResult<FileInfo> findList(Map<String, Object> params);
 
 	void delete(String id);
+
+	void out(String id, OutputStream os);
 }
