@@ -15,16 +15,14 @@ mybatis-plus:
 
 zlt:
   file-server:
-    type: fastdfs
-    fdfs:
-      web-url: ${zlt.fdfs.web-url}
-    #oss配置
-    #oss:
-    #  access-key: tpi8mObnfzZi4ggBX8Bw7zydjoTQ0WeML3RkPKsX
-    #  accessKeySecret: HZBXmSyUTy-haYp0KbBTtsil-GoKjVS2kDKT8Yow
-    #  endpoint: http://pkqtmn0p1.bkt.clouddn.com
-    #  bucketName: public-oss
-    #  domain:
+    type: s3
+    #fdfs:
+    #  web-url: ${zlt.fdfs.web-url}
+    s3:
+      access-key: ${zlt.s3.access-key}
+      accessKeySecret: ${zlt.s3.accessKeySecret}
+      endpoint: ${zlt.s3.endpoint}
+      bucketName: ${zlt.s3.bucketName}
   swagger:
     enabled: true
     title: 文件中心
@@ -36,7 +34,7 @@ zlt:
     enable: true
 
 #fastDFS配置
-fdfs:
-  soTimeout: 1500
-  connectTimeout: 600
-  trackerList: ${zlt.fdfs.trackerList}
+#fdfs:
+#  soTimeout: 1500
+#  connectTimeout: 600
+#  trackerList: ${zlt.fdfs.trackerList}

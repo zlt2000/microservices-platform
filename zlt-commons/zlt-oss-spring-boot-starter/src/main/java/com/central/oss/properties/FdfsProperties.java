@@ -1,10 +1,13 @@
-package com.central.file.properties;
+package com.central.oss.properties;
 
 import lombok.Getter;
 import lombok.Setter;
 
 /**
+ * fastdfs配置
+ *
  * @author zlt
+ * @date 2021/2/11
  * <p>
  * Blog: https://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
