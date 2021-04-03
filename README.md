@@ -81,6 +81,9 @@ central-platform -- 父项目，公共依赖
 │  │  ├─zlt-ribbon-spring-boot-starter -- 封装Ribbon和Feign的通用操作逻辑
 │  │  ├─zlt-sentinel-spring-boot-starter -- 封装Sentinel的通用操作逻辑
 │  │  ├─zlt-swagger2-spring-boot-starter -- 封装Swagger通用操作逻辑
+│  │  ├─zlt-elasticsearch-spring-boot-starter -- 封装Elasticsearch通用操作逻辑
+│  │  ├─zlt-oss-spring-boot-starter -- 封装对象存储通用操作逻辑
+│  │  ├─zlt-zookeeper-spring-boot-starter -- 封装Zookeeper通用操作逻辑
 │  ├─zlt-config -- 配置中心
 │  ├─zlt-doc -- 项目文档
 │  ├─zlt-gateway -- api网关一级工程
