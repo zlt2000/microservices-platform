@@ -102,7 +102,7 @@ public interface CommonConstant {
 
     String DEF_USER_PASSWORD = "123456";
 
-    String LOCK_KEY_PREFIX = "LOCK_KEY:";
+    String LOCK_KEY_PREFIX = "LOCK_KEY";
 
     /**
      * 租户id参数
@@ -126,4 +126,9 @@ public interface CommonConstant {
      * 注册中心元数据 版本号
      */
     String METADATA_VERSION = "version";
+
+    /**
+     * 文件分隔符
+     */
+    String PATH_SPLIT = "/";
 }
