@@ -8,6 +8,7 @@ import com.central.common.utils.JsonUtil;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.util.EntityUtils;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.client.indices.CreateIndexResponse;
 import org.elasticsearch.client.indices.GetIndexRequest;
@@ -21,7 +22,6 @@ import org.elasticsearch.cluster.metadata.AliasMetadata;
 import org.elasticsearch.cluster.metadata.MappingMetadata;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.xcontent.XContentType;
-import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -40,10 +40,10 @@ import java.util.*;
 public class IndexServiceImpl implements IIndexService {
     private ObjectMapper mapper = new ObjectMapper();
 
-    private final ElasticsearchRestTemplate elasticsearchRestTemplate;
+    private final RestHighLevelClient client;
 
-    public IndexServiceImpl(ElasticsearchRestTemplate elasticsearchRestTemplate) {
-        this.elasticsearchRestTemplate = elasticsearchRestTemplate;
+    public IndexServiceImpl(RestHighLevelClient client) {
+        this.client = client;
     }
 
     @Override
@@ -57,7 +57,7 @@ public class IndexServiceImpl implements IIndexService {
             //mappings
             request.mapping(indexDto.getMappingsSource(), XContentType.JSON);
         }
-        CreateIndexResponse response = elasticsearchRestTemplate.getClient()
+        CreateIndexResponse response = client
                 .indices()
                 .create(request, RequestOptions.DEFAULT);
         return response.isAcknowledged();
@@ -66,7 +66,7 @@ public class IndexServiceImpl implements IIndexService {
     @Override
     public boolean delete(String indexName) throws IOException {
         DeleteIndexRequest request = new DeleteIndexRequest(indexName);
-        AcknowledgedResponse response = elasticsearchRestTemplate.getClient().indices().delete(request, RequestOptions.DEFAULT);
+        AcknowledgedResponse response = client.indices().delete(request, RequestOptions.DEFAULT);
         return response.isAcknowledged();
     }
 
@@ -75,7 +75,7 @@ public class IndexServiceImpl implements IIndexService {
         if (StrUtil.isNotEmpty(queryStr)) {
             indices = queryStr;
         }
-        Response response = elasticsearchRestTemplate.getClient().getLowLevelClient()
+        Response response = client.getLowLevelClient()
                 .performRequest(new Request(
                         "GET",
                         "/_cat/indices?h=health,status,index,docsCount,docsDeleted,storeSize&s=cds:desc&format=json&index="+StrUtil.nullToEmpty(indices)
@@ -93,7 +93,7 @@ public class IndexServiceImpl implements IIndexService {
     @Override
     public Map<String, Object> show(String indexName) throws IOException {
         GetIndexRequest request = new GetIndexRequest(indexName);
-        GetIndexResponse getIndexResponse = elasticsearchRestTemplate.getClient()
+        GetIndexResponse getIndexResponse = client
                 .indices().get(request, RequestOptions.DEFAULT);
         MappingMetadata mappingMetadata = getIndexResponse.getMappings().get(indexName);
         Map<String, Object> mappOpenMap = mappingMetadata.getSourceAsMap();

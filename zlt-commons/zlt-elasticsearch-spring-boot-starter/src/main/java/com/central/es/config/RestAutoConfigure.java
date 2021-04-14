@@ -8,8 +8,8 @@ import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.elasticsearch.client.RestClientBuilder;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.elasticsearch.rest.RestClientBuilderCustomizer;
-import org.springframework.boot.autoconfigure.elasticsearch.rest.RestClientProperties;
+import org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchRestClientProperties;
+import org.springframework.boot.autoconfigure.elasticsearch.RestClientBuilderCustomizer;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.context.properties.PropertyMapper;
 import org.springframework.context.annotation.Bean;
@@ -28,7 +28,7 @@ import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 public class RestAutoConfigure {
     @Bean
     public RestClientBuilderCustomizer restClientBuilderCustomizer(RestClientPoolProperties poolProperties
-            , RestClientProperties restProperties) {
+            , ElasticsearchRestClientProperties restProperties) {
         return (builder) -> {
             setRequestConfig(builder, poolProperties);
 
@@ -51,7 +51,7 @@ public class RestAutoConfigure {
     /**
      * 异步httpclient连接数配置
      */
-    private void setHttpClientConfig(RestClientBuilder builder, RestClientPoolProperties poolProperties, RestClientProperties restProperties){
+    private void setHttpClientConfig(RestClientBuilder builder, RestClientPoolProperties poolProperties, ElasticsearchRestClientProperties restProperties){
         builder.setHttpClientConfigCallback(httpClientBuilder -> {
             httpClientBuilder.setMaxConnTotal(poolProperties.getMaxConnectNum())
                     .setMaxConnPerRoute(poolProperties.getMaxConnectPerRoute());

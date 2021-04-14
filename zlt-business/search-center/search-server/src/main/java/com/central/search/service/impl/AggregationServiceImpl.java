@@ -16,7 +16,6 @@ import org.elasticsearch.search.aggregations.bucket.range.Range;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.aggregations.metrics.ParsedCardinality;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -41,10 +40,10 @@ import java.util.Map;
  */
 @Service
 public class AggregationServiceImpl implements IAggregationService {
-    private final ElasticsearchRestTemplate elasticsearchRestTemplate;
+    private final RestHighLevelClient client;
 
-    public AggregationServiceImpl(ElasticsearchRestTemplate elasticsearchRestTemplate) {
-        this.elasticsearchRestTemplate = elasticsearchRestTemplate;
+    public AggregationServiceImpl(RestHighLevelClient client) {
+        this.client = client;
     }
 
     /**
@@ -152,7 +151,7 @@ public class AggregationServiceImpl implements IAggregationService {
                                     //时区相差8小时
                                     .timeZone(ZoneId.of(CommonConstant.TIME_ZONE_GMT8))
                                     .minDocCount(0L)
-                                    .extendedBounds(new ExtendedBounds(
+                                    .extendedBounds(new LongBounds(
                                             curDateTime.minusDays(1).format(DateTimeFormatter.ofPattern(CommonConstant.DATETIME_FORMAT)),
                                             curDateTime.format(DateTimeFormatter.ofPattern(CommonConstant.DATETIME_FORMAT))
                                     ))
@@ -178,7 +177,7 @@ public class AggregationServiceImpl implements IAggregationService {
                                     //时区相差8小时
                                     .timeZone(ZoneId.of(CommonConstant.TIME_ZONE_GMT8))
                                     .minDocCount(0L)
-                                    .extendedBounds(new ExtendedBounds(
+                                    .extendedBounds(new LongBounds(
                                             localDate.minusDays(6).format(DateTimeFormatter.ofPattern(CommonConstant.DATE_FORMAT)),
                                             localDate.format(DateTimeFormatter.ofPattern(CommonConstant.DATE_FORMAT))
                                     ))
@@ -219,7 +218,6 @@ public class AggregationServiceImpl implements IAggregationService {
                     )
         ).size(0);
 
-        RestHighLevelClient client = elasticsearchRestTemplate.getClient();
         SearchResponse response = client.search(searchRequest, RequestOptions.DEFAULT);
         Aggregations aggregations = response.getAggregations();
         Map<String, Object> result = new HashMap<>(15);

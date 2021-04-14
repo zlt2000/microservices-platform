@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.zlt</groupId>
         <artifactId>search-center</artifactId>
-        <version>4.2.0</version>
+        <version>4.4</version>
     </parent>
     <artifactId>search-server</artifactId>
     <description>搜索中心服务端</description>
@@ -59,6 +59,11 @@
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
         </dependency>
     </dependencies>
 

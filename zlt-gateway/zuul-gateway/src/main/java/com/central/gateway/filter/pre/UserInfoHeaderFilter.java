@@ -45,7 +45,7 @@ public class UserInfoHeaderFilter extends ZuulFilter {
             RequestContext ctx = RequestContext.getCurrentContext();
             //客户端模式只返回一个clientId
             if (principal instanceof SysUser) {
-                SysUser user = (SysUser)authentication.getPrincipal();
+                SysUser user = (SysUser)principal;
                 ctx.addZuulRequestHeader(SecurityConstants.USER_ID_HEADER, String.valueOf(user.getId()));
                 ctx.addZuulRequestHeader(SecurityConstants.USER_HEADER, user.getUsername());
             }

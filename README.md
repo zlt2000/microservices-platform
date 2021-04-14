@@ -1,9 +1,9 @@
 #  zlt-microservices-platform
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Spring%20Boot-2.2.10.RELEASE-blue" alt="Downloads"/>
-  <img src="https://img.shields.io/badge/Spring%20Cloud-Hoxton.SR8-blue" alt="Downloads"/>
-  <img src="https://img.shields.io/badge/Spring%20Cloud%20Alibaba-2.2.3.RELEASE-blue" alt="Downloads"/>
+  <img src="https://img.shields.io/badge/Spring%20Boot-2.3.8.RELEASE-blue" alt="Downloads"/>
+  <img src="https://img.shields.io/badge/Spring%20Cloud-Hoxton.SR9-blue" alt="Downloads"/>
+  <img src="https://img.shields.io/badge/Spring%20Cloud%20Alibaba-2.2.5.RELEASE-blue" alt="Downloads"/>
   <img src="https://img.shields.io/badge/Elasticsearch-7.x-brightgreen" alt="Downloads"/>
   <a target="_blank" href='https://gitee.com/zlt2000/microservices-platform'>
     <img src='https://gitee.com/zlt2000/microservices-platform/badge/star.svg' alt='star'/>
@@ -81,6 +81,9 @@ central-platform -- 父项目，公共依赖
 │  │  ├─zlt-ribbon-spring-boot-starter -- 封装Ribbon和Feign的通用操作逻辑
 │  │  ├─zlt-sentinel-spring-boot-starter -- 封装Sentinel的通用操作逻辑
 │  │  ├─zlt-swagger2-spring-boot-starter -- 封装Swagger通用操作逻辑
+│  │  ├─zlt-elasticsearch-spring-boot-starter -- 封装Elasticsearch通用操作逻辑
+│  │  ├─zlt-oss-spring-boot-starter -- 封装对象存储通用操作逻辑
+│  │  ├─zlt-zookeeper-spring-boot-starter -- 封装Zookeeper通用操作逻辑
 │  ├─zlt-config -- 配置中心
 │  ├─zlt-doc -- 项目文档
 │  ├─zlt-gateway -- api网关一级工程

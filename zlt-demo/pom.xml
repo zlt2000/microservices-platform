@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.zlt</groupId>
         <artifactId>central-platform</artifactId>
-        <version>4.2.0</version>
+        <version>4.4</version>
     </parent>
     <artifactId>zlt-demo</artifactId>
     <packaging>pom</packaging>
@@ -20,5 +20,7 @@
         <module>seata-demo</module>
         <!-- 单点登录demo -->
         <module>sso-demo</module>
+        <!-- dubbo集成demo -->
+        <module>dubbo-demo</module>
     </modules>
 </project>
