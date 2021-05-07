@@ -1,20 +1,22 @@
 package com.central.common.config;
 
+import com.central.common.utils.PwdEncoderUtil;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-/** 
-* @author zlt
-* 密码工具类
-*/
+/**
+ * 密码加密配置类
+ *
+ * @author zlt
+ * <p>
+ * Blog: https://zlt2000.gitee.io
+ * Github: https://github.com/zlt2000
+ */
 public class DefaultPasswordConfig {
-	/**
-	 * 装配BCryptPasswordEncoder用户密码的匹配
-	 * @return
-	 */
 	@Bean
-	public PasswordEncoder passwordEncoder()	{
-		return new BCryptPasswordEncoder();
+	@ConditionalOnMissingBean
+	public PasswordEncoder passwordEncoder() {
+		return PwdEncoderUtil.getDelegatingPasswordEncoder("bcrypt");
 	}
 }
