@@ -32,4 +32,13 @@ public class Client extends SuperEntity {
    private Integer refreshTokenValiditySeconds = 28800;
    private String additionalInformation = "{}";
    private String autoapprove = "true";
+   /**
+    * 是否支持id_token
+    */
+   private Boolean supportIdToken = true;
+   /**
+    * id_token有效时间(s)
+    */
+   @TableField(value = "id_token_validity")
+   private Integer idTokenValiditySeconds = 60;
 }

@@ -1,22 +1,38 @@
 package com.central.oauth.config;
 
+import com.central.common.constant.SecurityConstants;
+import com.central.common.model.SysUser;
+import com.central.oauth.model.Client;
+import com.central.oauth.service.IClientService;
 import com.central.oauth.service.impl.RedisClientDetailsService;
+import com.central.oauth.utils.OidcIdTokenBuilder;
+import com.central.oauth2.common.constants.IdTokenClaimNames;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.cloud.bootstrap.encrypt.KeyProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.TokenGranter;
 import org.springframework.security.oauth2.provider.code.RandomValueAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.error.WebResponseExceptionTranslator;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * OAuth2 授权服务器配置
@@ -55,6 +71,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private TokenGranter tokenGranter;
 
+    @Value("${zlt.oauth2.token.store.type:'redis'}")
+    private String tokenStoreType;
+
     /**
      * 配置身份认证器，配置认证方式，TokenStore，TokenGranter，OAuth2RequestFactory
      * @param endpoints
@@ -92,5 +111,60 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .checkTokenAccess("permitAll()")
                 //让/oauth/token支持client_id以及client_secret作登录认证
                 .allowFormAuthenticationForClients();
+    }
+
+    @Bean
+    @Order(1)
+    public TokenEnhancer tokenEnhancer(@Autowired(required = false) KeyProperties keyProperties
+                , IClientService clientService) {
+        return (accessToken, authentication) -> {
+            Set<String> responseTypes = authentication.getOAuth2Request().getResponseTypes();
+            if (responseTypes.contains(SecurityConstants.ID_TOKEN)
+                    || "authJwt".equals(tokenStoreType)) {
+                Map<String, Object> additionalInfo = new HashMap<>(2);
+                Object principal = authentication.getPrincipal();
+                //增加id参数
+                if (principal instanceof SysUser) {
+                    SysUser user = (SysUser)principal;
+                    if (responseTypes.contains(SecurityConstants.ID_TOKEN)) {
+                        //生成id_token
+                        setIdToken(additionalInfo, authentication, keyProperties, clientService, user);
+                    }
+                    if ("authJwt".equals(tokenStoreType)) {
+                        additionalInfo.put("id", user.getId());
+                    }
+                }
+                ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
+            }
+            return accessToken;
+        };
+    }
+
+    /**
+     * 生成id_token
+     * @param additionalInfo 存储token附加信息对象
+     * @param authentication 授权对象
+     * @param keyProperties 密钥
+     * @param clientService 应用service
+     */
+    private void setIdToken(Map<String, Object> additionalInfo, OAuth2Authentication authentication
+            , KeyProperties keyProperties, IClientService clientService, SysUser user) {
+        String clientId = authentication.getOAuth2Request().getClientId();
+        Client client = clientService.loadClientByClientId(clientId);
+        if (client.getSupportIdToken()) {
+            String nonce = authentication.getOAuth2Request().getRequestParameters().get(IdTokenClaimNames.NONCE);
+            long now = System.currentTimeMillis();
+            long expiresAt = System.currentTimeMillis() + client.getIdTokenValiditySeconds() * 1000;
+            String idToken = OidcIdTokenBuilder.builder(keyProperties)
+                    .issuer(SecurityConstants.ISS)
+                    .issuedAt(now)
+                    .expiresAt(expiresAt)
+                    .subject(String.valueOf(user.getId()))
+                    .audience(clientId)
+                    .nonce(nonce)
+                    .build();
+
+            additionalInfo.put(SecurityConstants.ID_TOKEN, idToken);
+        }
     }
 }

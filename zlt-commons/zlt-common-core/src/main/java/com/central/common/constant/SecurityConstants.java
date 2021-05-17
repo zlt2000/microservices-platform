@@ -158,4 +158,13 @@ public interface SecurityConstants {
      * rsa公钥
      */
     String RSA_PUBLIC_KEY = "pubkey.txt";
+    /**
+     * 获取id_token的response_type
+     */
+    String ID_TOKEN = "id_token";
+
+    /**
+     * 令牌颁发者
+     */
+    String ISS = "http://zlt2000.cn";
 }
