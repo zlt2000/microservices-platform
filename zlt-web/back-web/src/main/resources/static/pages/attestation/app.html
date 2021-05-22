@@ -86,6 +86,19 @@
                 <input name="refreshTokenValiditySeconds" lay-verify="number" type="text" class="layui-input" maxlength="20" value="28800"/>
             </div>
         </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">支持ID令牌</label>
+            <div class="layui-input-block">
+                <input type="radio" name="supportIdToken" value="true" title="是" checked/>
+                <input type="radio" name="supportIdToken" value="false" title="否"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">ID时效(s)</label>
+            <div class="layui-input-block">
+                <input name="idTokenValiditySeconds" lay-verify="number" type="text" class="layui-input" maxlength="20" value="60"/>
+            </div>
+        </div>
         <div class="layui-form-item model-form-footer">
             <button class="layui-btn layui-btn-primary" ew-event="closeDialog" type="button">取消</button>
             <button class="layui-btn" lay-filter="app-form-submit" lay-submit>保存</button>
@@ -117,10 +130,14 @@
                 {field: 'webServerRedirectUri', width:250,sort: true, title: '回调地址'},
                 {field: 'authorizedGrantTypes',width:250, sort: true, title: 'oauth授权方式'},
                 {width:110, sort: true, title: '自动审批', templet:function (d) {
-                    return d.autoapprove=='true'?"是":"否"
+                    return d.autoapprove == 'true' ? "是" : "否"
                 }},
                 {field: 'accessTokenValiditySeconds',width:130, sort: true, title: '令牌时效(s)'},
                 {field: 'refreshTokenValiditySeconds',width:130, sort: true, title: '刷新时效(s)'},
+                {width:120, sort: true, title: '支持ID令牌', templet:function (d) {
+                    return d.supportIdToken ? "是" : "否"
+                }},
+                {field: 'idTokenValiditySeconds',width:130, sort: true, title: 'ID时效(s)'},
                 {fixed: 'right', align: 'center',width:150, toolbar: '#app-table-bar', title: '操作'}
             ]]
         });
@@ -167,8 +184,8 @@
             layer.open({
                 type: 1,
                 title: data ? '修改应用' : '添加应用',
-                area: '450px',
-                offset: '80px',
+                area: '750px',
+                offset: '30px',
                 content: $('#app-model').html(),
                 success: function () {
                     $('#app-form')[0].reset();
