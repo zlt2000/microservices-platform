@@ -1,5 +1,6 @@
 package com.central.oauth.service.impl;
 
+import com.central.common.constant.SecurityConstants;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.common.*;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -9,6 +10,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -55,6 +57,8 @@ public class CustomTokenServices extends DefaultTokenServices {
                 tokenStore.removeAccessToken(existingAccessToken);
             }
             else {
+                // oidc每次授权都刷新id_token
+                existingAccessToken = refreshIdToken(existingAccessToken, authentication);
                 // Re-store the access token in case the authentication has changed
                 tokenStore.storeAccessToken(existingAccessToken, authentication);
                 return existingAccessToken;
@@ -87,6 +91,19 @@ public class CustomTokenServices extends DefaultTokenServices {
         }
         return accessToken;
 
+    }
+
+    /**
+     * oidc每次授权都刷新id_token
+     * @param token 已存在的token
+     * @param authentication 认证信息
+     */
+    private OAuth2AccessToken refreshIdToken(OAuth2AccessToken token, OAuth2Authentication authentication) {
+        Set<String> responseTypes = authentication.getOAuth2Request().getResponseTypes();
+        if (accessTokenEnhancer != null && responseTypes.contains(SecurityConstants.ID_TOKEN)) {
+            return accessTokenEnhancer.enhance(token, authentication);
+        }
+        return token;
     }
 
     private OAuth2RefreshToken createRefreshToken(OAuth2Authentication authentication) {

@@ -1,6 +1,7 @@
 package com.central.oauth2.common.config;
 
 import com.central.oauth2.common.properties.SecurityProperties;
+import com.central.oauth2.common.properties.TokenStoreProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 /**
@@ -10,6 +11,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
  * Blog: https://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
-@EnableConfigurationProperties(SecurityProperties.class)
+@EnableConfigurationProperties({SecurityProperties.class, TokenStoreProperties.class})
 public class SecurityPropertiesConfig {
 }

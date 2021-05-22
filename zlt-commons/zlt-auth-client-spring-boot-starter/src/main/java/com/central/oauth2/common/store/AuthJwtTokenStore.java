@@ -56,26 +56,4 @@ public class AuthJwtTokenStore {
         tokenConverter.setUserTokenConverter(new CustomUserAuthenticationConverter());
         return converter;
     }
-
-    /**
-     * jwt 生成token 定制化处理
-     * 添加一些额外的用户信息到token里面
-     *
-     * @return TokenEnhancer
-     */
-    @Bean
-    @Order(1)
-    public TokenEnhancer tokenEnhancer() {
-        return (accessToken, authentication) -> {
-            final Map<String, Object> additionalInfo = new HashMap<>(1);
-            Object principal = authentication.getPrincipal();
-            //增加id参数
-            if (principal instanceof SysUser) {
-                SysUser user = (SysUser)principal;
-                additionalInfo.put("id", user.getId());
-            }
-            ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
-            return accessToken;
-        };
-    }
 }

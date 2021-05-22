@@ -101,6 +101,27 @@ public class OidcIdTokenBuilder {
     }
 
     /**
+     * 赋值用户姓名
+     */
+    public OidcIdTokenBuilder name(String name) {
+        return this.claim(NAME, name);
+    }
+
+    /**
+     * 赋值用户登录名
+     */
+    public OidcIdTokenBuilder loginName(String loginName) {
+        return this.claim(L_NAME, loginName);
+    }
+
+    /**
+     * 赋值用户头像
+     */
+    public OidcIdTokenBuilder picture(String picture) {
+        return this.claim(PIC, picture);
+    }
+
+    /**
      * Build the {@link OidcIdTokenBuilder}
      *
      * @return The constructed {@link OidcIdTokenBuilder}

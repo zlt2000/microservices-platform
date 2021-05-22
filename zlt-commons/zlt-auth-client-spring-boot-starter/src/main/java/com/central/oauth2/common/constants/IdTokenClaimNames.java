@@ -71,4 +71,19 @@ public class IdTokenClaimNames {
      * {@code c_hash} - the Authorization Code hash value
      */
     public final static String C_HASH = "c_hash";
+
+    /**
+     * {@code name} - 用户姓名
+     */
+    public final static String NAME = "name";
+
+    /**
+     * {@code login_name} - 登录名
+     */
+    public final static String L_NAME = "login_name";
+
+    /**
+     * {@code picture} - 头像照片
+     */
+    public final static String PIC = "picture";
 }
