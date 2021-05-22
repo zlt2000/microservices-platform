@@ -7,8 +7,8 @@ import com.central.oauth.service.IClientService;
 import com.central.oauth.service.impl.RedisClientDetailsService;
 import com.central.oauth.utils.OidcIdTokenBuilder;
 import com.central.oauth2.common.constants.IdTokenClaimNames;
+import com.central.oauth2.common.properties.TokenStoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.cloud.bootstrap.encrypt.KeyProperties;
 import org.springframework.context.annotation.Bean;
@@ -71,9 +71,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private TokenGranter tokenGranter;
 
-    @Value("${zlt.oauth2.token.store.type:'redis'}")
-    private String tokenStoreType;
-
     /**
      * 配置身份认证器，配置认证方式，TokenStore，TokenGranter，OAuth2RequestFactory
      * @param endpoints
@@ -116,11 +113,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Bean
     @Order(1)
     public TokenEnhancer tokenEnhancer(@Autowired(required = false) KeyProperties keyProperties
-                , IClientService clientService) {
+                , IClientService clientService
+                , TokenStoreProperties tokenStoreProperties) {
         return (accessToken, authentication) -> {
             Set<String> responseTypes = authentication.getOAuth2Request().getResponseTypes();
             if (responseTypes.contains(SecurityConstants.ID_TOKEN)
-                    || "authJwt".equals(tokenStoreType)) {
+                    || "authJwt".equals(tokenStoreProperties.getType())) {
                 Map<String, Object> additionalInfo = new HashMap<>(2);
                 Object principal = authentication.getPrincipal();
                 //增加id参数
@@ -130,7 +128,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                         //生成id_token
                         setIdToken(additionalInfo, authentication, keyProperties, clientService, user);
                     }
-                    if ("authJwt".equals(tokenStoreType)) {
+                    if ("authJwt".equals(tokenStoreProperties.getType())) {
                         additionalInfo.put("id", user.getId());
                     }
                 }
@@ -160,6 +158,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                     .issuedAt(now)
                     .expiresAt(expiresAt)
                     .subject(String.valueOf(user.getId()))
+                    .name(user.getNickname())
+                    .loginName(user.getUsername())
+                    .picture(user.getHeadImgUrl())
                     .audience(clientId)
                     .nonce(nonce)
                     .build();
