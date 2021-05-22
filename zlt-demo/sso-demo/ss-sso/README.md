@@ -1,5 +1,5 @@
 ## **详细的原理和注意事项请查看**
-[单点登录详解](https://www.kancloud.cn/zlt2000/microservices-platform/1515193)
+[单点登录详解](https://www.kancloud.cn/zlt2000/microservices-platform/2278849)
 
 
 

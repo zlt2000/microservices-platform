@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="utf-8"/>
+    <title>zlt</title>
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/sso.js"></script>
+</head>
+<body>
+<script>
+    window.onload = function() {
+        //url获取state
+        let state = getQueryVariable('state');
+        let localState = sessionStorage.getItem("state");
+        //判断state防止CSRF攻击
+        if (localState !== state) {
+            alert('state参数无效！');
+            let state = getState();
+            sessionStorage.setItem("state", state);
+            window.location = getAuthorizeUri(state);
+        }
+        //url获取code
+        let code = getQueryVariable('code');
+
+        //获取token和用户信息
+        $.ajax({url:'http://127.0.0.1:8081/token/'+code, success:function(result) {
+            console.log(result);
+            sessionStorage.setItem('access_token', result.tokenInfo.access_token);
+            sessionStorage.setItem('username', result.userInfo.name);
+            sessionStorage.setItem('loginName', result.userInfo.loginName);
+            sessionStorage.setItem('picture', result.userInfo.picture);
+            window.location = sessionStorage.getItem('visitUri');
+        }});
+    };
+</script>
+</body>
+</html>
