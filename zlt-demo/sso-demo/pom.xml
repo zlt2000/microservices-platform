@@ -14,5 +14,7 @@
         <module>ss-sso</module>
         <!-- 前后端分离单点登录demo -->
         <module>web-sso</module>
+        <!-- OIDC协议单点登录demo -->
+        <module>oidc-sso</module>
     </modules>
 </project>
