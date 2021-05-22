@@ -50,6 +50,7 @@
             , scope, authorized_grant_types, autoapprove
             , access_token_validity accessTokenValiditySeconds
             , refresh_token_validity refreshTokenValiditySeconds
+            , support_id_token, refresh_token_validity
         from oauth_client_details
         <include refid="where"/>
     </select>
