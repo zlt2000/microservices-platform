@@ -181,7 +181,7 @@ public class ApiController {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Result> response = restTemplate.exchange(jwtKeyUri, HttpMethod.GET, request, Result.class);
         Result<String> result = response.getBody();
-        Assert.isTrue((result.getResp_code() == 200), result.getResp_msg());
+        Assert.isTrue((result.getResp_code() == 0), result.getResp_msg());
 
         String publicKeyStr = result.getResp_msg();
         publicKeyStr = publicKeyStr.substring(PUBKEY_START.length(), publicKeyStr.indexOf(PUBKEY_END));
