@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
@@ -52,10 +53,14 @@ public class TokensController {
     @GetMapping("/key")
     @ApiOperation(value = "获取jwt密钥")
     public Result<String> key(HttpServletRequest request) {
-        String[] clientArr = AuthUtils.extractClient(request);
-        ClientDetails clientDetails = clientDetailsService.loadClientByClientId(clientArr[0]);
-        if (!passwordEncoder.matches(clientArr[1], clientDetails.getClientSecret())) {
-            throw new BadCredentialsException("应用密码错误");
+        try {
+            String[] clientArr = AuthUtils.extractClient(request);
+            ClientDetails clientDetails = clientDetailsService.loadClientByClientId(clientArr[0]);
+            if (clientDetails == null || !passwordEncoder.matches(clientArr[1], clientDetails.getClientSecret())) {
+                throw new BadCredentialsException("应用ID或密码错误");
+            }
+        } catch (AuthenticationException ae) {
+            return Result.failed(ae.getMessage());
         }
         org.springframework.core.io.Resource res = new ClassPathResource(SecurityConstants.RSA_PUBLIC_KEY);
         try (BufferedReader br = new BufferedReader(new InputStreamReader(res.getInputStream()))) {
