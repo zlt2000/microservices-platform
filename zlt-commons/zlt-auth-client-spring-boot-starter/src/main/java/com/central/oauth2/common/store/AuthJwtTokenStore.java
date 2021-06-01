@@ -30,13 +30,7 @@ import java.util.Map;
  */
 @ConditionalOnProperty(prefix = "zlt.oauth2.token.store", name = "type", havingValue = "authJwt")
 public class AuthJwtTokenStore {
-
-    @Bean("keyProp")
-    public KeyProperties keyProperties() {
-        return new KeyProperties();
-    }
-
-    @Resource(name = "keyProp")
+    @Resource
     private KeyProperties keyProperties;
 
     @Bean
