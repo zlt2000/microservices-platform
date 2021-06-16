@@ -35,6 +35,14 @@
         <td><a href="http://shang.qq.com/wpa/qunwpa?idkey=17544199255998bda0d938fb72b08d076c40c52c9904520b76eb5eb0585da71e" target="_blank"><img width=300px height=300px alt="交流一群(已满)" src="https://gitee.com/zlt2000/images/raw/master/%E4%BA%A4%E6%B5%81%E4%B8%80%E7%BE%A4.png"/></a></td>
         <td><a href="https://shang.qq.com/wpa/qunwpa?idkey=41988facbc02f678942a7ee7ae03122f2ef0a10c948b3d07319f070bfb0d3a98" target="_blank"><img width=300px height=300px alt="交流二群" src="https://gitee.com/zlt2000/images/raw/master/%E4%BA%A4%E6%B5%81%E4%BA%8C%E7%BE%A4.png"/></a></td>
     </tr>
+    <tr>
+        <td><center><strong><a href="http://shang.qq.com/wpa/qunwpa?idkey=17544199255998bda0d938fb72b08d076c40c52c9904520b76eb5eb0585da71e" target="_blank">交流三群</a></strong></center></td>
+        <td></td>
+	</tr>
+	<tr>
+        <td><a href="https://qm.qq.com/cgi-bin/qm/qr?k=HntAHTirZwCEjF8PQpjDYkw37Zx5rJg8&jump_from=webapi" target="_blank"><img width=250px height=300px alt="交流三群" src="http://qiniu.zlt2000.cn/blog/20210616/htVdgkFMohAm.png?imageslim"/></a></td>
+        <td></td>
+    </tr>
 </table>
 
 
@@ -124,6 +132,7 @@ central-platform -- 父项目，公共依赖
 * 项目/微服务交流请进群：
   * 一群：[250883130(已满)](https://shang.qq.com/wpa/qunwpa?idkey=17544199255998bda0d938fb72b08d076c40c52c9904520b76eb5eb0585da71e)
   * 二群：[1041797659](https://shang.qq.com/wpa/qunwpa?idkey=41988facbc02f678942a7ee7ae03122f2ef0a10c948b3d07319f070bfb0d3a98)
+  * 三群：[512637767](https://qm.qq.com/cgi-bin/qm/qr?k=HntAHTirZwCEjF8PQpjDYkw37Zx5rJg8&jump_from=webapi)
 * 个人博客：[https://zlt2000.gitee.io](https://zlt2000.gitee.io)
 * 个人邮箱：zltdiablo@163.com
 * 个人公众号：[陶陶技术笔记](http://qiniu.zlt2000.cn/blog/20190902/M56cWjw7uNsc.png?imageslim)
