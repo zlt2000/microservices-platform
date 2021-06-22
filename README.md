@@ -36,7 +36,7 @@
         <td><a href="https://shang.qq.com/wpa/qunwpa?idkey=41988facbc02f678942a7ee7ae03122f2ef0a10c948b3d07319f070bfb0d3a98" target="_blank"><img width=300px height=300px alt="交流二群" src="https://gitee.com/zlt2000/images/raw/master/%E4%BA%A4%E6%B5%81%E4%BA%8C%E7%BE%A4.png"/></a></td>
     </tr>
     <tr>
-        <td><center><strong><a href="http://shang.qq.com/wpa/qunwpa?idkey=17544199255998bda0d938fb72b08d076c40c52c9904520b76eb5eb0585da71e" target="_blank">交流三群</a></strong></center></td>
+        <td><center><strong><a href="https://qm.qq.com/cgi-bin/qm/qr?k=HntAHTirZwCEjF8PQpjDYkw37Zx5rJg8&jump_from=webapi" target="_blank">交流三群</a></strong></center></td>
         <td></td>
 	</tr>
 	<tr>
@@ -53,9 +53,7 @@
   * 账号密码：admin/admin
   * APM监控账号密码：admin/admin
   * Grafana账号：zlt/zlt123
-  * txlcn事务管理器密码：admin
   * 任务管理账号密码：admin/123456
-  * Sentinel：sentinel/sentinel
 * **演示环境有全方位的监控示例：日志系统 + APM系统 + GPE系统**
 * Gitee地址：https://gitee.com/zlt2000/microservices-platform
 * Github地址：https://github.com/zlt2000/microservices-platform
