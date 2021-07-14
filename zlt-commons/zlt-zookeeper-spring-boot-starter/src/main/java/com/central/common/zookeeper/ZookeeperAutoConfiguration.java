@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
- * redis 配置类
+ * zookeeper 配置类
  *
  * @author zlt
  * @version 1.0

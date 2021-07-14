@@ -99,7 +99,8 @@ zlt:
         /api-uaa/images/**,
         /api-uaa/js/**,
         /login.html,
-        /user/login
+        /user/login,
+        /api-uaa/tokens/key
     auth:
       urlPermission:
         #是否开启url级别权限

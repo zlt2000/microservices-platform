@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.zlt</groupId>
         <artifactId>zlt-commons</artifactId>
-        <version>4.4</version>
+        <version>4.5.0</version>
     </parent>
     <artifactId>zlt-common-core</artifactId>
     <description>公共通用组件</description>
@@ -24,9 +24,8 @@
             <artifactId>spring-social-security</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.security.oauth</groupId>
-            <artifactId>spring-security-oauth2</artifactId>
-            <optional>true</optional>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
         </dependency>
 
         <dependency>

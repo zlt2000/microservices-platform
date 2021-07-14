@@ -24,4 +24,6 @@ public interface IClientService extends ISuperService<Client> {
     PageResult<Client> listClient(Map<String, Object> params, boolean isPage);
 
     void delClient(long id);
+
+    Client loadClientByClientId(String clientId);
 }

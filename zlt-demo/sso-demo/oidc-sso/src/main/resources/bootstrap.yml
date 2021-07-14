@@ -1,0 +1,14 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: oidc-demo
+
+zlt:
+  sso:
+    client-id: app
+    client-secret: app
+    redirect-uri: http://127.0.0.1:8081/callback.html
+    access-token-uri: http://127.0.0.1:9900/api-uaa/oauth/token
+    jwt-key-uri: http://127.0.0.1:9900/api-uaa/tokens/key
