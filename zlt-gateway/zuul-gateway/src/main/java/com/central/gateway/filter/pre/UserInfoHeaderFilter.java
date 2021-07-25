@@ -3,6 +3,7 @@ package com.central.gateway.filter.pre;
 import cn.hutool.core.collection.CollectionUtil;
 import com.central.common.constant.SecurityConstants;
 import com.central.common.model.SysUser;
+import com.central.oauth2.common.util.AuthUtils;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
@@ -19,6 +20,9 @@ import static org.springframework.cloud.netflix.zuul.filters.support.FilterConst
  *
  * @author zlt
  * @date 2018/11/20
+ * <p>
+ * Blog: https://zlt2000.gitee.io
+ * Github: https://github.com/zlt2000
  */
 @Component
 public class UserInfoHeaderFilter extends ZuulFilter {
@@ -53,6 +57,8 @@ public class UserInfoHeaderFilter extends ZuulFilter {
             String clientId = oauth2Authentication.getOAuth2Request().getClientId();
             ctx.addZuulRequestHeader(SecurityConstants.TENANT_HEADER, clientId);
             ctx.addZuulRequestHeader(SecurityConstants.ROLE_HEADER, CollectionUtil.join(authentication.getAuthorities(), ","));
+            String accountType = AuthUtils.getAccountType(oauth2Authentication.getUserAuthentication());
+            ctx.addZuulRequestHeader(SecurityConstants.ACCOUNT_TYPE_HEADER, accountType);
         }
         return null;
     }

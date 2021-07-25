@@ -4,21 +4,24 @@ import com.central.common.constant.SecurityConstants;
 import com.central.common.properties.TenantProperties;
 import com.central.oauth.filter.LoginProcessSetTenantFilter;
 import com.central.oauth.handler.OauthLogoutSuccessHandler;
+import com.central.oauth.password.PasswordAuthenticationProvider;
+import com.central.oauth.service.impl.UserDetailServiceFactory;
 import com.central.oauth.tenant.TenantAuthenticationSecurityConfig;
 import com.central.oauth.tenant.TenantUsernamePasswordAuthenticationFilter;
 import com.central.oauth.mobile.MobileAuthenticationSecurityConfig;
 import com.central.oauth.openid.OpenIdAuthenticationSecurityConfig;
 import com.central.common.config.DefaultPasswordConfig;
+import com.central.oauth2.common.token.CustomWebAuthenticationDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -27,6 +30,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * spring security配置
@@ -48,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private AuthenticationEntryPoint authenticationEntryPoint;
 
 	@Resource
-	private UserDetailsService userDetailsService;
+	private UserDetailServiceFactory userDetailsServiceFactory;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -71,6 +75,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private TenantProperties tenantProperties;
 
+	@Autowired
+	private AuthenticationDetailsSource<HttpServletRequest, CustomWebAuthenticationDetails> authenticationDetailsSource;
+
 	/**
 	 * 这一步的配置是必不可少的，否则SpringBoot会自动配置一个AuthenticationManager,覆盖掉内存中的用户
 	 * @return 认证管理对象
@@ -88,6 +95,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		filter.setFilterProcessesUrl(SecurityConstants.OAUTH_LOGIN_PRO_URL);
 		filter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
 		filter.setAuthenticationFailureHandler(new SimpleUrlAuthenticationFailureHandler(SecurityConstants.LOGIN_FAILURE_PAGE));
+		filter.setAuthenticationDetailsSource(authenticationDetailsSource);
 		return filter;
 	}
 
@@ -124,7 +132,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			http.formLogin()
 					.loginPage(SecurityConstants.LOGIN_PAGE)
 					.loginProcessingUrl(SecurityConstants.OAUTH_LOGIN_PRO_URL)
-					.successHandler(authenticationSuccessHandler);
+					.successHandler(authenticationSuccessHandler)
+					.authenticationDetailsSource(authenticationDetailsSource);
 		}
 
 
@@ -141,8 +150,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	/**
 	 * 全局用户信息
 	 */
-	@Autowired
-	public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+	@Override
+	public void configure(AuthenticationManagerBuilder auth) {
+		PasswordAuthenticationProvider provider = new PasswordAuthenticationProvider();
+		provider.setPasswordEncoder(passwordEncoder);
+		provider.setUserDetailsServiceFactory(userDetailsServiceFactory);
+		auth.authenticationProvider(provider);
 	}
+	/*public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+	}*/
 }

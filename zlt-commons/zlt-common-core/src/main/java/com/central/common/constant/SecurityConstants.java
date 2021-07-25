@@ -4,6 +4,9 @@ package com.central.common.constant;
  * Security 权限常量
  *
  * @author zlt
+ * <p>
+ * Blog: https://zlt2000.gitee.io
+ * Github: https://github.com/zlt2000
  */
 public interface SecurityConstants {
     /**
@@ -30,6 +33,11 @@ public interface SecurityConstants {
      * 租户信息头(应用)
      */
     String TENANT_HEADER = "x-tenant-header";
+
+    /**
+     * 账号类型信息头
+     */
+    String ACCOUNT_TYPE_HEADER = "x-account-type-header";
 
     /**
      * 基础角色
@@ -167,4 +175,14 @@ public interface SecurityConstants {
      * 令牌颁发者
      */
     String ISS = "http://zlt2000.cn";
+
+    /**
+     * 默认账号类型
+     */
+    String DEF_ACCOUNT_TYPE = "admin";
+
+    /**
+     * 账号类型参数名
+     */
+    String ACCOUNT_TYPE_PARAM_NAME = "account_type";
 }
