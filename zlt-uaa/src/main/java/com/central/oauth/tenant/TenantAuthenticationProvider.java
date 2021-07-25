@@ -1,7 +1,7 @@
 package com.central.oauth.tenant;
 
+import com.central.oauth.password.PasswordAuthenticationProvider;
 import com.central.oauth2.common.token.TenantUsernamePasswordAuthenticationToken;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  * Blog: https://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
-public class TenantAuthenticationProvider extends DaoAuthenticationProvider {
+public class TenantAuthenticationProvider extends PasswordAuthenticationProvider {
     @Override
     protected Authentication createSuccessAuthentication(Object principal,
                                                          Authentication authentication, UserDetails user) {

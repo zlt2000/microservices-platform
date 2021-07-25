@@ -46,10 +46,13 @@ public class OauthTokenAspect {
             String clientId = getClientId(principal);
             Map<String, String> parameters = (Map<String, String>) args[1];
             String grantType = parameters.get(OAuth2Utils.GRANT_TYPE);
+            if (!parameters.containsKey(SecurityConstants.ACCOUNT_TYPE_PARAM_NAME)) {
+                parameters.put(SecurityConstants.ACCOUNT_TYPE_PARAM_NAME, SecurityConstants.DEF_ACCOUNT_TYPE);
+            }
 
             //保存租户id
             TenantContextHolder.setTenant(clientId);
-            Object proceed = joinPoint.proceed();
+            Object proceed = joinPoint.proceed(args);
             if (SecurityConstants.AUTHORIZATION_CODE.equals(grantType)) {
                 /*
                  如果使用 @EnableOAuth2Sso 注解不能修改返回格式，否则授权码模式可以统一改

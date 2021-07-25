@@ -46,11 +46,12 @@
                 {
                     sort: true, templet: function (d) {
                         return util.toDateString(d.expiration);
-                    }, title: '到期时间'
+                    }, width:180, title: '到期时间'
                 },
                 {field: 'username',width:180, sort: true, title: '用户名'},
                 {field: 'grantType',width:180, sort: true, title: '授权类型'},
                 {field: 'clientId',width:180, sort: true, title: '所属应用'},
+                {field: 'accountType',width:180, sort: true, title: '账号类型'},
                 {align: 'center',width:100, toolbar: '#tokens-table-bar', title: '操作'}
             ]]
         });

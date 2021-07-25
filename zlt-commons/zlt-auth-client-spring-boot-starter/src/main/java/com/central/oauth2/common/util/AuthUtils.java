@@ -1,17 +1,19 @@
 package com.central.oauth2.common.util;
 
 import com.central.common.constant.CommonConstant;
+import com.central.common.constant.SecurityConstants;
 import com.central.common.model.SysUser;
+import com.central.oauth2.common.token.CustomWebAuthenticationDetails;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.exceptions.UnapprovedClientAuthenticationException;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Enumeration;
+import java.util.Map;
 
 /**
  * 认证授权相关工具类
@@ -103,5 +105,23 @@ public class AuthUtils {
             username = (String) principal;
         }
         return username;
+    }
+
+    /**
+     * 获取登陆的帐户类型
+     */
+    public static String getAccountType(Authentication authentication) {
+        Object details = authentication.getDetails();
+        String accountType = null;
+        if (details instanceof CustomWebAuthenticationDetails) {
+            CustomWebAuthenticationDetails detailsObj = (CustomWebAuthenticationDetails) details;
+            accountType = detailsObj.getAccountType();
+        } else {
+            Map<String, String> detailsMap = (Map<String, String>) details;
+            if (detailsMap != null) {
+                accountType = detailsMap.get(SecurityConstants.ACCOUNT_TYPE_PARAM_NAME);
+            }
+        }
+        return accountType;
     }
 }
