@@ -1,6 +1,7 @@
 package com.central.gateway.auth;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.StrUtil;
 import com.central.common.constant.SecurityConstants;
 import com.central.common.model.SysUser;
 import com.central.oauth2.common.util.AuthUtils;
@@ -26,7 +27,7 @@ import reactor.core.publisher.Mono;
 public class Oauth2AuthSuccessHandler implements ServerAuthenticationSuccessHandler {
     @Override
     public Mono<Void> onAuthenticationSuccess(WebFilterExchange webFilterExchange, Authentication authentication) {
-        MultiValueMap<String, String> headerValues = new LinkedMultiValueMap(4);
+        MultiValueMap<String, String> headerValues = new LinkedMultiValueMap<>(4);
         Object principal = authentication.getPrincipal();
         //客户端模式只返回一个clientId
         if (principal instanceof SysUser) {
@@ -39,8 +40,9 @@ public class Oauth2AuthSuccessHandler implements ServerAuthenticationSuccessHand
         headerValues.add(SecurityConstants.TENANT_HEADER, clientId);
         headerValues.add(SecurityConstants.ROLE_HEADER, CollectionUtil.join(authentication.getAuthorities(), ","));
         String accountType = AuthUtils.getAccountType(oauth2Authentication.getUserAuthentication());
-        headerValues.add(SecurityConstants.ACCOUNT_TYPE_HEADER, accountType);
-
+        if (StrUtil.isNotEmpty(accountType)) {
+            headerValues.add(SecurityConstants.ACCOUNT_TYPE_HEADER, accountType);
+        }
         ServerWebExchange exchange = webFilterExchange.getExchange();
         ServerHttpRequest serverHttpRequest = exchange.getRequest().mutate()
                 .headers(h -> h.addAll(headerValues))
