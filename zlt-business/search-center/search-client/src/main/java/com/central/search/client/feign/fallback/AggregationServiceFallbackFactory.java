@@ -2,7 +2,7 @@ package com.central.search.client.feign.fallback;
 
 import cn.hutool.core.map.MapUtil;
 import com.central.search.client.feign.AggregationService;
-import feign.hystrix.FallbackFactory;
+import org.springframework.cloud.openfeign.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

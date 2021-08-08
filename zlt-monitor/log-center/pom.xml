@@ -19,7 +19,7 @@
         </dependency>
         <dependency>
             <groupId>com.zlt</groupId>
-            <artifactId>zlt-ribbon-spring-boot-starter</artifactId>
+            <artifactId>zlt-loadbalancer-spring-boot-starter</artifactId>
         </dependency>
         <!-- swagger -->
         <dependency>

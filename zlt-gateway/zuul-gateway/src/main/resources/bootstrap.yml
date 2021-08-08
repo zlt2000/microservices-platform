@@ -1,9 +1,0 @@
-server:
-  port: 9900
-  undertow:
-    buffer-size: 1024
-    direct-buffers: true
-
-spring:
-  application:
-    name: api-gateway
