@@ -6,9 +6,9 @@ import com.central.common.constant.ConfigConstants;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
-import org.springframework.cloud.gateway.config.LoadBalancerProperties;
+/*import org.springframework.cloud.gateway.config.LoadBalancerProperties;
 import org.springframework.cloud.gateway.filter.LoadBalancerClientFilter;
-import org.springframework.cloud.netflix.ribbon.RibbonLoadBalancerClient;
+import org.springframework.cloud.netflix.ribbon.RibbonLoadBalancerClient;*/
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 
@@ -25,6 +25,7 @@ import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.G
  * Blog: https://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
+/*
 @Component
 @ConditionalOnProperty(name = ConfigConstants.CONFIG_RIBBON_ISOLATION_ENABLED, havingValue = "true")
 public class LbIsolationFilter extends LoadBalancerClientFilter {
@@ -45,3 +46,4 @@ public class LbIsolationFilter extends LoadBalancerClientFilter {
         return super.choose(exchange);
     }
 }
+*/

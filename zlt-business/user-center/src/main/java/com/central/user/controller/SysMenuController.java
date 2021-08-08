@@ -5,11 +5,11 @@ import java.util.stream.Collectors;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.convert.Convert;
+import cn.hutool.core.util.ObjectUtil;
 import com.central.common.annotation.LoginUser;
 import com.central.common.constant.CommonConstant;
 import com.central.common.model.*;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -40,7 +40,7 @@ public class SysMenuController {
     public static List<SysMenu> treeBuilder(List<SysMenu> sysMenus) {
         List<SysMenu> menus = new ArrayList<>();
         for (SysMenu sysMenu : sysMenus) {
-            if (ObjectUtils.equals(-1L, sysMenu.getParentId())) {
+            if (ObjectUtil.equal(-1L, sysMenu.getParentId())) {
                 menus.add(sysMenu);
             }
             for (SysMenu menu : sysMenus) {

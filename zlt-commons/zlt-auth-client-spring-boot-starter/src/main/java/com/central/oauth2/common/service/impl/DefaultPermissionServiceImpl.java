@@ -25,6 +25,9 @@ import java.util.stream.Collectors;
  *
  * @author zlt
  * @date 2018/10/28
+ * <p>
+ * Blog: https://zlt2000.gitee.io
+ * Github: https://github.com/zlt2000
  */
 @Slf4j
 public abstract class DefaultPermissionServiceImpl {
@@ -32,7 +35,7 @@ public abstract class DefaultPermissionServiceImpl {
     @Autowired
     private SecurityProperties securityProperties;
 
-    private AntPathMatcher antPathMatcher = new AntPathMatcher();
+    private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 
     /**
      * 查询当前用户拥有的资源权限

@@ -9,8 +9,6 @@
     <artifactId>zlt-gateway</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <!-- zuul -->
-        <module>zuul-gateway</module>
         <!-- spring cloud gateway -->
         <module>sc-gateway</module>
     </modules>
