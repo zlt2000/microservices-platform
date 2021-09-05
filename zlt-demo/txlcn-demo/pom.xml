@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.zlt</groupId>
         <artifactId>zlt-demo</artifactId>
-        <version>4.6.0</version>
+        <version>5.0.0</version>
     </parent>
     <artifactId>txlcn-demo</artifactId>
     <description>txlcn分布式事务demo</description>

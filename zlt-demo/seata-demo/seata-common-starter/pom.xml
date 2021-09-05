@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.zlt</groupId>
         <artifactId>seata-demo</artifactId>
-        <version>4.6.0</version>
+        <version>5.0.0</version>
     </parent>
     <artifactId>seata-common-starter</artifactId>
 
