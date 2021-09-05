@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.zlt</groupId>
         <artifactId>zlt-commons</artifactId>
-        <version>4.6.0</version>
+        <version>5.0.0</version>
     </parent>
     <artifactId>zlt-common-spring-boot-starter</artifactId>
     <description>公共通用组件</description>

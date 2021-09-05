@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.zlt</groupId>
         <artifactId>sso-demo</artifactId>
-        <version>4.6.0</version>
+        <version>5.0.0</version>
     </parent>
     <artifactId>oidc-sso</artifactId>
     <description>OIDC协议单点登录demo</description>
