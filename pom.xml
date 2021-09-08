@@ -51,7 +51,7 @@
         <elasticsearch.version>7.14.0</elasticsearch.version>
         <knife4j.version>2.0.5</knife4j.version>
         <hibernate-validator.version>6.2.0.Final</hibernate-validator.version>
-        <dubbo.version>2.7.8</dubbo.version>
+        <dubbo.version>2.7.13</dubbo.version>
         <curator.version>5.1.0</curator.version>
         <jackson-databind.version>2.12.4</jackson-databind.version>
         <commons-configuration.version>1.10</commons-configuration.version>
