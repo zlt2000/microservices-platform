@@ -2,7 +2,7 @@ package com.central.gateway.feign.fallback;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.central.gateway.feign.MenuService;
-import feign.hystrix.FallbackFactory;
+import org.springframework.cloud.openfeign.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

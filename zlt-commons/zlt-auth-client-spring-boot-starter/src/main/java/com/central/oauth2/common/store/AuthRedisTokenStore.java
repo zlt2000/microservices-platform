@@ -4,6 +4,7 @@ import com.central.oauth2.common.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -18,6 +19,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
  * Blog: https://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
+@Configuration
 @ConditionalOnProperty(prefix = "zlt.oauth2.token.store", name = "type", havingValue = "redis", matchIfMissing = true)
 public class AuthRedisTokenStore {
     @Bean

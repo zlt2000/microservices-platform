@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpEntity;
@@ -31,6 +32,7 @@ import java.util.stream.Collectors;
  * @author zlt
  * @date 2018/8/20 9:25
  */
+@Configuration
 @ConditionalOnProperty(prefix = "zlt.oauth2.token.store", name = "type", havingValue = "resJwt")
 public class ResJwtTokenStore {
     @Autowired

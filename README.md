@@ -1,9 +1,9 @@
 #  zlt-microservices-platform
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Spring%20Boot-2.3.11.RELEASE-blue" alt="Downloads"/>
-  <img src="https://img.shields.io/badge/Spring%20Cloud-Hoxton.SR9-blue" alt="Downloads"/>
-  <img src="https://img.shields.io/badge/Spring%20Cloud%20Alibaba-2.2.5.RELEASE-blue" alt="Downloads"/>
+  <img src="https://img.shields.io/badge/Spring%20Boot-2.5.4-blue" alt="Downloads"/>
+  <img src="https://img.shields.io/badge/Spring%20Cloud-2020.0.3-blue" alt="Downloads"/>
+  <img src="https://img.shields.io/badge/Spring%20Cloud%20Alibaba-2021.1-blue" alt="Downloads"/>
   <img src="https://img.shields.io/badge/Elasticsearch-7.x-brightgreen" alt="Downloads"/>
   <a target="_blank" href='https://gitee.com/zlt2000/microservices-platform'>
     <img src='https://gitee.com/zlt2000/microservices-platform/badge/star.svg' alt='star'/>
@@ -12,6 +12,7 @@
     <img src="https://img.shields.io/github/stars/zlt2000/microservices-platform.svg?style=social" alt="github star"/>
   </a>
 </p>
+
 
 
 ## 如果您觉得有帮助，请点右上角 "Star" 支持一下谢谢
@@ -28,20 +29,10 @@
 * **技术交流群** 
 <table>
     <tr>
-        <td><center><strong><a href="http://shang.qq.com/wpa/qunwpa?idkey=17544199255998bda0d938fb72b08d076c40c52c9904520b76eb5eb0585da71e" target="_blank">交流一群(已满)</a></strong></center></td>
-        <td><center><strong><a href="https://shang.qq.com/wpa/qunwpa?idkey=41988facbc02f678942a7ee7ae03122f2ef0a10c948b3d07319f070bfb0d3a98" target="_blank">交流二群</a></strong></center></td>
-	</tr>
-    <tr>
-        <td><a href="http://shang.qq.com/wpa/qunwpa?idkey=17544199255998bda0d938fb72b08d076c40c52c9904520b76eb5eb0585da71e" target="_blank"><img width=300px height=300px alt="交流一群(已满)" src="https://gitee.com/zlt2000/images/raw/master/%E4%BA%A4%E6%B5%81%E4%B8%80%E7%BE%A4.png"/></a></td>
-        <td><a href="https://shang.qq.com/wpa/qunwpa?idkey=41988facbc02f678942a7ee7ae03122f2ef0a10c948b3d07319f070bfb0d3a98" target="_blank"><img width=300px height=300px alt="交流二群" src="https://gitee.com/zlt2000/images/raw/master/%E4%BA%A4%E6%B5%81%E4%BA%8C%E7%BE%A4.png"/></a></td>
-    </tr>
-    <tr>
         <td><center><strong><a href="https://qm.qq.com/cgi-bin/qm/qr?k=HntAHTirZwCEjF8PQpjDYkw37Zx5rJg8&jump_from=webapi" target="_blank">交流三群</a></strong></center></td>
-        <td></td>
 	</tr>
 	<tr>
         <td><a href="https://qm.qq.com/cgi-bin/qm/qr?k=HntAHTirZwCEjF8PQpjDYkw37Zx5rJg8&jump_from=webapi" target="_blank"><img width=250px height=300px alt="交流三群" src="http://qiniu.zlt2000.cn/blog/20210616/htVdgkFMohAm.png?imageslim"/></a></td>
-        <td></td>
     </tr>
 </table>
 
@@ -84,7 +75,7 @@ central-platform -- 父项目，公共依赖
 │  │  ├─zlt-db-spring-boot-starter -- 封装数据库通用操作逻辑
 │  │  ├─zlt-log-spring-boot-starter -- 封装log通用操作逻辑
 │  │  ├─zlt-redis-spring-boot-starter -- 封装Redis通用操作逻辑
-│  │  ├─zlt-ribbon-spring-boot-starter -- 封装Ribbon和Feign的通用操作逻辑
+│  │  ├─zlt-loadbalancer-spring-boot-starter -- 封装Loadbalancer和Feign的通用操作逻辑
 │  │  ├─zlt-sentinel-spring-boot-starter -- 封装Sentinel的通用操作逻辑
 │  │  ├─zlt-swagger2-spring-boot-starter -- 封装Swagger通用操作逻辑
 │  │  ├─zlt-elasticsearch-spring-boot-starter -- 封装Elasticsearch通用操作逻辑
@@ -94,7 +85,6 @@ central-platform -- 父项目，公共依赖
 │  ├─zlt-doc -- 项目文档
 │  ├─zlt-gateway -- api网关一级工程
 │  │  ├─sc-gateway -- spring-cloud-gateway[9900]
-│  │  ├─zuul-gateway -- netflix-zuul[9900]
 │  ├─zlt-job -- 分布式任务调度一级工程
 │  │  ├─job-admin -- 任务管理器[8081]
 │  │  ├─job-core -- 任务调度核心代码
@@ -129,7 +119,7 @@ central-platform -- 父项目，公共依赖
 * 欢迎提交`ISSUS`，请写清楚问题的具体原因，重现步骤和环境(上下文)
 * 项目/微服务交流请进群：
   * 一群：[250883130(已满)](https://shang.qq.com/wpa/qunwpa?idkey=17544199255998bda0d938fb72b08d076c40c52c9904520b76eb5eb0585da71e)
-  * 二群：[1041797659](https://shang.qq.com/wpa/qunwpa?idkey=41988facbc02f678942a7ee7ae03122f2ef0a10c948b3d07319f070bfb0d3a98)
+  * 二群：[1041797659(已满)](https://shang.qq.com/wpa/qunwpa?idkey=41988facbc02f678942a7ee7ae03122f2ef0a10c948b3d07319f070bfb0d3a98)
   * 三群：[512637767](https://qm.qq.com/cgi-bin/qm/qr?k=HntAHTirZwCEjF8PQpjDYkw37Zx5rJg8&jump_from=webapi)
 * 个人博客：[https://zlt2000.gitee.io](https://zlt2000.gitee.io)
 * 个人邮箱：zltdiablo@163.com

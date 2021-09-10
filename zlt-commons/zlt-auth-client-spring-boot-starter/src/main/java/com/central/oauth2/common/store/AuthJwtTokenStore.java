@@ -5,6 +5,7 @@ import com.central.oauth2.common.converter.CustomUserAuthenticationConverter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.bootstrap.encrypt.KeyProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
@@ -28,6 +29,7 @@ import java.util.Map;
  * Blog: https://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
+@Configuration
 @ConditionalOnProperty(prefix = "zlt.oauth2.token.store", name = "type", havingValue = "authJwt")
 public class AuthJwtTokenStore {
     @Resource

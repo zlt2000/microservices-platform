@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.zlt</groupId>
         <artifactId>central-platform</artifactId>
-        <version>4.5.0</version>
+        <version>5.0.0</version>
     </parent>
     <artifactId>zlt-commons</artifactId>
     <description>通用组件</description>
@@ -16,7 +16,7 @@
         <module>zlt-db-spring-boot-starter</module>
         <module>zlt-swagger2-spring-boot-starter</module>
         <module>zlt-log-spring-boot-starter</module>
-        <module>zlt-ribbon-spring-boot-starter</module>
+        <module>zlt-loadbalancer-spring-boot-starter</module>
         <module>zlt-auth-client-spring-boot-starter</module>
         <module>zlt-sentinel-spring-boot-starter</module>
         <module>zlt-common-core</module>

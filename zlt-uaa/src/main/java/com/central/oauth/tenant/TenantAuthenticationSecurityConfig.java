@@ -1,6 +1,6 @@
 package com.central.oauth.tenant;
 
-import com.central.oauth.service.ZltUserDetailsService;
+import com.central.oauth.service.impl.UserDetailServiceFactory;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,19 +16,19 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class TenantAuthenticationSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
-    private ZltUserDetailsService userDetailsService;
+    private final UserDetailServiceFactory userDetailsServiceFactory;
 
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    public TenantAuthenticationSecurityConfig(ZltUserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
-        this.userDetailsService = userDetailsService;
+    public TenantAuthenticationSecurityConfig(UserDetailServiceFactory userDetailsServiceFactory, PasswordEncoder passwordEncoder) {
+        this.userDetailsServiceFactory = userDetailsServiceFactory;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public void configure(HttpSecurity http) {
         TenantAuthenticationProvider provider = new TenantAuthenticationProvider();
-        provider.setUserDetailsService(userDetailsService);
+        provider.setUserDetailsServiceFactory(userDetailsServiceFactory);
         provider.setPasswordEncoder(passwordEncoder);
         http.authenticationProvider(provider);
     }
