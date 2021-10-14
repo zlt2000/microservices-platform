@@ -111,16 +111,18 @@ public class AuthUtils {
      * 获取登陆的帐户类型
      */
     public static String getAccountType(Authentication authentication) {
-        Object details = authentication.getDetails();
         String accountType = null;
-        if (details != null) {
-            if (details instanceof CustomWebAuthenticationDetails) {
-                CustomWebAuthenticationDetails detailsObj = (CustomWebAuthenticationDetails) details;
-                accountType = detailsObj.getAccountType();
-            } else {
-                Map<String, String> detailsMap = (Map<String, String>) details;
-                if (detailsMap != null) {
-                    accountType = detailsMap.get(SecurityConstants.ACCOUNT_TYPE_PARAM_NAME);
+        if (authentication != null) {
+            Object details = authentication.getDetails();
+            if (details != null) {
+                if (details instanceof CustomWebAuthenticationDetails) {
+                    CustomWebAuthenticationDetails detailsObj = (CustomWebAuthenticationDetails) details;
+                    accountType = detailsObj.getAccountType();
+                } else {
+                    Map<String, String> detailsMap = (Map<String, String>) details;
+                    if (detailsMap != null) {
+                        accountType = detailsMap.get(SecurityConstants.ACCOUNT_TYPE_PARAM_NAME);
+                    }
                 }
             }
         }
