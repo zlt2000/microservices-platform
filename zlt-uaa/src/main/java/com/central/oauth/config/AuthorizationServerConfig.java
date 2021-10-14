@@ -1,5 +1,6 @@
 package com.central.oauth.config;
 
+import cn.hutool.core.util.StrUtil;
 import com.central.common.constant.SecurityConstants;
 import com.central.common.model.SysUser;
 import com.central.oauth.model.Client;
@@ -120,7 +121,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
             Set<String> responseTypes = authentication.getOAuth2Request().getResponseTypes();
             Map<String, Object> additionalInfo = new HashMap<>(3);
             String accountType = AuthUtils.getAccountType(authentication.getUserAuthentication());
-            additionalInfo.put(SecurityConstants.ACCOUNT_TYPE_PARAM_NAME, accountType);
+            if (StrUtil.isNotEmpty(accountType)) {
+                additionalInfo.put(SecurityConstants.ACCOUNT_TYPE_PARAM_NAME, accountType);
+            }
 
             if (responseTypes.contains(SecurityConstants.ID_TOKEN)
                     || "authJwt".equals(tokenStoreProperties.getType())) {
