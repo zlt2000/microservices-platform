@@ -7,7 +7,6 @@ import com.central.search.service.ISearchService;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.search.sort.SortOrder;
-import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
