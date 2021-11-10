@@ -108,7 +108,7 @@ central-platform -- 父项目，公共依赖
 
 <table>
     <tr>
-        <td><a target="_blank" href="https://activity.huaweicloud.com/discount_area_v5/index.html?fromacct=a87e1945-e6c4-4e04-bb43-e0472a54e454&utm_source=V1g3MDY4NTY=&utm_medium=cps&utm_campaign=201905"><img width="460px" height="177px" alt="华为云" src="https://gitee.com/zlt2000/images/raw/master/hwy.jpg"/></a></td>
+        <td><a target="_blank" href="https://www.aliyun.com/minisite/goods?userCode=dickv1kw&share_source=copy_link"><img width="460px" height="177px" alt="阿里云" src="https://gitee.com/zlt2000/images/raw/master/aly.jpg"/></a></td>
         <td><a target="_blank" href="https://cloud.tencent.com/act/cps/redirect?redirect=1074&cps_key=5516bbd5876cd224d90bd41d53d3f7fe&from=console"><img width="460px" height="177px"  alt="腾讯云" src="https://gitee.com/zlt2000/images/raw/master/txy.jpg"/></a></td>
     </tr>
 </table>
