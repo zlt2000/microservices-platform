@@ -1,9 +1,9 @@
 package com.central.log.trace;
 
+import cn.hutool.core.util.StrUtil;
 import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.rpc.*;
-import org.springframework.util.StringUtils;
 
 /**
  * dubbo过滤器，传递traceId
@@ -25,22 +25,25 @@ public class DubboTraceFilter implements Filter {
         boolean isProviderSide = RpcContext.getContext().isProviderSide();
         if (isProviderSide) { //服务提供者逻辑
             String traceId = invocation.getAttachment(MDCTraceUtils.KEY_TRACE_ID);
-            if (StringUtils.isEmpty(traceId)) {
-                MDCTraceUtils.addTraceId();
+            String spanId = invocation.getAttachment(MDCTraceUtils.KEY_SPAN_ID);
+            if (StrUtil.isEmpty(traceId)) {
+                MDCTraceUtils.addTrace();
             } else {
-                MDCTraceUtils.putTraceId(traceId);
+                MDCTraceUtils.putTrace(traceId, spanId);
             }
         } else { //服务消费者逻辑
             String traceId = MDCTraceUtils.getTraceId();
-            if (!StringUtils.isEmpty(traceId)) {
+            if (StrUtil.isNotEmpty(traceId)) {
+                String spanId = MDCTraceUtils.getSpanId();
                 invocation.setAttachment(MDCTraceUtils.KEY_TRACE_ID, traceId);
+                invocation.setAttachment(MDCTraceUtils.KEY_SPAN_ID, spanId);
             }
         }
         try {
             return invoker.invoke(invocation);
         } finally {
             if (isProviderSide) {
-                MDCTraceUtils.removeTraceId();
+                MDCTraceUtils.removeTrace();
             }
         }
     }
