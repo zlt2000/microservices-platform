@@ -7,6 +7,7 @@ import com.central.common.utils.JsonUtil;
 import com.central.common.utils.RsaUtils;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.security.jwt.Jwt;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import sun.misc.BASE64Encoder;
 
+import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.security.interfaces.RSAPublicKey;
 import java.util.*;
@@ -33,6 +35,7 @@ import java.util.*;
  * Blog: https://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
+@Slf4j
 @RestController
 public class ApiController {
     private static final String PUBKEY_START = "-----BEGIN PUBLIC KEY-----";
@@ -68,6 +71,8 @@ public class ApiController {
      */
     private final static ThreadLocal<String> NONCE = new ThreadLocal<>();
 
+    private final static Map<String, MyUser> localTokenMap = new HashMap<>();
+
     @GetMapping("/token/{code}")
     public Map<String, Object> tokenInfo(@PathVariable String code) throws Exception {
         //获取token
@@ -83,11 +88,30 @@ public class ApiController {
         if (!userDb.containsKey(user.getId())) {
             userDb.put(user.getId(), user);
         }
+        String accessToken = (String)tokenMap.get("access_token");
+        localTokenMap.put(accessToken, user);
 
         Map<String, Object> result = new HashMap<>(2);
         result.put("tokenInfo", tokenMap);
         result.put("userInfo", user);
         return result;
+    }
+
+    @GetMapping("/logoutNotify")
+    public void logoutNotify(HttpServletRequest request) {
+        String tokens = request.getParameter("tokens");
+        log.info("=====logoutNotify: " + tokens);
+        if (StrUtil.isNotEmpty(tokens)) {
+            for (String accessToken : tokens.split(",")) {
+                localTokenMap.remove(accessToken);
+            }
+        }
+    }
+
+    @GetMapping("/user")
+    public MyUser user(HttpServletRequest request) {
+        String token = request.getParameter("access_token");
+        return localTokenMap.get(token);
     }
 
     /**
@@ -122,7 +146,7 @@ public class ApiController {
         param.add("code", code);
         param.add("grant_type", "authorization_code");
         param.add("redirect_uri", redirectUri);
-        param.add("scope", "app");
+        param.add("scope", "all");
         param.add("nonce", this.genNonce());
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(param, headers);
         ResponseEntity<Map> response = restTemplate.postForEntity(accessTokenUri, request , Map.class);

@@ -16,28 +16,35 @@
     <p><input type="button" value="登出" onclick="logout()"/></p>
 </div>
 <script>
+    function login() {
+        let state = getState();
+        sessionStorage.setItem("visitUri", window.location.href);
+        sessionStorage.setItem("state", state);
+        window.location = getAuthorizeUri(state);
+    }
+
     window.onload = function() {
         let accessToken = sessionStorage.getItem('access_token');
         if (accessToken) {//已登录
-            let username = sessionStorage.getItem('username');
-            let roles = sessionStorage.getItem("roles");
-            $('#accessToken').html(accessToken);
-            $('#userName').html(username);
-            $('#roles').html(roles);
-            $('#clientId').html(clientId);
+            //获取token和用户信息
+            $.ajax({url:'http://127.0.0.1:8081/user?access_token='+accessToken, success:function(result) {
+                if (result.username) {
+                    $('#accessToken').html(accessToken);
+                    $('#userName').html(result.username);
+                    $('#roles').html(result.roles);
+                    $('#clientId').html(clientId);
+                } else {
+                    login();
+                }
+            }});
         } else {//未登录
-            let state = getState();
-            sessionStorage.setItem("visitUri", window.location.href);
-            sessionStorage.setItem("state", state);
-            window.location = getAuthorizeUri(state);
+            login();
         }
     };
 
     function logout() {
         let accessToken = sessionStorage.getItem('access_token');
         sessionStorage.removeItem('access_token');
-        sessionStorage.removeItem('username');
-        sessionStorage.removeItem("roles");
         window.location = getLogoutUri(accessToken);
     }
 </script>
