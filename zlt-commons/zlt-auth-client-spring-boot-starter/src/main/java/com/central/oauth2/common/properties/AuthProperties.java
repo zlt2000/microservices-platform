@@ -28,4 +28,9 @@ public class AuthProperties {
      * url权限配置
      */
     private UrlPermissionProperties urlPermission = new UrlPermissionProperties();
+
+    /**
+     * 是否开启登出统一通知
+     */
+    private Boolean logoutNotify = false;
 }
