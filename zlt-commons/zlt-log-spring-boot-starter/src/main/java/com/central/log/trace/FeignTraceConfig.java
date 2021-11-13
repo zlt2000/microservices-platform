@@ -4,6 +4,7 @@ import com.central.log.properties.TraceProperties;
 import feign.RequestInterceptor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
@@ -17,8 +18,9 @@ import javax.annotation.Resource;
  * Blog: https://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
+@Configuration
 @ConditionalOnClass(value = {RequestInterceptor.class})
-public class FeignTraceInterceptor {
+public class FeignTraceConfig {
     @Resource
     private TraceProperties traceProperties;
 
@@ -29,7 +31,9 @@ public class FeignTraceInterceptor {
                 //传递日志traceId
                 String traceId = MDCTraceUtils.getTraceId();
                 if (!StringUtils.isEmpty(traceId)) {
+                    String spanId = MDCTraceUtils.getSpanId();
                     template.header(MDCTraceUtils.TRACE_ID_HEADER, traceId);
+                    template.header(MDCTraceUtils.SPAN_ID_HEADER, spanId);
                 }
             }
         };

@@ -3,6 +3,7 @@ package com.central.log.trace;
 import com.central.log.properties.TraceProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -22,6 +23,7 @@ import java.io.IOException;
  * Blog: https://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
+@Component
 @ConditionalOnClass(value = {HttpServletRequest.class, OncePerRequestFilter.class})
 @Order(value = MDCTraceUtils.FILTER_ORDER)
 public class WebTraceFilter extends OncePerRequestFilter {
@@ -38,14 +40,15 @@ public class WebTraceFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws IOException, ServletException {
         try {
             String traceId = request.getHeader(MDCTraceUtils.TRACE_ID_HEADER);
+            String spanId = request.getHeader(MDCTraceUtils.SPAN_ID_HEADER);
             if (StringUtils.isEmpty(traceId)) {
-                MDCTraceUtils.addTraceId();
+                MDCTraceUtils.addTrace();
             } else {
-                MDCTraceUtils.putTraceId(traceId);
+                MDCTraceUtils.putTrace(traceId, spanId);
             }
             filterChain.doFilter(request, response);
         } finally {
-            MDCTraceUtils.removeTraceId();
+            MDCTraceUtils.removeTrace();
         }
     }
 }
