@@ -12,6 +12,10 @@ function getLogoutUri(accessToken) {
     return uaaUri+'remove/token?redirect_uri=http://127.0.0.1:8081/index.html&access_token='+accessToken;
 }
 
+function getUserInfo(accessToken) {
+    return 'http://127.0.0.1:8081/user?access_token='+accessToken;
+}
+
 function getState() {
     let state='';
     for (let i = 0; i < 6; i++) {

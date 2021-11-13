@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8082
 
 spring:
   application:
@@ -7,8 +7,8 @@ spring:
 
 zlt:
   sso:
-    client-id: app
-    client-secret: app
-    redirect-uri: http://127.0.0.1:8081/callback.html
+    client-id: webApp
+    client-secret: webApp
+    redirect-uri: http://127.0.0.1:8082/callback.html
     access-token-uri: http://127.0.0.1:9900/api-uaa/oauth/token
     jwt-key-uri: http://127.0.0.1:9900/api-uaa/tokens/key

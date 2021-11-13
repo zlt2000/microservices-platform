@@ -1,6 +1,8 @@
 package com.sso.demo.controller;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.StrUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -14,11 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import sun.misc.BASE64Encoder;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author zlt
@@ -27,6 +27,7 @@ import java.util.Map;
  * Blog: https://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
+@Slf4j
 @RestController
 public class ApiController {
     @Value("${zlt.sso.client-id:}")
@@ -44,8 +45,10 @@ public class ApiController {
     @Value("${zlt.sso.user-info-uri:}")
     private String userInfoUri;
 
+    private final static Map<String, Map<String, Object>> localTokenMap = new HashMap<>();
+
     @GetMapping("/token/{code}")
-    public Map tokenInfo(@PathVariable String code) throws UnsupportedEncodingException {
+    public String tokenInfo(@PathVariable String code) throws UnsupportedEncodingException {
         //获取token
         Map tokenMap = getAccessToken(code);
         String accessToken = (String)tokenMap.get("access_token");
@@ -54,10 +57,12 @@ public class ApiController {
         List<String> roles = getRoles(userMap);
 
         Map result = new HashMap(2);
-        result.put("tokenInfo", tokenMap);
-        result.put("userInfo", userMap);
+        String username = (String)userMap.get("username");
+        result.put("username", username);
         result.put("roles", roles);
-        return result;
+        localTokenMap.put(accessToken, result);
+
+        return accessToken;
     }
 
     /**
@@ -101,5 +106,22 @@ public class ApiController {
             });
         }
         return result;
+    }
+
+    @GetMapping("/user")
+    public Map<String, Object> user(HttpServletRequest request) {
+        String token = request.getParameter("access_token");
+        return localTokenMap.get(token);
+    }
+
+    @GetMapping("/logoutNotify")
+    public void logoutNotify(HttpServletRequest request) {
+        String tokens = request.getParameter("tokens");
+        log.info("=====logoutNotify: " + tokens);
+        if (StrUtil.isNotEmpty(tokens)) {
+            for (String accessToken : tokens.split(",")) {
+                localTokenMap.remove(accessToken);
+            }
+        }
     }
 }
