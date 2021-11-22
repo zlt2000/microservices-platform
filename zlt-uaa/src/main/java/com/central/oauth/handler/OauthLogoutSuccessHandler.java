@@ -3,7 +3,7 @@ package com.central.oauth.handler;
 import cn.hutool.core.util.StrUtil;
 import com.central.common.model.Result;
 import com.central.common.utils.JsonUtil;
-import com.central.oauth.service.impl.LogoutNotifyService;
+import com.central.oauth.service.impl.UnifiedLogoutService;
 import com.central.oauth2.common.properties.SecurityProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -31,15 +31,15 @@ public class OauthLogoutSuccessHandler implements LogoutSuccessHandler {
 	private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
 	@Resource
-	private LogoutNotifyService logoutNotifyService;
+	private UnifiedLogoutService unifiedLogoutService;
 
 	@Resource
 	private SecurityProperties securityProperties;
 
 	@Override
 	public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
-		if (securityProperties.getAuth().getLogoutNotify()) {
-			logoutNotifyService.notification();
+		if (securityProperties.getAuth().getUnifiedLogout()) {
+			unifiedLogoutService.allLogout();
 		}
 
 		String redirectUri = request.getParameter("redirect_uri");
