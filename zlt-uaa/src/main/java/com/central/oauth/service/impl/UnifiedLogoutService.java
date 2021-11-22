@@ -4,9 +4,11 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.central.oauth.utils.UsernameHolder;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.ClientDetails;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -15,7 +17,7 @@ import javax.annotation.Resource;
 import java.util.*;
 
 /**
- * 登出通知服务
+ * 统一登出服务
  *
  * @author zlt
  * @version 1.0
@@ -26,7 +28,7 @@ import java.util.*;
  */
 @Slf4j
 @Service
-public class LogoutNotifyService {
+public class UnifiedLogoutService {
     private final static String LOGOUT_NOTIFY_URL_KEY = "LOGOUT_NOTIFY_URL_LIST";
 
     @Resource
@@ -41,7 +43,11 @@ public class LogoutNotifyService {
     @Resource
     private TokenStore tokenStore;
 
-    public void notification() {
+    @Lazy
+    @Resource
+    private DefaultTokenServices tokenServices;
+
+    public void allLogout() {
         Set<String> urls = this.getLogoutNotifyUrl();
         for (String url : urls) {
             taskExecutor.execute(() -> {
@@ -68,8 +74,10 @@ public class LogoutNotifyService {
                 String urls = (String)informationMap.get(LOGOUT_NOTIFY_URL_KEY);
                 if (StrUtil.isNotEmpty(urls)) {
                     Collection<OAuth2AccessToken> tokens = tokenStore.findTokensByClientIdAndUserName(client.getClientId(), username);
-                    String tokenStr = getTokenValueStr(tokens);
-                    if (StrUtil.isNotEmpty(tokenStr)) {
+                    if (CollUtil.isNotEmpty(tokens)) {
+                        //注销所有该用户名下的token
+                        tokens.forEach(t -> tokenServices.revokeToken(t.getValue()));
+                        String tokenStr = getTokenValueStr(tokens);
                         logoutNotifyUrls.addAll(generateNotifyUrls(urls.split(","), tokenStr));
                     }
                 }

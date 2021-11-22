@@ -41,7 +41,7 @@ public class OauthLogoutHandler implements LogoutHandler {
 			token = AuthUtils.extractToken(request);
 		}
 		if(StrUtil.isNotEmpty(token)){
-			if (securityProperties.getAuth().getLogoutNotify()) {
+			if (securityProperties.getAuth().getUnifiedLogout()) {
 				OAuth2Authentication oAuth2Authentication = tokenStore.readAuthentication(token);
 				UsernameHolder.setContext(oAuth2Authentication.getName());
 			}

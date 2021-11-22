@@ -30,7 +30,9 @@ public class AuthProperties {
     private UrlPermissionProperties urlPermission = new UrlPermissionProperties();
 
     /**
-     * 是否开启登出统一通知
+     * 是否开启统一登出
+     * 1. 登出时把同一个用户名下的所有token都注销
+     * 2. 登出信息通知所有单点登录系统
      */
-    private Boolean logoutNotify = false;
+    private Boolean unifiedLogout = false;
 }
