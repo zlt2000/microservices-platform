@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
@@ -26,6 +27,7 @@ import javax.sql.DataSource;
  * Github: https://github.com/zlt2000
  */
 @Slf4j
+@Service
 @ConditionalOnProperty(name = "zlt.audit-log.log-type", havingValue = "db")
 @ConditionalOnClass(JdbcTemplate.class)
 public class DbAuditServiceImpl implements IAuditService {

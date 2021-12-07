@@ -31,7 +31,6 @@ public class RestTemplateAutoConfigure {
     @Autowired
     private RestTemplateProperties restTemplateProperties;
 
-    @LoadBalanced
     @Bean
     public RestTemplate restTemplate(ClientHttpRequestFactory httpRequestFactory) {
         RestTemplate restTemplate = new RestTemplate();

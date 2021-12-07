@@ -24,12 +24,9 @@
         let code = getQueryVariable('code');
 
         //获取token和用户信息
-        $.ajax({url:'http://127.0.0.1:8081/token/'+code, success:function(result) {
+        $.ajax({url:'http://127.0.0.1:'+port+'/token/'+code, success:function(result) {
             console.log(result);
             sessionStorage.setItem('access_token', result.tokenInfo.access_token);
-            sessionStorage.setItem('username', result.userInfo.name);
-            sessionStorage.setItem('loginName', result.userInfo.loginName);
-            sessionStorage.setItem('picture', result.userInfo.picture);
             window.location = sessionStorage.getItem('visitUri');
         }});
     };

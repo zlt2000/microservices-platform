@@ -9,6 +9,7 @@ import com.central.oauth.service.impl.UserDetailServiceFactory;
 import com.central.oauth.service.impl.UserDetailsByNameServiceFactoryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -80,7 +81,8 @@ public class TokenGranterConfig {
      * 授权模式
      */
     @Bean
-    public TokenGranter tokenGranter() {
+    @ConditionalOnMissingBean
+    public TokenGranter tokenGranter(DefaultTokenServices tokenServices) {
         if (tokenGranter == null) {
             tokenGranter = new TokenGranter() {
                 private CompositeTokenGranter delegate;
@@ -88,7 +90,7 @@ public class TokenGranterConfig {
                 @Override
                 public OAuth2AccessToken grant(String grantType, TokenRequest tokenRequest) {
                     if (delegate == null) {
-                        delegate = new CompositeTokenGranter(getAllTokenGranters());
+                        delegate = new CompositeTokenGranter(getAllTokenGranters(tokenServices));
                     }
                     return delegate.grant(grantType, tokenRequest);
                 }
@@ -100,8 +102,7 @@ public class TokenGranterConfig {
     /**
      * 所有授权模式：默认的5种模式 + 自定义的模式
      */
-    private List<TokenGranter> getAllTokenGranters() {
-        AuthorizationServerTokenServices tokenServices = tokenServices();
+    protected List<TokenGranter> getAllTokenGranters(DefaultTokenServices tokenServices) {
         AuthorizationCodeServices authorizationCodeServices = authorizationCodeServices();
         OAuth2RequestFactory requestFactory = requestFactory();
         //获取默认的授权模式
@@ -157,7 +158,9 @@ public class TokenGranterConfig {
         return new DefaultOAuth2RequestFactory(clientDetailsService);
     }
 
-    private DefaultTokenServices createDefaultTokenServices() {
+    @Bean
+    @ConditionalOnMissingBean
+    protected DefaultTokenServices createDefaultTokenServices() {
         DefaultTokenServices tokenServices = new CustomTokenServices(isSingleLogin);
         tokenServices.setTokenStore(tokenStore);
         tokenServices.setSupportRefreshToken(true);

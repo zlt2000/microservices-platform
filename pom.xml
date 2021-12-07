@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.zlt</groupId>
     <artifactId>central-platform</artifactId>
-    <version>5.0.0</version>
+    <version>5.1.0</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -14,8 +14,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>8</java.version>
         <spring-cloud-alibaba-dependencies.version>2021.1</spring-cloud-alibaba-dependencies.version>
-        <spring-boot-dependencies.version>2.5.4</spring-boot-dependencies.version>
-        <spring-cloud-dependencies.version>2020.0.3</spring-cloud-dependencies.version>
+        <spring-boot-dependencies.version>2.5.7</spring-boot-dependencies.version>
+        <spring-cloud-dependencies.version>2020.0.4</spring-cloud-dependencies.version>
         <commons-collections4.version>4.4</commons-collections4.version>
         <swagger.version>2.9.2</swagger.version>
         <swagger.ui.version>1.8.7</swagger.ui.version>

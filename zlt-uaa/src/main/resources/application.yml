@@ -28,6 +28,8 @@ zlt:
     code:
       # 忽略验证码的应用编号
       ignoreClientCode: app
+    auth:
+      unifiedLogout: true
   #多租户配置
   tenant:
     enable: true

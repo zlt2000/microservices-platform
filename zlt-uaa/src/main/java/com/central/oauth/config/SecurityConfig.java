@@ -28,6 +28,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -58,7 +59,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private PasswordEncoder passwordEncoder;
 
 	@Resource
-	private LogoutHandler oauthLogoutHandler;
+	private LogoutHandler logoutHandler;
+
+	@Resource
+	private LogoutSuccessHandler logoutSuccessHandler;
 
 	@Autowired
 	private OpenIdAuthenticationSecurityConfig openIdAuthenticationSecurityConfig;
@@ -108,8 +112,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
 				.logout()
 					.logoutUrl(SecurityConstants.LOGOUT_URL)
-					.logoutSuccessHandler(new OauthLogoutSuccessHandler())
-					.addLogoutHandler(oauthLogoutHandler)
+					.logoutSuccessHandler(logoutSuccessHandler)
+					.addLogoutHandler(logoutHandler)
 					.clearAuthentication(true)
 					.and()
                 .apply(openIdAuthenticationSecurityConfig)
