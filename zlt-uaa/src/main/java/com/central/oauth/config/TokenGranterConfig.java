@@ -139,14 +139,6 @@ public class TokenGranterConfig {
         return tokenGranters;
     }
 
-    private AuthorizationServerTokenServices tokenServices() {
-        if (tokenServices != null) {
-            return tokenServices;
-        }
-        this.tokenServices = createDefaultTokenServices();
-        return tokenServices;
-    }
-
     private AuthorizationCodeServices authorizationCodeServices() {
         if (authorizationCodeServices == null) {
             authorizationCodeServices = new InMemoryAuthorizationCodeServices();
