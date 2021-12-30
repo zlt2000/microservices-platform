@@ -101,7 +101,7 @@ public class RedisClientDetailsService extends JdbcClientDetailsService {
             return;
         }
 
-        list.parallelStream().forEach(client -> redisTemplate.opsForValue().set(clientRedisKey(client.getClientId()), client));
+        list.forEach(client -> redisTemplate.opsForValue().set(clientRedisKey(client.getClientId()), client));
     }
 
     private String clientRedisKey(String clientId) {
