@@ -34,9 +34,8 @@ public class DubboTraceFilter implements Filter {
         } else { //服务消费者逻辑
             String traceId = MDCTraceUtils.getTraceId();
             if (StrUtil.isNotEmpty(traceId)) {
-                String spanId = MDCTraceUtils.getSpanId();
                 invocation.setAttachment(MDCTraceUtils.KEY_TRACE_ID, traceId);
-                invocation.setAttachment(MDCTraceUtils.KEY_SPAN_ID, spanId);
+                invocation.setAttachment(MDCTraceUtils.KEY_SPAN_ID, MDCTraceUtils.getNextSpanId());
             }
         }
         try {

@@ -34,7 +34,7 @@ public class TraceFilter implements GlobalFilter, Ordered {
             ServerHttpRequest serverHttpRequest = exchange.getRequest().mutate()
                     .headers(h -> {
                         h.add(MDCTraceUtils.TRACE_ID_HEADER, MDCTraceUtils.getTraceId());
-                        h.add(MDCTraceUtils.SPAN_ID_HEADER, MDCTraceUtils.getSpanId());
+                        h.add(MDCTraceUtils.SPAN_ID_HEADER, MDCTraceUtils.getNextSpanId());
                     })
                     .build();
 
