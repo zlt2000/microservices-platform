@@ -1,10 +1,10 @@
 package com.central.log.trace;
 
+import cn.hutool.core.util.StrUtil;
 import com.central.log.properties.TraceProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.annotation.Resource;
@@ -41,7 +41,7 @@ public class WebTraceFilter extends OncePerRequestFilter {
         try {
             String traceId = request.getHeader(MDCTraceUtils.TRACE_ID_HEADER);
             String spanId = request.getHeader(MDCTraceUtils.SPAN_ID_HEADER);
-            if (StringUtils.isEmpty(traceId)) {
+            if (StrUtil.isEmpty(traceId)) {
                 MDCTraceUtils.addTrace();
             } else {
                 MDCTraceUtils.putTrace(traceId, spanId);
