@@ -35,7 +35,7 @@ public class SearchServiceImpl implements ISearchService {
     public PageResult<JsonNode> strQuery(String indexName, SearchDto searchDto) throws IOException {
         return SearchBuilder.builder(client, indexName)
                 .setStringQuery(searchDto.getQueryStr())
-                .addSort(searchDto.getSortCol(), SortOrder.DESC)
+                .addSort(searchDto.getSortCol(), searchDto.getSortOrder())
                 .setIsHighlight(searchDto.getIsHighlighter())
                 .getPage(searchDto.getPage(), searchDto.getLimit());
     }

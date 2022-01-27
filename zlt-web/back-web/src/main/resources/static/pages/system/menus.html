@@ -39,14 +39,7 @@
         let form = layui.form;
 
         // 渲染表格
-        var renderTable = function (param) {
-            if (param) {
-                param.access_token = config.getToken().access_token;
-            } else {
-                param = {
-                    access_token: config.getToken().access_token
-                };
-            }
+        var renderTable = function (tenantId) {
             treetable.render({
                 treeColIndex: 1,
                 treeSpid: -1,
@@ -54,7 +47,10 @@
                 treePidName: 'parentId',
                 elem: '#menus-table',
                 url: config.base_server + 'api-user/menus/findAlls',
-                where: param,
+                where: {
+                    access_token: config.getToken().access_token,
+                    tenantId: tenantId
+                },
                 page: false,
                 cols: [[
                     {type: 'numbers'},
@@ -79,7 +75,7 @@
                 ]]
             });
         };
-        renderTable({tenantId: config.clientId});
+        renderTable(config.clientId);
 
         // 获取应用列表
         layer.load(2);
@@ -117,7 +113,7 @@
                         layer.closeAll('loading');
                         if (0 === data.resp_code) {
                             layer.msg(data.resp_msg, {icon: 1, time: 500});
-                            renderTable({tenantId: tenantId});
+                            renderTable(tenantId);
                         } else {
                             layer.msg(data.resp_msg, {icon: 2, time: 500});
                         }
@@ -143,7 +139,7 @@
                 title: title,
                 path: 'pages/system/menus_form.html',
                 finish: function () {
-                    renderTable({tenantId: tenantId});
+                    renderTable(tenantId);
                 }
             });
         };
@@ -186,7 +182,7 @@
 
         // 应用下来框点击事件
         form.on('select(menu_clients)', function(data){
-            renderTable({tenantId: data.value});
+            renderTable(data.value);
         });
     });
 </script>
