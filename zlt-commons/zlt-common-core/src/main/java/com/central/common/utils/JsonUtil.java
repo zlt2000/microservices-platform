@@ -88,15 +88,11 @@ public class JsonUtil {
      * @param json json字符串
      * @param cls 目标对象
      */
-    public static <T> T toObject(String json, Class<T> cls) {
-        if(StringUtils.isBlank(json) || cls == null){
+    public static <T> T toObject(JsonNode json, Class<T> cls) {
+        if(json == null || cls == null){
             return null;
         }
-        try {
-            return MAPPER.readValue(json, cls);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return MAPPER.convertValue(json, cls);
     }
 
     /**
@@ -129,6 +125,22 @@ public class JsonUtil {
         }
         try {
             return MAPPER.readValue(json, typeReference);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 字符串转换为指定对象
+     * @param json json字符串
+     * @param cls 目标对象
+     */
+    public static <T> T toObject(String json, Class<T> cls) {
+        if(StringUtils.isBlank(json) || cls == null){
+            return null;
+        }
+        try {
+            return MAPPER.readValue(json, cls);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
