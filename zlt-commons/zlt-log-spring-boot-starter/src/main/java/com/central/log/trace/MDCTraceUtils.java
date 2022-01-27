@@ -25,10 +25,6 @@ public class MDCTraceUtils {
      * 块id的名称
      */
     public static final String KEY_SPAN_ID = "spanId";
-    /**
-     * 父块id的名称
-     */
-    public static final String KEY_PARENT_ID = "parentId";
 
     /**
      * 日志链路追踪id信息头
@@ -38,10 +34,6 @@ public class MDCTraceUtils {
      * 日志链路块id信息头
      */
     public static final String SPAN_ID_HEADER = "x-spanId-header";
-    /**
-     * 日志链路父块id信息头
-     */
-    public static final String PARENT_ID_HEADER = "x-parentId-header";
 
     /**
      * filter的优先级，值越低越优先
