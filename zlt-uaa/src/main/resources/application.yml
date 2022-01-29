@@ -29,12 +29,12 @@ zlt:
       # 忽略验证码的应用编号
       ignoreClientCode: app
     auth:
+      # 开启统一登出
       unifiedLogout: true
+      # 同账号登录互踢
+      isSingleLogin: true
   #多租户配置
   tenant:
     enable: true
     ignoreTables:
       - oauth_client_details
-  #是否登录同应用同账号互踢
-  uaa:
-    isSingleLogin: false
