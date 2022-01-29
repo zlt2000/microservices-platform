@@ -46,5 +46,5 @@ public class AuthProperties {
      * true: 多个用户使用同一账号登录时共用一个token
      * false: 就算使用同一账号登录时都会新建一个token
      */
-    private Boolean isShareToken = false;
+    private Boolean isShareToken = true;
 }
