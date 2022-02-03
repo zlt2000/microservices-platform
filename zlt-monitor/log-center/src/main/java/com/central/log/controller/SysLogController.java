@@ -58,7 +58,12 @@ public class SysLogController {
     public PageResult<TraceLog> traceLog(SearchDto searchDto) {
         PageResult<JsonNode> pageResult = queryService.strQuery(SYS_LOG_INDEXNAME, searchDto);
         List<JsonNode> jsonNodeList = pageResult.getData();
-        List<TraceLog> logList = traceLogService.transTraceLog(jsonNodeList);
+        List<TraceLog> logList;
+        if (jsonNodeList != null) {
+            logList = traceLogService.transTraceLog(jsonNodeList);
+        } else {
+            logList = new ArrayList<>(0);
+        }
         return PageResult.<TraceLog>builder().data(logList).code(0).count((long) logList.size()).build();
     }
 }

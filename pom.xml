@@ -29,7 +29,7 @@
         <security-jwt.version>1.1.0.RELEASE</security-jwt.version>
         <redisson-starter.version>3.16.1</redisson-starter.version>
         <easyCaptcha.version>1.6.2</easyCaptcha.version>
-        <hutool.version>5.1.4</hutool.version>
+        <hutool.version>5.7.20</hutool.version>
         <mybatis-plus-boot-starter.version>3.4.0</mybatis-plus-boot-starter.version>
         <aliyun-sdk-oss>3.8.1</aliyun-sdk-oss>
         <qiniu-java-sdk>7.2.28</qiniu-java-sdk>
