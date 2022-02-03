@@ -81,6 +81,10 @@
 
         //显示表单弹窗
         let showTraceLog = function (traceId) {
+            console.log(traceId)
+            traceId = traceId.replace('<mark>', '');
+            traceId = traceId.replace('</mark>', '');
+            console.log(traceId)
             admin.putTempData('traceId', traceId);
             admin.popupCenter({
                 title: '日志链路',
