@@ -167,7 +167,7 @@ public class SysMenuController {
         if (CollectionUtil.isEmpty(roles)) {
             return Collections.emptyList();
         }
-        List<SysMenu> menus = menuService.findByRoleCodes(roles.parallelStream().map(SysRole::getCode).collect(Collectors.toSet()), CommonConstant.MENU);
+        List<SysMenu> menus = menuService.findByRoleCodes(roles.stream().map(SysRole::getCode).collect(Collectors.toSet()), CommonConstant.MENU);
         return treeBuilder(menus);
     }
 }

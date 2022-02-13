@@ -1,6 +1,7 @@
 package com.central.oauth.service.impl;
 
 import com.central.common.constant.SecurityConstants;
+import com.central.oauth2.common.properties.AuthProperties;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -41,10 +42,10 @@ public class CustomTokenServices extends DefaultTokenServices {
     /**
      * 是否登录同应用同账号互踢
      */
-    private boolean isSingleLogin;
+    private final AuthProperties authProperties;
 
-    public CustomTokenServices(boolean isSingleLogin) {
-        this.isSingleLogin = isSingleLogin;
+    public CustomTokenServices(AuthProperties auth) {
+        this.authProperties = auth;
     }
 
     @Override
@@ -53,7 +54,7 @@ public class CustomTokenServices extends DefaultTokenServices {
         OAuth2AccessToken existingAccessToken = tokenStore.getAccessToken(authentication);
         OAuth2RefreshToken refreshToken = null;
         if (existingAccessToken != null) {
-            if (isSingleLogin) {
+            if (authProperties.getIsSingleLogin()) {
                 if (existingAccessToken.getRefreshToken() != null) {
                     tokenStore.removeRefreshToken(existingAccessToken.getRefreshToken());
                 }
@@ -67,8 +68,7 @@ public class CustomTokenServices extends DefaultTokenServices {
                     tokenStore.removeRefreshToken(refreshToken);
                 }
                 tokenStore.removeAccessToken(existingAccessToken);
-            }
-            else {
+            } else if (authProperties.getIsShareToken()) {
                 // oidc每次授权都刷新id_token
                 existingAccessToken = refreshIdToken(existingAccessToken, authentication);
                 // Re-store the access token in case the authentication has changed

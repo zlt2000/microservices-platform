@@ -7,8 +7,8 @@ import com.central.oauth.service.IValidateCodeService;
 import com.central.oauth.service.impl.CustomTokenServices;
 import com.central.oauth.service.impl.UserDetailServiceFactory;
 import com.central.oauth.service.impl.UserDetailsByNameServiceFactoryWrapper;
+import com.central.oauth2.common.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -71,11 +71,8 @@ public class TokenGranterConfig {
 
     private TokenGranter tokenGranter;
 
-    /**
-     * 是否登录同应用同账号互踢
-     */
-    @Value("${zlt.uaa.isSingleLogin:false}")
-    private boolean isSingleLogin;
+    @Resource
+    private SecurityProperties securityProperties;
 
     /**
      * 授权模式
@@ -153,7 +150,7 @@ public class TokenGranterConfig {
     @Bean
     @ConditionalOnMissingBean
     protected DefaultTokenServices createDefaultTokenServices() {
-        DefaultTokenServices tokenServices = new CustomTokenServices(isSingleLogin);
+        DefaultTokenServices tokenServices = new CustomTokenServices(securityProperties.getAuth());
         tokenServices.setTokenStore(tokenStore);
         tokenServices.setSupportRefreshToken(true);
         tokenServices.setReuseRefreshToken(reuseRefreshToken);

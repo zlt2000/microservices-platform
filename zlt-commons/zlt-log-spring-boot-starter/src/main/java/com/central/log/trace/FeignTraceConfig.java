@@ -1,11 +1,11 @@
 package com.central.log.trace;
 
+import cn.hutool.core.util.StrUtil;
 import com.central.log.properties.TraceProperties;
 import feign.RequestInterceptor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 
@@ -30,10 +30,9 @@ public class FeignTraceConfig {
             if (traceProperties.getEnable()) {
                 //传递日志traceId
                 String traceId = MDCTraceUtils.getTraceId();
-                if (!StringUtils.isEmpty(traceId)) {
-                    String spanId = MDCTraceUtils.getSpanId();
+                if (StrUtil.isNotEmpty(traceId)) {
                     template.header(MDCTraceUtils.TRACE_ID_HEADER, traceId);
-                    template.header(MDCTraceUtils.SPAN_ID_HEADER, spanId);
+                    template.header(MDCTraceUtils.SPAN_ID_HEADER, MDCTraceUtils.getNextSpanId());
                 }
             }
         };
