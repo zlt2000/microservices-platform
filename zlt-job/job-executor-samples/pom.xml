@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.zlt</groupId>
         <artifactId>zlt-job</artifactId>
-        <version>5.1.0</version>
+        <version>5.2.0</version>
     </parent>
     <artifactId>job-executor-samples</artifactId>
     <packaging>jar</packaging>
