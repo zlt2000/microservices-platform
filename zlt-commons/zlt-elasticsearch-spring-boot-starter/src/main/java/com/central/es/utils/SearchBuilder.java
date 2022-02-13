@@ -51,6 +51,10 @@ public class SearchBuilder {
      * 高亮后缀
      */
     private static final String HIGHLIGHTER_POST_TAGS = "</mark>";
+    /**
+     * 排序顺序
+     */
+    private static final String SORT_ORDER_ASC = "ASC";
 
     private SearchRequest searchRequest;
     private SearchSourceBuilder searchBuilder;
@@ -144,9 +148,15 @@ public class SearchBuilder {
      * @param field 排序字段
      * @param order 顺序方向
      */
-    public SearchBuilder addSort(String field, SortOrder order) {
+    public SearchBuilder addSort(String field, String order) {
         if (StrUtil.isNotEmpty(field) && order != null) {
-            searchBuilder.sort(field, order);
+            SortOrder so;
+            if (SORT_ORDER_ASC.equals(order)) {
+                so = SortOrder.ASC;
+            } else {
+                so = SortOrder.DESC;
+            }
+            searchBuilder.sort(field, so);
         }
         return this;
     }

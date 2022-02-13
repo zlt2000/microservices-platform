@@ -134,13 +134,13 @@ central-platform -- 父项目，公共依赖
         <td><img alt="首页" src="https://gitee.com/zlt2000/images/raw/master/%E9%A6%96%E9%A1%B5.png"/></td>
         <td><img alt="用户搜索" src="https://gitee.com/zlt2000/images/raw/master/%E7%94%A8%E6%88%B7%E6%90%9C%E7%B4%A2.png"/></td>
     </tr>
+    <tr>
+        <td><img alt="日志系统" src="https://gitee.com/zlt2000/images/raw/master/%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F.png"/></td>
+        <td><img alt="日志链路" src="https://gitee.com/zlt2000/images/raw/master/%E6%97%A5%E5%BF%97%E9%93%BE%E8%B7%AF.png"/></td>
+    </tr>
 	<tr>
         <td><img alt="server_metrics" src="https://gitee.com/zlt2000/images/raw/master/server_metrics.png"/></td>
         <td><img alt="application_metrics" src="https://gitee.com/zlt2000/images/raw/master/application_metrics.png"/></td>
-    </tr>
-	<tr>
-        <td><img alt="持续集成2" src="https://gitee.com/zlt2000/images/raw/master/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%902.png"/></td>
-        <td><img alt="sonar结果" src="https://gitee.com/zlt2000/images/raw/master/sonar%E7%BB%93%E6%9E%9C.png"/></td>
     </tr>
     <tr>
         <td><img alt="skywalking首页.png" src="https://gitee.com/zlt2000/images/raw/master/skywalking%E9%A6%96%E9%A1%B5.png"/></td>

@@ -1,0 +1,45 @@
+<!-- 数据表格 -->
+<table class="layui-table" id="trace-table" lay-filter="trace-table"></table>
+
+<script>
+    layui.use(['config', 'admin', 'table', 'treetable'],function () {
+        let layer = layui.layer;
+        let treetable = layui.treetable;
+        let config = layui.config;
+        let admin = layui.admin;
+
+        let traceId = admin.getTempData('traceId');
+        // 渲染表格
+        let renderTable = function () {
+            layer.load(2);
+            treetable.render({
+                treeColIndex: 1,
+                treeSpid: '-1',
+                treeIdName: 'spanId',
+                treePidName: 'parentId',
+                elem: '#trace-table',
+                url: config.base_server + 'api-log/traceLog',
+                where: {
+                    access_token: config.getToken().access_token,
+                    queryStr: 'traceId:'+traceId,
+                    sortCol: 'timestamp',
+                    sortOrder: 'ASC'
+                },
+                page: false,
+                cols: [[
+                    {type: 'numbers'},
+                    {field: 'appName', sort: true, title: '应用名', width: 220},
+                    {field: 'spanId', sort: false, title: 'spanId', width: 130},
+                    {field: 'serverIp', sort: true, title: '服务ip', width: 150},
+                    {field: 'serverPort', sort: true, title: '服务端口', width: 120}
+                ]],
+                done: function() {
+                    layer.closeAll('loading');
+                }
+            });
+        };
+        if (traceId) {
+            renderTable();
+        }
+    });
+</script>

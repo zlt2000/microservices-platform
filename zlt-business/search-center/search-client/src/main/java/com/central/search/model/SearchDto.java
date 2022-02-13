@@ -2,8 +2,6 @@ package com.central.search.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.io.Serializable;
 
@@ -31,6 +29,10 @@ public class SearchDto implements Serializable {
      * 排序字段
      */
     private String sortCol;
+    /**
+     * 排序顺序
+     */
+    private String sortOrder = "DESC";
     /**
      * 是否显示高亮
      */
