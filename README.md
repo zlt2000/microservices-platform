@@ -1,7 +1,7 @@
 #  zlt-microservices-platform
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Version-5.1.0-critical" alt="Downloads"/>
+  <img src="https://img.shields.io/badge/Version-5.2.0-critical" alt="Downloads"/>
   <img src="https://img.shields.io/badge/Spring%20Boot-2.5.7-blue" alt="Downloads"/>
   <img src="https://img.shields.io/badge/Spring%20Cloud-2020.0.4-blue" alt="Downloads"/>
   <img src="https://img.shields.io/badge/Spring%20Cloud%20Alibaba-2021.1-blue" alt="Downloads"/>
@@ -13,6 +13,7 @@
     <img src="https://img.shields.io/github/stars/zlt2000/microservices-platform.svg?style=social" alt="github star"/>
   </a>
 </p>
+
 
 
 
