@@ -54,9 +54,10 @@ public class RedisKeyExpirationListener extends KeyExpirationEventMessageListene
         }
         String accessValue = expiredKey.substring(expiredKey.indexOf(":") + 1);
         // 分布式集群部署下防止一个过期被多个服务重复消费
-        String qc = redisRepository.getAndSet("qc:" + accessValue, "1");
-        if (StringUtils.isNotEmpty(qc) && "1".equals(qc)) {
-            log.debug("其他节点已经处理了该数据，次数跳过");
+        String qc = "qc:" + accessValue;
+        String oldLock = redisRepository.getAndSet(qc, "1");
+        if (StringUtils.isNotEmpty(oldLock) && "1".equals(oldLock)) {
+            log.debug("其他节点已经处理了该数据，跳过");
             return;
         }
         byte[] accessBakKey = serializeKey(SecurityConstants.ACCESS_BAK + accessValue);
@@ -77,7 +78,7 @@ public class RedisKeyExpirationListener extends KeyExpirationEventMessageListene
         } catch (Exception e) {
             log.error(e.getMessage());
         } finally {
-            conn.del();
+            conn.del(oldLock.getBytes());
             conn.close();
         }
 

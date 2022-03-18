@@ -186,16 +186,19 @@ public class RedisRepository {
      * @param value
      * @return
      */
-    public String getAndSet(final String key,Object value) {
+    public String getAndSet(final String key,String value) {
         String result = null;
         if (StringUtils.isEmpty(key)){
-            log.error("key不能为空");
+            log.error("非法入参");
             return null;
         }
         try {
-            result = (String) redisTemplate.opsForValue().getAndSet(key, value);
+            Object object =redisTemplate.opsForValue().getAndSet(key, value);
+            if (object !=null){
+                result = object.toString();
+            }
         }catch (Exception e){
-            e.printStackTrace();
+            log.error("redisTemplate操作异常",e);
         }
         return result;
     }
