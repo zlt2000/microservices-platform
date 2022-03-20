@@ -78,7 +78,7 @@ public class RedisKeyExpirationListener extends KeyExpirationEventMessageListene
         } catch (Exception e) {
             log.error(e.getMessage());
         } finally {
-            conn.del(oldLock.getBytes());
+            conn.del(serializeKey(qc));
             conn.close();
         }
 
