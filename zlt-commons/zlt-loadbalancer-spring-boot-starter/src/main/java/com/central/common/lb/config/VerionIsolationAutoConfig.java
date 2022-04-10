@@ -7,12 +7,12 @@ import org.springframework.cloud.loadbalancer.annotation.LoadBalancerClients;
 import org.springframework.context.annotation.Import;
 
 /**
- * 示例
+ * 
  *
  * @author jarvis create by 2022/4/10
  */
 @LoadBalancerClients(defaultConfiguration = VersionLoadBalancerConfig.class)
 @ConditionalOnProperty(prefix = ConfigConstants.CONFIG_LOADBALANCE_ISOLATION, name = "enabled", havingValue = "true", matchIfMissing = false)
 @Import({VersionRegisterBeanPostProcessor.class, LbIsolationFilter.class})
-public class VerionAutoRegistryConfig {
+public class VerionIsolationAutoConfig {
 }
