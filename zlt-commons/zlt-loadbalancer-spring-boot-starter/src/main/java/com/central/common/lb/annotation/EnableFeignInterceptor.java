@@ -1,5 +1,6 @@
 package com.central.common.lb.annotation;
 
+import com.central.common.lb.config.FeignHttpImportBeanDefinitionRegistrar;
 import com.central.common.lb.config.FeignHttpInterceptorConfig;
 import com.central.common.lb.config.FeignInterceptorConfig;
 import org.springframework.context.annotation.Import;
@@ -17,7 +18,8 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import({FeignInterceptorConfig.class, FeignHttpInterceptorConfig.class})
+@Import(FeignHttpImportBeanDefinitionRegistrar.class)
+//@Import({FeignInterceptorConfig.class, FeignHttpInterceptorConfig.class})
 public @interface EnableFeignInterceptor {
 
 }
