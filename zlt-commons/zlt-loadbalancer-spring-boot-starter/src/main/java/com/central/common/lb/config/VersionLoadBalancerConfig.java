@@ -15,8 +15,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.util.ClassUtils;
-import java.util.Objects;
-
 
 /**
  * 版本控制的路由选择类配置
