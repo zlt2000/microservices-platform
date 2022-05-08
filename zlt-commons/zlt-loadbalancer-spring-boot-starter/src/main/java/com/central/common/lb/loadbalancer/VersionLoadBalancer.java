@@ -3,15 +3,15 @@ package com.central.common.lb.loadbalancer;
 import com.central.common.constant.CommonConstant;
 import com.central.common.context.LbIsolationContextHolder;
 import com.central.common.lb.chooser.IRuleChooser;
+import com.central.common.lb.utils.QueryUtils;
+import com.google.common.collect.Maps;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.loadbalancer.DefaultResponse;
-import org.springframework.cloud.client.loadbalancer.EmptyResponse;
-import org.springframework.cloud.client.loadbalancer.Request;
-import org.springframework.cloud.client.loadbalancer.Response;
+import org.springframework.cloud.client.loadbalancer.*;
 import org.springframework.cloud.loadbalancer.core.ReactorServiceInstanceLoadBalancer;
 import org.springframework.cloud.loadbalancer.core.RoundRobinLoadBalancer;
 import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
@@ -19,10 +19,8 @@ import org.springframework.cloud.loadbalancer.support.SimpleObjectProvider;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.net.URI;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
@@ -50,9 +48,24 @@ public class VersionLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 
     @Override
     public Mono<Response<ServiceInstance>> choose(Request request) {
-        return serviceInstanceListSuppliers.getIfAvailable().get(request).next().map(this::getInstanceResponse);
+        // 从request中获取版本，兼容webflux方式
+        RequestData requestData = ((RequestDataContext) (request.getContext())).getClientRequest();
+        String version = getVersionFromRequestData(requestData);
+        log.debug("选择的版本号为：{}", version);
+        return serviceInstanceListSuppliers.getIfAvailable().get(request).next().map(instanceList->{
+            return getInstanceResponse(instanceList, version);
+        });
     }
 
+    private String getVersionFromRequestData(RequestData requestData){
+        Map<String, String> queryMap = QueryUtils.getQueryMap(requestData.getUrl());
+        if(MapUtils.isNotEmpty(queryMap)&& queryMap.containsKey(CommonConstant.Z_L_T_VERSION)&& StringUtils.isNotBlank(queryMap.get(CommonConstant.Z_L_T_VERSION))){
+            return queryMap.get(CommonConstant.Z_L_T_VERSION);
+        }else if(requestData.getHeaders().containsKey(CommonConstant.Z_L_T_VERSION)){
+            return requestData.getHeaders().get(CommonConstant.Z_L_T_VERSION).get(0);
+        }
+        return null;
+    }
     /**
      * 1. 先获取到拦截的版本，如果不为空的话就将service列表过滤，寻找metadata中哪个服务是配置的版本，
      * 如果版本为空则不需要进行过滤直接提交给service选择器进行选择
@@ -61,9 +74,7 @@ public class VersionLoadBalancer implements ReactorServiceInstanceLoadBalancer {
      * @param instances
      * @return
      */
-    private Response<ServiceInstance> getInstanceResponse(List<ServiceInstance>instances){
-        String version = LbIsolationContextHolder.getVersion();
-        log.debug("选择的版本号为：{}", version);
+    private Response<ServiceInstance> getInstanceResponse(List<ServiceInstance>instances, String version){
         List<ServiceInstance> filteredServiceIstanceList = instances;
         if(StringUtils.isNotBlank(version)){
             if(CollectionUtils.isNotEmpty(instances)){
