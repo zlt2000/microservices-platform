@@ -35,7 +35,7 @@
 		<commons-lang3.version>3.8.1</commons-lang3.version>
 		<groovy.version>2.5.5</groovy.version>
 		<quartz.version>2.3.0</quartz.version>
-		<jackson.version>2.9.8</jackson.version>
+		<jackson.version>2.12.6.1</jackson.version>
 	</properties>
 
 	<profiles>
