@@ -87,7 +87,8 @@ public class VersionLoadBalancer implements ReactorServiceInstanceLoadBalancer {
         // 如果没有找到对应的版本实例时，选择版本号为空的或这版本为default的实例
         if(CollectionUtils.isEmpty(filteredServiceIstanceList)){
             filteredServiceIstanceList = instances.stream()
-                    .filter(item->!item.getMetadata().containsKey(CommonConstant.METADATA_VERSION)
+                    .filter(item->!item.getMetadata().containsKey(CommonConstant.METADATA_VERSION)||
+                            StringUtils.isBlank(item.getMetadata().get(CommonConstant.METADATA_VERSION))
                             || "default".equals(item.getMetadata().get(CommonConstant.METADATA_VERSION)))
                     .collect(Collectors.toList());
         }
