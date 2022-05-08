@@ -2,7 +2,10 @@ package com.central.common.lb.config;
 
 import com.central.common.constant.CommonConstant;
 import com.central.common.constant.SecurityConstants;
+import com.central.common.lb.utils.QueryUtils;
 import feign.RequestInterceptor;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -12,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 
 /**
  * feign拦截器，只包含http相关数据
@@ -37,6 +41,7 @@ public class FeignHttpInterceptorConfig {
      * 使用feign client访问别的微服务时，将上游传过来的access_token、username、roles等信息放入header传递给下一个服务
      */
     @Bean
+    @ConditionalOnClass(HttpServletRequest.class)
     public RequestInterceptor httpFeignInterceptor() {
         return template -> {
             ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder
