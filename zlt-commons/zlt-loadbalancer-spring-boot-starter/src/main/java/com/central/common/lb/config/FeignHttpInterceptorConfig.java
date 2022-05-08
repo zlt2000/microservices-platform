@@ -60,16 +60,6 @@ public class FeignHttpInterceptorConfig {
                         }
                     }
                 }
-                // 增加从query上获取版本
-                String queryString = request.getQueryString();
-                if(StringUtils.isNotBlank(queryString)){
-                    Map<String, String> map = QueryUtils.getQueryMap(queryString);
-                    for (String requestHeader : requestHeaders) {
-                        if(map.containsKey(requestHeader)){
-                            template.header(requestHeader, map.get(requestHeader));
-                        }
-                    }
-                }
                 //传递access_token，无网络隔离时需要传递
                 /*
                 String token = extractHeaderToken(request);
