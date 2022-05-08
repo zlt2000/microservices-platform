@@ -42,7 +42,7 @@ public class SuperServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M,
                 ) {
             if (lock != null) {
                 //判断记录是否已存在
-                int count = super.count(countWrapper);
+                long count = super.count(countWrapper);
                 if (count == 0) {
                     return super.save(entity);
                 } else {
