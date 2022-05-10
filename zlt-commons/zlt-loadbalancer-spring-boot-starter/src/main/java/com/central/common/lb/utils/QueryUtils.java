@@ -1,6 +1,7 @@
 package com.central.common.lb.utils;
 
-import org.apache.commons.lang3.StringUtils;
+
+import cn.hutool.core.util.StrUtil;
 
 import java.net.URI;
 import java.util.Arrays;
@@ -21,9 +22,9 @@ public class QueryUtils {
      * @return
      */
     public static Map<String, String> getQueryMap(String queryString){
-        if(StringUtils.isNotBlank(queryString)){
+        if(StrUtil.isNotBlank(queryString)){
             return Arrays.stream(queryString.split("&")).map(item -> item.split("="))
-                    .collect(Collectors.toMap(key -> key[0], value -> value.length > 1 && StringUtils.isNotBlank(value[1]) ? value[1] : ""));
+                    .collect(Collectors.toMap(key -> key[0], value -> value.length > 1 && StrUtil.isNotBlank(value[1]) ? value[1] : ""));
         }
         return Collections.emptyMap();
     }

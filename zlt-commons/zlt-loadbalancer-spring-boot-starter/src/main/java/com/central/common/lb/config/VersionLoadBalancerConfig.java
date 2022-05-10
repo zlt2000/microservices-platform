@@ -1,11 +1,11 @@
 package com.central.common.lb.config;
 
+import cn.hutool.core.util.StrUtil;
 import com.central.common.constant.ConfigConstants;
 import com.central.common.lb.chooser.IRuleChooser;
 import com.central.common.lb.chooser.RoundRuleChooser;
 import com.central.common.lb.loadbalancer.VersionLoadBalancer;
-import lombok.extern.log4j.Log4j2;
-import org.apache.commons.lang3.StringUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.loadbalancer.core.ReactorServiceInstanceLoadBalancer;
@@ -23,7 +23,7 @@ import java.util.Objects;
  *
  * @author jarvis create by 2022/3/9
  */
-@Log4j2
+@Slf4j
 public class VersionLoadBalancerConfig{
 
     private IRuleChooser defaultRuleChooser = null;
@@ -36,7 +36,7 @@ public class VersionLoadBalancerConfig{
         IRuleChooser chooser = new RoundRuleChooser();
         if (environment.containsProperty(ConfigConstants.CONFIG_LOADBALANCE_ISOLATION_CHOOSER)) {
             String chooserRuleClassString = environment.getProperty(ConfigConstants.CONFIG_LOADBALANCE_ISOLATION_CHOOSER);
-            if(StringUtils.isNotBlank(chooserRuleClassString)){
+            if(StrUtil.isNotBlank(chooserRuleClassString)){
                 try {
                     Class<?> ruleClass = ClassUtils.forName(chooserRuleClassString, context.getClassLoader());
                     chooser = (IRuleChooser) ruleClass.newInstance();

@@ -1,7 +1,7 @@
 package com.central.common.lb.config;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
-import com.alibaba.nacos.common.utils.StringUtils;
 import com.central.common.constant.CommonConstant;
 import com.central.common.constant.ConfigConstants;
 import org.springframework.beans.BeansException;
@@ -18,7 +18,7 @@ public class VersionRegisterBeanPostProcessor  implements BeanPostProcessor {
     private String version;
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        if(bean instanceof NacosDiscoveryProperties && StringUtils.isNotBlank(version)){
+        if(bean instanceof NacosDiscoveryProperties && StrUtil.isNotBlank(version)){
             NacosDiscoveryProperties nacosDiscoveryProperties = (NacosDiscoveryProperties) bean;
             nacosDiscoveryProperties.getMetadata().putIfAbsent(CommonConstant.METADATA_VERSION, version);
         }
