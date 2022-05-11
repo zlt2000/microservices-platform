@@ -1,7 +1,7 @@
 package com.central.common.lb.chooser;
 
 import com.alibaba.nacos.common.utils.CollectionUtils;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.client.ServiceInstance;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  *
  * @author jarvis create by 2022/3/13
  */
-@Log4j2
+@Slf4j
 public class RoundRuleChooser implements IRuleChooser{
 
     private AtomicInteger position;
