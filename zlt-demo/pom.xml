@@ -22,5 +22,7 @@
         <module>sso-demo</module>
         <!-- dubbo集成demo -->
         <module>dubbo-demo</module>
+        <!-- webSocket集成demo -->
+        <module>websocket-demo</module>
     </modules>
 </project>
