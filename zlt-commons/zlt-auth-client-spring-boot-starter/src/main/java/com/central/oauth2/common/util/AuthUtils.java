@@ -74,7 +74,7 @@ public class AuthUtils {
      * 校验accessToken
      */
     public static void checkAccessToken(HttpServletRequest request) {
-        String accessToken = extractHeaderToken(request);
+        String accessToken = extractToken(request);
         checkAccessToken(accessToken);
     }
 
