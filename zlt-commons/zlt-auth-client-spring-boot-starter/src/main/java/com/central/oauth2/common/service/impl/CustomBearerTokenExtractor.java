@@ -1,6 +1,7 @@
 package com.central.oauth2.common.service.impl;
 
 import com.central.oauth2.common.properties.SecurityProperties;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.provider.authentication.BearerTokenExtractor;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
  * Blog: https://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
+@ConditionalOnClass(HttpServletRequest.class)
 @Component
 public class CustomBearerTokenExtractor extends BearerTokenExtractor {
     @Resource
