@@ -3,7 +3,7 @@ package com.central.common.lb.loadbalancer;
 import com.central.common.constant.CommonConstant;
 import com.central.common.lb.chooser.IRuleChooser;
 import com.central.common.lb.utils.QueryUtils;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  *
  * @author jarvis create by 2022/3/9
  */
-@Log4j2
+@Slf4j
 public class VersionLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 
     private final static String KEY_DEFAULT = "default";

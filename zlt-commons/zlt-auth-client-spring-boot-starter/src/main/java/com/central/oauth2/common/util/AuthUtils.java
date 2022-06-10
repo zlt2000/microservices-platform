@@ -3,11 +3,15 @@ package com.central.oauth2.common.util;
 import com.central.common.constant.CommonConstant;
 import com.central.common.constant.SecurityConstants;
 import com.central.common.model.SysUser;
+import com.central.common.utils.SpringUtil;
 import com.central.oauth2.common.token.CustomWebAuthenticationDetails;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
 import org.springframework.security.oauth2.common.exceptions.UnapprovedClientAuthenticationException;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
@@ -64,6 +68,29 @@ public class AuthUtils {
             }
         }
         return null;
+    }
+
+    /**
+     * 校验accessToken
+     */
+    public static void checkAccessToken(HttpServletRequest request) {
+        String accessToken = extractToken(request);
+        checkAccessToken(accessToken);
+    }
+
+    public static void checkAccessToken(String accessTokenValue) {
+        TokenStore tokenStore = SpringUtil.getBean(TokenStore.class);
+        OAuth2AccessToken accessToken = tokenStore.readAccessToken(accessTokenValue);
+        if (accessToken == null || accessToken.getValue() == null) {
+            throw new InvalidTokenException("Invalid access token: " + accessTokenValue);
+        } else if (accessToken.isExpired()) {
+            tokenStore.removeAccessToken(accessToken);
+            throw new InvalidTokenException("Access token expired: " + accessTokenValue);
+        }
+        OAuth2Authentication result = tokenStore.readAuthentication(accessToken);
+        if (result == null) {
+            throw new InvalidTokenException("Invalid access token: " + accessTokenValue);
+        }
     }
 
     /**
