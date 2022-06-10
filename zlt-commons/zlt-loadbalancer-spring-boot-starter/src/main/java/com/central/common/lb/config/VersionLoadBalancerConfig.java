@@ -4,7 +4,7 @@ import com.central.common.constant.ConfigConstants;
 import com.central.common.lb.chooser.IRuleChooser;
 import com.central.common.lb.chooser.RoundRuleChooser;
 import com.central.common.lb.loadbalancer.VersionLoadBalancer;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -21,7 +21,7 @@ import org.springframework.util.ClassUtils;
  *
  * @author jarvis create by 2022/3/9
  */
-@Log4j2
+@Slf4j
 public class VersionLoadBalancerConfig{
 
     private IRuleChooser defaultRuleChooser = null;

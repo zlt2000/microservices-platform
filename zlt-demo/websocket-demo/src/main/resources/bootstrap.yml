@@ -1,0 +1,14 @@
+server:
+  port: 8092
+
+spring:
+  application:
+    name: zlt-websocket
+  main:
+    allow-bean-definition-overriding: true
+
+zlt:
+  security:
+    ignore:
+      httpUrls: >
+        /websocket/**
