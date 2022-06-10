@@ -40,7 +40,6 @@ public class MybatisPlusAutoConfigure {
     @Bean
     public MybatisPlusInterceptor paginationInterceptor() {
         MybatisPlusInterceptor mpInterceptor = new MybatisPlusInterceptor();
-        mpInterceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
         boolean enableTenant = tenantProperties.getEnable();
         //是否开启多租户隔离
         if (enableTenant) {
@@ -48,6 +47,7 @@ public class MybatisPlusAutoConfigure {
                     tenantLineHandler, tenantProperties.getIgnoreSqls());
             mpInterceptor.addInnerInterceptor(tenantInterceptor);
         }
+        mpInterceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
         return mpInterceptor;
     }
 
