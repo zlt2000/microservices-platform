@@ -20,9 +20,18 @@ http://localhost:8093/test/notAuth
 
 &nbsp;
 ### 3.2. 测试接口二
+通过 @LoginUser 获取当前登录人
+
 http://localhost:8093/test/auth?access_token=xxx
 > - xxx 需替换为正确的 access_token
 > - 可以通过修改 `bootstrap.yml` 文件中的 `zlt.security.ignore.httpUrls` 参数添加排除校验的url。
+
+&nbsp;
+### 3.3. 测试接口三
+通过 LoginUserContextHolder 获取当前登录人
+
+http://localhost:8093/test/auth2?access_token=xxx
+> - xxx 需替换为正确的 access_token
 
 &nbsp;
 ## 四、获取access_token

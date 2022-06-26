@@ -15,9 +15,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-import java.util.Enumeration;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 认证授权相关工具类
