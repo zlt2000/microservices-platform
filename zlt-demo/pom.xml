@@ -24,5 +24,7 @@
         <module>dubbo-demo</module>
         <!-- webSocket集成demo -->
         <module>websocket-demo</module>
+        <!-- 资源服务器demo -->
+        <module>resources-server-demo</module>
     </modules>
 </project>
