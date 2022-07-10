@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.zlt</groupId>
         <artifactId>central-platform</artifactId>
-        <version>5.3.0</version>
+        <version>5.4.0</version>
     </parent>
     <artifactId>zlt-demo</artifactId>
     <packaging>pom</packaging>
@@ -24,5 +24,7 @@
         <module>dubbo-demo</module>
         <!-- webSocket集成demo -->
         <module>websocket-demo</module>
+        <!-- 资源服务器demo -->
+        <module>resources-server-demo</module>
     </modules>
 </project>
