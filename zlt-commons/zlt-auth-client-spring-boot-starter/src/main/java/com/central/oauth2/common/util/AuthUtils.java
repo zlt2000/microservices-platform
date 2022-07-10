@@ -2,11 +2,14 @@ package com.central.oauth2.common.util;
 
 import com.central.common.constant.CommonConstant;
 import com.central.common.constant.SecurityConstants;
+import com.central.common.context.LoginUserContextHolder;
 import com.central.common.model.SysUser;
 import com.central.common.utils.SpringUtil;
 import com.central.oauth2.common.token.CustomWebAuthenticationDetails;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
 import org.springframework.security.oauth2.common.exceptions.UnapprovedClientAuthenticationException;
@@ -15,15 +18,16 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-import java.util.Enumeration;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 认证授权相关工具类
  *
  * @author zlt
  * @date 2018/5/13
+ * <p>
+ * Blog: https://zlt2000.gitee.io
+ * Github: https://github.com/zlt2000
  */
 @Slf4j
 public class AuthUtils {
@@ -73,12 +77,12 @@ public class AuthUtils {
     /**
      * 校验accessToken
      */
-    public static void checkAccessToken(HttpServletRequest request) {
+    public static SysUser checkAccessToken(HttpServletRequest request) {
         String accessToken = extractToken(request);
-        checkAccessToken(accessToken);
+        return checkAccessToken(accessToken);
     }
 
-    public static void checkAccessToken(String accessTokenValue) {
+    public static SysUser checkAccessToken(String accessTokenValue) {
         TokenStore tokenStore = SpringUtil.getBean(TokenStore.class);
         OAuth2AccessToken accessToken = tokenStore.readAccessToken(accessTokenValue);
         if (accessToken == null || accessToken.getValue() == null) {
@@ -91,6 +95,17 @@ public class AuthUtils {
         if (result == null) {
             throw new InvalidTokenException("Invalid access token: " + accessTokenValue);
         }
+        return setContext(result);
+    }
+
+    /**
+     * 用户信息赋值 context 对象
+     */
+    public static SysUser setContext(Authentication authentication) {
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        SysUser user = getUser(authentication);
+        LoginUserContextHolder.setUser(user);
+        return user;
     }
 
     /**
@@ -132,6 +147,21 @@ public class AuthUtils {
             username = (String) principal;
         }
         return username;
+    }
+
+    /**
+     * 获取登陆的用户对象
+     */
+    public static SysUser getUser(Authentication authentication) {
+        SysUser user = null;
+        if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
+            Object principal = authentication.getPrincipal();
+            //客户端模式只返回一个clientId
+            if (principal instanceof SysUser) {
+                user = (SysUser)principal;
+            }
+        }
+        return user;
     }
 
     /**

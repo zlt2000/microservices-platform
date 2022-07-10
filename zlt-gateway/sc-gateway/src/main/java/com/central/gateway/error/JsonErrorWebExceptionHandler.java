@@ -1,7 +1,7 @@
 package com.central.gateway.error;
 
 import org.springframework.boot.autoconfigure.web.ErrorProperties;
-import org.springframework.boot.autoconfigure.web.ResourceProperties;
+import org.springframework.boot.autoconfigure.web.WebProperties;
 import org.springframework.boot.autoconfigure.web.reactive.error.DefaultErrorWebExceptionHandler;
 import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.reactive.error.ErrorAttributes;
@@ -23,7 +23,7 @@ import java.util.Map;
  * Github: https://github.com/zlt2000
  */
 public class JsonErrorWebExceptionHandler extends DefaultErrorWebExceptionHandler {
-    public JsonErrorWebExceptionHandler(ErrorAttributes errorAttributes, ResourceProperties resourceProperties,
+    public JsonErrorWebExceptionHandler(ErrorAttributes errorAttributes, WebProperties.Resources resourceProperties,
                                         ErrorProperties errorProperties, ApplicationContext applicationContext) {
         super(errorAttributes, resourceProperties, errorProperties, applicationContext);
     }
