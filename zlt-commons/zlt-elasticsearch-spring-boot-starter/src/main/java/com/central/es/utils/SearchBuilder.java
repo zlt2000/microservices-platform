@@ -22,8 +22,7 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 import org.elasticsearch.search.sort.SortOrder;
-import org.springframework.data.elasticsearch.ElasticsearchException;
-import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
+import org.springframework.data.elasticsearch.UncategorizedElasticsearchException;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -52,6 +51,10 @@ public class SearchBuilder {
      * 高亮后缀
      */
     private static final String HIGHLIGHTER_POST_TAGS = "</mark>";
+    /**
+     * 排序顺序
+     */
+    private static final String SORT_ORDER_ASC = "ASC";
 
     private SearchRequest searchRequest;
     private SearchSourceBuilder searchBuilder;
@@ -65,26 +68,24 @@ public class SearchBuilder {
 
     /**
      * 生成SearchBuilder实例
-     * @param elasticsearchTemplate
+     * @param client
      * @param indexName
      */
-    public static SearchBuilder builder(ElasticsearchRestTemplate elasticsearchTemplate, String indexName) {
+    public static SearchBuilder builder(RestHighLevelClient client, String indexName) {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         SearchRequest searchRequest = new SearchRequest(indexName);
         searchRequest.source(searchSourceBuilder);
-        RestHighLevelClient client = elasticsearchTemplate.getClient();
         return new SearchBuilder(searchRequest, searchSourceBuilder, client);
     }
 
     /**
      * 生成SearchBuilder实例
-     * @param elasticsearchTemplate
+     * @param client
      */
-    public static SearchBuilder builder(ElasticsearchRestTemplate elasticsearchTemplate) {
+    public static SearchBuilder builder(RestHighLevelClient client) {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         SearchRequest searchRequest = new SearchRequest();
         searchRequest.source(searchSourceBuilder);
-        RestHighLevelClient client = elasticsearchTemplate.getClient();
         return new SearchBuilder(searchRequest, searchSourceBuilder, client);
     }
 
@@ -147,9 +148,15 @@ public class SearchBuilder {
      * @param field 排序字段
      * @param order 顺序方向
      */
-    public SearchBuilder addSort(String field, SortOrder order) {
+    public SearchBuilder addSort(String field, String order) {
         if (StrUtil.isNotEmpty(field) && order != null) {
-            searchBuilder.sort(field, order);
+            SortOrder so;
+            if (SORT_ORDER_ASC.equals(order)) {
+                so = SortOrder.ASC;
+            } else {
+                so = SortOrder.DESC;
+            }
+            searchBuilder.sort(field, so);
         }
         return this;
     }
@@ -266,7 +273,7 @@ public class SearchBuilder {
                     }
                 }
             } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-                throw new ElasticsearchException("failed to set highlighted value for field: " + field.getName()
+                throw new UncategorizedElasticsearchException("failed to set highlighted value for field: " + field.getName()
                         + " with value: " + Arrays.toString(field.getFragments()), e);
             }
         }

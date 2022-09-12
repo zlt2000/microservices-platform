@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.central.common.lb.RestTemplateAutoConfigure,\
+com.central.common.lb.config.VerionIsolationAutoConfig

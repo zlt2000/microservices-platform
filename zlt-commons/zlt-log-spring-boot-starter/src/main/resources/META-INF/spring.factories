@@ -2,7 +2,4 @@ org.springframework.context.ApplicationContextInitializer=\
 com.central.log.config.TtlMDCAdapterInitializer
 
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.central.log.config.LogAutoConfigure,\
-com.central.log.service.impl.LoggerAuditServiceImpl,\
-com.central.log.service.impl.DbAuditServiceImpl,\
-com.central.log.aspect.AuditLogAspect
+com.central.log.LogAutoConfigure

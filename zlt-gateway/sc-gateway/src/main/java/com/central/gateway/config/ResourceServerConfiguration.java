@@ -48,6 +48,7 @@ public class ResourceServerConfiguration {
         oauth2Filter.setServerAuthenticationConverter(tokenAuthenticationConverter);
         oauth2Filter.setAuthenticationFailureHandler(new ServerAuthenticationEntryPointFailureHandler(entryPoint));
         oauth2Filter.setAuthenticationSuccessHandler(new Oauth2AuthSuccessHandler());
+        oauth2Filter.setRequiresAuthenticationMatcher(new CustomServerWebExchangeMatchers(securityProperties));
         http.addFilterAt(oauth2Filter, SecurityWebFiltersOrder.AUTHENTICATION);
 
         ServerHttpSecurity.AuthorizeExchangeSpec authorizeExchange = http.authorizeExchange();

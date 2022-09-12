@@ -32,9 +32,9 @@ public class RedissonDistributedLock implements DistributedLock {
     private ZLock getLock(String key, boolean isFair) {
         RLock lock;
         if (isFair) {
-            lock = redisson.getFairLock(CommonConstant.LOCK_KEY_PREFIX + key);
+            lock = redisson.getFairLock(CommonConstant.LOCK_KEY_PREFIX + ":" + key);
         } else {
-            lock =  redisson.getLock(CommonConstant.LOCK_KEY_PREFIX + key);
+            lock =  redisson.getLock(CommonConstant.LOCK_KEY_PREFIX + ":" + key);
         }
         return new ZLock(lock, this);
     }

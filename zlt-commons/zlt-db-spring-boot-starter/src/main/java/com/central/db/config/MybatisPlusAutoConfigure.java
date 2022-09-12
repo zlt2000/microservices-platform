@@ -1,12 +1,12 @@
 package com.central.db.config;
 
-import cn.hutool.core.collection.CollUtil;
+import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import com.baomidou.mybatisplus.core.parser.ISqlParserFilter;
-import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler;
-import com.baomidou.mybatisplus.extension.plugins.tenant.TenantSqlParser;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.central.common.properties.TenantProperties;
+import com.central.db.interceptor.CustomTenantInterceptor;
 import com.central.db.properties.MybatisPlusAutoFillProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -26,10 +26,7 @@ import org.springframework.context.annotation.Bean;
 @EnableConfigurationProperties(MybatisPlusAutoFillProperties.class)
 public class MybatisPlusAutoConfigure {
     @Autowired
-    private TenantHandler tenantHandler;
-
-    @Autowired
-    private ISqlParserFilter sqlParserFilter;
+    private TenantLineHandler tenantLineHandler;
 
     @Autowired
     private TenantProperties tenantProperties;
@@ -41,17 +38,17 @@ public class MybatisPlusAutoConfigure {
      * 分页插件，自动识别数据库类型
      */
     @Bean
-    public PaginationInterceptor paginationInterceptor() {
-        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
+    public MybatisPlusInterceptor paginationInterceptor() {
+        MybatisPlusInterceptor mpInterceptor = new MybatisPlusInterceptor();
         boolean enableTenant = tenantProperties.getEnable();
         //是否开启多租户隔离
         if (enableTenant) {
-            TenantSqlParser tenantSqlParser = new TenantSqlParser()
-                    .setTenantHandler(tenantHandler);
-            paginationInterceptor.setSqlParserList(CollUtil.toList(tenantSqlParser));
-            paginationInterceptor.setSqlParserFilter(sqlParserFilter);
+            CustomTenantInterceptor tenantInterceptor = new CustomTenantInterceptor(
+                    tenantLineHandler, tenantProperties.getIgnoreSqls());
+            mpInterceptor.addInnerInterceptor(tenantInterceptor);
         }
-        return paginationInterceptor;
+        mpInterceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
+        return mpInterceptor;
     }
 
     @Bean

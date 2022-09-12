@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.zlt</groupId>
         <artifactId>zlt-business</artifactId>
-        <version>4.2.0</version>
+        <version>5.4.0</version>
     </parent>
     <artifactId>file-center</artifactId>
     <description>文件中心</description>
@@ -24,11 +24,15 @@
         </dependency>
         <dependency>
             <groupId>com.zlt</groupId>
-            <artifactId>zlt-ribbon-spring-boot-starter</artifactId>
+            <artifactId>zlt-loadbalancer-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>com.zlt</groupId>
             <artifactId>zlt-sentinel-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.zlt</groupId>
+            <artifactId>zlt-oss-spring-boot-starter</artifactId>
         </dependency>
 
         <dependency>
@@ -66,20 +70,20 @@
             <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
 
-        <!-- 阿里云oss -->
-        <dependency>
-            <groupId>com.aliyun.oss</groupId>
-            <artifactId>aliyun-sdk-oss</artifactId>
-        </dependency>
-        <!-- 七牛oss -->
-        <dependency>
-            <groupId>com.qiniu</groupId>
-            <artifactId>qiniu-java-sdk</artifactId>
-        </dependency>
         <!-- fastDFS -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.github.tobato</groupId>
             <artifactId>fastdfs-client</artifactId>
+        </dependency>-->
+        <!-- aws s3 -->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-s3</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
         </dependency>
     </dependencies>
 

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.central.oss.model.ObjectInfo;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,12 +28,14 @@ public abstract class AbstractIFileService extends ServiceImpl<FileMapper, FileI
     private static final String FILE_SPLIT = ".";
 
     @Override
-    public FileInfo upload(MultipartFile file) throws Exception {
+    public FileInfo upload(MultipartFile file) {
         FileInfo fileInfo = FileUtil.getFileInfo(file);
         if (!fileInfo.getName().contains(FILE_SPLIT)) {
             throw new IllegalArgumentException("缺少后缀名");
         }
-        uploadFile(file, fileInfo);
+        ObjectInfo objectInfo = uploadFile(file);
+        fileInfo.setPath(objectInfo.getObjectPath());
+        fileInfo.setUrl(objectInfo.getObjectUrl());
         // 设置文件来源
         fileInfo.setSource(fileType());
         // 将文件信息保存到数据库
@@ -52,9 +55,8 @@ public abstract class AbstractIFileService extends ServiceImpl<FileMapper, FileI
      * 上传文件
      *
      * @param file
-     * @param fileInfo
      */
-    protected abstract void uploadFile(MultipartFile file, FileInfo fileInfo) throws Exception;
+    protected abstract ObjectInfo uploadFile(MultipartFile file);
 
     /**
      * 删除文件
@@ -65,17 +67,16 @@ public abstract class AbstractIFileService extends ServiceImpl<FileMapper, FileI
         FileInfo fileInfo = baseMapper.selectById(id);
         if (fileInfo != null) {
             baseMapper.deleteById(fileInfo.getId());
-            this.deleteFile(fileInfo);
+            this.deleteFile(fileInfo.getPath());
         }
     }
 
     /**
      * 删除文件资源
      *
-     * @param fileInfo
-     * @return
+     * @param objectPath 文件路径
      */
-    protected abstract boolean deleteFile(FileInfo fileInfo);
+    protected abstract void deleteFile(String objectPath);
 
     @Override
     public PageResult<FileInfo> findList(Map<String, Object> params) {

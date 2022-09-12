@@ -27,9 +27,4 @@ public class SuperEntity<T extends Model<?>> extends Model<T> {
     private Date createTime;
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
-
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
 }

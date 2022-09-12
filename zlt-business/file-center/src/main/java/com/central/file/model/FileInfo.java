@@ -56,9 +56,4 @@ public class FileInfo extends Model<FileInfo> {
     private Date createTime;
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
-
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
 }

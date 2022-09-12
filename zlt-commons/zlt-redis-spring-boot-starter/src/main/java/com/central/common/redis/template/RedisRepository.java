@@ -1,6 +1,7 @@
 package com.central.common.redis.template;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisClusterNode;
 import org.springframework.data.redis.connection.RedisConnection;
@@ -178,6 +179,29 @@ public class RedisRepository {
     public Object get(final String key) {
         return redisTemplate.opsForValue().get(key);
     }
+
+    /**
+     *获取原来key键对应的值并重新赋新值。
+     * @param key
+     * @param value
+     * @return
+     */
+    public String getAndSet(final String key,String value) {
+        String result = null;
+        if (StringUtils.isEmpty(key)){
+            log.error("非法入参");
+            return null;
+        }
+        try {
+            Object object =redisTemplate.opsForValue().getAndSet(key, value);
+            if (object !=null){
+                result = object.toString();
+            }
+        }catch (Exception e){
+            log.error("redisTemplate操作异常",e);
+        }
+        return result;
+    }
     /**
      * 根据key获取对象
      *
@@ -189,6 +213,7 @@ public class RedisRepository {
         byte[] rawKey = rawKey(key);
         return redisTemplate.execute(connection -> deserializeValue(connection.get(rawKey), valueSerializer), true);
     }
+
 
     /**
      * Ops for hash hash operations.

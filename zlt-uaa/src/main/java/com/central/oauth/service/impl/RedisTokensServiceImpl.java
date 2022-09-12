@@ -39,7 +39,7 @@ public class RedisTokensServiceImpl implements ITokensService {
     public PageResult<TokenVo> listTokens(Map<String, Object> params, String clientId) {
         Integer page = MapUtils.getInteger(params, "page");
         Integer limit = MapUtils.getInteger(params, "limit");
-        int[] startEnds = PageUtil.transToStartEnd(page, limit);
+        int[] startEnds = PageUtil.transToStartEnd(page-1, limit);
         //根据请求参数生成redis的key
         String redisKey = getRedisKey(params, clientId);
         long size = redisRepository.length(redisKey);
@@ -64,6 +64,10 @@ public class RedisTokensServiceImpl implements ITokensService {
                     tokenVo.setClientId(request.getClientId());
                     tokenVo.setGrantType(request.getGrantType());
                 }
+
+                Map<String, Object> additionalInformation = accessToken.getAdditionalInformation();
+                String accountType = (String)additionalInformation.get(SecurityConstants.ACCOUNT_TYPE_PARAM_NAME);
+                tokenVo.setAccountType(accountType);
 
                 result.add(tokenVo);
             }

@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.zlt</groupId>
 		<artifactId>central-platform</artifactId>
-		<version>4.2.0</version>
+		<version>5.4.0</version>
 	</parent>
 	<artifactId>zlt-uaa</artifactId>
 	<description>认证中心</description>
@@ -27,7 +27,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.zlt</groupId>
-			<artifactId>zlt-ribbon-spring-boot-starter</artifactId>
+			<artifactId>zlt-loadbalancer-spring-boot-starter</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.zlt</groupId>
@@ -88,7 +88,17 @@
 			<groupId>io.micrometer</groupId>
 			<artifactId>micrometer-registry-prometheus</artifactId>
 		</dependency>
-	</dependencies>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+		</dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
 	<build>
 		<plugins>

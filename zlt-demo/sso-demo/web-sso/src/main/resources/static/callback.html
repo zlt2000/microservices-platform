@@ -26,9 +26,7 @@
         //获取token和用户信息
         $.ajax({url:'http://127.0.0.1:8081/token/'+code, success:function(result) {
             console.log(result);
-            sessionStorage.setItem('access_token', result.tokenInfo.access_token);
-            sessionStorage.setItem('username', result.userInfo.username);
-            sessionStorage.setItem('roles', result.roles);
+            sessionStorage.setItem('access_token', result);
             window.location = sessionStorage.getItem('visitUri');
         }});
     };

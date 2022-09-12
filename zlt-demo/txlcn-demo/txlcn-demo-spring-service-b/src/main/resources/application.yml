@@ -17,3 +17,8 @@ tx-lcn:
     jdbc-url: jdbc:mysql://${zlt.datasource.ip}:3306/tx_logger?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
     username: ${zlt.datasource.username}
     password: ${zlt.datasource.password}
+zlt:
+  loadbalance:
+    version: test
+    isolation:
+      enabled: true

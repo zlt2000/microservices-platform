@@ -5,8 +5,8 @@ import com.central.es.utils.SearchBuilder;
 import com.central.search.model.SearchDto;
 import com.central.search.service.ISearchService;
 import com.fasterxml.jackson.databind.JsonNode;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.search.sort.SortOrder;
-import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -19,10 +19,10 @@ import java.io.IOException;
  */
 @Service
 public class SearchServiceImpl implements ISearchService {
-    private final ElasticsearchRestTemplate elasticsearchRestTemplate;
+    private final RestHighLevelClient client;
 
-    public SearchServiceImpl(ElasticsearchRestTemplate elasticsearchRestTemplate) {
-        this.elasticsearchRestTemplate = elasticsearchRestTemplate;
+    public SearchServiceImpl(RestHighLevelClient client) {
+        this.client = client;
     }
 
     /**
@@ -33,9 +33,9 @@ public class SearchServiceImpl implements ISearchService {
      */
     @Override
     public PageResult<JsonNode> strQuery(String indexName, SearchDto searchDto) throws IOException {
-        return SearchBuilder.builder(elasticsearchRestTemplate, indexName)
+        return SearchBuilder.builder(client, indexName)
                 .setStringQuery(searchDto.getQueryStr())
-                .addSort(searchDto.getSortCol(), SortOrder.DESC)
+                .addSort(searchDto.getSortCol(), searchDto.getSortOrder())
                 .setIsHighlight(searchDto.getIsHighlighter())
                 .getPage(searchDto.getPage(), searchDto.getLimit());
     }

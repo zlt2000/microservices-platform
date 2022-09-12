@@ -28,4 +28,23 @@ public class AuthProperties {
      * url权限配置
      */
     private UrlPermissionProperties urlPermission = new UrlPermissionProperties();
+
+    /**
+     * 是否开启统一登出
+     * 1. 登出时把同一个用户名下的所有token都注销
+     * 2. 登出信息通知所有单点登录系统
+     */
+    private Boolean unifiedLogout = false;
+
+    /**
+     * 是否同应用同账号登录互踢
+     */
+    private Boolean isSingleLogin = false;
+
+    /**
+     * 是否同应用同账号登录时共用token
+     * true: 多个用户使用同一账号登录时共用一个token
+     * false: 就算使用同一账号登录时都会新建一个token
+     */
+    private Boolean isShareToken = true;
 }

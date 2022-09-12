@@ -1,9 +1,10 @@
 #  zlt-microservices-platform
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Spring%20Boot-2.2.10.RELEASE-blue" alt="Downloads"/>
-  <img src="https://img.shields.io/badge/Spring%20Cloud-Hoxton.SR8-blue" alt="Downloads"/>
-  <img src="https://img.shields.io/badge/Spring%20Cloud%20Alibaba-2.2.3.RELEASE-blue" alt="Downloads"/>
+  <img src="https://img.shields.io/badge/Version-5.4.0-critical" alt="Downloads"/>
+  <img src="https://img.shields.io/badge/Spring%20Boot-2.5.14-blue" alt="Downloads"/>
+  <img src="https://img.shields.io/badge/Spring%20Cloud-2020.0.5-blue" alt="Downloads"/>
+  <img src="https://img.shields.io/badge/Spring%20Cloud%20Alibaba-2021.1-blue" alt="Downloads"/>
   <img src="https://img.shields.io/badge/Elasticsearch-7.x-brightgreen" alt="Downloads"/>
   <a target="_blank" href='https://gitee.com/zlt2000/microservices-platform'>
     <img src='https://gitee.com/zlt2000/microservices-platform/badge/star.svg' alt='star'/>
@@ -12,6 +13,8 @@
     <img src="https://img.shields.io/github/stars/zlt2000/microservices-platform.svg?style=social" alt="github star"/>
   </a>
 </p>
+
+
 
 
 ## 如果您觉得有帮助，请点右上角 "Star" 支持一下谢谢
@@ -28,12 +31,10 @@
 * **技术交流群** 
 <table>
     <tr>
-        <td><center><strong><a href="http://shang.qq.com/wpa/qunwpa?idkey=17544199255998bda0d938fb72b08d076c40c52c9904520b76eb5eb0585da71e" target="_blank">交流一群(已满)</a></strong></center></td>
-        <td><center><strong><a href="https://shang.qq.com/wpa/qunwpa?idkey=41988facbc02f678942a7ee7ae03122f2ef0a10c948b3d07319f070bfb0d3a98" target="_blank">交流二群</a></strong></center></td>
+        <td><center><strong><a href="https://qm.qq.com/cgi-bin/qm/qr?k=HntAHTirZwCEjF8PQpjDYkw37Zx5rJg8&jump_from=webapi" target="_blank">交流三群</a></strong></center></td>
 	</tr>
-    <tr>
-        <td><a href="http://shang.qq.com/wpa/qunwpa?idkey=17544199255998bda0d938fb72b08d076c40c52c9904520b76eb5eb0585da71e" target="_blank"><img width=300px height=300px alt="交流一群(已满)" src="https://gitee.com/zlt2000/images/raw/master/%E4%BA%A4%E6%B5%81%E4%B8%80%E7%BE%A4.png"/></a></td>
-        <td><a href="https://shang.qq.com/wpa/qunwpa?idkey=41988facbc02f678942a7ee7ae03122f2ef0a10c948b3d07319f070bfb0d3a98" target="_blank"><img width=300px height=300px alt="交流二群" src="https://gitee.com/zlt2000/images/raw/master/%E4%BA%A4%E6%B5%81%E4%BA%8C%E7%BE%A4.png"/></a></td>
+	<tr>
+        <td><a href="https://qm.qq.com/cgi-bin/qm/qr?k=HntAHTirZwCEjF8PQpjDYkw37Zx5rJg8&jump_from=webapi" target="_blank"><img width=250px height=300px alt="交流三群" src="http://qiniu.zlt2000.cn/blog/20210616/htVdgkFMohAm.png?imageslim"/></a></td>
     </tr>
 </table>
 
@@ -45,9 +46,7 @@
   * 账号密码：admin/admin
   * APM监控账号密码：admin/admin
   * Grafana账号：zlt/zlt123
-  * txlcn事务管理器密码：admin
   * 任务管理账号密码：admin/123456
-  * Sentinel：sentinel/sentinel
 * **演示环境有全方位的监控示例：日志系统 + APM系统 + GPE系统**
 * Gitee地址：https://gitee.com/zlt2000/microservices-platform
 * Github地址：https://github.com/zlt2000/microservices-platform
@@ -78,14 +77,16 @@ central-platform -- 父项目，公共依赖
 │  │  ├─zlt-db-spring-boot-starter -- 封装数据库通用操作逻辑
 │  │  ├─zlt-log-spring-boot-starter -- 封装log通用操作逻辑
 │  │  ├─zlt-redis-spring-boot-starter -- 封装Redis通用操作逻辑
-│  │  ├─zlt-ribbon-spring-boot-starter -- 封装Ribbon和Feign的通用操作逻辑
+│  │  ├─zlt-loadbalancer-spring-boot-starter -- 封装Loadbalancer和Feign的通用操作逻辑
 │  │  ├─zlt-sentinel-spring-boot-starter -- 封装Sentinel的通用操作逻辑
 │  │  ├─zlt-swagger2-spring-boot-starter -- 封装Swagger通用操作逻辑
+│  │  ├─zlt-elasticsearch-spring-boot-starter -- 封装Elasticsearch通用操作逻辑
+│  │  ├─zlt-oss-spring-boot-starter -- 封装对象存储通用操作逻辑
+│  │  ├─zlt-zookeeper-spring-boot-starter -- 封装Zookeeper通用操作逻辑
 │  ├─zlt-config -- 配置中心
 │  ├─zlt-doc -- 项目文档
 │  ├─zlt-gateway -- api网关一级工程
 │  │  ├─sc-gateway -- spring-cloud-gateway[9900]
-│  │  ├─zuul-gateway -- netflix-zuul[9900]
 │  ├─zlt-job -- 分布式任务调度一级工程
 │  │  ├─job-admin -- 任务管理器[8081]
 │  │  ├─job-core -- 任务调度核心代码
@@ -109,8 +110,8 @@ central-platform -- 父项目，公共依赖
 
 <table>
     <tr>
-        <td><a target="_blank" href="https://activity.huaweicloud.com/discount_area_v5/index.html?fromacct=a87e1945-e6c4-4e04-bb43-e0472a54e454&utm_source=V1g3MDY4NTY=&utm_medium=cps&utm_campaign=201905"><img width="460px" height="177px" alt="华为云" src="https://gitee.com/zlt2000/images/raw/master/hwy.jpg"/></a></td>
-        <td><a target="_blank" href="https://url.cn/7a8mAUfO"><img width="460px" height="177px"  alt="腾讯云" src="https://gitee.com/zlt2000/images/raw/master/txy.jpg"/></a></td>
+        <td><a target="_blank" href="https://www.aliyun.com/minisite/goods?userCode=dickv1kw&share_source=copy_link"><img width="460px" height="177px" alt="阿里云" src="https://gitee.com/zlt2000/images/raw/master/aly.jpg"/></a></td>
+        <td><a target="_blank" href="https://cloud.tencent.com/act/cps/redirect?redirect=1074&cps_key=5516bbd5876cd224d90bd41d53d3f7fe&from=console"><img width="460px" height="177px"  alt="腾讯云" src="https://gitee.com/zlt2000/images/raw/master/txy.jpg"/></a></td>
     </tr>
 </table>
 
@@ -120,7 +121,8 @@ central-platform -- 父项目，公共依赖
 * 欢迎提交`ISSUS`，请写清楚问题的具体原因，重现步骤和环境(上下文)
 * 项目/微服务交流请进群：
   * 一群：[250883130(已满)](https://shang.qq.com/wpa/qunwpa?idkey=17544199255998bda0d938fb72b08d076c40c52c9904520b76eb5eb0585da71e)
-  * 二群：[1041797659](https://shang.qq.com/wpa/qunwpa?idkey=41988facbc02f678942a7ee7ae03122f2ef0a10c948b3d07319f070bfb0d3a98)
+  * 二群：[1041797659(已满)](https://shang.qq.com/wpa/qunwpa?idkey=41988facbc02f678942a7ee7ae03122f2ef0a10c948b3d07319f070bfb0d3a98)
+  * 三群：[512637767](https://qm.qq.com/cgi-bin/qm/qr?k=HntAHTirZwCEjF8PQpjDYkw37Zx5rJg8&jump_from=webapi)
 * 个人博客：[https://zlt2000.gitee.io](https://zlt2000.gitee.io)
 * 个人邮箱：zltdiablo@163.com
 * 个人公众号：[陶陶技术笔记](http://qiniu.zlt2000.cn/blog/20190902/M56cWjw7uNsc.png?imageslim)
@@ -133,13 +135,13 @@ central-platform -- 父项目，公共依赖
         <td><img alt="首页" src="https://gitee.com/zlt2000/images/raw/master/%E9%A6%96%E9%A1%B5.png"/></td>
         <td><img alt="用户搜索" src="https://gitee.com/zlt2000/images/raw/master/%E7%94%A8%E6%88%B7%E6%90%9C%E7%B4%A2.png"/></td>
     </tr>
+    <tr>
+        <td><img alt="日志系统" src="https://gitee.com/zlt2000/images/raw/master/%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F.png"/></td>
+        <td><img alt="日志链路" src="https://gitee.com/zlt2000/images/raw/master/%E6%97%A5%E5%BF%97%E9%93%BE%E8%B7%AF.png"/></td>
+    </tr>
 	<tr>
         <td><img alt="server_metrics" src="https://gitee.com/zlt2000/images/raw/master/server_metrics.png"/></td>
         <td><img alt="application_metrics" src="https://gitee.com/zlt2000/images/raw/master/application_metrics.png"/></td>
-    </tr>
-	<tr>
-        <td><img alt="持续集成2" src="https://gitee.com/zlt2000/images/raw/master/%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%902.png"/></td>
-        <td><img alt="sonar结果" src="https://gitee.com/zlt2000/images/raw/master/sonar%E7%BB%93%E6%9E%9C.png"/></td>
     </tr>
     <tr>
         <td><img alt="skywalking首页.png" src="https://gitee.com/zlt2000/images/raw/master/skywalking%E9%A6%96%E9%A1%B5.png"/></td>
