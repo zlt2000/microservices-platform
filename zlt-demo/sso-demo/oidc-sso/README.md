@@ -11,6 +11,7 @@ alter table oauth_client_details add support_id_token tinyint(1) DEFAULT 1 COMME
 alter table oauth_client_details add id_token_validity int(11) DEFAULT 60 COMMENT 'id_token有效期';
 
 update oauth_client_details set additional_information = '{"LOGOUT_NOTIFY_URL_LIST":"http://127.0.0.1:8082/logoutNotify"}'
+    , web_server_redirect_uri = 'http://127.0.0.1:8082/callback.html'
 where client_id = 'webApp';
 ```
 
