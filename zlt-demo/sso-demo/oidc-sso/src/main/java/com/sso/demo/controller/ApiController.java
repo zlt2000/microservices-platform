@@ -50,6 +50,9 @@ public class ApiController {
     @Value("${zlt.sso.redirect-uri:}")
     private String redirectUri;
 
+    @Value("${zlt.sso.scope:}")
+    private String scope;
+
     @Value("${zlt.sso.access-token-uri:}")
     private String accessTokenUri;
 
@@ -146,7 +149,7 @@ public class ApiController {
         param.add("code", code);
         param.add("grant_type", "authorization_code");
         param.add("redirect_uri", redirectUri);
-        param.add("scope", "all");
+        param.add("scope", scope);
         param.add("nonce", this.genNonce());
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(param, headers);
         ResponseEntity<Map> response = restTemplate.postForEntity(accessTokenUri, request , Map.class);
