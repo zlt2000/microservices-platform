@@ -1,2 +1,13 @@
-package com.central.ui;public class UiBootApplication {
+package com.central.ui;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class UiBootApplication {
+
+  public static void main(String[] args) {
+    SpringApplication.run(UiBootApplication.class, args);
+  }
+
 }
