@@ -1,6 +1,6 @@
-import { pageRole } from '@/services/system/api';
+import { deleteRole, pageRole, saveOrUpdateRole } from '@/services/system/api';
 import { PlusOutlined } from '@ant-design/icons';
-import type { ProColumns } from '@ant-design/pro-components';
+import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import {
   ProFormSelect,
   ModalForm,
@@ -10,9 +10,9 @@ import {
   ProTable,
   QueryFilter,
 } from '@ant-design/pro-components';
-import { Space, Typography } from 'antd';
+import { Popconfirm, Space, Typography } from 'antd';
 import { Button, message } from 'antd';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import AssignAuth from './components/AssignAuth';
 import UpdateForm from './components/UpdateForm';
 
@@ -24,13 +24,70 @@ type AssignAuthProps = {
   assignModalVisible: boolean;
 };
 
+const handleAdd = async (fields: SYSTEM.Role) => {
+  const hide = message.loading('正在添加');
+  try {
+    const result = await saveOrUpdateRole({ ...fields });
+    hide();
+    if (result.resp_code === 0) {
+      message.success('添加角色成功');
+      return true;
+    } else {
+      message.error(result.resp_msg);
+      return false;
+    }
+  } catch (error) {
+    hide();
+    message.error('添加角色失败');
+    return false;
+  }
+};
+
+const handleEdit = async (fields: SYSTEM.Role) => {
+  const hide = message.loading('正在更新');
+  try {
+    const result = await saveOrUpdateRole({ ...fields });
+    hide();
+    if (result.resp_code === 0) {
+      message.success('修改角色成功');
+      return true;
+    } else {
+      message.error(result.resp_msg);
+      return false;
+    }
+  } catch (error) {
+    hide();
+    message.error('修改角色失败');
+    return false;
+  }
+};
+
+const handleDelete = async (data: SYSTEM.Role) => {
+  const hide = message.loading('正在删除');
+  try {
+    const result = await deleteRole(data.id);
+    hide();
+    if (result.resp_code === 0) {
+      message.success('删除角色成功');
+      return true;
+    } else {
+      message.error(result.resp_msg);
+      return false;
+    }
+  } catch (error) {
+    hide();
+    message.error('删除角色失败');
+    return false;
+  }
+};
+
 const TableList: React.FC = () => {
   const [params, setParams] = useState<Record<string, string | number>>({});
-
+  const actionRef = useRef<ActionType>();
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
   const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
 
-  const [currentRow, setCurrentRow] = useState<SYSTEM.User>();
+  const [currentRow, setCurrentRow] = useState<SYSTEM.Role>();
 
   const [assignAuth, setAssignAuth] = useState<AssignAuthProps>({ assignModalVisible: false });
 
@@ -59,20 +116,32 @@ const TableList: React.FC = () => {
     {
       title: '操作',
       key: 'action',
-      render: (_, record) => (
+      render: (_, entity) => (
         <Space>
           <Link
             onClick={() => {
               handleUpdateModalVisible(true);
-              setCurrentRow(record);
+              setCurrentRow(entity);
             }}
           >
             修改
           </Link>
-          <Link onClick={() => message.info('演示环境不支持该功能')}>删除</Link>
+          <Popconfirm
+            title={`确认删除用户[${entity.name}]?`}
+            onConfirm={async () => {
+              const success = await handleDelete(entity);
+              if (success) {
+                if (actionRef.current) {
+                  actionRef.current.reload();
+                }
+              }
+            }}
+          >
+            <Link>删除</Link>
+          </Popconfirm>
           <Link
             onClick={() => {
-              setAssignAuth({ roleId: record.id, assignModalVisible: true, tenantId: 'webApp' });
+              setAssignAuth({ roleId: entity.id, assignModalVisible: true, tenantId: 'webApp' });
             }}
           >
             权限分配
@@ -112,6 +181,7 @@ const TableList: React.FC = () => {
       <ProTable<SYSTEM.Role>
         rowKey="id"
         headerTitle="角色管理"
+        actionRef={actionRef}
         request={pageRole}
         columns={columns}
         search={false}
@@ -139,8 +209,15 @@ const TableList: React.FC = () => {
         width={500}
         visible={createModalVisible}
         onVisibleChange={handleModalVisible}
-        onFinish={async () => {
-          message.info('演示环境不支持该功能');
+        modalProps={{ destroyOnClose: true }}
+        onFinish={async (values) => {
+          const success = await handleAdd(values as SYSTEM.Role);
+          if (success) {
+            handleModalVisible(false);
+            if (actionRef.current) {
+              actionRef.current.reload();
+            }
+          }
         }}
       >
         <ProForm.Group>
@@ -171,17 +248,21 @@ const TableList: React.FC = () => {
         </ProForm.Group>
       </ModalForm>
       <UpdateForm
-        onSubmit={async () => {
-          message.info('演示环境不支持该功能');
-          handleUpdateModalVisible(false);
-          setCurrentRow(undefined);
+        onSubmit={async (values) => {
+          if (currentRow) {
+            const success = await handleEdit({ ...currentRow, ...values });
+            if (success) {
+              handleUpdateModalVisible(false);
+              if (actionRef.current) {
+                actionRef.current.reload();
+              }
+            }
+            setCurrentRow(undefined);
+          }
         }}
-        onCancel={(flag) => {
-          handleUpdateModalVisible(flag ?? true);
-          setCurrentRow(undefined);
-        }}
+        onVisibleChange={handleUpdateModalVisible}
         updateModalVisible={updateModalVisible}
-        values={currentRow || {}}
+        values={currentRow}
       />
       <AssignAuth {...assignAuth} onCancel={() => setAssignAuth({ assignModalVisible: false })} />
     </PageContainer>

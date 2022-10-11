@@ -9,10 +9,10 @@ import React, { useEffect } from 'react';
 export type FormValueType = Partial<SYSTEM.Role>;
 
 export type UpdateFormProps = {
-  onCancel: (flag?: boolean, formVals?: FormValueType) => void;
+  onVisibleChange: (flag: boolean) => void;
   onSubmit: (values: FormValueType) => Promise<void>;
   updateModalVisible: boolean;
-  values: Partial<SYSTEM.Role>;
+  values?: SYSTEM.Role;
 };
 
 const UpdateForm: React.FC<UpdateFormProps> = (props) => {
@@ -32,7 +32,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
       visible={props.updateModalVisible}
       // initialValues={formData}
       onFinish={props.onSubmit}
-      onVisibleChange={props.onCancel}
+      onVisibleChange={props.onVisibleChange}
     >
       <ProForm.Group>
         <ProFormText
