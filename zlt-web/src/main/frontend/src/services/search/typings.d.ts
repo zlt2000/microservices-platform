@@ -47,4 +47,11 @@ declare namespace SEARCH {
     userId?: string;
     userName?: string;
   };
+
+  type SlowSqlLog = {
+    id?: string;
+
+  };
+
+  
 }
