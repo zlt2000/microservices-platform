@@ -1,6 +1,15 @@
-import { user, exportUser, role } from '@/services/system/api';
+import {
+  user,
+  saveOrUpdateUser,
+  exportUser,
+  role,
+  updateEnabled,
+  resetPassword,
+  deleteUser,
+  importUser,
+} from '@/services/system/api';
 import { ExportOutlined, ImportOutlined, PlusOutlined } from '@ant-design/icons';
-import type { ProColumns } from '@ant-design/pro-components';
+import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import {
   ProFormRadio,
   ProFormSelect,
@@ -11,16 +20,131 @@ import {
   ProTable,
   QueryFilter,
 } from '@ant-design/pro-components';
-import { Space, Typography } from 'antd';
+import { Popconfirm, Space, Typography, Upload } from 'antd';
 import { Button, Switch, message } from 'antd';
-import React, { useState } from 'react';
+import type { RcFile } from 'antd/lib/upload';
+import React, { useRef, useState } from 'react';
 import UpdateForm from './components/UpdateForm';
 
 const { Link } = Typography;
 
+const handleAdd = async (fields: SYSTEM.User) => {
+  const hide = message.loading('正在添加');
+  try {
+    const result = await saveOrUpdateUser({ ...fields });
+    hide();
+    if (result.resp_code === 0) {
+      message.success('添加用户成功');
+      return true;
+    } else {
+      message.error(result.resp_msg);
+      return false;
+    }
+  } catch (error) {
+    hide();
+    message.error('添加用户失败');
+    return false;
+  }
+};
+
+const handleEdit = async (fields: SYSTEM.User) => {
+  const hide = message.loading('正在更新');
+  try {
+    const result = await saveOrUpdateUser({ ...fields });
+    hide();
+    if (result.resp_code === 0) {
+      message.success('修改用户成功');
+      return true;
+    } else {
+      message.error(result.resp_msg);
+      return false;
+    }
+  } catch (error) {
+    hide();
+    message.error('修改用户失败');
+    return false;
+  }
+};
+
+const swichUser = async (sysUser: SYSTEM.User) => {
+  const hide = message.loading('正在更新');
+  try {
+    const result = await updateEnabled(sysUser.id, !sysUser.enabled);
+    hide();
+    if (result.resp_code === 0) {
+      message.success('修改用户成功');
+      return true;
+    } else {
+      message.error(result.resp_msg);
+      return false;
+    }
+  } catch (error) {
+    hide();
+    message.error('修改用户失败');
+    return false;
+  }
+};
+
+const handleResetPassword = async (sysUser: SYSTEM.User) => {
+  const hide = message.loading('正在更新');
+  try {
+    const result = await resetPassword(sysUser.id);
+    hide();
+    if (result.resp_code === 0) {
+      message.success('重置密码成功');
+      return true;
+    } else {
+      message.error(result.resp_msg);
+      return false;
+    }
+  } catch (error) {
+    hide();
+    message.error('重置密码失败');
+    return false;
+  }
+};
+
+const handleDelete = async (sysUser: SYSTEM.User) => {
+  const hide = message.loading('正在删除');
+  try {
+    const result = await deleteUser(sysUser.id);
+    hide();
+    if (result.resp_code === 0) {
+      message.success('删除用户成功');
+      return true;
+    } else {
+      message.error(result.resp_msg);
+      return false;
+    }
+  } catch (error) {
+    hide();
+    message.error('删除用户失败');
+    return false;
+  }
+};
+
+const handleImport = async (file: RcFile) => {
+  const hide = message.loading('正在导入');
+  debugger
+  try {
+    const formData = new FormData();
+    formData.append('file', file);
+    const result = await importUser(formData);
+    hide();
+    if (result.resp_code === 0) {
+      message.success('导入用户成功');
+    } else {
+      message.error(result.resp_msg);
+    }
+  } catch (error) {
+    hide();
+    message.error('导入用户失败');
+  }
+};
+
 const TableList: React.FC = () => {
   const [params, setParams] = useState<Record<string, string | number>>({});
-
+  const actionRef = useRef<ActionType>();
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
 
   const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
@@ -65,25 +189,44 @@ const TableList: React.FC = () => {
           checkedChildren="正常"
           unCheckedChildren="锁定"
           checked={entity.enabled}
-          onClick={() => message.info('演示环境不支持该功能')}
+          onClick={async () => {
+            const success = await swichUser(entity);
+            if (success) {
+              if (actionRef.current) {
+                actionRef.current.reload();
+              }
+            }
+          }}
         />
       ),
     },
     {
       title: '操作',
       key: 'action',
-      render: (_, record) => (
+      render: (_, entity) => (
         <Space>
           <Link
             onClick={() => {
+              setCurrentRow(entity);
               handleUpdateModalVisible(true);
-              setCurrentRow(record);
             }}
           >
             修改
           </Link>
-          <Link onClick={() => message.info('演示环境不支持该功能')}>重置密码</Link>
-          <Link onClick={() => message.info('演示环境不支持该功能')}>删除</Link>
+          <Link onClick={async () => await handleResetPassword(entity)}>重置密码</Link>
+          <Popconfirm
+            title={`确认删除用户[${entity.username}]?`}
+            onConfirm={async () => {
+              const success = await handleDelete(entity);
+              if (success) {
+                if (actionRef.current) {
+                  actionRef.current.reload();
+                }
+              }
+            }}
+          >
+            <Link>删除</Link>
+          </Popconfirm>
         </Space>
       ),
     },
@@ -112,6 +255,7 @@ const TableList: React.FC = () => {
       <ProTable<SYSTEM.User>
         rowKey="id"
         headerTitle="用户管理"
+        actionRef={actionRef}
         request={user}
         columns={columns}
         search={false}
@@ -129,13 +273,20 @@ const TableList: React.FC = () => {
             >
               <ExportOutlined /> 导出
             </Button>
-            <Button
-              onClick={() => {
-                message.info('演示环境不支持该功能');
+            <Upload
+              maxCount={1}
+              action="/api-user/users/import"
+              showUploadList={false}
+              beforeUpload={async (file) => {
+                await handleImport(file);
+                return false;
               }}
             >
-              <ImportOutlined /> 导入
-            </Button>
+              <Button>
+                <ImportOutlined /> 导入
+              </Button>
+            </Upload>
+
             <Button
               type="primary"
               onClick={() => {
@@ -153,9 +304,18 @@ const TableList: React.FC = () => {
         visible={createModalVisible}
         onVisibleChange={handleModalVisible}
         initialValues={{ sex: 0 }}
+        modalProps={{ destroyOnClose: true }}
         onFinish={async (values) => {
-          console.log(values);
-          message.info('演示环境不支持该功能');
+          const roleIds: string[] = values.roleIds;
+          const roleId = roleIds.join(',');
+          values.roleId = roleId;
+          const success = await handleAdd(values);
+          if (success) {
+            handleModalVisible(false);
+            if (actionRef.current) {
+              actionRef.current.reload();
+            }
+          }
         }}
       >
         <ProForm.Group>
@@ -212,14 +372,14 @@ const TableList: React.FC = () => {
           />
           <ProFormSelect
             mode="multiple"
-            name="roleCodes"
+            name="roleIds"
             label="角色"
             width="md"
             request={async () => {
               const roles = await role();
               if (roles)
                 return roles.map((r) => {
-                  return { label: r.name, value: r.code };
+                  return { label: r.name, value: r.id };
                 });
               return [];
             }}
@@ -228,17 +388,24 @@ const TableList: React.FC = () => {
         </ProForm.Group>
       </ModalForm>
       <UpdateForm
-        onSubmit={async () => {
-          message.info('演示环境不支持该功能');
-          handleUpdateModalVisible(false);
-          setCurrentRow(undefined);
+        onSubmit={async (values) => {
+          if (currentRow) {
+            const roleIds: number[] = values.roleIds || [];
+            const roleId = roleIds.join(',');
+            values.roleId = roleId;
+            const success = await handleEdit({ ...currentRow, ...values });
+            if (success) {
+              handleUpdateModalVisible(false);
+              if (actionRef.current) {
+                actionRef.current.reload();
+              }
+            }
+            setCurrentRow(undefined);
+          }
         }}
-        onCancel={(flag) => {
-          handleUpdateModalVisible(flag ?? true);
-          setCurrentRow(undefined);
-        }}
+        onVisibleChange={handleUpdateModalVisible}
         updateModalVisible={updateModalVisible}
-        values={currentRow || {}}
+        values={currentRow}
       />
     </PageContainer>
   );

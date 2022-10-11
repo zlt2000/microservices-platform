@@ -1,17 +1,36 @@
-import { menuForAuth } from '@/services/system/api';
+import { assignMenu, menuForAuth } from '@/services/system/api';
 import { treeify } from '@/util/treeify';
 import type { TreeDataNode } from 'antd';
 import { Modal, Tree, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 
 type AssignAuthProps = {
-  roleId?: number;
+  roleId: number;
   tenantId?: string;
   onCancel: () => void;
   assignModalVisible: boolean;
 };
 
 type Key = string | number;
+
+const handleAssign = async (roleId: number, menuIds: Key[]) => {
+  const hide = message.loading('正在添加');
+  try {
+    const result = await assignMenu({ roleId, menuIds });
+    hide();
+    if (result.resp_code === 0) {
+      message.success('权限分配成功');
+      return true;
+    } else {
+      message.error(result.resp_msg);
+      return false;
+    }
+  } catch (error) {
+    hide();
+    message.error('权限分配失败');
+    return false;
+  }
+};
 
 const AssignAuth: React.FC<AssignAuthProps> = (props) => {
   const [treeData, setTreeData] = useState<TreeDataNode[]>([]);
@@ -39,9 +58,14 @@ const AssignAuth: React.FC<AssignAuthProps> = (props) => {
       // layout="horizontal"
       open={props.assignModalVisible}
       // initialValues={formData}
-      onOk={() => {
-        message.info('演示环境不支持该功能');
-        props.onCancel();
+      destroyOnClose
+      onOk={async () => {
+        const success = await handleAssign(roleId, checkedKeys);
+        if (success) {
+          setTreeData([]);
+          setCheckedKeys([]);
+          props.onCancel();;
+        }
       }}
       onCancel={() => {
         setTreeData([]);

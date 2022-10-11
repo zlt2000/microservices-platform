@@ -1,14 +1,28 @@
-import { app } from '@/services/system/api';
-import type { ProColumns } from '@ant-design/pro-components';
+import { app, deleteApp } from '@/services/system/api';
+import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { PageContainer, ProFormText, ProTable, QueryFilter } from '@ant-design/pro-components';
-import { Typography, message } from 'antd';
-import React, { useState } from 'react';
+import { Typography, message, Popconfirm } from 'antd';
+import React, { useRef, useState } from 'react';
 
 const { Link } = Typography;
 
+const handleDelete = async (data: SYSTEM.App) => {
+  const hide = message.loading('正在删除');
+  try {
+    await deleteApp(data.id);
+    hide();
+    message.success('删除应用成功');
+    return true;
+  } catch (error) {
+    hide();
+    message.error('删除应用失败');
+    return false;
+  }
+};
+
 const TableList: React.FC = () => {
   const [params, setParams] = useState<Record<string, string | number>>();
-
+  const actionRef = useRef<ActionType>();
   const columns: ProColumns<SYSTEM.App>[] = [
     {
       dataIndex: 'index',
@@ -73,7 +87,19 @@ const TableList: React.FC = () => {
       key: 'action',
       fixed: 'right',
       width: 40,
-      render: () => <Link onClick={() => message.info('演示环境不支持该功能')}>删除</Link>,
+      render: (_, entity) => <Popconfirm
+      title={`确认删除用户[${entity.clientName}]?`}
+      onConfirm={async () => {
+        const success = await handleDelete(entity);
+        if (success) {
+          if (actionRef.current) {
+            actionRef.current.reload();
+          }
+        }
+      }}
+    >
+      <Link>删除</Link>
+    </Popconfirm>,
     },
   ];
   return (
@@ -90,7 +116,8 @@ const TableList: React.FC = () => {
       </QueryFilter>
       <ProTable<SYSTEM.App>
         rowKey="id"
-        headerTitle="Token管理"
+        headerTitle="应用管理"
+        actionRef={actionRef}
         request={app}
         columns={columns}
         search={false}

@@ -1,24 +1,26 @@
 import { menu } from '@/services/system/api';
 import { treeify } from '@/util/treeify';
-import { FolderOpenOutlined, MenuOutlined, ProfileOutlined } from '@ant-design/icons';
+import { FolderOpenOutlined, MenuOutlined, PlusOutlined, ProfileOutlined } from '@ant-design/icons';
 import type { ProColumns } from '@ant-design/pro-components';
 import { ProFormSelect } from '@ant-design/pro-components';
 import { PageContainer, ProFormText, ProTable, QueryFilter } from '@ant-design/pro-components';
-import { Space, Tag, Typography } from 'antd';
+import { Button, Space, Tag, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
 
 const { Link } = Typography;
 
 const Generator: React.FC = () => {
   const [data, setData] = useState<SYSTEM.Menu[]>();
-
+  const [keys, setKeys] = useState<(React.Key)[]>([]);
+  const [expandedRowKeys, setExpandedRowKeys] = useState<(React.Key)[]>([]);
   const query = async (params: Record<string, string | number>) => {
-    const menus = (await menu(params)) ?? [];
+    const menus = await menu(params);
     const treeData = treeify(menus, {});
     menus.forEach((node) => {
       if (node.children && node.children.length === 0) delete node.children;
     });
     // debugger;
+    setKeys(menus.map(m=>m.id));
     setData(treeData);
   };
 
@@ -30,7 +32,7 @@ const Generator: React.FC = () => {
     {
       title: '菜单名称',
       key: 'name',
-      width: 80,
+      width: 120,
       render(dom, entity) {
         if (entity.type === 1) {
           if (entity.url?.startsWith('javascript')) {
@@ -136,6 +138,36 @@ const Generator: React.FC = () => {
         columns={columns}
         search={false}
         pagination={false}
+        expandable={{
+          expandedRowKeys,
+          onExpandedRowsChange: (expandedRows) => setExpandedRowKeys([...expandedRows]),
+        }}
+        toolBarRender={() => [
+          <>
+          <Button
+              onClick={() => {
+                setExpandedRowKeys(keys);
+              }}
+            >
+              全部展开
+            </Button>
+            <Button
+              onClick={() => {
+                setExpandedRowKeys([]);
+              }}
+            >
+              全部折叠
+            </Button>
+            <Button
+              type="primary"
+              onClick={() => {
+                //handleModalVisible(true);
+              }}
+            >
+              <PlusOutlined /> 添加
+            </Button>
+          </>,
+        ]}
       />
     </PageContainer>
   );

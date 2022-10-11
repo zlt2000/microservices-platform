@@ -8,32 +8,24 @@
  */
 export default {
   dev: {
-    // localhost:8000/api/** -> https://preview.pro.ant.design/api/**
-    '/api/': {
-      // 要代理的地址
-      target: 'https://preview.pro.ant.design',
-      // 配置了这个可以从 http 代理到 https
-      // 依赖 origin 的功能可能需要这个，比如 cookie
-      changeOrigin: true,
-    },
     '/api-uaa/': {
-      target: 'http://gateway.zlt2000.cn',
+      target: 'http://127.0.0.1:9900',
       changeOrigin: true,
     },
     '/api-user/': {
-      target: 'http://gateway.zlt2000.cn',
+      target: 'http://127.0.0.1:9900',
       changeOrigin: true,
     },
     '/api-log/': {
-      target: 'http://gateway.zlt2000.cn',
+      target: 'http://127.0.0.1:9900',
       changeOrigin: true,
     },
     '/api-search/': {
-      target: 'http://gateway.zlt2000.cn',
+      target: 'http://127.0.0.1:9900',
       changeOrigin: true,
     },
     '/api-generator/': {
-      target: 'http://gateway.zlt2000.cn',
+      target: 'http://127.0.0.1:9900',
       changeOrigin: true,
     },
   },

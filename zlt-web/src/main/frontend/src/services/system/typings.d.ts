@@ -3,9 +3,9 @@
 
 declare namespace SYSTEM {
   type Page<T> = {
-    code?: number;
-    count?: number;
-    data?: T[];
+    code: number;
+    count: number;
+    data: T[];
   };
 
   type Role = {
@@ -18,7 +18,7 @@ declare namespace SYSTEM {
   };
 
   type User = {
-    id?: number;
+    id: number;
     username?: string;
     nickname?: string;
     headImgUrl?: string;
@@ -26,9 +26,10 @@ declare namespace SYSTEM {
     type?: string;
     mobile?: string;
     createTime?: Date;
-    enabled?: boolean;
+    enabled: boolean;
     del?: boolean;
     roles?: Role[];
+    roleId?: string;
   };
 
   type Menu = {
@@ -43,6 +44,11 @@ declare namespace SYSTEM {
     open?: boolean;
     sort?: number;
     children?: Menu[];
+  };
+
+  type AssignMenu = {
+    roleId: number;
+    menuIds: (string|number)[];
   };
 
   type Token = {

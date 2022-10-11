@@ -10,14 +10,14 @@ import { Form } from 'antd';
 import React, { useEffect } from 'react';
 
 export type FormValueType = {
-  roleCodes?: string[];
+  roleIds?: number[];
 } & Partial<SYSTEM.User>;
 
 export type UpdateFormProps = {
-  onCancel: (flag?: boolean, formVals?: FormValueType) => void;
+  onVisibleChange: (flag: boolean) => void;
   onSubmit: (values: FormValueType) => Promise<void>;
   updateModalVisible: boolean;
-  values: Partial<SYSTEM.User>;
+  values?: SYSTEM.User;
 };
 
 const UpdateForm: React.FC<UpdateFormProps> = (props) => {
@@ -25,9 +25,9 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
   const { values } = props;
 
   useEffect(() => {
-    if (values.roles) {
-      const roleCodes = values.roles.map((r) => r.code);
-      const formData: FormValueType = { ...values, roleCodes };
+    if (values?.roles) {
+      const roleIds = values.roles.map((r) => r.id);
+      const formData: FormValueType = { ...values, roleIds };
       form.setFieldsValue(formData);
     }
   }, [form, values]);
@@ -39,7 +39,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
       visible={props.updateModalVisible}
       // initialValues={formData}
       onFinish={props.onSubmit}
-      onVisibleChange={props.onCancel}
+      onVisibleChange={props.onVisibleChange}
     >
       <ProForm.Group>
         <ProFormText
@@ -95,14 +95,14 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
         />
         <ProFormSelect
           mode="multiple"
-          name="roleCodes"
+          name="roleIds"
           label="角色"
           width="md"
           request={async () => {
             const roles = await role();
             if (roles)
               return roles.map((r) => {
-                return { label: r.name, value: r.code };
+                return { label: r.name, value: r.id };
               });
             return [];
           }}
