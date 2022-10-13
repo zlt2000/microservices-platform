@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.zlt</groupId>
     <artifactId>central-platform</artifactId>
@@ -50,7 +48,7 @@
         <hibernate-validator.version>6.2.0.Final</hibernate-validator.version>
         <dubbo.version>2.7.8</dubbo.version>
         <curator.version>5.1.0</curator.version>
-        <jackson-databind.version>2.12.4</jackson-databind.version>
+        <jackson-databind.version>2.12.6.1</jackson-databind.version>
         <commons-configuration.version>1.10</commons-configuration.version>
         <zuul.version>2.2.9.RELEASE</zuul.version>
         <aws-java-sdk-s3.version>1.12.40</aws-java-sdk-s3.version>
