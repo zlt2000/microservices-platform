@@ -48,7 +48,7 @@ export async function auditlog(params?: { [key: string]: string | number }) {
 
 export async function slowQueryLog(params?: { [key: string]: string | number }) {
   const { current, pageSize, ...rest } = params ?? {};
-  const result = await request<SYSTEM.Page<SEARCH.TraceLog>>('/api-log/slowQueryLog', {
+  const result = await request<SYSTEM.Page<SEARCH.SlowSqlLog>>('/api-log/slowQueryLog', {
     method: 'GET',
     params: { page: current, limit: pageSize, ...rest },
   });

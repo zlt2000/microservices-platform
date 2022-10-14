@@ -125,7 +125,6 @@ const handleDelete = async (sysUser: SYSTEM.User) => {
 
 const handleImport = async (file: RcFile) => {
   const hide = message.loading('正在导入');
-  debugger
   try {
     const formData = new FormData();
     formData.append('file', file);
