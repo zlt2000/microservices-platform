@@ -12,7 +12,7 @@ import React, { useState } from 'react';
 const SlowSqlLog: React.FC = () => {
   const [params, setParams] = useState<Record<string, string | number>>();
 
-  const columns: ProColumns<SEARCH.AuditLog>[] = [
+  const columns: ProColumns<SEARCH.SlowSqlLog>[] = [
     {
       dataIndex: 'index',
       valueType: 'indexBorder',
@@ -75,20 +75,15 @@ const SlowSqlLog: React.FC = () => {
         <ProFormSelect
           name="searchKey"
           label="搜索"
+          initialValue={['全文搜索']}
           valueEnum={{
             none: '全文搜索',
-            appName: '应用名',
-            classname: '类别',
-            methodName: '方法名',
-            userId: '用户ID',
-            userName: '用户名',
-            clientId: '租户ID',
-            operation: '操作信息',
+            query_str: '查询语句',
           }}
         />
         <ProFormText name="searchValue" />
       </QueryFilter>
-      <ProTable<SEARCH.AuditLog>
+      <ProTable<SEARCH.SlowSqlLog>
         className="audit-log"
         rowKey="id"
         headerTitle="慢查询日志"

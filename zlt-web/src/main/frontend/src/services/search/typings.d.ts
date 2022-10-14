@@ -50,7 +50,12 @@ declare namespace SEARCH {
 
   type SlowSqlLog = {
     id?: string;
-
+    timestamp?: string;
+    query_str?: string;
+    query_time?: string;
+    lock_time?: string;
+    rows_sent?: string;
+    rows_examined?: string;
   };
 
   

@@ -69,6 +69,15 @@ export async function importUser(formData: FormData) {
   return result;
 }
 
+export async function importImage(formData: FormData) {
+  const result = await request<API.Result<void>>("/api-file/files-anon", {
+    method: 'POST',
+    requestType: 'form',
+    data: formData,
+  });
+  return result;
+}
+
 export async function role() {
   const result = await request<SYSTEM.Page<SYSTEM.Role>>('/api-user/roles', {
     method: 'GET',
@@ -164,10 +173,42 @@ export async function menu(params: { [key: string]: string | number }) {
   return result.data;
 }
 
+export async function menuOnes() {
+  const result = await request<SYSTEM.Page<SYSTEM.Menu>>('/api-user/menus/findOnes', {
+    method: 'GET',
+  });
+  return result.data;
+}
+
 export async function assignMenu(assignMenu: SYSTEM.AssignMenu) {
   const result = await request<API.Result<void>>("/api-user/menus/granted", {
     method: 'POST',
     data: assignMenu,
+  });
+  return result;
+}
+
+export async function saveOrUpdateMenus(data: SYSTEM.Menu): Promise<API.Result<SYSTEM.Menu>> {
+  const result = await request<API.Result<SYSTEM.Menu>>('/api-user/menus/saveOrUpdate', {
+    method: 'POST',
+    data,
+  });
+  return result;
+}
+
+export async function deleteMenus(id: number) {
+  const url = `/api-user/menus/${id}`;
+  const result = await request<API.Result<void>>(url, {
+    method: 'DELETE',
+  });
+  return result;
+}
+
+export async function deleteToken(token: string) {
+  const url = `/api-uaa/oauth/remove/token`;
+  const result = await request<API.Result<void>>(url, {
+    method: 'DELETE',
+    params: {token}
   });
   return result;
 }

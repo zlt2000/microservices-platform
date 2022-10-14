@@ -1,5 +1,5 @@
-import { token } from '@/services/system/api';
-import type { ProColumns } from '@ant-design/pro-components';
+import { deleteToken, token } from '@/services/system/api';
+import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import {
   ProFormSelect,
   PageContainer,
@@ -7,14 +7,33 @@ import {
   ProTable,
   QueryFilter,
 } from '@ant-design/pro-components';
-import { Typography, message } from 'antd';
-import React, { useState } from 'react';
+import { Typography, message, Popconfirm } from 'antd';
+import React, { useRef, useState } from 'react';
 
 const { Link } = Typography;
 
-const TableList: React.FC = () => {
-  const [params, setParams] = useState<Record<string, string | number>>({ tenantId: 'webApp' });
+const handleDelete = async (token: SYSTEM.Token) => {
+  const hide = message.loading('正在删除');
+  try {
+    const result = await deleteToken(token.tokenValue);
+    hide();
+    if (result.resp_code === 0) {
+      message.success('删除Token成功');
+      return true;
+    } else {
+      message.error(result.resp_msg);
+      return false;
+    }
+  } catch (error) {
+    hide();
+    message.error('删除Token失败');
+    return false;
+  }
+};
 
+const TableList: React.FC = () => {
+  const actionRef = useRef<ActionType>();
+  const [params, setParams] = useState<Record<string, string | number>>({ tenantId: 'webApp' });
   const columns: ProColumns<SYSTEM.Token>[] = [
     {
       dataIndex: 'index',
@@ -48,7 +67,19 @@ const TableList: React.FC = () => {
     {
       title: '操作',
       key: 'action',
-      render: () => <Link onClick={() => message.info('演示环境不支持该功能')}>删除</Link>,
+      render: (_, entity) => <Popconfirm
+        title={`确认删除Token?`}
+        onConfirm={async () => {
+          const success = await handleDelete(entity);
+          if (success) {
+            if (actionRef.current) {
+              actionRef.current.reload();
+            }
+          }
+        }}
+      >
+        <Link>删除</Link>
+      </Popconfirm>,
     },
   ];
 
@@ -61,11 +92,14 @@ const TableList: React.FC = () => {
         className="query-filter"
         initialValues={params}
         onFinish={async (values) => setParams(values)}
-        // onReset={() => setParams({})}
+      // onReset={() => setParams({})}
       >
         <ProFormSelect
           name="tenantId"
           label="所属应用"
+          fieldProps={{
+            onChange:async (values) => setParams({tenantId: values})
+          }}
           valueEnum={{
             webApp: 'pc端',
             app: '移动端',
@@ -79,6 +113,7 @@ const TableList: React.FC = () => {
         rowKey="tokenValue"
         headerTitle="Token管理"
         request={token}
+        actionRef={actionRef}
         columns={columns}
         search={false}
         params={params}

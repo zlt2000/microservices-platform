@@ -1,11 +1,50 @@
 import { currentUser2 } from '@/services/login/api';
+import { importImage, importUser, saveOrUpdateUser } from '@/services/system/api';
 import { UploadOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { PageContainer, ProFormText, ProForm, ProFormRadio } from '@ant-design/pro-components';
-import { Button, Upload } from 'antd';
+import { Button, message, Upload } from 'antd';
+import { RcFile } from 'antd/lib/upload';
 import React, { useRef } from 'react';
 import { useModel } from 'umi';
 import styles from './index.less';
+
+const handleEdit = async (fields: SYSTEM.User) => {
+  const hide = message.loading('正在更新');
+  try {
+    const result = await saveOrUpdateUser({ ...fields });
+    hide();
+    if (result.resp_code === 0) {
+      message.success('修改个人信息成功');
+      return true;
+    } else {
+      message.error(result.resp_msg);
+      return false;
+    }
+  } catch (error) {
+    hide();
+    message.error('修改个人信息失败');
+    return false;
+  }
+};
+
+const handleImport = async (file: RcFile) => {
+  const hide = message.loading('正在导入');
+  try {
+    const formData = new FormData();
+    formData.append('file', file);
+    const result = await importImage(formData);
+    hide();
+    if (result.resp_code === 0) {
+      message.success('上传头像成功');
+    } else {
+      message.error(result.resp_msg);
+    }
+  } catch (error) {
+    hide();
+    message.error('上传头像失败');
+  }
+};
 
 const AvatarView = ({ avatar }: { avatar: string }) => (
   <>
@@ -13,7 +52,15 @@ const AvatarView = ({ avatar }: { avatar: string }) => (
     <div className={styles.avatar}>
       <img src={avatar} alt="avatar" />
     </div>
-    <Upload showUploadList={false}>
+    <Upload
+      maxCount={1}
+      action="/api-file/files-anon"
+      showUploadList={false}
+      beforeUpload={async (file) => {
+        await handleImport(file);
+        return false;
+      }}
+    >
       <div className={styles.button_view}>
         <Button>
           <UploadOutlined />
@@ -28,7 +75,6 @@ const UserInfo: React.FC = () => {
   const formRef = useRef<ProFormInstance<API.CurrentUser>>();
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState;
-
   return (
     <PageContainer header={{ subTitle: '更新个人信息' }}>
       <div className={styles.baseView}>
@@ -37,8 +83,13 @@ const UserInfo: React.FC = () => {
             formRef={formRef}
             //layout="horizontal"
             request={currentUser2}
-            // labelCol={{ span: 8 }}
-            // wrapperCol={{ span: 16 }}
+            onFinish={async (values) => {
+              const user = { ...currentUser, ...values };
+              await handleEdit(user);
+              message.success('修改个人信息成功');
+            }}
+          // labelCol={{ span: 8 }}
+          // wrapperCol={{ span: 16 }}
           >
             <ProFormText name="username" label="账号" readonly />
             <ProFormText
