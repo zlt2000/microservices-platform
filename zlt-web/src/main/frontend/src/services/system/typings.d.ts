@@ -56,7 +56,7 @@ declare namespace SYSTEM {
     clientId?: string;
     expiration?: Date;
     grantType?: string;
-    tokenValue?: string;
+    tokenValue: string;
     username?: string;
   };
 

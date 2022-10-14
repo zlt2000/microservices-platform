@@ -163,6 +163,9 @@ const TableList: React.FC = () => {
         <ProFormSelect
           name="tenantId"
           label="所属应用"
+          fieldProps={{
+            onChange:async (values) => setParams({tenantId: values})
+          }}
           valueEnum={{
             webApp: 'pc端',
             app: '移动端',

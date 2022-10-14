@@ -23,7 +23,6 @@ export type UpdateFormProps = {
 const UpdateForm: React.FC<UpdateFormProps> = (props) => {
   const [form] = Form.useForm();
   const { values } = props;
-
   useEffect(() => {
     if (values?.roles) {
       const roleIds = values.roles.map((r) => r.id);
