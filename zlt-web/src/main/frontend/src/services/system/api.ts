@@ -70,7 +70,7 @@ export async function importUser(formData: FormData) {
 }
 
 export async function importImage(formData: FormData) {
-  const result = await request<API.Result<void>>("/api-file/files-anon", {
+  const result = await request<SYSTEM.FileInfo>("/api-file/files-anon", {
     method: 'POST',
     requestType: 'form',
     data: formData,

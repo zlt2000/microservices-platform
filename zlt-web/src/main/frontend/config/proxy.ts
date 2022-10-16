@@ -6,7 +6,7 @@
  * For details, please see
  * https://pro.ant.design/docs/deploy
  */
-export default {
+ export default {
   dev: {
     '/api-uaa/': {
       target: 'http://127.0.0.1:9900',
@@ -25,6 +25,10 @@ export default {
       changeOrigin: true,
     },
     '/api-generator/': {
+      target: 'http://127.0.0.1:9900',
+      changeOrigin: true,
+    },
+    '/api-file/': {
       target: 'http://127.0.0.1:9900',
       changeOrigin: true,
     },

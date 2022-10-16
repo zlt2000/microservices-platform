@@ -18,7 +18,7 @@ declare namespace SYSTEM {
   };
 
   type User = {
-    id: number;
+    id?: number;
     username?: string;
     nickname?: string;
     headImgUrl?: string;
@@ -26,10 +26,11 @@ declare namespace SYSTEM {
     type?: string;
     mobile?: string;
     createTime?: Date;
-    enabled: boolean;
+    enabled?: boolean;
     del?: boolean;
     roles?: Role[];
     roleId?: string;
+    headImgUrl?: string;
   };
 
   type Menu = {
@@ -87,4 +88,18 @@ declare namespace SYSTEM {
     tableComment?: string;
     tableName?: string;
   };
+
+  type FileInfo = {
+    id: number;
+    name?: string;
+    isImg: boolean;
+    url?: string;
+    contentType?: string;
+    size?: number;
+    path?: string;
+    source?: string;
+    createTime?: string;
+    tenantId?: string;
+    updateTime?: string;
+  }
 }
