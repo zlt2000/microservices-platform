@@ -1,11 +1,10 @@
-import { currentUser2 } from '@/services/login/api';
-import { importImage, importUser, saveOrUpdateUser } from '@/services/system/api';
+import { importImage, saveOrUpdateUser } from '@/services/system/api';
 import { UploadOutlined } from '@ant-design/icons';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { PageContainer, ProFormText, ProForm, ProFormRadio } from '@ant-design/pro-components';
 import { Button, message, Upload } from 'antd';
-import { RcFile } from 'antd/lib/upload';
-import React, { useRef } from 'react';
+import type { RcFile } from 'antd/lib/upload';
+import React, { useRef, useState } from 'react';
 import { useModel } from 'umi';
 import styles from './index.less';
 
@@ -35,18 +34,16 @@ const handleImport = async (file: RcFile) => {
     formData.append('file', file);
     const result = await importImage(formData);
     hide();
-    if (result.resp_code === 0) {
-      message.success('上传头像成功');
-    } else {
-      message.error(result.resp_msg);
-    }
+    message.success('上传头像成功');
+    return result;
   } catch (error) {
     hide();
     message.error('上传头像失败');
+    return null;
   }
 };
 
-const AvatarView = ({ avatar }: { avatar: string }) => (
+const AvatarUpload = ({ avatar, setImage }: { avatar: string, setImage: (headImgUrl: string) => void }) => (
   <>
     <div className={styles.avatar_title}>头像</div>
     <div className={styles.avatar}>
@@ -57,7 +54,10 @@ const AvatarView = ({ avatar }: { avatar: string }) => (
       action="/api-file/files-anon"
       showUploadList={false}
       beforeUpload={async (file) => {
-        await handleImport(file);
+        const result = await handleImport(file);
+        if(result && result.url) {
+          setImage(result.url);
+        }
         return false;
       }}
     >
@@ -72,20 +72,27 @@ const AvatarView = ({ avatar }: { avatar: string }) => (
 );
 
 const UserInfo: React.FC = () => {
-  const formRef = useRef<ProFormInstance<API.CurrentUser>>();
+  const formRef = useRef<ProFormInstance<SYSTEM.User>>();
   const { initialState } = useModel('@@initialState');
-  const { currentUser } = initialState;
+  const { currentUser } = initialState ?? {};
+  const [user, setUser] = useState<SYSTEM.User>({...currentUser});
+  const setImage = (headImgUrl: string) => {
+    setUser({...user, headImgUrl});
+  }
+  if (!initialState || !currentUser) {
+    return null;
+  }
+  formRef.current?.setFieldsValue(user);
   return (
     <PageContainer header={{ subTitle: '更新个人信息' }}>
       <div className={styles.baseView}>
         <div className={styles.left}>
-          <ProForm<API.CurrentUser>
+          <ProForm<SYSTEM.User>
             formRef={formRef}
             //layout="horizontal"
-            request={currentUser2}
             onFinish={async (values) => {
-              const user = { ...currentUser, ...values };
-              await handleEdit(user);
+              const saveUser = { ...user, ...values };
+              await handleEdit(saveUser);
               message.success('修改个人信息成功');
             }}
           // labelCol={{ span: 8 }}
@@ -134,7 +141,7 @@ const UserInfo: React.FC = () => {
           </ProForm>
         </div>
         <div className={styles.right}>
-          <AvatarView avatar={currentUser.headImgUrl} />
+          {user.headImgUrl && <AvatarUpload avatar={user.headImgUrl} setImage={setImage}/>}
         </div>
       </div>
     </PageContainer>

@@ -14,13 +14,8 @@ declare namespace API {
     datas?: T;
   };
 
-  type CurrentUser = {
-    userId?: string;
-    username?: string;
-    nickname?: string;
-    headImgUrl?: string;
-    sex?: number;
-    type?: string;
+  type CurrentUser = SYSTEM.User & {
+    permissions: string[];
   };
 
   type Menu = {
