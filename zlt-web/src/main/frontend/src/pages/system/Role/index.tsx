@@ -1,4 +1,4 @@
-import { deleteRole, pageRole, saveOrUpdateRole } from '@/services/system/api';
+import { appAll, deleteRole, pageRole, saveOrUpdateRole } from '@/services/system/api';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import {
@@ -10,9 +10,9 @@ import {
   ProTable,
   QueryFilter,
 } from '@ant-design/pro-components';
-import { Popconfirm, Space, Typography } from 'antd';
+import { Form, Popconfirm, Space, Typography } from 'antd';
 import { Button, message } from 'antd';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import AssignAuth from './components/AssignAuth';
 import UpdateForm from './components/UpdateForm';
 
@@ -82,14 +82,28 @@ const handleDelete = async (data: SYSTEM.Role) => {
 };
 
 const TableList: React.FC = () => {
-  const [params, setParams] = useState<Record<string, string | number>>({tenantId: 'webApp'});
+  const [params, setParams] = useState<Record<string, string | number>>({});
+  const [form] = Form.useForm();
   const actionRef = useRef<ActionType>();
+  const [apps, setApps] = useState<SYSTEM.App[]>([]);
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
   const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
 
   const [currentRow, setCurrentRow] = useState<SYSTEM.Role>();
 
   const [assignAuth, setAssignAuth] = useState<AssignAuthProps>({ assignModalVisible: false });
+
+  useEffect(() => {
+    (async () => {
+      const appData = (await appAll()) || [];
+      setApps(appData);
+      if (appData.length > 0) {
+        const tenantId = appData[0].clientId;
+        setParams({ tenantId });
+        form.setFieldsValue({ tenantId });
+      }
+    })();
+  }, [form]);
 
   const columns: ProColumns<SYSTEM.Role>[] = [
     {
@@ -157,22 +171,24 @@ const TableList: React.FC = () => {
         defaultCollapsed
         split
         span={6}
-        initialValues={params}
+        form={form}
         className="query-filter"
+        onValuesChange={(changedValues, allValues) => {
+          if (changedValues.tenantId) setParams(allValues);
+        }}
         onFinish={async (values) => setParams(values)}
-        onReset={async() => setParams({tenantId: 'webApp'})}
+        onReset={() => {
+          form.setFieldsValue({ tenantId: params.tenantId });
+          setParams({ tenantId: params.tenantId });
+        }}
       >
         <ProFormSelect
           name="tenantId"
           label="所属应用"
-          fieldProps={{
-            onChange:async (values) => setParams({tenantId: values})
-          }}
-          valueEnum={{
-            webApp: 'pc端',
-            app: '移动端',
-            zlt: '第三方应用',
-          }}
+          allowClear={false}
+          options={apps.map((item) => {
+            return { label: item.clientId, value: item.clientId };
+          })}
         />
         <ProFormSelect
           name="searchKey"

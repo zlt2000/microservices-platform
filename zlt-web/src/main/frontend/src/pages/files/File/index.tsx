@@ -1,7 +1,6 @@
 import { deleteFile, file } from '@/services/files/api';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import {
-  ProFormSelect,
   PageContainer,
   ProFormText,
   ProTable,
@@ -12,10 +11,10 @@ import React, { useRef, useState } from 'react';
 
 const { Link } = Typography;
 
-const handleDelete = async (file: FILES.File) => {
+const handleDelete = async (deletefile: FILES.File) => {
   const hide = message.loading('正在删除');
   try {
-    const result = await deleteFile(file.id);
+    const result = await deleteFile(deletefile.id);
     hide();
     if (result.resp_code === 0) {
       message.success('删除File成功');
@@ -33,7 +32,7 @@ const handleDelete = async (file: FILES.File) => {
 
 const TableList: React.FC = () => {
   const actionRef = useRef<ActionType>();
-  const [params, setParams] = useState<Record<string, string | number>>({ tenantId: 'webApp' });
+  const [params, setParams] = useState<Record<string, string | number>>({ });
   const columns: ProColumns<FILES.File>[] = [
     {
       dataIndex: 'index',
@@ -46,6 +45,7 @@ const TableList: React.FC = () => {
     {
       title: '文件大小（B）',
       dataIndex: 'size',
+      valueType: 'digit',
     },
     {
       title: '媒体类型',
@@ -68,7 +68,7 @@ const TableList: React.FC = () => {
       title: '操作',
       key: 'action',
       render: (_, entity) => <Popconfirm
-        title={`确认删除File?`}
+        title={`确认删除文件[${entity.name}]?`}
         onConfirm={async () => {
           const success = await handleDelete(entity);
           if (success) {
@@ -90,9 +90,7 @@ const TableList: React.FC = () => {
         split
         span={6}
         className="query-filter"
-        initialValues={params}
         onFinish={async (values) => setParams(values)}
-        onReset={() => setParams({})}
       >
         <ProFormText name="name" label="搜索" placeholder="输入关键字" />
       </QueryFilter>
