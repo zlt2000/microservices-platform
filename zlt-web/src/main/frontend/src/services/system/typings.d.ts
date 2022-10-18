@@ -30,7 +30,6 @@ declare namespace SYSTEM {
     del?: boolean;
     roles?: Role[];
     roleId?: string;
-    headImgUrl?: string;
   };
 
   type Menu = {
@@ -62,13 +61,13 @@ declare namespace SYSTEM {
   };
 
   type App = {
-    id: number;
+    id?: number;
     accessTokenValiditySeconds?: number;
     additionalInformation?: string;
     authorities?: string;
     authorizedGrantTypes?: string;
     autoapprove?: string;
-    clientId?: string;
+    clientId: string;
     clientName?: string;
     clientSecret?: string;
     clientSecretStr?: string;
