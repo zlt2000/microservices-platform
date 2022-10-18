@@ -1,7 +1,8 @@
 import { app, deleteApp } from '@/services/system/api';
+import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { PageContainer, ProFormText, ProTable, QueryFilter } from '@ant-design/pro-components';
-import { Typography, message, Popconfirm } from 'antd';
+import { Typography, message, Popconfirm, Button } from 'antd';
 import React, { useRef, useState } from 'react';
 
 const { Link } = Typography;
@@ -127,6 +128,18 @@ const TableList: React.FC = () => {
           showSizeChanger: true,
           showQuickJumper: true,
         }}
+        toolBarRender={() => [
+          <>
+            <Button
+              type="primary"
+              onClick={() => {
+                handleModalVisible(true);
+              }}
+            >
+              <PlusOutlined /> 添加
+            </Button>
+          </>,
+        ]}
       />
     </PageContainer>
   );

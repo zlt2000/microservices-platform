@@ -1,4 +1,4 @@
-import { deleteToken, token } from '@/services/system/api';
+import { deleteFile, file } from '@/services/files/api';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import {
   ProFormSelect,
@@ -12,13 +12,13 @@ import React, { useRef, useState } from 'react';
 
 const { Link } = Typography;
 
-const handleDelete = async (token: SYSTEM.Token) => {
+const handleDelete = async (file: FILES.File) => {
   const hide = message.loading('正在删除');
   try {
-    const result = await deleteToken(token.tokenValue);
+    const result = await deleteFile(file.id);
     hide();
     if (result.resp_code === 0) {
-      message.success('删除Token成功');
+      message.success('删除File成功');
       return true;
     } else {
       message.error(result.resp_msg);
@@ -26,7 +26,7 @@ const handleDelete = async (token: SYSTEM.Token) => {
     }
   } catch (error) {
     hide();
-    message.error('删除Token失败');
+    message.error('删除File失败');
     return false;
   }
 };
@@ -34,41 +34,41 @@ const handleDelete = async (token: SYSTEM.Token) => {
 const TableList: React.FC = () => {
   const actionRef = useRef<ActionType>();
   const [params, setParams] = useState<Record<string, string | number>>({ tenantId: 'webApp' });
-  const columns: ProColumns<SYSTEM.Token>[] = [
+  const columns: ProColumns<FILES.File>[] = [
     {
       dataIndex: 'index',
       valueType: 'indexBorder',
     },
     {
-      title: 'token',
-      dataIndex: 'tokenValue',
+      title: '流媒体名称',
+      dataIndex: 'name',
     },
     {
-      title: '到期时间',
-      dataIndex: 'expiration',
-      valueType: 'dateTime',
+      title: '文件大小（B）',
+      dataIndex: 'size',
     },
     {
-      title: '用户名',
-      dataIndex: 'username',
+      title: '媒体类型',
+      dataIndex: 'contentType',
     },
     {
-      title: '授权类型',
+      title: '文件系统',
       dataIndex: 'grantType',
     },
     {
-      title: '所属应用',
-      dataIndex: 'clientId',
+      title: '创建时间',
+      dataIndex: 'createTime',
+      valueType: 'dateTime',
     },
     {
-      title: '账号类型',
+      title: '内容',
       dataIndex: 'accountType',
     },
     {
       title: '操作',
       key: 'action',
       render: (_, entity) => <Popconfirm
-        title={`确认删除Token?`}
+        title={`确认删除File?`}
         onConfirm={async () => {
           const success = await handleDelete(entity);
           if (success) {
@@ -84,7 +84,7 @@ const TableList: React.FC = () => {
   ];
 
   return (
-    <PageContainer header={{ subTitle: '管理会话Token' }}>
+    <PageContainer header={{ subTitle: '管理文件' }}>
       <QueryFilter
         defaultCollapsed
         split
@@ -92,27 +92,14 @@ const TableList: React.FC = () => {
         className="query-filter"
         initialValues={params}
         onFinish={async (values) => setParams(values)}
-        onReset={async() => setParams({tenantId: "webApp"})}
+        onReset={() => setParams({})}
       >
-        <ProFormSelect
-          name="tenantId"
-          label="所属应用"
-          fieldProps={{
-            onChange:async (values) => setParams({tenantId: values})
-          }}
-          valueEnum={{
-            webApp: 'pc端',
-            app: '移动端',
-            zlt: '第三方应用',
-          }}
-          allowClear={false}
-        />
-        <ProFormText name="username" label="搜索" placeholder="输入用户名" />
+        <ProFormText name="name" label="搜索" placeholder="输入关键字" />
       </QueryFilter>
-      <ProTable<SYSTEM.Token>
-        rowKey="tokenValue"
-        headerTitle="Token管理"
-        request={token}
+      <ProTable<FILES.File>
+        rowKey="id"
+        headerTitle="文件管理"
+        request={file}
         actionRef={actionRef}
         columns={columns}
         search={false}

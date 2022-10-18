@@ -55,7 +55,7 @@ const AvatarUpload = ({ avatar, setImage }: { avatar: string, setImage: (headImg
       showUploadList={false}
       beforeUpload={async (file) => {
         const result = await handleImport(file);
-        if(result && result.url) {
+        if (result && result.url) {
           setImage(result.url);
         }
         return false;
@@ -75,13 +75,14 @@ const UserInfo: React.FC = () => {
   const formRef = useRef<ProFormInstance<SYSTEM.User>>();
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState ?? {};
-  const [user, setUser] = useState<SYSTEM.User>({...currentUser});
+  const [user, setUser] = useState<SYSTEM.User>({ ...currentUser });
   const setImage = (headImgUrl: string) => {
-    setUser({...user, headImgUrl});
+    setUser({ ...user, headImgUrl });
   }
   if (!initialState || !currentUser) {
     return null;
   }
+  // debugger
   formRef.current?.setFieldsValue(user);
   return (
     <PageContainer header={{ subTitle: '更新个人信息' }}>
@@ -90,10 +91,12 @@ const UserInfo: React.FC = () => {
           <ProForm<SYSTEM.User>
             formRef={formRef}
             //layout="horizontal"
+            initialValues={user}
             onFinish={async (values) => {
               const saveUser = { ...user, ...values };
               await handleEdit(saveUser);
-              message.success('修改个人信息成功');
+              setUser({ ...user });
+
             }}
           // labelCol={{ span: 8 }}
           // wrapperCol={{ span: 16 }}
@@ -141,7 +144,7 @@ const UserInfo: React.FC = () => {
           </ProForm>
         </div>
         <div className={styles.right}>
-          {user.headImgUrl && <AvatarUpload avatar={user.headImgUrl} setImage={setImage}/>}
+          {user.headImgUrl && <AvatarUpload avatar={user.headImgUrl} setImage={setImage} />}
         </div>
       </div>
     </PageContainer>
