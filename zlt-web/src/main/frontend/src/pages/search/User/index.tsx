@@ -10,7 +10,7 @@ import {
 import React, { useState } from 'react';
 
 const TableList: React.FC = () => {
-  const [params, setParams] = useState<Record<string, string | number>>({});
+  const [params, setParams] = useState<Record<string, string | number>>({ });
 
   const columns: ProColumns<SYSTEM.User>[] = [
     {
@@ -55,16 +55,32 @@ const TableList: React.FC = () => {
         defaultCollapsed
         split
         className="query-filter"
-        onFinish={async (values) => setParams(values)}
+        initialValues={{searchKey:"none"}}
+        // onFinish={async (values) => setParams(values)}
+        onFinish={async (values) => {
+          let queryStr = '';
+          const { searchKey, searchValue } = values;
+          if (searchKey && searchValue) {
+            if (searchKey === 'none') {
+              queryStr = searchValue;
+            } else {
+              queryStr = `${searchKey}:${searchValue}`;
+            }
+          }
+          setParams({ ...params, queryStr });
+        }}
       >
         <ProFormSelect
           name="searchKey"
           label="搜索"
           valueEnum={{
-            user_id: 'ID',
+            none: '全文搜索',
+            id: 'ID',
             username: '账号',
-            nick_name: '用户名',
+            nickname: '用户名',
             mobile: '手机号',
+            sex: '性别',
+            type: '用户类别',
           }}
         />
         <ProFormText name="searchValue" />

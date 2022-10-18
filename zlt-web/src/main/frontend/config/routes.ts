@@ -39,6 +39,15 @@
     ],
   },
   {
+    path: '/files',
+    routes: [
+      {
+        path: '/files/files.html',
+        component: './files/File',
+      }
+    ],
+  },
+  {
     path: '/search',
     routes: [
       {

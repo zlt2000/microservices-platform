@@ -82,7 +82,7 @@ const handleDelete = async (data: SYSTEM.Role) => {
 };
 
 const TableList: React.FC = () => {
-  const [params, setParams] = useState<Record<string, string | number>>({});
+  const [params, setParams] = useState<Record<string, string | number>>({tenantId: 'webApp'});
   const actionRef = useRef<ActionType>();
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
   const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
@@ -157,8 +157,10 @@ const TableList: React.FC = () => {
         defaultCollapsed
         split
         span={6}
+        initialValues={params}
         className="query-filter"
         onFinish={async (values) => setParams(values)}
+        onReset={async() => setParams({tenantId: 'webApp'})}
       >
         <ProFormSelect
           name="tenantId"

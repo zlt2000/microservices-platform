@@ -90,7 +90,7 @@ declare namespace SYSTEM {
   };
 
   type FileInfo = {
-    id: number;
+    id: string;
     name?: string;
     isImg: boolean;
     url?: string;
