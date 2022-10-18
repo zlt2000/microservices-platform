@@ -68,7 +68,7 @@ const handleDelete = async (sysUser: SYSTEM.Menu) => {
 };
 const Generator: React.FC = () => {
 
-  const [params, setParams] = useState<Record<string, string | number>>({});
+  const [params, setParams] = useState<Record<string, string | number>>({ tenantId: 'webApp' });
   const actionRef = useRef<ActionType>();
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
   const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
@@ -198,9 +198,10 @@ const Generator: React.FC = () => {
         defaultCollapsed
         split
         span={6}
+        initialValues={params}
         className="query-filter"
         onFinish={async (values) => query(values)}
-      // onReset={() => setParams({})}
+        // onReset={() => setParams({})}
       >
         <ProFormSelect
           name="tenantId"
