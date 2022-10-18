@@ -1,12 +1,25 @@
-import { deleteMenus, menu, menuOnes, saveOrUpdateMenus } from '@/services/system/api';
+import { appAll, deleteMenus, menu, menuOnes, saveOrUpdateMenus } from '@/services/system/api';
 import { treeify } from '@/util/treeify';
-import { FolderOpenOutlined, MenuOutlined, PlusOutlined, ProfileOutlined, } from '@ant-design/icons';
-import { idIDIntl, ProColumns, ProFormDigit } from '@ant-design/pro-components';
-import { ProFormRadio, ProFormTreeSelect, ProForm, ProFormSelect } from '@ant-design/pro-components';
-import { PageContainer, ProFormText, ProTable, QueryFilter, ModalForm } from '@ant-design/pro-components';
-import { Button, Space, Tag, Typography, TreeSelect, message, Popconfirm } from 'antd';
+import { FolderOpenOutlined, MenuOutlined, PlusOutlined, ProfileOutlined } from '@ant-design/icons';
+import type { ActionType, ProColumns } from '@ant-design/pro-components';
+import { ProFormDigit } from '@ant-design/pro-components';
+import {
+  ProFormRadio,
+  ProFormTreeSelect,
+  ProForm,
+  ProFormSelect,
+} from '@ant-design/pro-components';
+import {
+  PageContainer,
+  ProFormText,
+  ProTable,
+  QueryFilter,
+  ModalForm,
+} from '@ant-design/pro-components';
+import { Button, Space, Tag, Typography, message, Popconfirm } from 'antd';
 import React, { useRef, useEffect, useState } from 'react';
 import UpdateForm from './components/UpdateForm';
+
 
 const { Link } = Typography;
 
@@ -67,28 +80,42 @@ const handleDelete = async (sysUser: SYSTEM.Menu) => {
   }
 };
 const Generator: React.FC = () => {
-
-  const [params, setParams] = useState<Record<string, string | number>>({ tenantId: 'webApp' });
+  const [tenantId, setTenantId] = useState<string>();
+  const [keyword, setKeyword] = useState<string>();
+  const [apps, setApps] = useState<SYSTEM.App[]>([]);
   const actionRef = useRef<ActionType>();
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
   const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
   const [currentRow, setCurrentRow] = useState<SYSTEM.Menu>();
   const [data, setData] = useState<SYSTEM.Menu[]>();
-  const [keys, setKeys] = useState<(React.Key)[]>([]);
-  const [expandedRowKeys, setExpandedRowKeys] = useState<(React.Key)[]>([]);
+  const [keys, setKeys] = useState<React.Key[]>([]);
+  const [expandedRowKeys, setExpandedRowKeys] = useState<React.Key[]>([]);
 
-  const query = async (params: Record<string, string | number>) => {
-    const menus = await menu(params);
+  const query = async (clientId: string) => {
+    const menus = await menu(clientId);
     const treeData = treeify(menus, {});
     menus.forEach((node) => {
       if (node.children && node.children.length === 0) delete node.children;
     });
-    setKeys(menus.map(m => m.id));
+    setKeys(menus.map((m) => m.id));
     setData(treeData);
   };
 
+  // useEffect(() => {
+
+  //   query({ tenantId: 'webApp' });
+  // }, []);
+
   useEffect(() => {
-    query({ tenantId: 'webApp' });
+    (async () => {
+      const appData = (await appAll()) || [];
+      setApps(appData);
+      if (appData.length > 0) {
+        const clientId = appData[0].clientId;
+        setTenantId(clientId);
+        query(clientId);
+      }
+    })();
   }, []);
 
   const columns: ProColumns<SYSTEM.Menu>[] = [
@@ -96,6 +123,10 @@ const Generator: React.FC = () => {
       title: '菜单名称',
       key: 'name',
       width: 120,
+      onCell: (record) => {
+        if (keyword && record.name?.includes(keyword)) return { className: 'hightligh' };
+        return {};
+      },
       render(dom, entity) {
         if (entity.type === 1) {
           if (entity.url?.startsWith('javascript')) {
@@ -127,12 +158,20 @@ const Generator: React.FC = () => {
       title: '菜单url',
       dataIndex: 'url',
       width: 100,
+      onCell: (record) => {
+        if (keyword && record.url?.includes(keyword)) return { className: 'hightligh' };
+        return {};
+      },
     },
     {
       title: '菜单path',
       dataIndex: 'path',
       width: 100,
       ellipsis: true,
+      onCell: (record) => {
+        if (keyword && record.path?.includes(keyword)) return { className: 'hightligh' };
+        return {};
+      },
     },
     {
       title: '样式',
@@ -193,27 +232,32 @@ const Generator: React.FC = () => {
     },
   ];
   return (
-    <PageContainer header={{ subTitle: '生成代码' }}>
+    <PageContainer header={{ subTitle: '维护系统菜单' }}>
       <QueryFilter
         defaultCollapsed
         split
         span={6}
-        initialValues={params}
         className="query-filter"
-        onFinish={async (values) => query(values)}
+        onFinish={async (values) => {
+          setExpandedRowKeys(keys);
+          setKeyword(values.searchValue);
+        }}
         // onReset={() => setParams({})}
       >
         <ProFormSelect
           name="tenantId"
           label="所属应用"
           fieldProps={{
-            onChange: async (values) => query({ tenantId: values })
+            value: tenantId,
+            allowClear: false,
+            onChange: async (values) => {
+              setTenantId(values);
+              query(values);
+            },
           }}
-          valueEnum={{
-            webApp: 'pc端',
-            app: '移动端',
-            zlt: '第三方应用',
-          }}
+          options={apps.map((item) => {
+            return { label: item.clientId, value: item.clientId };
+          })}
         />
         <ProFormText name="searchValue" />
       </QueryFilter>
@@ -227,7 +271,7 @@ const Generator: React.FC = () => {
           menus.forEach((node) => {
             if (node.children && node.children.length === 0) delete node.children;
           });
-          setKeys(menus.map(m => m.id));
+          setKeys(menus.map((m) => m.id));
           setData(treeData);
         }}
         dataSource={data}
@@ -270,7 +314,7 @@ const Generator: React.FC = () => {
         // layout="horizontal"
         visible={createModalVisible}
         onVisibleChange={handleModalVisible}
-        modalProps={{ destroyOnClose: true, okText: "保存" }}
+        modalProps={{ destroyOnClose: true, okText: '保存' }}
         onFinish={async (values) => {
           const success = await handleAdd(values as SYSTEM.Menu);
           if (success) {
@@ -289,11 +333,11 @@ const Generator: React.FC = () => {
             request={async () => {
               const menus = await menuOnes();
               if (menus) {
-                let a = menus.map(item => {
-                  return { ...item, key: item.id, title: item.name, value: item.id }
-                })
-                let treeData = treeify(a, {});
-                let root = {
+                const a = menus.map((item) => {
+                  return { ...item, key: item.id, title: item.name, value: item.id };
+                });
+                const treeData = treeify(a, {});
+                const root = {
                   title: '顶级目录',
                   value: -1,
                   key: -1,
@@ -324,18 +368,8 @@ const Generator: React.FC = () => {
             label="菜单名"
             placeholder="输入菜单名"
           />
-          <ProFormText
-            width="md"
-            name="url"
-            label="菜单url"
-            placeholder="输入菜单url"
-          />
-          <ProFormText
-            width="md"
-            name="path"
-            label="菜单path"
-            placeholder="输入菜单path"
-          />
+          <ProFormText width="md" name="url" label="菜单url" placeholder="输入菜单url" />
+          <ProFormText width="md" name="path" label="菜单path" placeholder="输入菜单path" />
           <ProFormText
             rules={[
               {

@@ -173,7 +173,7 @@ const TableList: React.FC = () => {
     {
       title: '性别',
       dataIndex: 'sex',
-      render: (value) => (value === 0 ? '男' : '女'),
+      renderText: (value) => (value === 0 ? '男' : '女'),
     },
     {
       title: '创建时间',

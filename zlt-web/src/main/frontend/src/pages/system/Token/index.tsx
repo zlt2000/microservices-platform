@@ -1,4 +1,4 @@
-import { deleteToken, token } from '@/services/system/api';
+import { appAll, deleteToken, token } from '@/services/system/api';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import {
   ProFormSelect,
@@ -7,15 +7,15 @@ import {
   ProTable,
   QueryFilter,
 } from '@ant-design/pro-components';
-import { Typography, message, Popconfirm } from 'antd';
-import React, { useRef, useState } from 'react';
+import { Typography, message, Popconfirm, Form } from 'antd';
+import React, { useEffect, useRef, useState } from 'react';
 
 const { Link } = Typography;
 
-const handleDelete = async (token: SYSTEM.Token) => {
+const handleDelete = async (delToken: SYSTEM.Token) => {
   const hide = message.loading('正在删除');
   try {
-    const result = await deleteToken(token.tokenValue);
+    const result = await deleteToken(delToken.tokenValue);
     hide();
     if (result.resp_code === 0) {
       message.success('删除Token成功');
@@ -32,8 +32,22 @@ const handleDelete = async (token: SYSTEM.Token) => {
 };
 
 const TableList: React.FC = () => {
+  const [form] = Form.useForm();
   const actionRef = useRef<ActionType>();
-  const [params, setParams] = useState<Record<string, string | number>>({ tenantId: 'webApp' });
+  const [apps, setApps] = useState<SYSTEM.App[]>([]);
+  const [params, setParams] = useState<Record<string, string | number>>({});
+  useEffect(() => {
+    (async () => {
+      const appData = (await appAll()) || [];
+      setApps(appData);
+      if (appData.length > 0) {
+        const tenantId = appData[0].clientId;
+        setParams({ tenantId });
+        form.setFieldsValue({ tenantId });
+      }
+    })();
+  }, [form]);
+
   const columns: ProColumns<SYSTEM.Token>[] = [
     {
       dataIndex: 'index',
@@ -89,23 +103,28 @@ const TableList: React.FC = () => {
         defaultCollapsed
         split
         span={6}
+        form={form}
         className="query-filter"
-        initialValues={params}
+        onValuesChange={(changedValues, allValues) => {
+          if (changedValues.tenantId) setParams(allValues);
+        }}
         onFinish={async (values) => setParams(values)}
-        onReset={async() => setParams({tenantId: "webApp"})}
+        onReset={() => {
+          form.setFieldsValue({ tenantId: params.tenantId });
+          setParams({ tenantId: params.tenantId });
+        }}
       >
         <ProFormSelect
           name="tenantId"
           label="所属应用"
           fieldProps={{
+            value: params.tenantId,
+            allowClear: false,
             onChange:async (values) => setParams({tenantId: values})
           }}
-          valueEnum={{
-            webApp: 'pc端',
-            app: '移动端',
-            zlt: '第三方应用',
-          }}
-          allowClear={false}
+          options={apps.map((item) => {
+            return { label: item.clientId, value: item.clientId };
+          })}
         />
         <ProFormText name="username" label="搜索" placeholder="输入用户名" />
       </QueryFilter>
