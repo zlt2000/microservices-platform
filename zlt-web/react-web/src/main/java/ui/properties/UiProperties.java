@@ -1,4 +1,4 @@
-package com.central.ui.properties;
+package ui.properties;
 
 import lombok.Getter;
 import lombok.Setter;

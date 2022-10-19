@@ -1,4 +1,4 @@
-package com.central.ui;
+package ui;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
