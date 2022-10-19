@@ -1,4 +1,4 @@
-import { user } from '@/services/system/api';
+import { searchUser } from '@/services/system/api';
 import type { ProColumns } from '@ant-design/pro-components';
 import {
   ProFormSelect,
@@ -10,7 +10,7 @@ import {
 import React, { useState } from 'react';
 
 const TableList: React.FC = () => {
-  const [params, setParams] = useState<Record<string, string | number>>({ });
+  const [params, setParams] = useState<Record<string, string | number>>({});
 
   const columns: ProColumns<SYSTEM.User>[] = [
     {
@@ -24,23 +24,27 @@ const TableList: React.FC = () => {
     {
       title: '账号',
       dataIndex: 'username',
+      render: (_, entity) => <span dangerouslySetInnerHTML={{ __html: entity.username || '' }} />,
     },
     {
       title: '用户名',
       dataIndex: 'nickname',
+      render: (_, entity) => <span dangerouslySetInnerHTML={{ __html: entity.nickname || '' }} />,
     },
     {
       title: '手机号',
       dataIndex: 'mobile',
+      render: (_, entity) => <span dangerouslySetInnerHTML={{ __html: entity.mobile || '' }} />,
     },
     {
       title: '性别',
       dataIndex: 'sex',
-      render: (value) => (value === 0 ? '男' : '女'),
+      render: (_, entity) => <span dangerouslySetInnerHTML={{ __html: entity.sex || '' }} />,
     },
     {
       title: '类别',
       dataIndex: 'type',
+      render: (_, entity) => <span dangerouslySetInnerHTML={{ __html: entity.type || '' }} />,
     },
     {
       title: '创建时间',
@@ -55,7 +59,7 @@ const TableList: React.FC = () => {
         defaultCollapsed
         split
         className="query-filter"
-        initialValues={{searchKey:"none"}}
+        initialValues={{ searchKey: 'none' }}
         // onFinish={async (values) => setParams(values)}
         onFinish={async (values) => {
           let queryStr = '';
@@ -88,7 +92,7 @@ const TableList: React.FC = () => {
       <ProTable<SYSTEM.User>
         rowKey="id"
         headerTitle="用户管理"
-        request={user}
+        request={searchUser}
         columns={columns}
         search={false}
         params={params}
