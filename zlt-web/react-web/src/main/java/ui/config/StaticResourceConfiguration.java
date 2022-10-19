@@ -1,6 +1,6 @@
-package com.central.ui.config;
+package ui.config;
 
-import com.central.ui.properties.UiProperties;
+import ui.properties.UiProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
