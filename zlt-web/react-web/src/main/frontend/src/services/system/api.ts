@@ -12,6 +12,15 @@ export async function user(params?: { [key: string]: string | number }) {
   return { data: result.data, total: result.count };
 }
 
+export async function searchUser(params?: { [key: string]: string | number }) {
+  const { current, pageSize, ...rest } = params ?? {};
+  const result = await request<SYSTEM.Page<SYSTEM.User>>('/api-user/users/search', {
+    method: 'GET',
+    params: { page: current, limit: pageSize, ...rest },
+  });
+  return { data: result.data, total: result.count };
+}
+
 export async function saveOrUpdateUser(data: SYSTEM.User): Promise<API.Result<SYSTEM.User>> {
   const result = await request<API.Result<SYSTEM.User>>('/api-user/users/saveOrUpdate', {
     method: 'POST',
