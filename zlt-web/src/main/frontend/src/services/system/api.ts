@@ -78,6 +78,15 @@ export async function importImage(formData: FormData) {
   return result;
 }
 
+export async function userSearch(params?: { [key: string]: string | number }) {
+  const { current, pageSize, ...rest } = params ?? {};
+  const result = await request<SYSTEM.Page<SYSTEM.User>>('/api-user/users/search', {
+    method: 'GET',
+    params: { page: current, limit: pageSize, ...rest },
+  });
+  return { data: result.data, total: result.count };
+}
+
 export async function role() {
   const result = await request<SYSTEM.Page<SYSTEM.Role>>('/api-user/roles', {
     method: 'GET',

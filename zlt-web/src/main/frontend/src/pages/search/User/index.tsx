@@ -1,4 +1,4 @@
-import { user } from '@/services/system/api';
+import { userSearch } from '@/services/system/api';
 import type { ProColumns } from '@ant-design/pro-components';
 import {
   ProFormSelect,
@@ -88,7 +88,7 @@ const TableList: React.FC = () => {
       <ProTable<SYSTEM.User>
         rowKey="id"
         headerTitle="用户管理"
-        request={user}
+        request={userSearch}
         columns={columns}
         search={false}
         params={params}
