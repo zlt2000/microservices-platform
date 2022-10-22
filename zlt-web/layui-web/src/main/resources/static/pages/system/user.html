@@ -1,0 +1,221 @@
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2 class="header-title">用户管理</h2>
+        <span class="layui-breadcrumb pull-right">
+          <a href="#!console">首页</a>
+          <a><cite>用户管理</cite></a>
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-form toolbar">
+            搜索：
+            <select id="user-search-key">
+                <option value="">-请选择-</option>
+                <option value="user_id">ID</option>
+                <option value="username">账号</option>
+                <option value="nick_name">用户名</option>
+                <option value="mobile">手机号</option>
+            </select>&emsp;
+            <input id="user-search-value" class="layui-input search-input" type="text" placeholder="输入关键字"/>&emsp;
+            <button id="user-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+            <button id="user-btn-add" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+            <button id="user-btn-export" class="layui-btn icon-btn"><i class="layui-icon">&#xe601;</i>导出</button>
+            <button type="button" class="layui-btn" id="user-btn-import">
+                <i class="layui-icon">&#xe67c;</i>导入
+            </button>
+        </div>
+
+        <table class="layui-table" id="user-table" lay-filter="user-table"></table>
+    </div>
+</div>
+
+
+<!-- 表格操作列 -->
+<script type="text/html" id="user-table-bar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-xs" lay-event="reset">重置密码</a>
+    <a class="layui-btn layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<!-- 表格状态列 -->
+<script type="text/html" id="user-tpl-state">
+    <input type="checkbox" lay-filter="user-tpl-state" value="{{d.id}}" lay-skin="switch" lay-text="正常|锁定"
+           {{d.enabled==true?'checked':''}}/>
+</script>
+
+<script>
+    layui.use(['form', 'table', 'util', 'config', 'admin', 'upload'], function () {
+        var form = layui.form;
+        var table = layui.table;
+        var config = layui.config;
+        var layer = layui.layer;
+        var util = layui.util;
+        var admin = layui.admin;
+        //上传
+        var upload = layui.upload;
+
+        // 渲染表格
+        table.render({
+            elem: '#user-table',
+            url: config.base_server + 'api-user/users',
+            method: 'GET',
+            headers:{'Authorization': 'Bearer ' + config.getToken().access_token},
+            page: true,
+            cols: [[
+                {type: 'numbers'},
+                {field: 'id', sort: true, title: '用户编号'},
+                {field: 'username', sort: true, title: '账号'},
+                {field: 'nickname', sort: true, title: '用户名'},
+                {field: 'mobile', sort: true, title: '手机号'},
+                {sort: true, title: '性别',templet:function (d) {
+                        return d.sex==0?"男":"女"
+                    }},
+                {
+                    sort: true, templet: function (d) {
+                        return util.toDateString(d.createTime);
+                    }, title: '创建时间'
+                },
+                {field: 'enabled', sort: true, templet: '#user-tpl-state', title: '状态'},
+                {fixed: 'right', align: 'center', toolbar: '#user-table-bar', title: '操作', width: 175}
+            ]]
+        });
+
+        // 添加按钮点击事件
+        $('#user-btn-add').click(function () {
+            showEditModel();
+        });
+
+        // 工具条点击事件
+        table.on('tool(user-table)', function (obj) {
+            var data = obj.data;
+            var layEvent = obj.event;
+
+            if (layEvent === 'edit') { // 修改
+                showEditModel(data);
+            } else if (layEvent === 'reset') { // 重置密码
+                layer.confirm('确定重置此用户的密码吗？', function (i) {
+                    layer.close(i);
+                    layer.load(2);
+                    admin.req('api-user/users/'+obj.data.id+'/password', {}, function (data) {
+                        layer.closeAll('loading');
+                        if (data.resp_code == 0) {
+                            layer.msg(data.resp_msg, {icon: 1, time: 500});
+                        } else {
+                            layer.msg(data.resp_msg, {icon: 2, time: 500});
+                        }
+                    }, 'PUT');
+                });
+            } else if (layEvent === 'del') { // 删除
+                layer.confirm('确定删除此用户吗？', function (i) {
+                    layer.close(i);
+                    layer.load(2);
+                    admin.req('api-user/users/'+obj.data.id, {}, function (data) {
+                        layer.closeAll('loading');
+                        if (data.resp_code == 0) {
+                            layer.msg(data.resp_msg, {icon: 1, time: 500});
+                            table.reload('user-table', {});
+                        } else {
+                            layer.msg(data.resp_msg, {icon: 2, time: 500});
+                        }
+                    }, 'delete');
+                });
+            }
+        });
+
+        //显示表单弹窗
+        var showEditModel = function (data) {
+            //修改sex值
+            if (data){
+                data.sex = data.sex+'';
+            }
+            admin.putTempData('t_user', data);
+            var title = data ? '修改用户' : '添加用户';
+            admin.popupCenter({
+                title: title,
+                path: 'pages/system/user_form.html',
+                finish: function () {
+                    table.reload('user-table', {});
+                }
+            });
+        };
+
+        // 搜索按钮点击事件
+        $('#user-btn-search').click(function () {
+            var key = $('#user-search-key').val();
+            var value = $('#user-search-value').val();
+            table.reload('user-table', {where: {searchKey: key, searchValue: value}});
+        });
+
+        // 导出
+        $('#user-btn-export').click(function () {
+            var url = config.base_server + 'api-user/users/export';
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', url, true);
+            xhr.responseType = "blob";
+            xhr.setRequestHeader("client_type", "DESKTOP_WEB");
+            xhr.setRequestHeader("Authorization", "Bearer " + config.getToken().access_token);
+            xhr.onload = function() {
+                if (this.status == 200) {
+                    var fileName = "user.xlsx";
+                    var blob = this.response;
+                    var a = document.createElement('a');
+                    a.innerHTML = fileName;
+                    // 指定生成的文件名
+                    a.download = fileName;
+                    a.href = URL.createObjectURL(blob);
+                    document.body.appendChild(a);
+                    var evt = document.createEvent("MouseEvents");
+                    evt.initEvent("click", false, false);
+                    a.dispatchEvent(evt);
+                    document.body.removeChild(a);
+                }
+            }
+            xhr.send();
+        });
+
+        // 修改user状态
+        form.on('switch(user-tpl-state)', function (obj) {
+            layer.load(2);
+            admin.req('api-user/users/updateEnabled', {
+                id: obj.elem.value,
+                enabled: obj.elem.checked ? true : false
+            }, function (data) {
+                layer.closeAll('loading');
+                if (data.resp_code == 0) {
+                    layer.msg(data.resp_msg, {icon: 1, time: 500});
+                    //table.reload('table-user', {});
+                } else {
+                    layer.msg(data.resp_msg, {icon: 2, time: 500});
+                    $(obj.elem).prop('checked', !obj.elem.checked);
+                    form.render('checkbox');
+                }
+            }, 'GET');
+        });
+
+        //上传
+        var importUrl = config.base_server + 'api-user/users/import';
+        upload.render({
+            elem: '#user-btn-import'
+            ,url: importUrl
+            ,accept: 'file' //普通文件
+            ,multiple: false
+            ,headers: {"Authorization" : "Bearer " + config.getToken().access_token}
+            ,done: function(data){
+                if (data.resp_code == 0) {
+                    layer.msg(data.resp_msg, {icon: 1, time: 500});
+                    table.reload('user-table', {});
+                } else {
+                    layer.msg(data.resp_msg, {icon: 2, time: 500});
+                }
+            }
+        });
+
+        //判断权限，没有权限则隐藏按钮
+        /*let resList = ['user-btn-add','user-btn-export','user-btn-import'];
+        for(let i = 0; i < resList.length; i++){
+            if (!admin.hasPerm(resList[i])) {
+                $('#'+resList[i]).hide();
+            }
+        }*/
+    });
+</script>

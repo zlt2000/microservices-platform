@@ -1,0 +1,700 @@
+/** EasyWeb */
+html {
+    background-color: #f2f2f2;
+    color: #666;
+}
+
+/** header样式 */
+/** 导航栏下面的线条 */
+.layui-layout-admin .layui-header .layui-nav .layui-this:after, .layui-layout-admin .layui-header .layui-nav-bar {
+    height: 2px;
+    background-color: #03152A;
+    top: 0 !important;
+}
+
+.layui-layout-admin .layui-header .layui-nav .layui-nav-item {
+    line-height: 50px; /** 高度重写 */
+}
+
+.layui-layout-admin .layui-header .layui-nav .layui-nav-item .layui-nav-child {
+    top: 55px;
+}
+
+.layui-layout-admin .layui-header .layui-nav-item .layui-icon {
+    font-size: 16px; /** 图标大小 */
+}
+
+.layui-layout-admin .layui-header .layui-layout-left {
+    left: 220px;
+    padding: 0 10px;
+    transition: all .3s;
+}
+
+.layui-layout-admin .layui-header .layui-layout-right {
+    padding: 0;
+}
+
+/** 重写header的背景色和字体颜色 */
+.layui-layout-admin .layui-header {
+    background-color: #fff;
+    height: 50px;
+    box-shadow: 0 1px 4px 0 rgba(0, 21, 41, .08);
+}
+
+.layui-layout-admin .layui-header a {
+    color: #333;
+    padding: 0 15px;
+}
+
+.layui-layout-admin .layui-header a:hover {
+    color: #333;
+}
+
+.layui-layout-admin .layui-header .layui-nav-child a {
+    color: #333 !important;
+}
+
+.layui-layout-admin .layui-header .layui-nav .layui-nav-more {
+    border-color: #666 transparent transparent;
+}
+
+.layui-layout-admin .layui-header .layui-nav .layui-nav-mored {
+    border-color: transparent transparent #666;
+}
+
+/** logo部分样式 */
+.layui-layout-admin .layui-header .layui-logo {
+    width: 220px;
+    background-color: #001529;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .15);
+    color: #eee;
+    font-size: 16px;
+    font-family: Myriad Pro, Helvetica Neue, Arial, Helvetica, sans-serif;
+    font-weight: 300;
+    overflow: hidden;
+    line-height: 50px;
+    transition: all .3s;
+}
+
+.layui-layout-admin .layui-header .layui-logo img {
+    height: 40px;
+}
+
+.layui-layout-admin .layui-header .layui-logo cite {
+    font-style: normal;
+}
+
+.layui-layout-admin .layui-header .layui-nav-img {
+    margin-right: 5px;
+}
+
+.layui-layout-admin .layui-header .layui-nav-img + cite {
+    margin-right: 5px;
+}
+
+.layui-layout-admin .layui-header .layui-nav-child dd {
+    text-align: center;
+}
+
+.layui-layout-admin .layui-header a {
+    cursor: pointer;
+}
+
+/** //header样式结束 */
+
+/** 侧边栏样式 */
+.layui-layout-admin .layui-side .layui-side-scroll {
+    width: 240px;
+}
+
+.layui-layout-admin .layui-side {
+    top: 50px;
+    width: 220px;
+    background-color: #001529;
+    transition: all .3s;
+    -webkit-transition: all .3s;
+}
+
+.layui-layout-admin .layui-side .layui-nav {
+    width: 220px;
+    background-color: transparent;
+}
+
+.layui-layout-admin .layui-side .layui-nav .layui-nav-item > a:hover {
+    background: transparent;
+}
+
+.layui-layout-admin .layui-side .layui-nav .layui-nav-item > .layui-nav-child {
+    padding: 5px 0;
+    background-color: rgba(0, 0, 0, .3) !important;
+}
+
+.layui-layout-admin .layui-side .layui-nav .layui-nav-more {
+    right: 15px;
+}
+
+.layui-layout-admin .layui-side .layui-nav .layui-nav-item .layui-nav-child a {
+    padding-left: 50px; /** 导航字体位置 */
+}
+
+.layui-layout-admin .layui-side .layui-nav .layui-nav-item > a {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+/** 侧边栏样式结束 */
+
+/** 主体部分样式 */
+.layui-layout-admin .layui-body {
+    left: 220px;
+    top: 50px;
+    transition: left .3s;
+    overflow-y: scroll;
+    padding: 15px;
+}
+
+/** //主体部分样式结束 */
+
+/** 底部样式 */
+.layui-layout-admin .layui-footer {
+    left: 220px;
+    background: #fff;
+    transition: all .3s;
+}
+
+/** 底部样式结束 */
+
+/** 侧导航折叠样式PC */
+.layui-layout-admin.admin-nav-mini .layui-header .layui-logo {
+    width: 60px;
+}
+
+.layui-layout-admin.admin-nav-mini .layui-header .layui-logo cite {
+    display: none;
+}
+
+.layui-layout-admin.admin-nav-mini .layui-header .layui-layout-left {
+    left: 60px;
+}
+
+.layui-layout-admin.admin-nav-mini .layui-side {
+    width: 60px;
+}
+
+.layui-layout-admin.admin-nav-mini .layui-side .layui-nav {
+    width: 60px;
+}
+
+.layui-layout-admin.admin-nav-mini .layui-side-scroll {
+    width: 80px;
+}
+
+/** 侧导航隐藏文字 */
+.layui-layout-admin.admin-nav-mini .layui-side .layui-nav .layui-nav-item > a > cite {
+    display: none;
+}
+
+.layui-layout-admin.admin-nav-mini .layui-side .layui-nav .layui-nav-item > a .layui-nav-more {
+    display: none;
+}
+
+.layui-layout-admin.admin-nav-mini .layui-side .layui-nav .layui-nav-item > a {
+    overflow: visible;
+}
+
+.layui-layout-admin.admin-nav-mini .layui-side .layui-nav .layui-nav-itemed .layui-nav-child {
+    display: none;
+}
+
+.layui-layout-admin.admin-nav-mini .layui-body {
+    left: 60px;
+}
+
+.layui-layout-admin.admin-nav-mini .layui-footer {
+    left: 60px;
+}
+
+.layui-layout-admin.admin-nav-mini .layui-side .layui-nav .layui-nav-itemed > a {
+    background: rgba(0, 0, 0, .3);
+}
+
+/** 修改折叠的图标 */
+.layui-layout-admin.admin-nav-mini .layui-header .layui-icon-shrink-right:before {
+    content: "\e66b";
+}
+
+/** //侧导航折叠样式结束 */
+
+/** 移动设备样式 */
+@media screen and (max-width: 750px) {
+    .layui-layout-admin .layui-side {
+        position: fixed;
+        left: -260px;
+        z-index: 10000;
+    }
+
+    .layui-layout-admin .layui-body {
+        left: 0;
+    }
+
+    .layui-layout-admin .layui-footer {
+        left: 0;
+    }
+
+    .layui-layout-admin .layui-header .layui-logo {
+        left: -260px;
+    }
+
+    .layui-layout-admin .layui-header .layui-layout-left {
+        left: 0;
+    }
+
+    .layui-layout-admin .layui-header .layui-icon-shrink-right:before {
+        content: "\e66b";
+    }
+
+    /* 移动设备侧导航折叠样式 */
+    .layui-layout-admin.admin-nav-mini .layui-header .layui-logo {
+        width: 220px;
+        left: 0;
+        z-index: 10001;
+    }
+
+    .layui-layout-admin.admin-nav-mini .layui-header {
+        z-index: auto;
+    }
+
+    .layui-layout-admin.admin-nav-mini .layui-header .layui-logo cite {
+        display: inline-block;
+    }
+
+    .layui-layout-admin.admin-nav-mini .layui-header .layui-layout-left {
+        left: 0;
+    }
+
+    .layui-layout-admin.admin-nav-mini .layui-side {
+        width: 220px;
+        left: 0;
+    }
+
+    .layui-layout-admin.admin-nav-mini .layui-side .layui-nav {
+        width: 220px;
+    }
+
+    .layui-layout-admin.admin-nav-mini .layui-side-scroll {
+        width: 240px;
+    }
+
+    .layui-layout-admin.admin-nav-mini .layui-side .layui-nav .layui-nav-item > a > cite {
+        display: inline-block;
+    }
+
+    .layui-layout-admin.admin-nav-mini .layui-side .layui-nav .layui-nav-item > a .layui-nav-more {
+        display: inline-block;
+    }
+
+    .layui-layout-admin.admin-nav-mini .layui-side .layui-nav .layui-nav-item > a {
+        overflow: hidden;
+    }
+
+    .layui-layout-admin.admin-nav-mini .layui-side .layui-nav .layui-nav-itemed .layui-nav-child {
+        display: block;
+    }
+
+    .layui-layout-admin.admin-nav-mini .layui-body {
+        left: 0;
+    }
+
+    .layui-layout-admin.admin-nav-mini .layui-footer {
+        left: 0;
+    }
+
+    /** 移动设备遮罩层 */
+    .layui-layout-admin.admin-nav-mini .site-mobile-shade {
+        content: '';
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0, .2);
+        z-index: 9999;
+        cursor: pointer;
+    }
+
+    .layui-layout-admin.admin-nav-mini .layui-side .layui-nav .layui-nav-itemed > a {
+        background: transparent;
+    }
+
+    .layui-layout-admin.admin-nav-mini .layui-header .layui-icon-shrink-right:before {
+        content: "\e668";
+    }
+}
+
+/** //移动设备样式结束 */
+
+/** 右侧弹窗样式 */
+.layui-layer.layui-layer-adminRight {
+    top: 50px !important;
+    bottom: 0;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, .1);
+    border-radius: 0;
+    overflow: auto;
+}
+
+/** 消息列表样式 */
+.message-list {
+}
+
+.message-list-item {
+    padding: 10px 24px;
+    border-bottom: 1px solid #e8e8e8;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    display: flex;
+    -ms-flex: 1 1;
+    flex: 1 1;
+}
+
+.message-list-item:hover {
+    background: #F2F2F2;
+}
+
+.message-item-icon {
+    width: 40px;
+    height: 40px;
+    margin-right: 16px;
+    display: block;
+    margin-top: 4px;
+}
+
+.message-item-right {
+    display: block;
+    flex: 1 0;
+}
+
+.message-item-title {
+    font-size: 14px;
+    color: rgba(0, 0, 0, .65);
+}
+
+.message-item-text {
+    color: rgba(0, 0, 0, .45);
+    font-size: 12px;
+}
+
+/** //消息列表样式结束 */
+
+/** 主体部分标题样式 */
+.layui-card-header .header-title {
+    display: inline;
+    font-size: 16px;
+}
+
+/** 表格搜索框样式 */
+.search-input {
+    width: 150px;
+    display: inline-block;
+    height: 36px;
+    vertical-align: middle;
+    padding: 3px 6px;
+}
+
+/** 重写layui默认按钮的高度，因为按钮跟输入框不一样高特别丑 */
+.layui-btn:not(.layui-btn-lg ):not(.layui-btn-sm):not(.layui-btn-xs) {
+    height: 34px;
+    line-height: 34px;
+}
+
+/** 如果按钮加图标减少内边距 */
+.icon-btn {
+    padding: 0 8px;
+}
+
+.layui-form.toolbar .layui-btn + .layui-btn {
+    margin-left: 15px;
+}
+
+.model-form-footer .layui-btn + .layui-btn {
+    margin-left: 15px;
+}
+
+.layui-table-cell .layui-btn + .layui-btn {
+    margin-left: 5px;
+}
+
+/** 表格上方工具栏样式 */
+.layui-form.toolbar {
+    color: #333;
+}
+
+.layui-form.toolbar .layui-form-select input {
+    height: 35px;
+    line-height: 35px;
+    width: 150px;
+    overflow: hidden;
+}
+
+.layui-form.toolbar .layui-form-select {
+    display: inline-block;
+}
+
+/* 表单弹窗样式 */
+.model-form {
+    padding-top: 30px;
+    padding-right: 45px;
+}
+
+.model-form-footer {
+    text-align: right;
+}
+
+/** dialog超出显示 */
+.layui-layout-body .layui-layer-page .layui-layer-content {
+    overflow: visible;
+}
+
+/* layui文档官网右侧弹窗目录列表的样式 */
+.site-dir li {
+    line-height: 26px;
+    margin-left: 20px;
+    overflow: visible;
+    list-style-type: disc;
+}
+
+/** laydate加图标 */
+.date-icon {
+    background-image: url(../images/icon_date.png);
+    background-repeat: no-repeat;
+    background-position: right center;
+}
+
+/** 辅助样式 */
+.layui-link {
+    color: #029789 !important;
+}
+
+.layui-link:hover {
+    opacity: .8;
+}
+
+.pull-right {
+    float: right;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+/** 卡片header里面的徽章样式调整 */
+.layui-card .layui-card-header .layui-badge.pull-right {
+    top: 50%;
+    margin-top: -9px;
+}
+
+/** 特大字体 */
+.lay-big-font {
+    font-size: 36px;
+    color: #666;
+    line-height: 36px;
+    padding: 5px 0 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    white-space: nowrap;
+}
+
+/** 超链接样式 */
+.layui-text a:not(.layui-btn) {
+    color: #01AAED;
+}
+
+.layui-text a:not(.layui-btn):hover {
+    text-decoration: underline;
+}
+
+/** loading组件样式 */
+.admin-loading {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -16px -15px;
+    font-size: 30px;
+    color: #c2c2c2
+}
+
+/** admin选项卡样式 */
+/** 调整header阴影 */
+.layui-layout-admin.open-tab .layui-header {
+    box-shadow: 0 1px 1px 0 rgba(0, 21, 41, .05);
+}
+
+.layui-layout-admin.open-tab .layui-body {
+    padding: 0;
+    overflow: hidden;
+}
+
+.layui-layout-admin .layui-body .layui-tab {
+    margin: 0;
+    overflow: hidden;
+}
+
+/** 开启选项卡后让tab-content样式为以前的layui-body样式 */
+.layui-layout-admin .layui-body .layui-tab .layui-tab-content .layui-tab-item {
+    position: absolute;
+    bottom: 0;
+    overflow-y: scroll;
+    padding: 15px;
+    right: 0;
+    top: 40px;
+    left: 0;
+}
+
+/** 选项卡标题样式 */
+.layui-layout-admin .layui-body .layui-tab .layui-tab-title {
+    height: 40px;
+    line-height: 40px;
+    padding: 0 80px 0 40px;
+    background-color: #fff;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
+    position: absolute;
+    right: 0;
+    z-index: 999;
+    border: none;
+    overflow: hidden;
+}
+
+.layui-layout-admin .layui-body .layui-tab .layui-tab-title li {
+    min-width: 0;
+    line-height: 40px;
+    max-width: 160px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    border-right: 1px solid #f6f6f6;
+    vertical-align: top;
+}
+
+.layui-layout-admin .layui-body .layui-tab .layui-tab-title .layui-tab-bar {
+    display: none;
+}
+
+.layui-layout-admin .layui-body .layui-tab .layui-tab-title li.layui-this,
+.layui-layout-admin .layui-body .layui-tab .layui-tab-title li:hover {
+    background-color: #f6f6f6;
+}
+
+.layui-layout-admin .layui-body .layui-tab .layui-tab-title li.layui-this:after {
+    width: 100%;
+    border: none;
+    height: 2px;
+    background-color: #292B34;
+    border-radius: 0;
+}
+
+/** tab关闭按钮样式 */
+.layui-layout-admin .layui-body .layui-tab .layui-tab-title li .layui-tab-close {
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    border-radius: 50%;
+    font-size: 12px;
+}
+
+.layui-layout-admin .layui-body .layui-tab .layui-tab-title li:first-child .layui-tab-close {
+    display: none; /** 第一个选项卡不可关闭 */
+}
+
+/** 选项卡其他操作按钮样式 */
+.layui-layout-admin .layui-body .admin-tabs-control {
+    position: absolute;
+    top: 0;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
+    transition: all .3s;
+    box-sizing: border-box;
+    border-left: 1px solid #f6f6f6;
+    z-index: 1000;
+    visibility: hidden; /** 默认隐藏 */
+    background-color: white;
+}
+
+.layui-layout-admin.open-tab .layui-body .admin-tabs-control {
+    visibility: visible;
+}
+
+.layui-layout-admin .layui-body .admin-tabs-control:hover {
+    background-color: #f6f6f6
+}
+
+.layui-layout-admin .layui-body .layui-icon-prev {
+    left: 0;
+    border-left: none;
+    border-right: 1px solid #f6f6f6;
+}
+
+.layui-layout-admin .layui-body .layui-icon-next {
+    right: 40px;
+}
+
+.layui-layout-admin .layui-body .layui-icon-down {
+    right: 0;
+}
+
+.admin-tabs-select.layui-nav {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    background: 0 0;
+}
+
+.admin-tabs-select.layui-nav .layui-nav-item {
+    line-height: 40px
+}
+
+.admin-tabs-select.layui-nav .layui-nav-item > a {
+    height: 40px
+}
+
+.admin-tabs-select.layui-nav .layui-nav-item a {
+    color: #666
+}
+
+.admin-tabs-select.layui-nav .layui-nav-child {
+    top: 40px;
+    left: auto;
+    right: 0
+}
+
+.admin-tabs-select.layui-nav .layui-nav-child dd.layui-this,
+.admin-tabs-select.layui-nav .layui-nav-child dd.layui-this a {
+    background-color: #f2f2f2 !important;
+    color: #333
+}
+
+.admin-tabs-select.layui-nav .layui-nav-bar, .admin-tabs-select.layui-nav .layui-nav-more {
+    display: none;
+}
+
+.layui-fluid {
+    padding: 15px;
+}
+
+body.layui-fluid {
+    overflow-y: scroll;
+}
+
+.admin-iframe {
+    width: 100%;
+    height: 100%;
+}
+
+.layui-layout-admin .layui-body.admin-iframe-body {
+    padding: 0;
+    overflow: hidden;
+}
