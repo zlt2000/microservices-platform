@@ -21,7 +21,7 @@
     "playwright": "playwright install && playwright test",
     "prettier": "prettier -c --write \"src/**/*\"",
     "serve": "umi-serve",
-    "start": "cross-env UMI_ENV=dev umi dev",
+    "start": "cross-env UMI_ENV=dev umi dev --port=8066",
     "start:dev": "cross-env REACT_APP_ENV=dev MOCK=none UMI_ENV=dev umi dev",
     "start:no-mock": "cross-env MOCK=none UMI_ENV=dev umi dev",
     "start:no-ui": "cross-env UMI_UI=none UMI_ENV=dev umi dev",

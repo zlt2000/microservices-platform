@@ -1,0 +1,175 @@
+/** EasyWeb 蓝色主题 data:2018-10-17 */
+
+/** 透明侧边栏导航 */
+.layui-layout-admin .layui-side .layui-nav {
+    background-color: transparent;
+}
+
+.layui-layout-admin .layui-side .layui-nav .layui-nav-item > a:hover {
+    background: rgba(255, 255, 255, .03);
+}
+
+/** logo部分样式 */
+.layui-layout-admin .layui-header .layui-logo {
+    background-color: #00509f;
+    color: #eee;
+}
+
+/** header样式 */
+.layui-layout-admin .layui-header {
+    background-color: #fff;
+}
+
+.layui-layout-admin .layui-header a {
+    color: #333;
+}
+
+.layui-layout-admin .layui-header a:hover {
+    color: #333;
+}
+
+.layui-layout-admin .layui-header .layui-nav .layui-nav-more {
+    border-color: #333 transparent transparent;
+}
+
+.layui-layout-admin .layui-header .layui-nav .layui-nav-mored {
+    border-color: transparent transparent #333;
+}
+
+/** 导航栏下面的线条 */
+.layui-layout-admin .layui-header .layui-nav .layui-this:after, .layui-layout-admin .layui-header .layui-nav-bar {
+    background-color: #333;
+}
+
+/** 侧边栏样式 */
+.layui-layout-admin .layui-side {
+    background-color: #00509f;
+}
+
+.layui-nav-tree .layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a, .layui-nav-tree .layui-this, .layui-nav-tree .layui-this > a, .layui-nav-tree .layui-this > a:hover {
+    background-color: #1e90ff;
+}
+
+.layui-nav-tree .layui-nav-bar {
+    background-color: #1e90ff;
+}
+
+/** 主题颜色 */
+
+/** 按钮 */
+.layui-btn:not(.layui-btn-primary):not(.layui-btn-normal):not(.layui-btn-warm):not(.layui-btn-danger):not(.layui-btn-disabled) {
+    background-color: #1e90ff;
+}
+
+.layui-btn.layui-btn-primary:hover {
+    border-color: #1e90ff;
+}
+
+/** 开关 */
+.layui-form-onswitch {
+    border-color: #1e90ff;
+    background-color: #1e90ff;
+}
+
+/** 分页插件 */
+.layui-laypage .layui-laypage-curr .layui-laypage-em {
+    background-color: #1e90ff;
+}
+
+.layui-table-page .layui-laypage input:focus {
+    border-color: #1e90ff !important;
+}
+
+.layui-table-view select:focus {
+    border-color: #1e90ff !important;
+}
+
+.layui-table-page .layui-laypage a:hover {
+    color: #1e90ff;
+}
+
+/** 单选按钮 */
+.layui-form-radio > i:hover, .layui-form-radioed > i {
+    color: #1e90ff;
+}
+
+/** 下拉条目选中 */
+.layui-form-select dl dd.layui-this {
+    background-color: #1e90ff;
+}
+
+/** 选项卡 */
+.layui-tab-brief > .layui-tab-title .layui-this {
+    color: #1e90ff;
+}
+
+.layui-tab-brief > .layui-tab-more li.layui-this:after, .layui-tab-brief > .layui-tab-title .layui-this:after {
+    border-color: #1e90ff !important;
+}
+
+/** 面包屑导航 */
+.layui-breadcrumb a:hover {
+    color: #1e90ff !important;
+}
+
+/** 主体标题 */
+.layui-body-header-title {
+    border-left-color: #1e90ff;
+}
+
+/** 日期选择器按钮 */
+.laydate-footer-btns span:hover {
+    color: #1e90ff !important;
+}
+
+/** 时间轴 */
+.layui-timeline-axis {
+    color: #1e90ff;
+}
+
+/** 主题切换 */
+.btnTheme:hover, .btnTheme.active {
+    border-color: #1e90ff;
+}
+
+/** 侧边栏文字颜色 */
+.layui-side .layui-nav .layui-nav-item a {
+    color: rgba(238, 238, 238, .7);
+}
+
+.layui-side .layui-nav-itemed > a, .layui-nav-tree .layui-nav-title a, .layui-nav-tree .layui-nav-title a:hover {
+    color: #eee !important;
+}
+
+/** header线条 */
+.layui-layout-admin .layui-header .layui-nav .layui-this:after, .layui-layout-admin .layui-header .layui-nav-bar {
+    background-color: #1e90ff;
+}
+
+/** tab下划线 */
+.layui-layout-admin .layui-body .layui-tab .layui-tab-title li.layui-this:after {
+    background-color: #1e90ff;
+}
+
+/** 复选框 */
+.layui-form-checked[lay-skin=primary] i {
+    border-color: #1e90ff;
+    background-color: #1e90ff;
+}
+
+.layui-form-checkbox[lay-skin=primary] i:hover {
+    border-color: #1e90ff;
+}
+
+/** PC端折叠鼠标经过样式 */
+.layui-layout-admin.admin-nav-mini .layui-side .layui-nav .layui-nav-item.admin-nav-hover > .layui-nav-child {
+    background: #00509f !important;
+}
+
+/** 移动设备样式 */
+@media screen and (max-width: 750px) {
+    /** 去掉PC端折叠鼠标经过样式 */
+    .layui-layout-admin.admin-nav-mini .layui-side .layui-nav .layui-nav-item.admin-nav-hover > .layui-nav-child {
+        background-color: rgba(0, 0, 0, .3) !important;
+    }
+}
