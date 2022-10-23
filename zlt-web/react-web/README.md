@@ -8,7 +8,6 @@
 ## 1.目录说明
 考虑到部署方便，集成了SpringBootWeb,目录结构基于Maven规范。
 ```lua
-zlt-web -- 前端一级工程
 │  ├─src -- 源码
 │  │  ├─main -- 
 │  │  │  ├─frontend -- 前端源码
