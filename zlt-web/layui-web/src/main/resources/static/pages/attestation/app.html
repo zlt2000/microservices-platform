@@ -1,0 +1,237 @@
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2 class="header-title">应用管理</h2>
+        <span class="layui-breadcrumb pull-right">
+          <a href="#!home_console">首页</a>
+          <a><cite>应用管理</cite></a>
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-form toolbar">
+        搜索：<input id="app-edit-search" class="layui-input search-input" type="text" placeholder="输入关键字"/>&emsp;
+        <button id="app-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+        <button id="app-btn-add" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+        </div>
+
+        <!-- 数据表格 -->
+        <table class="layui-table" id="app-table" lay-filter="app-table"></table>
+    </div>
+</div>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="app-table-bar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<!-- 表单弹窗 -->
+<script type="text/html" id="app-model">
+    <form id="app-form" method="POST" lay-filter="app-form" class="layui-form model-form">
+        <input name="id" type="hidden"/>
+        <div class="layui-form-item">
+            <label class="layui-form-label">应用标识</label>
+            <div class="layui-input-block">
+                <input name="clientId" placeholder="请输入应用标识" type="text" class="layui-input" maxlength="20"
+                       lay-verify="required" required/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">应用名称</label>
+            <div class="layui-input-block">
+                <input name="clientName" placeholder="请输入应用名称" type="text" class="layui-input" maxlength="20"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">应用密钥</label>
+            <div class="layui-input-block">
+                <input name="clientSecretStr" placeholder="请输入应用密钥" type="text" class="layui-input" maxlength="20"
+                       lay-verify="required" required />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">回调地址</label>
+            <div class="layui-input-block">
+                <input name="webServerRedirectUri" placeholder="请输入回调地址" type="text" class="layui-input" maxlength="20"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">自动审批</label>
+            <div class="layui-input-block">
+                <input type="radio" name="autoapprove" value="true" title="是" checked/>
+                <input type="radio" name="autoapprove" value="false" title="否"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">授权模式</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="authorizedGrantTypes" lay-skin="primary" title="授权码模式" value="authorization_code" checked>
+                <input type="checkbox" name="authorizedGrantTypes" lay-skin="primary" title="密码模式" value="password" checked>
+                <input type="checkbox" name="authorizedGrantTypes" lay-skin="primary" title="客户端模式" value="client_credentials" checked>
+                <input type="checkbox" name="authorizedGrantTypes" lay-skin="primary" title="简化模式" value="implicit" checked>
+                <input type="checkbox" name="authorizedGrantTypes" lay-skin="primary" title="刷新Token" value="refresh_token" checked>
+                <input type="checkbox" name="authorizedGrantTypes" lay-skin="primary" title="密码验证码模式" value="password_code" checked>
+                <input type="checkbox" name="authorizedGrantTypes" lay-skin="primary" title="openId模式" value="openId" checked>
+                <input type="checkbox" name="authorizedGrantTypes" lay-skin="primary" title="手机号密码模式" value="mobile_password" checked>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">令牌时效(s)</label>
+            <div class="layui-input-block">
+                <input name="accessTokenValiditySeconds" lay-verify="number" type="text" class="layui-input" maxlength="20" value="18000"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">刷新时效(s)</label>
+            <div class="layui-input-block">
+                <input name="refreshTokenValiditySeconds" lay-verify="number" type="text" class="layui-input" maxlength="20" value="28800"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">支持ID令牌</label>
+            <div class="layui-input-block">
+                <input type="radio" name="supportIdToken" value="true" title="是" checked/>
+                <input type="radio" name="supportIdToken" value="false" title="否"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">ID时效(s)</label>
+            <div class="layui-input-block">
+                <input name="idTokenValiditySeconds" lay-verify="number" type="text" class="layui-input" maxlength="20" value="60"/>
+            </div>
+        </div>
+        <div class="layui-form-item model-form-footer">
+            <button class="layui-btn layui-btn-primary" ew-event="closeDialog" type="button">取消</button>
+            <button class="layui-btn" lay-filter="app-form-submit" lay-submit>保存</button>
+        </div>
+    </form>
+</script>
+
+
+<script>
+    layui.use(['form', 'table', 'util', 'config', 'admin'],function () {
+        var form = layui.form;
+        var table = layui.table;
+        var config = layui.config;
+        var layer = layui.layer;
+        var util = layui.util;
+        var admin = layui.admin;
+
+        // 渲染表格
+        table.render({
+            elem: '#app-table',
+            url: config.base_server + 'api-uaa/clients/list',
+            method: 'GET',
+            headers:{'Authorization': 'Bearer ' + config.getToken().access_token},
+            page: true,
+            cols: [[
+                {type: 'numbers'},
+                {field: 'clientId',width:180, sort: true, title: '应用标识'},
+                {field: 'clientName',width:180, sort: true, title: '应用名称'},
+                {field: 'webServerRedirectUri', width:250,sort: true, title: '回调地址'},
+                {field: 'authorizedGrantTypes',width:250, sort: true, title: 'oauth授权方式'},
+                {width:110, sort: true, title: '自动审批', templet:function (d) {
+                    return d.autoapprove == 'true' ? "是" : "否"
+                }},
+                {field: 'accessTokenValiditySeconds',width:130, sort: true, title: '令牌时效(s)'},
+                {field: 'refreshTokenValiditySeconds',width:130, sort: true, title: '刷新时效(s)'},
+                {width:120, sort: true, title: '支持ID令牌', templet:function (d) {
+                    return d.supportIdToken ? "是" : "否"
+                }},
+                {field: 'idTokenValiditySeconds',width:130, sort: true, title: 'ID时效(s)'},
+                {fixed: 'right', align: 'center',width:150, toolbar: '#app-table-bar', title: '操作'}
+            ]]
+        });
+
+        // 工具条点击事件
+        table.on('tool(app-table)', function (obj) {
+            var data = obj.data;
+            var layEvent = obj.event;
+
+            if (layEvent === 'del') { // 删除
+                doDelete(obj);
+            }else if (layEvent === 'edit'){ //修改
+                showEditModel(data);
+            }
+        });
+
+
+        // 删除
+        var doDelete = function (obj) {
+            layer.confirm('确定要删除吗？', function (i) {
+                layer.close(i);
+                layer.load(2);
+                admin.req('api-uaa/clients/' + obj.data.id, {}, function (data) {
+                    layer.closeAll('loading');
+                    layer.msg('成功', {icon: 1, time: 500});
+                    obj.del();
+                }, 'DELETE');
+            });
+        };
+
+        // 搜索按钮点击事件
+        $('#app-btn-search').click(function () {
+            var key = $('#app-edit-search').val();
+            table.reload('app-table', {where: {searchKey: key}});
+        });
+
+        // 添加按钮点击事件
+        $('#app-btn-add').click(function () {
+            showEditModel();
+        });
+
+        // 显示编辑弹窗
+        var showEditModel = function (data) {
+            layer.open({
+                type: 1,
+                title: data ? '修改应用' : '添加应用',
+                area: '750px',
+                offset: '30px',
+                content: $('#app-model').html(),
+                success: function () {
+                    $('#app-form')[0].reset();
+                    if (data) {
+                        $("input[name='clientId']").attr('disabled',true);
+                        $("input[name='clientId']").attr('class',"layui-input layui-disabled");
+                        $("input[name='webServerRedirectUri']").attr('disabled',true);
+                        $("input[name='webServerRedirectUri']").attr('class',"layui-input layui-disabled");
+                        form.val('app-form', data);
+
+                        let authorizedGrantTypesArr = data.authorizedGrantTypes.split(",");
+                        $('input[type=checkbox][name=authorizedGrantTypes]').each(function() {
+                            let typeValue = $(this).val();
+                            let isCheck = false;
+                            for (var i = 0; i < authorizedGrantTypesArr.length; i++) {
+                                if (typeValue === authorizedGrantTypesArr[i]) {
+                                    isCheck = true;
+                                    break;
+                                }
+                            }
+                            $(this).prop("checked", isCheck);
+                        });
+                    }
+                }
+            });
+        };
+
+        // 表单提交事件
+        form.on('submit(app-form-submit)', function (data) {
+            let authorizedGrantTypesArr = [];
+            $('input[type=checkbox][name=authorizedGrantTypes]:checked').each(function() {
+                authorizedGrantTypesArr.push($(this).val());
+            });
+            data.field.authorizedGrantTypes = authorizedGrantTypesArr.join(",");
+            layer.load(2);
+            admin.req('api-uaa/clients/saveOrUpdate', JSON.stringify(data.field), function (data) {
+                layer.closeAll('loading');
+                if (data.resp_code == 0) {
+                    layer.msg(data.resp_msg, {icon: 1, time: 500});
+                    table.reload('app-table');
+                    layer.closeAll('page');
+                } else {
+                    layer.msg(data.resp_msg, {icon: 2, time: 500});
+                }
+            }, $('#app-form').attr('method'));
+            return false;
+        });
+    });
+</script>

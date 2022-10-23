@@ -1,0 +1,106 @@
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2 class="header-title">系统日志</h2>
+        <span class="layui-breadcrumb pull-right">
+          <a href="#!console">首页</a>
+          <a><cite>系统日志</cite></a>
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-form toolbar">
+            搜索：
+            <select id="sysLog-search-key">
+                <option value="_all">全文搜索</option>
+                <option value="message">日志信息</option>
+                <option value="logLevel">日志级别</option>
+                <option value="appName">应用名</option>
+                <option value="classname">类名</option>
+                <option value="traceId">链路追踪id</option>
+            </select>&emsp;
+            <input id="sysLog-search-value" class="layui-input search-input" style="width: 300px" type="text" placeholder="输入关键字"/>&emsp;
+            <button id="sysLog-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+        </div>
+
+        <table class="layui-table" id="sysLog-table" lay-filter="sysLog-table"></table>
+    </div>
+</div>
+
+<script>
+    layui.use(['form', 'table', 'util', 'config', 'admin', 'upload'], function () {
+        let table = layui.table;
+        let config = layui.config;
+        let admin = layui.admin;
+
+        // 渲染表格
+        table.render({
+            elem: '#sysLog-table',
+            url: config.base_server + 'api-log/sysLog?sortCol=timestamp&isHighlighter=true',
+            method: 'GET',
+            headers:{'Authorization': 'Bearer ' + config.getToken().access_token},
+            page: true,
+            cols: [[
+                {type: 'numbers'},
+                {
+                    field: 'timestamp', width: 180, sort: true, templet: function (d) {
+                        let newDate = Date.parse(d.timestamp);
+                        newDate = new Date(newDate);
+                        let yyyy = newDate.getFullYear();
+                        let MM = (newDate.getMonth()+1);
+                        let dd = newDate.getDate();
+                        let hh = newDate.getHours()<10 ? "0"+newDate.getHours() : newDate.getHours();
+                        let mm = newDate.getMinutes()<10 ? "0"+newDate.getMinutes() : newDate.getMinutes();
+                        let ss = newDate.getSeconds()<10 ? "0"+newDate.getSeconds() : newDate.getSeconds();
+                        let SSS = newDate.getMilliseconds();
+                        return yyyy+"-"+MM+"-"+dd+" "+hh+":"+mm+":"+ss+"."+SSS;
+                    }, title: '时间'
+                },
+                {field: 'message', sort: true, title: '日志信息', width: 350},
+                {field: 'logLevel', sort: true, title: '日志级别', width: 110},
+                {field: 'appName', sort: true, title: '应用名', width: 120},
+                {field: 'traceId', sort: false, title: '追踪id', width: 180, templet: function (d) {
+                    if (d.traceId){
+                        return '<a class="layui-table-link" href="javascript:void(0);" lay-event="traceLog">'+d.traceId+'</a>';
+                    } else {
+                        return '';
+                    }
+                }},
+                {field: 'spanId', sort: false, title: 'spanId', width: 80},
+                {field: 'classname', sort: true, title: '类名', width: 250},
+                {field: 'threadName', sort: true, title: '线程名', width: 150},
+                {field: 'serverIp', sort: true, title: '服务ip', width: 130},
+                {field: 'serverPort', sort: true, title: '服务端口', width: 110}
+            ]]
+        });
+
+        // 工具条点击事件
+        table.on('tool(sysLog-table)', function (obj) {
+            if (obj.event === 'traceLog') {
+                showTraceLog(obj.data.traceId);
+            }
+        });
+
+        //显示表单弹窗
+        let showTraceLog = function (traceId) {
+            traceId = traceId.replace('<mark>', '');
+            traceId = traceId.replace('</mark>', '');
+            admin.putTempData('traceId', traceId);
+            admin.popupCenter({
+                title: '日志链路',
+                area: '670px',
+                path: 'pages/log/traceLog.html'
+            });
+        };
+
+        // 搜索按钮点击事件
+        $('#sysLog-btn-search').click(function () {
+            let key = $('#sysLog-search-key').val();
+            let value = $('#sysLog-search-value').val();
+            if (key != '_all' && value) {
+                value = key + ':' + value;
+            }
+            table.reload('sysLog-table', {
+                where: {queryStr: value}
+            });
+        });
+    });
+</script>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta charset="utf-8"/>
+    <title>用户登录</title>
+    <link rel="stylesheet" href="assets/libs/layui/css/layui.css"/>
+    <link rel="stylesheet" href="assets/css/login.css" media="all">
+</head>
+
+<body>
+<div class="login-wrapper">
+    <div class="login-body">
+        <div class="layui-card">
+            <div class="layui-card-header">
+                <i class="layui-icon layui-icon-engine"></i>&nbsp;&nbsp;用户登录
+            </div>
+            <form class="layui-card-body layui-form layui-form-pane">
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><i class="layui-icon layui-icon-username"></i></label>
+                    <div class="layui-input-block">
+                        <input name="username" type="text" lay-verify="required" placeholder="账号"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><i class="layui-icon layui-icon-password"></i></label>
+                    <div class="layui-input-block">
+                        <input name="password" type="password" lay-verify="required" placeholder="密码"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><i class="layui-icon layui-icon-vercode"></i></label>
+                    <div class="layui-input-block">
+                        <div class="layui-row inline-block">
+                            <div class="layui-col-xs7">
+                                <input name="validCode" style="width:170px" type="text" lay-verify="required" placeholder="验证码" class="layui-input">
+                                <input name="deviceId" type="hidden"/>
+                            </div>
+                            <div class="layui-col-xs5" style="padding-left: 10px;">
+                                <img class="login-captcha" src="#" style="display:none">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <input name="grant_type" type="hidden" value="password_code"/>
+                    <button lay-filter="login-submit" class="layui-btn layui-btn-fluid" lay-submit>登 录</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <div class="login-footer">
+        <p>© 2018 <a href="javascript:;" target="_blank">zlt版权所有</a></p>
+    </div>
+</div>
+<script type="text/javascript" src="module/apiUrl.js"></script>
+<script type="text/javascript" src="assets/libs/layui/layui.js"></script>
+<script type="text/javascript" src="assets/libs/login.js"></script>
+<script type="text/javascript" src="module/Math.uuid.js"></script>
+
+<script>
+    layui.config({
+        base: 'module/'
+    }).use(['config', 'form'], function () {
+        //页面唯一标识
+        let uuid = Math.uuid();
+        let $ = layui.jquery;
+        let form = layui.form;
+        let config = layui.config;
+
+        if (config.getToken()) {
+            location.replace('./');
+            return;
+        }
+        $("input[name='deviceId']").val(uuid);
+
+        // 表单提交
+        form.on('submit(login-submit)', function (obj) {
+            layer.load(2);
+            $.ajax({
+                url: config.base_server + 'api-uaa/oauth/token',
+                xhrFields: {
+                    withCredentials: true
+                },
+                data: obj.field,
+                type: 'POST',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', 'Basic ' + window.btoa(config.clientId + ":" + config.clientSecret));
+                },
+                success: function (data) {
+                    //console.log(JSON.stringify(data));
+                    if (data.resp_code === 0) {
+                        config.putToken(data.datas);
+                        layer.msg('登录成功', {icon: 1, time: 500}, function () {
+                            location.replace('./');
+                        });
+                    } else {
+                        layer.closeAll('loading');
+                        layer.msg(data.resp_msg, {icon: 5, time: 500});
+                    }
+                },
+                error: function (xhr) {
+                    //console.log(xhr)
+                    layer.closeAll('loading');
+                    layer.msg(xhr.responseJSON.resp_msg, {icon: 5, time: 500});
+                }
+            });
+            //阻止表单跳转
+            return false;
+        });
+
+        // 图形验证码
+        $('.login-captcha').attr("src", config.base_server + "api-uaa/validata/code/"+uuid);
+        $('.login-captcha').attr("style", "");
+
+        // 图形验证码
+        $('.login-captcha').click(function () {
+            this.src = this.src + '?t=' + (new Date).getTime();
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<div class="layui-card-header">
+    <h2 class="header-title">更多设置</h2>
+</div>
+<div class="layui-card-body layui-form">
+    <div class="layui-form-item" style="margin-top: 20px;">
+        <label class="layui-form-label" style="text-align: left;padding-left: 5px;">多标签：</label>
+        <div class="layui-input-block" style="text-align: right;">
+            <input type="checkbox" lay-skin="switch" lay-text="开启|关闭" lay-filter="set-tab" id="set-tab" checked>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="text-align: left;padding-left: 5px;">换主题：</label>
+        <div class="layui-input-block" style="text-align: right;">
+            <input type="checkbox" lay-skin="switch" lay-text="默认|蓝色" lay-filter="set-theme" id="set-theme" checked>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use(['form', 'element', 'layer', 'config', 'index', 'admin'], function () {
+        var element = layui.element;
+        var form = layui.form;
+        var layer = layui.layer;
+        var config = layui.config;
+        var index = layui.index;
+        var admin = layui.admin;
+
+        $('#set-tab').prop('checked', config.pageTabs);
+        if ($(document.head).find('#layuicss-assetscsstheme-bluecss').length > 0) {
+            $('#set-theme').prop('checked', false);
+        } else {
+            $('#set-theme').prop('checked', true);
+        }
+        form.render('checkbox');
+
+        form.on('switch(set-tab)', function (data) {
+            if (data.elem.checked) {
+                location.reload();
+            } else {
+                config.pageTabs = false;
+                index.checkPageTabs();
+                admin.refresh();
+                admin.closePopupRight();
+            }
+        });
+
+        form.on('switch(set-theme)', function (data) {
+            if (data.elem.checked) {
+                $(document.head).find('#layuicss-assetscsstheme-bluecss').remove();
+            } else {
+                layui.link('assets/css/theme-blue.css');
+            }
+        });
+    });
+</script>
