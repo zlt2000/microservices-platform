@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>首页</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <style>
+        .layui-card-header {
+            text-align:left;
+        }
+        .layuiadmin-badge {
+            float:right;
+            margin-top:12px;
+        }
+        .big-font {
+            text-align:left;
+            font-size: 250%;
+            height: 30px;
+        }
+        .my-tab-item {
+            vertical-align: middle;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 20px;
+            padding: 0 15px 12px 15px;
+            cursor: pointer;
+        }
+        .my-tab-item-select {
+            border: none;
+            border-radius: 0;
+            border-bottom: 2px solid #5FB878;
+        }
+        .my-tab-content {
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="layui-card-body" style="text-align: center;">
+    <div class="layui-row layui-col-space10">
+        <div class="layui-col-sm2 layui-col-md2">
+            <div class="layui-card">
+                <div class="layui-card-header">在线人数
+                    <span class="layui-badge layui-bg-cyan layuiadmin-badge">时</span>
+                </div>
+                <div class="layui-card-body layuiadmin-card-list">
+                    <p class="big-font" id="userCnt"></p>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-sm2 layui-col-md2">
+            <div class="layui-card">
+                <div class="layui-card-header">PV
+                    <span class="layui-badge layui-bg-green layuiadmin-badge">天</span>
+                </div>
+                <div class="layui-card-body layuiadmin-card-list">
+                    <p class="big-font" id="pv"></p>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-sm2 layui-col-md2">
+            <div class="layui-card">
+                <div class="layui-card-header">UV
+                    <span class="layui-badge layui-bg-green layuiadmin-badge">天</span>
+                </div>
+                <div class="layui-card-body layuiadmin-card-list">
+                    <p class="big-font" id="uv"></p>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-sm3 layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">周访问量
+                    <span class="layui-badge layui-bg-blue layuiadmin-badge">周</span>
+                </div>
+                <div class="layui-card-body layuiadmin-card-list">
+                    <p class="big-font" id="weekPv"></p>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-sm3 layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">月访问量
+                    <span class="layui-badge layui-bg-orange layuiadmin-badge">月</span>
+                </div>
+                <div class="layui-card-body layuiadmin-card-list">
+                    <p class="big-font" id="monthPv"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row layui-col-space10">
+        <div class="layui-col-lg12 layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <a id="weekTab" class="my-tab-item my-tab-item-select">周流量趋势</a>
+                    <a id="dayTab" class="my-tab-item">天流量趋势</a>
+                </div>
+                <div class="layui-card-body">
+                    <div id="week-container" tabId="weekTab" class="my-tab-content"></div>
+                    <div id="date-container" tabId="dayTab" class="my-tab-content" style="display: none"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row layui-col-space10">
+        <div class="layui-col-lg6 layui-col-md6">
+            <div class="layui-card">
+                <div class="card-block">
+                    <div id="browser-container" style="height:300px"></div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-lg6 layui-col-lg6">
+            <div class="layui-card">
+                <div class="card-block">
+                    <div id="operatingSystem-container" style="height:300px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    layui.use(['admin', "echarts"], function () {
+        let admin = layui.admin;
+        let echarts = layui.echarts;
+        let statData;
+
+        $(".my-tab-item").click(function() {
+            let selectId = $(this).attr('id');
+            $(".my-tab-item").each(function() {
+                let eachId = $(this).attr('id');
+                if (eachId === selectId) {
+                    $(this).addClass("my-tab-item-select");
+                } else {
+                    $(this).removeClass("my-tab-item-select");
+                }
+            });
+            $("[tabId]").each(function() {
+                let tabId = $(this).attr('tabId');
+                if (tabId === selectId) {
+                    $(this).show();
+                    if ($(this).html().length === 0) {
+                        showDateChart($(this).attr('id'));
+                    }
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+
+        let showDateChart = function (contetnId) {
+            let dateChart = echarts.init(document.getElementById(contetnId), layui.echartsTheme);
+            dateChart.setOption({
+                tooltip: {trigger: "axis"},
+                legend: {
+                    data: ['访问量(PV)', '独立用户(UV)']
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        boundaryGap: !1,
+                        data: statData.statDate_items
+                    }
+                ],
+                yAxis: [{type: "value"}],
+                series: [
+                    {
+                        name: '访问量(PV)',
+                        type: 'line',
+                        smooth: !0,
+                        itemStyle: {normal: {areaStyle: {type: "default"}}},
+                        data: statData.statDate_pv
+                    },
+                    {
+                        name: '独立用户(UV)',
+                        type: 'line',
+                        smooth: !0,
+                        itemStyle: {normal: {areaStyle: {type: "default"}}},
+                        data: statData.statDate_uv
+                    }
+                ]
+            });
+        }
+
+        let browserChart = echarts.init(document.getElementById("browser-container"), layui.echartsTheme);
+        browserChart.setOption({
+            title : {
+                text: '浏览器分布',
+                subtext: '',
+                x:'center'
+            },
+            tooltip: {trigger: "item", formatter: "{a} <br/>{b} : {c} ({d}%)"},
+            legend: {},
+            series : []
+        });
+        browserChart.showLoading();
+
+        let osChart = echarts.init(document.getElementById("operatingSystem-container"), layui.echartsTheme);
+        osChart.setOption({
+            title : {
+                text: '系统分布',
+                subtext: '',
+                x:'center'
+            },
+            tooltip: {trigger: "item", formatter: "{a} <br/>{b} : {c} ({d}%)"},
+            legend: {},
+            series : []
+        });
+        osChart.showLoading();
+
+        let weekChart = echarts.init(document.getElementById("week-container"), layui.echartsTheme);
+        weekChart.setOption({
+            tooltip: {trigger: "axis"},
+            legend: {
+                data: ['访问量(PV)', '独立用户(UV)']
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: !1,
+                    data: []
+                }
+            ],
+            yAxis: [{type: "value"}],
+            series: []
+        });
+        weekChart.showLoading();
+
+        admin.req('api-log/requestStat', {}, function (data) {
+            statData = data;
+            $('#pv').html(data.currDate_pv);
+            $('#uv').html(data.currDate_uv);
+            $('#weekPv').html(data.currWeek_pv);
+            $('#monthPv').html(data.currMonth_pv);
+            $('#userCnt').html(data.currHour_uv);
+
+            browserChart.hideLoading()
+            browserChart.setOption({
+                legend: {
+                    orient: 'vertical',
+                    x: 'left',
+                    data: data.browser_legendData
+                },
+                series : [
+                    {
+                        name: '访问来源',
+                        type: 'pie',
+                        radius : '55%',
+                        center: ['60%', '60%'],
+                        data: data.browser_datas
+                    }
+                ]
+            });
+
+            osChart.hideLoading()
+            osChart.setOption({
+                legend: {
+                    orient: 'vertical',
+                    x: 'left',
+                    data: data.operatingSystem_legendData
+                },
+                series : [
+                    {
+                        name: '操作系统',
+                        type: 'pie',
+                        radius : '55%',
+                        center: ['60%', '60%'],
+                        data: data.operatingSystem_datas
+                    }
+                ]
+            });
+
+            weekChart.hideLoading()
+            weekChart.setOption({
+                xAxis: [
+                    {
+                        type: 'category',
+                        boundaryGap: !1,
+                        data: data.statWeek_items
+                    }
+                ],
+                series: [
+                    {
+                        name: '访问量(PV)',
+                        type: 'line',
+                        smooth: !0,
+                        itemStyle: {normal: {areaStyle: {type: "default"}}},
+                        data: data.statWeek_pv
+                    },
+                    {
+                        name: '独立用户(UV)',
+                        type: 'line',
+                        smooth: !0,
+                        itemStyle: {normal: {areaStyle: {type: "default"}}},
+                        data: data.statWeek_uv
+                    }
+                ]
+            });
+        }, 'GET');
+    });
+</script>
+</body>
+</html>

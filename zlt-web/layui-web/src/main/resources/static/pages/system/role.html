@@ -1,0 +1,253 @@
+<link rel="stylesheet" href="/assets/libs/zTree/css/zTreeStyle/zTreeStyle.css"/>
+<script type="text/javascript" src="/assets/libs/zTree/js/jquery.ztree.all-3.5.min.js"></script>
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2 class="header-title">角色管理</h2>
+        <span class="layui-breadcrumb pull-right">
+          <a href="#!console">首页</a>
+          <a><cite>角色管理</cite></a>
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-form toolbar">
+            所属应用：<select id="role_clients" lay-filter="role_clients"></select>
+            &emsp;搜索：
+            <select id="role-search-key">
+                <option value="">-请选择-</option>
+                <option value="name">角色名称</option>
+            </select>&emsp;
+            <input id="role-edit-value" class="layui-input search-input" type="text" placeholder="输入关键字"/>&emsp;
+            <button id="role-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+            <button id="role-btn-add" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+        </div>
+
+        <!-- 数据表格 -->
+        <table class="layui-table" id="role-table" lay-filter="role-table"></table>
+    </div>
+</div>
+
+<!-- 表单弹窗 -->
+<script type="text/html" id="role-model">
+    <form id="role-form" lay-filter="role-form" class="layui-form model-form">
+        <input name="id" type="hidden"/>
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色名</label>
+            <div class="layui-input-block">
+                <input name="name" placeholder="请输入角色名" type="text" class="layui-input" maxlength="20"
+                       lay-verify="required" required/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">Code</label>
+            <div class="layui-input-block">
+                <input name="code" placeholder="请输入Code" type="text" class="layui-input" maxlength="20"
+                       lay-verify="required" required />
+            </div>
+        </div>
+        <div class="layui-form-item model-form-footer">
+            <button class="layui-btn layui-btn-primary" ew-event="closeDialog" type="button">取消</button>
+            <button class="layui-btn" lay-filter="role-form-submit" lay-submit>保存</button>
+        </div>
+    </form>
+</script>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="role-table-bar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-xs" lay-event="auth">权限分配</a>
+</script>
+
+<script>
+    layui.use(['form', 'table', 'util', 'config', 'admin', 'formSelects'], function () {
+        var form = layui.form;
+        var table = layui.table;
+        var config = layui.config;
+        var layer = layui.layer;
+        var util = layui.util;
+        var admin = layui.admin;
+        var formSelects = layui.formSelects;
+
+        //渲染表格
+        table.render({
+            elem: '#role-table',
+            url: config.base_server + 'api-user/roles',
+            headers:{'Authorization': 'Bearer ' + config.getToken().access_token},
+            page: true,
+            cols: [[
+                {type: 'numbers'},
+                {field: 'id', sort: true, title: 'ID',width: 80},
+                {field: 'name', sort: true, title: '角色名'},
+                {field: 'code', sort: true, title: 'Code'},
+                {
+                    field: 'createTime', sort: true, templet: function (d) {
+                        return util.toDateString(d.createTime);
+                    }, title: '创建时间'
+                },
+                {align: 'center', toolbar: '#role-table-bar', title: '操作',width: 250}
+            ]]
+        });
+
+        // 获取应用列表
+        layer.load(2);
+        admin.req('api-uaa/clients/all', {}, function (data) {
+            layer.closeAll('loading');
+            if (0 === data.resp_code) {
+                let selected = false;
+                $.each(data.datas,function(index,item){
+                    if (config.clientId === item.clientId) {
+                        selected = true;
+                    } else {
+                        selected = false;
+                    }
+                    //往下拉菜单里添加元素
+                    $('#role_clients').append(new Option(item.clientName, item.clientId, false, selected));
+                })
+                form.render();
+            } else {
+                layer.msg(data.resp_msg, {icon: 2, time: 500});
+            }
+        }, 'GET');
+
+        // 添加按钮点击事件
+        $('#role-btn-add').click(function () {
+            showEditModel();
+        });
+
+        // 表单提交事件
+        form.on('submit(role-form-submit)', function (data) {
+            let tenantId = $('#role_clients').val();
+            layer.load(2);
+            admin.req('api-user/roles/saveOrUpdate?tenantId='+tenantId, JSON.stringify(data.field), function (data) {
+                layer.closeAll('loading');
+                console.log(data);
+                if (data.resp_code === 0) {
+                    layer.msg(data.resp_msg, {icon: 1, time: 500});
+                    table.reload('role-table');
+                    layer.closeAll('page');
+                } else {
+                    layer.msg(data.resp_msg, {icon: 2, time: 500});
+                }
+            }, $('#role-form').attr('method'));
+            return false;
+        });
+
+        // 工具条点击事件
+        table.on('tool(role-table)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'edit') { //修改
+                showEditModel(data);
+            } else if (obj.event === 'del') { //删除
+                doDelete(obj);
+            } else if (obj.event === 'auth') {  // 权限分配
+                showMenuDialog(obj.data.id);
+            }
+        });
+
+        // 搜索按钮点击事件
+        $('#role-btn-search').click(function () {
+            var key = $('#role-search-key').val();
+            var value = $('#role-edit-value').val();
+            table.reload('role-table', {where: {searchKey: key, searchValue: value}});
+        });
+
+        // 显示编辑弹窗
+        var showEditModel = function (data) {
+            layer.open({
+                type: 1,
+                title: data ? '修改角色' : '添加角色',
+                area: '450px',
+                offset: '120px',
+                content: $('#role-model').html(),
+                success: function () {
+                    $('#role-form')[0].reset();
+                    $('#role-form').attr('method', 'POST');
+                    if (data) {
+                        $("input[name='code']").attr('disabled',true);
+                        $("input[name='code']").attr('class',"layui-input layui-disabled");
+                        form.val('role-form', data);
+                        $('#role-form').attr('method', 'POST');
+                    }
+                }
+            });
+        };
+
+        // 删除
+        var doDelete = function (obj) {
+            layer.confirm('确定要删除吗？', function (i) {
+                let tenantId = $('#role_clients').val();
+                layer.close(i);
+                layer.load(2);
+                admin.req('api-user/roles/' + obj.data.id+'?tenantId='+tenantId, {}, function (data) {
+                    layer.closeAll('loading');
+                    if (data.resp_code === 0) {
+                        layer.msg(data.resp_msg, {icon: 1, time: 500});
+                        obj.del();
+                    } else {
+                        layer.msg(data.resp_msg, {icon: 2, time: 500});
+                    }
+                }, 'DELETE');
+            });
+        };
+
+
+        // 菜单管理
+        var showMenuDialog = function (roleId) {
+            let tenantId = $('#role_clients').val();
+            layer.open({
+                type: 1,
+                title: '菜单管理',
+                area: ['600px', '500px'],
+                offset: '120px',
+                content: '<ul id="treeMenu" class="ztree" style="padding: 25px 0px 20px 60px;"></ul>',
+                btn: ['保存', '关闭'],
+                btnAlign: 'c',
+                success: function (layero, index) {
+                    $(layero).children('.layui-layer-content').css('overflow-y', 'auto');
+                    layer.load(2);
+                    var setting = {
+                        check: {enable: true},
+                        data: {
+                            simpleData: {
+                                enable: true
+                            }
+                        }
+                    };
+                    admin.req('api-user/menus/'+roleId+'/menus', {tenantId: tenantId}, function (data) {
+                        $.fn.zTree.init($('#treeMenu'), setting, data);
+                        layer.closeAll('loading');
+                    }, 'GET');
+
+                },
+                yes: function (index) {
+                    layer.load(1);
+                    var treeObj = $.fn.zTree.getZTreeObj('treeMenu');
+                    var nodes = treeObj.getCheckedNodes(true);
+                    var ids = new Array();
+                    for (var i = 0; i < nodes.length; i++) {
+                        ids[i] = nodes[i].id;
+                    }
+                    var data = new Object();
+                    data.roleId = roleId;
+                    data.menuIds = ids;
+
+                    admin.req('api-user/menus/granted?tenantId='+tenantId, JSON.stringify(data) , function (data) {
+                        layer.closeAll('loading');
+                        if (0 == data.resp_code) {
+                            layer.msg(data.resp_msg, {icon: 1, time: 500});
+                            layer.close(index);
+                        } else {
+                            layer.msg(data.resp_msg, {icon: 2, time: 500});
+                        }
+                    }, 'POST');
+                }
+            });
+        }
+
+        // 应用下来框点击事件
+        form.on('select(role_clients)', function(data){
+            table.reload('role-table', {where: {tenantId: data.value}});
+        });
+    });
+
+</script>
