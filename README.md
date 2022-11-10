@@ -6,6 +6,7 @@
   <img src="https://img.shields.io/badge/Spring%20Cloud-2020.0.5-blue" alt="Downloads"/>
   <img src="https://img.shields.io/badge/Spring%20Cloud%20Alibaba-2021.1-blue" alt="Downloads"/>
   <img src="https://img.shields.io/badge/Elasticsearch-7.x-brightgreen" alt="Downloads"/>
+  <img src="https://img.shields.io/badge/Ant%20Design-pro-9cf" alt="Downloads"/>
   <a target="_blank" href='https://gitee.com/zlt2000/microservices-platform'>
     <img src='https://gitee.com/zlt2000/microservices-platform/badge/star.svg' alt='star'/>
   </a>
@@ -97,7 +98,8 @@ central-platform -- 父项目，公共依赖
 │  ├─zlt-uaa -- spring-security认证中心[8000]
 │  ├─zlt-register -- 注册中心Nacos[8848]
 │  ├─zlt-web -- 前端一级工程
-│  │  ├─back-web -- 后台前端[8066]
+│  │  ├─layui-web -- layui前端[8066]
+│  │  ├─react-web -- react前端[8066]
 │  ├─zlt-transaction -- 事务一级工程
 │  │  ├─txlcn-tm -- tx-lcn事务管理器[7970]
 │  ├─zlt-demo -- demo一级工程
