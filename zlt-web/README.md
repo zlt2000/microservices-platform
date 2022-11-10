@@ -46,6 +46,10 @@
 ##### 2.2.1.1. 安装node_modules
 执行以下命令：
 ```bash
+// 设置淘宝镜像nmp代理来提高速度
+npm config set registry https://registry.npm.taobao.org
+
+// 安装
 npm install
 ```
 ##### 2.2.1.2. 运行

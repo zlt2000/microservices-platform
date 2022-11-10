@@ -45,16 +45,19 @@ const TableList: React.FC = () => {
       dataIndex: 'message',
       ellipsis: true,
       width: 200,
+      render: (_, entity) => <span dangerouslySetInnerHTML={{ __html: entity.message || '' }} />,
     },
     {
       title: '日志级别',
       dataIndex: 'logLevel',
       width: 40,
+      render: (_, entity) => <span dangerouslySetInnerHTML={{ __html: entity.logLevel || '' }} />,
     },
     {
       title: '应用名',
       dataIndex: 'appName',
       width: 50,
+      render: (_, entity) => <span dangerouslySetInnerHTML={{ __html: entity.appName || '' }} />,
     },
     {
       title: '追踪id',
@@ -64,10 +67,10 @@ const TableList: React.FC = () => {
         return (
           <Link
             onClick={() => {
-              setTraceView({ traceId: entity.traceId, open: true });
+              setTraceView({ traceId: entity.traceId.replace('<mark>', '').replace('</mark>', ''), open: true });
             }}
           >
-            {entity.traceId}
+            <span dangerouslySetInnerHTML={{ __html: entity.traceId || '' }} />
           </Link>
         );
       },
@@ -76,28 +79,33 @@ const TableList: React.FC = () => {
       title: 'spanId',
       dataIndex: 'spanId',
       width: 40,
+      render: (_, entity) => <span dangerouslySetInnerHTML={{ __html: entity.spanId || '' }} />,
     },
     {
       title: '类名',
       dataIndex: 'classname',
       width: 110,
       ellipsis: true,
+      render: (_, entity) => <span dangerouslySetInnerHTML={{ __html: entity.classname || '' }} />,
     },
     {
       title: '线程名',
       dataIndex: 'threadName',
       width: 50,
       ellipsis: true,
+      render: (_, entity) => <span dangerouslySetInnerHTML={{ __html: entity.threadName || '' }} />,
     },
     {
       title: '服务ip',
       dataIndex: 'serverIp',
       width: 50,
+      render: (_, entity) => <span dangerouslySetInnerHTML={{ __html: entity.serverIp || '' }} />,
     },
     {
       title: '服务端口',
       dataIndex: 'serverPort',
       width: 35,
+      render: (_, entity) => <span dangerouslySetInnerHTML={{ __html: entity.serverPort || '' }} />,
     },
   ];
 
