@@ -33,6 +33,9 @@
 #### 2.1.2. 方式二：静态服务器运行
 把 `layui-web\src\main\resources\static` 下的内容复制到类似 `Nginx` 之类的静态服务器运行。
 
+#### 2.1.3. 后端接口地址修改
+修改 `layui-web\src\main\resources\static\module\apiUrl.js` 中的地址。
+
 &nbsp;
 ### 2.2. react-web
 **以下 3 种运行方式，选一种运行即可。**
@@ -50,11 +53,32 @@ npm install
 
 运行成功后，浏览器访问：http://localhost:8066
 
+##### 2.2.1.3. 后端接口地址修改
+修改 `react-web\src\main\frontend\config\proxy.ts` 中的地址。
+
 &nbsp;
 #### 2.2.2. 方式二：静态服务器运行
+##### 2.2.2.1. 源码编译
 运行 `frontend\build.bat` 文件或者执行 `npm run build` 命令进行编译。
 
 编译成功后，把 `react-web\src\main\frontend\dist` 下的内容复制到类似 `Nginx` 之类的静态服务器运行。
+
+##### 2.2.2.2. 后端接口地址修改
+通过反向代理，例如 `Nginx` 的配置如下：
+```json
+location ~ ^/api-* {
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Real-Port $remote_port;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_pass http://127.0.0.1:9900;
+}
+
+location / {
+    root /usr/share/nginx/html;
+    index index.html;
+    expires 7d;
+}
+```
 
 &nbsp;
 #### 2.2.3. 方式三：使用Java运行
@@ -70,17 +94,6 @@ java -jar zlt-web-5.4.0.jar
 
 或者直接在IDE中运行 `react-web\src\main\java\ui\ReactUiBootApplication.java` 
 > 运行前必需先使用 maven 对 react-web 工程进行编译或打包。
-
-&nbsp;
-## 三、后端接口地址修改
-两个前端默认请求的后端接口地址默认都是：http://127.0.0.1:9900/
-
-### 3.1. layui-web
-修改 `layui-web\src\main\resources\static\module\apiUrl.js` 中的地址。
-
-&nbsp;
-### 3.2. react-web
-修改 `react-web\src\main\frontend\config\proxy.ts` 中的地址。
 
 &nbsp;
 ## 四、More
