@@ -40,20 +40,29 @@
 ### 2.2. react-web
 **以下 3 种运行方式，选一种运行即可。**
 
-需要先安装 `nodejs` 官网地址：https://nodejs.org/en/download/
+- 需要先安装 `nodejs` 官网地址：https://nodejs.org/en/download/
 
-#### 2.2.1. 方式一：本地运行
-##### 2.2.1.1. 安装node_modules
-执行以下命令：
+
+- 然后安装 **node_modules**：
+
+在 `react-web\src\main\frontend` 目录下执行以下命令：
+
 ```bash
+//直接使用淘宝的镜像源
+npm config set registry https://registry.npm.taobao.org/
+
+//安装
 npm install
 ```
-##### 2.2.1.2. 运行
+
+
+#### 2.2.1. 方式一：本地运行
+##### 2.2.1.1. 运行
 运行 `frontend\start.bat` 文件或者执行 `npm start` 命令。
 
 运行成功后，浏览器访问：http://localhost:8066
 
-##### 2.2.1.3. 后端接口地址修改
+##### 2.2.1.2. 后端接口地址修改
 修改 `react-web\src\main\frontend\config\proxy.ts` 中的地址。
 
 &nbsp;
