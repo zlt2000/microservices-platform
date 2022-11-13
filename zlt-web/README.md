@@ -48,7 +48,7 @@
 在 `react-web\src\main\frontend` 目录下执行以下命令：
 
 ```bash
-//直接使用淘宝的镜像源
+//设置使用淘宝的镜像源
 npm config set registry https://registry.npm.taobao.org/
 
 // 安装
@@ -89,12 +89,15 @@ location / {
 }
 ```
 
+> 配置了两条路由，页面请求的各个 `api-xxx` 地址重定向到指定的接口地址；其他的则访问静态文件。
+
 &nbsp;
+
 #### 2.2.3. 方式三：使用Java运行
 模块已集成Maven插件`frontend-maven-plugin`用于编译前端代码
 >由于需要安装前端环境并编译前端代码，**首次运行需要时间较长**。
 
-执行 maven 命令 `mvn package` 打包。
+在 `react-web` 目录下执行 maven 命令 `mvn package` 打包。
 
 在target目录下生成zlt-web-x.x.x.jar（springboot jar）。
 ```bash

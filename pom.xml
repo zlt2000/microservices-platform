@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.zlt</groupId>
     <artifactId>central-platform</artifactId>
-    <version>5.4.0</version>
+    <version>5.5.0</version>
     <packaging>pom</packaging>
 
     <properties>
