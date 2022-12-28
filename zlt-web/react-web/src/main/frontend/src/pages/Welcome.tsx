@@ -59,7 +59,7 @@ const Welcome: React.FC = () => {
 
   return (
     <PageContainer
-      subTitle="前后端分离的企业级微服务架构"
+      subTitle="前后端分离的微服务架构"
       tags={
         <>
           <Tag color="blue">简单</Tag>

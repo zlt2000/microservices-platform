@@ -1,5 +1,5 @@
 export default {
-  'pages.layouts.userLayout.title': '前后端分离的企业级微服务架构',
+  'pages.layouts.userLayout.title': '前后端分离的微服务架构',
   'pages.login.accountLogin.tab': '账户密码登录',
   'pages.login.accountLogin.errorMessage': '错误的账号和密码(admin/ant.design)',
   'pages.login.failure': '登录失败，请重试！',
