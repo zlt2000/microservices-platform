@@ -1,0 +1,32 @@
+<!--<iframe src="http://127.0.0.1:9200/swagger-ui.html" frameborder="0" class="admin-iframe"></iframe>-->
+<iframe frameborder="0" class="admin-iframe"></iframe>
+<script>
+    layui.use(['config','admin'], function (){
+        var config = layui.config;
+        var admin = layui.admin;
+        var html = admin.getTempData("params");
+        console.log(html);
+        console.log($('iframe:last'));
+
+        if (!$('iframe:last').attr("src")){
+            $('iframe:last').attr("src",html);
+        }
+    });
+
+    // 以下代码是去掉主体部分的滚动条，因为iframe自带滚动条
+    initIFrame($('.admin-iframe'));
+
+    function initIFrame(d) {
+        var $parent = d.parent();
+        if ($parent.hasClass('layui-body')) {
+            $parent.addClass('admin-iframe-body');
+            return;
+        }
+        if ($parent.hasClass('layui-tab-item')) {
+            $parent.css({'padding': '0', 'overflow-y': 'hidden'});
+        } else {
+            $parent.css({'width': '100%', 'height': '100%'});
+            initIFrame($parent);
+        }
+    }
+</script>

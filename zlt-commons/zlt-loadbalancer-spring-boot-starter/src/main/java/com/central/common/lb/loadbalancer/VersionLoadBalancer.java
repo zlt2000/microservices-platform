@@ -1,27 +1,20 @@
 package com.central.common.lb.loadbalancer;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
 import com.central.common.constant.CommonConstant;
-import com.central.common.context.LbIsolationContextHolder;
 import com.central.common.lb.chooser.IRuleChooser;
 import com.central.common.lb.utils.QueryUtils;
-import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.*;
 import org.springframework.cloud.loadbalancer.core.ReactorServiceInstanceLoadBalancer;
-import org.springframework.cloud.loadbalancer.core.RoundRobinLoadBalancer;
 import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
-import org.springframework.cloud.loadbalancer.support.SimpleObjectProvider;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.net.URI;
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 /**
@@ -59,7 +52,7 @@ public class VersionLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 
     private String getVersionFromRequestData(RequestData requestData){
         Map<String, String> queryMap = QueryUtils.getQueryMap(requestData.getUrl());
-        if(MapUtils.isNotEmpty(queryMap)&& queryMap.containsKey(CommonConstant.Z_L_T_VERSION)&& StrUtil.isNotBlank(queryMap.get(CommonConstant.Z_L_T_VERSION))){
+        if(MapUtils.isNotEmpty(queryMap)&& queryMap.containsKey(CommonConstant.Z_L_T_VERSION)&& StringUtils.isNotBlank(queryMap.get(CommonConstant.Z_L_T_VERSION))){
             return queryMap.get(CommonConstant.Z_L_T_VERSION);
         }else if(requestData.getHeaders().containsKey(CommonConstant.Z_L_T_VERSION)){
             return requestData.getHeaders().get(CommonConstant.Z_L_T_VERSION).get(0);
@@ -76,8 +69,8 @@ public class VersionLoadBalancer implements ReactorServiceInstanceLoadBalancer {
      */
     private Response<ServiceInstance> getInstanceResponse(List<ServiceInstance>instances, String version){
         List<ServiceInstance> filteredServiceIstanceList = instances;
-        if(StrUtil.isNotBlank(version)){
-            if(CollUtil.isNotEmpty(instances)){
+        if(StringUtils.isNotBlank(version)){
+            if(CollectionUtils.isNotEmpty(instances)){
                 filteredServiceIstanceList = instances.stream()
                         .filter(item->item.getMetadata().containsKey(CommonConstant.METADATA_VERSION)&&
                                 version.equals(item.getMetadata().get(CommonConstant.METADATA_VERSION)))
@@ -85,15 +78,15 @@ public class VersionLoadBalancer implements ReactorServiceInstanceLoadBalancer {
             }
         }
         // 如果没有找到对应的版本实例时，选择版本号为空的或这版本为default的实例
-        if(CollUtil.isEmpty(filteredServiceIstanceList)){
+        if(CollectionUtils.isEmpty(filteredServiceIstanceList)){
             filteredServiceIstanceList = instances.stream()
                     .filter(item->!item.getMetadata().containsKey(CommonConstant.METADATA_VERSION)||
-                            StrUtil.isBlank(item.getMetadata().get(CommonConstant.METADATA_VERSION))
+                            StringUtils.isBlank(item.getMetadata().get(CommonConstant.METADATA_VERSION))
                             || "default".equals(item.getMetadata().get(CommonConstant.METADATA_VERSION)))
                     .collect(Collectors.toList());
         }
         // 经过两轮过滤后如果能找到的话就选择，不然返回空
-        if(CollUtil.isNotEmpty(filteredServiceIstanceList)){
+        if(CollectionUtils.isNotEmpty(filteredServiceIstanceList)){
             ServiceInstance serviceInstance = this.ruleChooser.choose(filteredServiceIstanceList);
             if(!Objects.isNull(serviceInstance)){
                 log.debug("使用serviceId为：{}服务， 选择version为：{}， 地址：{}:{}，", serviceId, version
