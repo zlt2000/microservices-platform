@@ -2,6 +2,7 @@ package com.central.common.model;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.central.common.enums.DataScope;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -18,4 +19,8 @@ public class SysRole extends SuperEntity {
     private String name;
     @TableField(exist = false)
     private Long userId;
+    /**
+     * 数据权限字段
+     */
+    private DataScope dataScope;
 }
