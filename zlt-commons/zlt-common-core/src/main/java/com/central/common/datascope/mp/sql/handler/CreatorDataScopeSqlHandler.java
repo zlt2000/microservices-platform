@@ -12,6 +12,7 @@ import com.central.common.properties.DataScopeProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 个人权限的处理器
@@ -37,12 +38,13 @@ public class CreatorDataScopeSqlHandler implements SqlHandler{
         SysUser user = LoginUserContextHolder.getUser();
         Assert.notNull(user, "登陆人不能为空");
         List<SysRole> roleList = userService.findRolesByUserId(user.getId());
-        return StrUtil.isBlank(dataScopeProperties.getScopeColumn())
-                ||(CollUtil.isNotEmpty(roleList)&& roleList.stream().anyMatch(item-> DataScope.ALL.equals(item.getDataScope())))
+        return StrUtil.isBlank(dataScopeProperties.getCreatorIdColumnName())
+                ||CollUtil.isEmpty(roleList)
+                || roleList.stream().anyMatch(item-> Objects.nonNull(item.getDataScope()) || DataScope.ALL.equals(item.getDataScope()))
                 ? DO_NOTHING:
                 // 这里确保有配置权限范围控制的字段
-                // 1. 如果没有配置角色的情况默认采用只读个人创建的记录
-                // 2. 如果有配置角色的话判断是否存在有ALL的情况，如果没有ALL的话读取个人创建记录
-                String.format("%s.%s = '%s'", ALIAS_SYNBOL, dataScopeProperties.getScopeColumn(), user.getId());
+                // 1. 如果没有配置角色的情况默认采用只读全部的记录
+                // 2. 如果有配置角色的话判断是否存在有ALL获取null的情况，如果没有ALL的话读取个人创建记录
+                String.format("%s.%s = '%s'", ALIAS_SYNBOL, dataScopeProperties.getCreatorIdColumnName(), user.getId());
     }
 }
