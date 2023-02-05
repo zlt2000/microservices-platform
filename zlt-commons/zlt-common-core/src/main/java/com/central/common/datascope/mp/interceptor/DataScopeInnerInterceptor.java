@@ -13,9 +13,11 @@ import lombok.extern.slf4j.Slf4j;
 import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.expression.Alias;
 import net.sf.jsqlparser.expression.Expression;
+import net.sf.jsqlparser.expression.ExpressionVisitorAdapter;
 import net.sf.jsqlparser.expression.operators.conditional.AndExpression;
 import net.sf.jsqlparser.parser.CCJSqlParserManager;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
+import net.sf.jsqlparser.schema.Column;
 import net.sf.jsqlparser.schema.Table;
 import net.sf.jsqlparser.statement.select.*;
 import org.apache.ibatis.executor.Executor;
@@ -29,7 +31,6 @@ import org.springframework.web.util.pattern.PathPatternParser;
 import java.io.StringReader;
 import java.sql.SQLException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static com.central.common.datascope.mp.sql.handler.SqlHandler.ALIAS_SYNBOL;
 
@@ -66,7 +67,7 @@ public class DataScopeInnerInterceptor implements InnerInterceptor {
     }
 
     @Override
-    public void beforeQuery(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) throws SQLException {
+    public void beforeQuery(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) {
         if(CollUtil.isEmpty(dataScopeProperties.getIgnoreSqls())|| !dataScopeProperties.getIgnoreSqls().contains(ms.getId())){
             PluginUtils.MPBoundSql mpBs = PluginUtils.mpBoundSql(boundSql);
             String sql = boundSql.getSql();
@@ -227,19 +228,26 @@ public class DataScopeInnerInterceptor implements InnerInterceptor {
      * @throws JSQLParserException
      */
     private SelectBody reformWhere(PlainSelect select, String whereSql, List<String> aliasName) throws JSQLParserException {
-        Expression where = select.getWhere();
+
         // todo 处理exists
         if(StrUtil.isNotBlank(whereSql)&& CollUtil.isNotEmpty(aliasName)){
-            String andWhereSql = aliasName.stream()
-                    .map(item -> whereSql.replaceAll(ALIAS_SYNBOL, StrUtil.isNotBlank(item) ? item : ""))
-                    .collect(Collectors.joining(" and "));
-            if(StrUtil.isNotBlank(andWhereSql)){
+            for (String alias : aliasName) {
                 Expression expression = CCJSqlParserUtil
-                        .parseCondExpression(andWhereSql);
-                if(ObjectUtil.isNull(where)){
+                        .parseCondExpression(whereSql);
+                expression.accept(new ExpressionVisitorAdapter(){
+                    @Override
+                    public void visit(Column column) {
+                        if(Objects.isNull(column.getTable())|| ALIAS_SYNBOL.equals(column.getTable().toString())){
+                            Table table = new Table();
+                            table.setAlias(new Alias(alias));
+                            column.setTable(table);
+                        }
+                    }
+                });
+                if(ObjectUtil.isNull(select.getWhere())){
                     select.setWhere(expression);
                 }else {
-                    AndExpression andExpression = new AndExpression(where, expression);
+                    AndExpression andExpression = new AndExpression(select.getWhere(), expression);
                     select.setWhere(andExpression);
                 }
             }

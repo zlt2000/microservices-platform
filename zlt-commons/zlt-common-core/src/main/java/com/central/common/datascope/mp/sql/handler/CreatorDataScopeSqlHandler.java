@@ -40,7 +40,7 @@ public class CreatorDataScopeSqlHandler implements SqlHandler{
         List<SysRole> roleList = userService.findRolesByUserId(user.getId());
         return StrUtil.isBlank(dataScopeProperties.getCreatorIdColumnName())
                 ||CollUtil.isEmpty(roleList)
-                || roleList.stream().anyMatch(item-> Objects.nonNull(item.getDataScope()) || DataScope.ALL.equals(item.getDataScope()))
+                || roleList.stream().anyMatch(item-> Objects.isNull(item.getDataScope()) || DataScope.ALL.equals(item.getDataScope()))
                 ? DO_NOTHING:
                 // 这里确保有配置权限范围控制的字段
                 // 1. 如果没有配置角色的情况默认采用只读全部的记录
