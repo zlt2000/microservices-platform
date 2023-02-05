@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.central.common.datascope.mp.interceptor.DataScopeInnerInterceptor;
+import com.central.common.datascope.mp.interceptor.EnableQuerySqlLogInnerInterceptor;
 import com.central.common.datascope.mp.sql.handler.CreatorDataScopeSqlHandler;
 import com.central.common.datascope.mp.sql.handler.SqlHandler;
 import com.central.common.properties.DataScopeProperties;
@@ -61,7 +62,9 @@ public class MybatisPlusAutoConfigure {
             mpInterceptor.addInnerInterceptor(tenantInterceptor);
         }
         if(dataScopeProperties.getEnabled()){
-            mpInterceptor.addInnerInterceptor(new DataScopeInnerInterceptor(dataScopeProperties, sqlHandler));
+            DataScopeInnerInterceptor dataScopeInnerInterceptor = new DataScopeInnerInterceptor(dataScopeProperties, sqlHandler);
+            mpInterceptor.addInnerInterceptor(Boolean.TRUE.equals(dataScopeProperties.getEnabledSqlDebug())
+                    ? new EnableQuerySqlLogInnerInterceptor(dataScopeInnerInterceptor): dataScopeInnerInterceptor);
         }
         mpInterceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
         return mpInterceptor;
