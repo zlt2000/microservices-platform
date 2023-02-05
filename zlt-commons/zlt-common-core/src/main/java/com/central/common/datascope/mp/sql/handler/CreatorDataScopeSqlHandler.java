@@ -45,6 +45,6 @@ public class CreatorDataScopeSqlHandler implements SqlHandler{
                 // 这里确保有配置权限范围控制的字段
                 // 1. 如果没有配置角色的情况默认采用只读全部的记录
                 // 2. 如果有配置角色的话判断是否存在有ALL获取null的情况，如果没有ALL的话读取个人创建记录
-                String.format("%s.%s = '%s'", ALIAS_SYNBOL, dataScopeProperties.getCreatorIdColumnName(), user.getId());
+                String.format("%s = '%s'", dataScopeProperties.getCreatorIdColumnName(), user.getId());
     }
 }
