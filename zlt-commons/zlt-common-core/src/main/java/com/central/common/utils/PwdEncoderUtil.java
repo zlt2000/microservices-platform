@@ -1,5 +1,6 @@
 package com.central.common.utils;
 
+import com.central.common.passwordEncoder.SM3PasswordEncoder;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
@@ -35,6 +36,7 @@ public class PwdEncoderUtil {
         encoders.put("SHA-256", new org.springframework.security.crypto.password.MessageDigestPasswordEncoder("SHA-256"));
         encoders.put("sha256", new org.springframework.security.crypto.password.StandardPasswordEncoder());
         encoders.put("argon2", new Argon2PasswordEncoder());
+        encoders.put("SM3", new SM3PasswordEncoder());
 
         Assert.isTrue(encoders.containsKey(encodingId), encodingId + " is not found in idToPasswordEncoder");
 

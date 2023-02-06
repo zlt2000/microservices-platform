@@ -3,19 +3,21 @@ package com.central.oauth.filter;
 import com.central.common.constant.SecurityConstants;
 import com.central.common.context.TenantContextHolder;
 import com.central.common.model.Result;
+import com.central.oauth.handler.decryptParamHandler.IDecryptParamHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 import org.springframework.security.oauth2.common.util.OAuth2Utils;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.security.Principal;
 import java.util.Map;
 
@@ -34,17 +36,23 @@ import java.util.Map;
 @Component
 @Aspect
 public class OauthTokenAspect {
+    @Resource
+    private IDecryptParamHandler decryptParamHandler;
+
     @Around("execution(* org.springframework.security.oauth2.provider.endpoint.TokenEndpoint.postAccessToken(..))")
     public Object handleControllerMethod(ProceedingJoinPoint joinPoint) throws Throwable {
         try {
             Object[] args = joinPoint.getArgs();
             Principal principal = (Principal) args[0];
             if (!(principal instanceof Authentication)) {
-                throw new InsufficientAuthenticationException(
+                throw new OAuth2Exception(
                         "There is no client authentication. Try adding an appropriate authentication filter.");
             }
             String clientId = getClientId(principal);
             Map<String, String> parameters = (Map<String, String>) args[1];
+            //解密参数
+            decryptParamHandler.decryptParams(parameters);
+
             String grantType = parameters.get(OAuth2Utils.GRANT_TYPE);
             if (!parameters.containsKey(SecurityConstants.ACCOUNT_TYPE_PARAM_NAME)) {
                 parameters.put(SecurityConstants.ACCOUNT_TYPE_PARAM_NAME, SecurityConstants.DEF_ACCOUNT_TYPE);
@@ -74,7 +82,7 @@ public class OauthTokenAspect {
     private String getClientId(Principal principal) {
         Authentication client = (Authentication) principal;
         if (!client.isAuthenticated()) {
-            throw new InsufficientAuthenticationException("The client is not authenticated.");
+            throw new OAuth2Exception("The client is not authenticated.");
         }
         String clientId = client.getName();
         if (client instanceof OAuth2Authentication) {
