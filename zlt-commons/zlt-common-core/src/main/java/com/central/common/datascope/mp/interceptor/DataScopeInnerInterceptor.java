@@ -206,8 +206,7 @@ public class DataScopeInnerInterceptor implements InnerInterceptor {
                 if(Objects.nonNull(tablealias)&& StrUtil.isNotBlank(tablealias.getName())){
                     alias = tablealias.getName();
                 }else{
-                    alias = ALIAS_SYNBOL;
-                    ((Table) fromItem).setAlias(new Alias(ALIAS_SYNBOL, false));
+                    alias = ((Table) fromItem).getName();
                 }
             }
             // 如果from的子查询
