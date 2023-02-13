@@ -43,11 +43,18 @@ public class DataScopeProperties {
      * 指定某几个表接受权限控制，仅enabled=true，默认当开启时全部表
      */
     private Set<String> includeTables = Collections.singleton("*");
+    /**
+     * 指定某几条sql执行权限控制，仅enabled=true生效
+     * 1. 为空时：所有sql都添加权限控制
+     * 2. 有值时：只有配置的sql添加权限控制
+     */
+    private Set<String> includeSqls = Collections.emptySet();
 
     /**
      * 指定需要的字段名
      */
-    private String creatorIdColumnName;
+    private String creatorIdColumnName = "creator_id";
+
     public void setIgnoreSqls(Set<String> ignoreSqls) {
         Set<String> ingoreSet = new HashSet<>();
         ingoreSet.addAll(INGORE_SQL_ID);

@@ -38,3 +38,10 @@ zlt:
     enable: true
     ignoreTables:
       - oauth_client_details
+  # 数据权限
+  datascope:
+    enabled: true
+    enabledSqlDebug: true
+    includeSqls:
+      # 应用列表
+      - com.central.oauth.mapper.ClientMapper.findList

@@ -68,15 +68,22 @@ public class DataScopeInnerInterceptor implements InnerInterceptor {
 
     @Override
     public void beforeQuery(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) {
-        if(CollUtil.isEmpty(dataScopeProperties.getIgnoreSqls())|| !dataScopeProperties.getIgnoreSqls().contains(ms.getId())){
-            PluginUtils.MPBoundSql mpBs = PluginUtils.mpBoundSql(boundSql);
-            String sql = boundSql.getSql();
-            try {
-                Select select = explainQuerySql(sql);
-                reform(select.getSelectBody());
-                mpBs.sql(select.toString());
-            } catch (JSQLParserException e) {
-                throw new RuntimeException(e);
+        //为空时：所有sql都添加权限控制
+        if (CollUtil.isEmpty(dataScopeProperties.getIncludeSqls())
+                //有值时：只有配置的sql添加权限控制
+            || dataScopeProperties.getIncludeSqls().contains(ms.getId())) {
+            //判断排除的sql
+            if(CollUtil.isEmpty(dataScopeProperties.getIgnoreSqls())
+                    || !dataScopeProperties.getIgnoreSqls().contains(ms.getId())){
+                PluginUtils.MPBoundSql mpBs = PluginUtils.mpBoundSql(boundSql);
+                String sql = boundSql.getSql();
+                try {
+                    Select select = explainQuerySql(sql);
+                    reform(select.getSelectBody());
+                    mpBs.sql(select.toString());
+                } catch (JSQLParserException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }

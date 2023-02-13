@@ -38,6 +38,20 @@ zlt:
       - com.central.user.mapper.SysRoleMapper.findAll
       # 用户列表显示用户所关联的所有角色
       - com.central.user.mapper.SysUserRoleMapper.findRolesByUserIds
+  # 数据权限
+  datascope:
+    enabled: true
+    enabledSqlDebug: true
+    ignoreTables:
+      - sys_role_user
+      - sys_role_menu
+    includeSqls:
+      # 用户列表
+      - com.central.user.mapper.SysUserMapper.findList
+      # 角色列表
+      - com.central.user.mapper.SysRoleMapper.findList
+      # 菜单列表
+      - com.central.user.mapper.SysMenuMapper.selectList
   #审计日志
 #  audit-log:
 #    enabled: true
