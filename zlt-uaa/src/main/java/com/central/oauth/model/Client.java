@@ -41,4 +41,6 @@ public class Client extends SuperEntity {
     */
    @TableField(value = "id_token_validity")
    private Integer idTokenValiditySeconds = 60;
+
+   private Long creatorId;
 }

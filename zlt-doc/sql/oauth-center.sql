@@ -24,6 +24,7 @@ CREATE TABLE `oauth_client_details`  (
   `client_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '' COMMENT '应用名称',
   `support_id_token` tinyint(1) DEFAULT 1 COMMENT '是否支持id_token',
   `id_token_validity` int(11) DEFAULT 60 COMMENT 'id_token有效期',
+  `creator_id` int(11) COMMENT '创建人id',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 

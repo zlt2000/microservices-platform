@@ -27,6 +27,7 @@ public class SysUser extends SuperEntity {
 	private Boolean enabled;
 	private String type;
 	private String openId;
+	private Long creatorId;
 	@TableLogic
 	private boolean isDel;
 

@@ -23,4 +23,5 @@ public class SysRole extends SuperEntity {
      * 数据权限字段
      */
     private DataScope dataScope;
+    private Long creatorId;
 }

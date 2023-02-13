@@ -7,6 +7,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.central.common.constant.CommonConstant;
+import com.central.common.context.LoginUserContextHolder;
 import com.central.common.lock.DistributedLock;
 import com.central.common.model.*;
 import com.central.common.service.impl.SuperServiceImpl;
@@ -226,6 +227,7 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
             }
             sysUser.setPassword(passwordEncoder.encode(CommonConstant.DEF_USER_PASSWORD));
             sysUser.setEnabled(Boolean.TRUE);
+            sysUser.setCreatorId(LoginUserContextHolder.getUser().getId());
         }
         String username = sysUser.getUsername();
         boolean result = super.saveOrUpdateIdempotency(sysUser, lock
