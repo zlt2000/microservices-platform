@@ -1,6 +1,6 @@
 import {
   ModalForm,
-  ProForm,
+  ProForm, ProFormRadio,
   ProFormText,
 } from '@ant-design/pro-components';
 import { Form } from 'antd';
@@ -58,6 +58,21 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
           name="code"
           label="Code"
           placeholder="输入Code"
+        />
+        <ProFormRadio.Group
+          name="dataScope"
+          label="数据权限"
+          width="lg"
+          options={[
+            {
+              label: '全部',
+              value: 'ALL',
+            },
+            {
+              label: '本人',
+              value: 'CREATOR',
+            },
+          ]}
         />
       </ProForm.Group>
     </ModalForm>
