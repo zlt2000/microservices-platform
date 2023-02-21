@@ -1,5 +1,5 @@
 ## 代码说明
-- [SpringBoot的WebSocket接口如何实现鉴权？](https://www.kancloud.cn/zlt2000/microservices-platform/2278851)
+- [WebSocket接口鉴权](https://www.kancloud.cn/zlt2000/microservices-platform/2757595)
 
 &nbsp;
 ## 启动以下服务
