@@ -50,7 +50,7 @@
         <hibernate-validator.version>6.2.0.Final</hibernate-validator.version>
         <dubbo.version>2.7.8</dubbo.version>
         <curator.version>5.1.0</curator.version>
-        <jackson-databind.version>2.12.4</jackson-databind.version>
+        <jackson-databind.version>2.13.4</jackson-databind.version>
         <commons-configuration.version>1.10</commons-configuration.version>
         <zuul.version>2.2.9.RELEASE</zuul.version>
         <aws-java-sdk-s3.version>1.12.40</aws-java-sdk-s3.version>
