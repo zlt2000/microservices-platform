@@ -32,26 +32,26 @@ public class DataScopeProperties {
      */
     private Boolean enabledSqlDebug = Boolean.FALSE;
     /**
-     * 在includeTables的匹配符中过滤某几个表不需要权限的，仅enabled=true
+     * 配置那些表不执行权限控制
      */
     private Set<String> ignoreTables = Collections.emptySet();
     /**
-     * 指定某几条sql不执行权限控制， 仅enabled=true生效
+     * 指定那些sql不执行权限控制
      */
     private Set<String> ignoreSqls = INGORE_SQL_ID;
     /**
-     * 指定某几个表接受权限控制，仅enabled=true，默认当开启时全部表
+     * 配置那些表执行数据权限控制，默认是*则表示全部
      */
     private Set<String> includeTables = Collections.singleton("*");
     /**
-     * 指定某几条sql执行权限控制，仅enabled=true生效
+     * 指定那些sql执行数据权限控制
      * 1. 为空时：所有sql都添加权限控制
      * 2. 有值时：只有配置的sql添加权限控制
      */
     private Set<String> includeSqls = Collections.emptySet();
 
     /**
-     * 指定需要的字段名
+     * 指定创建人id的字段名
      */
     private String creatorIdColumnName = "creator_id";
 

@@ -489,7 +489,7 @@
         <!-- 业务 -->
         <module>zlt-business</module>
         <!-- 前端 -->
-        <!--<module>zlt-web</module>-->
+        <module>zlt-web</module>
         <!-- 任务 -->
         <module>zlt-job</module>
         <!-- 监控 -->
