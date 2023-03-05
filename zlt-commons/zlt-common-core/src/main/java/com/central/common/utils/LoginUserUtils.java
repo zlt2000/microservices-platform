@@ -8,6 +8,8 @@ import com.central.common.model.SysUser;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -65,5 +67,15 @@ public class LoginUserUtils {
             }
         }
         return user;
+    }
+
+    public static SysUser getCurrentUser(boolean isFull) {
+        // 从请求上下文里获取 Request 对象
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest contextRequest = requestAttributes.getRequest();
+        if (contextRequest != null) {
+            return LoginUserUtils.getCurrentUser(contextRequest, isFull);
+        }
+        return null;
     }
 }

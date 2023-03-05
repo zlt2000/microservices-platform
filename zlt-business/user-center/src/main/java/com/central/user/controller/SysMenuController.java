@@ -8,6 +8,7 @@ import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ObjectUtil;
 import com.central.common.annotation.LoginUser;
 import com.central.common.constant.CommonConstant;
+import com.central.common.context.LoginUserContextHolder;
 import com.central.common.model.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -147,6 +148,9 @@ public class SysMenuController {
     @PostMapping("saveOrUpdate")
     public Result saveOrUpdate(@RequestBody SysMenu menu) {
         try {
+            if (menu.getId() == null) {
+                menu.setCreatorId(LoginUserContextHolder.getUser().getId());
+            }
             menuService.saveOrUpdate(menu);
             return Result.succeed("操作成功");
         } catch (Exception ex) {

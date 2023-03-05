@@ -6,6 +6,7 @@ import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.central.common.constant.CommonConstant;
+import com.central.common.context.LoginUserContextHolder;
 import com.central.common.lock.DistributedLock;
 import com.central.common.model.*;
 import com.central.common.service.impl.SuperServiceImpl;
@@ -69,6 +70,7 @@ public class SysRoleServiceImpl extends SuperServiceImpl<SysRoleMapper, SysRole>
     @Transactional
     public Result saveOrUpdateRole(SysRole sysRole) throws Exception {
         if (sysRole.getId() == null) {
+            sysRole.setCreatorId(LoginUserContextHolder.getUser().getId());
             this.saveRole(sysRole);
         } else {
             baseMapper.updateById(sysRole);

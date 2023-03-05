@@ -10,7 +10,11 @@ import java.util.List;
  * url权限配置
  *
  * @author zlt
+ * @version 1.0
  * @date 2019/8/2
+ * <p>
+ * Blog: https://zlt2000.gitee.io
+ * Github: https://github.com/zlt2000
  */
 @Setter
 @Getter

@@ -10,6 +10,11 @@ import java.util.List;
  * 配置需要放权的url白名单
  *
  * @author zlt
+ * @version 1.0
+ * @date 2019/1/19
+ * <p>
+ * Blog: https://zlt2000.gitee.io
+ * Github: https://github.com/zlt2000
  */
 @Setter
 @Getter
