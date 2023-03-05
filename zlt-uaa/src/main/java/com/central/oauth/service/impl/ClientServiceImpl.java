@@ -3,6 +3,7 @@ package com.central.oauth.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.central.common.context.LoginUserContextHolder;
 import com.central.common.lock.DistributedLock;
 import com.central.common.redis.template.RedisRepository;
 import com.central.common.constant.SecurityConstants;
@@ -45,6 +46,9 @@ public class ClientServiceImpl extends SuperServiceImpl<ClientMapper, Client> im
     public Result saveClient(Client client) throws Exception {
         client.setClientSecret(passwordEncoder.encode(client.getClientSecretStr()));
         String clientId = client.getClientId();
+        if (client.getId() == null) {
+            client.setCreatorId(LoginUserContextHolder.getUser().getId());
+        }
         super.saveOrUpdateIdempotency(client, lock
                 , LOCK_KEY_CLIENTID+clientId
                 , new QueryWrapper<Client>().eq("client_id", clientId)

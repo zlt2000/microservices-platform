@@ -44,6 +44,13 @@
                        lay-verify="required" required />
             </div>
         </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">数据权限</label>
+            <div class="layui-input-block">
+                <input type="radio" name="dataScope" value="ALL" title="全部" checked/>
+                <input type="radio" name="dataScope" value="CREATOR" title="本人"/>
+            </div>
+        </div>
         <div class="layui-form-item model-form-footer">
             <button class="layui-btn layui-btn-primary" ew-event="closeDialog" type="button">取消</button>
             <button class="layui-btn" lay-filter="role-form-submit" lay-submit>保存</button>

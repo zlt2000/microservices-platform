@@ -29,6 +29,7 @@ public class SysMenu extends SuperEntity {
 	 * 请求的类型
 	 */
 	private String pathMethod;
+	private Long creatorId;
 
 	@TableField(exist = false)
 	private List<SysMenu> subMenus;

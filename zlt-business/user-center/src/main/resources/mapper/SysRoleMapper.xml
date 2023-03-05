@@ -8,7 +8,8 @@
 			name,
 			create_time,
 			update_time,
-			tenant_id
+			tenant_id,
+			data_scope
 	</sql>
 
 	<sql id="where">

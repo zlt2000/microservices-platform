@@ -8,7 +8,7 @@ import {
   ProFormText,
   ProForm,
   ProTable,
-  QueryFilter,
+  QueryFilter, ProFormRadio,
 } from '@ant-design/pro-components';
 import { Form, Popconfirm, Space, Typography } from 'antd';
 import { Button, message } from 'antd';
@@ -123,6 +123,11 @@ const TableList: React.FC = () => {
       dataIndex: 'code',
     },
     {
+      title: '数据权限',
+      dataIndex: 'dataScope',
+      renderText: (value) => (value === 'ALL' ? '全部' : '本人'),
+    },
+    {
       title: '创建时间',
       dataIndex: 'createTime',
       valueType: 'dateTime',
@@ -230,6 +235,7 @@ const TableList: React.FC = () => {
         width={500}
         visible={createModalVisible}
         onVisibleChange={handleModalVisible}
+        initialValues={{ dataScope: 'ALL' }}
         modalProps={{ destroyOnClose: true }}
         onFinish={async (values) => {
           const success = await handleAdd(values as SYSTEM.Role);
@@ -265,6 +271,21 @@ const TableList: React.FC = () => {
             name="code"
             label="Code"
             placeholder="输入Code"
+          />
+          <ProFormRadio.Group
+            name="dataScope"
+            label="数据权限"
+            width="lg"
+            options={[
+              {
+                label: '全部',
+                value: 'ALL',
+              },
+              {
+                label: '本人',
+                value: 'CREATOR',
+              },
+            ]}
           />
         </ProForm.Group>
       </ModalForm>

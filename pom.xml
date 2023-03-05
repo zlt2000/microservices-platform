@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.zlt</groupId>
     <artifactId>central-platform</artifactId>
-    <version>5.5.0</version>
+    <version>5.6.0</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -50,7 +50,7 @@
         <hibernate-validator.version>6.2.0.Final</hibernate-validator.version>
         <dubbo.version>2.7.8</dubbo.version>
         <curator.version>5.1.0</curator.version>
-        <jackson-databind.version>2.12.4</jackson-databind.version>
+        <jackson-databind.version>2.13.4</jackson-databind.version>
         <commons-configuration.version>1.10</commons-configuration.version>
         <zuul.version>2.2.9.RELEASE</zuul.version>
         <aws-java-sdk-s3.version>1.12.40</aws-java-sdk-s3.version>
@@ -62,6 +62,7 @@
         <docker.image.prefix>hub.zlt.com:8080/microservices-platform</docker.image.prefix>
         <docker.java.security.egd>-Djava.security.egd=file:/dev/./urandom</docker.java.security.egd>
         <docker.java.opts>-Xms128m -Xmx128m</docker.java.opts>
+        <guava.version>20.0</guava.version>
     </properties>
 
     <dependencies>
@@ -430,6 +431,11 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -483,7 +489,7 @@
         <!-- 业务 -->
         <module>zlt-business</module>
         <!-- 前端 -->
-        <!--<module>zlt-web</module>-->
+        <module>zlt-web</module>
         <!-- 任务 -->
         <module>zlt-job</module>
         <!-- 监控 -->
