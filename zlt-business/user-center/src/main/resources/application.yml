@@ -40,8 +40,7 @@ zlt:
       - com.central.user.mapper.SysUserRoleMapper.findRolesByUserIds
   # 数据权限
   datascope:
-    enabled: true
-    enabledSqlDebug: true
+    enabled: false
     ignoreTables:
       - sys_role_user
       - sys_role_menu
