@@ -53,7 +53,7 @@
         <jackson-databind.version>2.12.4</jackson-databind.version>
         <commons-configuration.version>1.10</commons-configuration.version>
         <zuul.version>2.2.9.RELEASE</zuul.version>
-        <aws-java-sdk-s3.version>1.12.40</aws-java-sdk-s3.version>
+        <aws-java-sdk-s3.version>1.12.261</aws-java-sdk-s3.version>
         <spring-cloud-starter-oauth2.version>2.2.5.RELEASE</spring-cloud-starter-oauth2.version>
         <docker-maven-plugin.version>1.2.2</docker-maven-plugin.version>
         <sonar.exclusions>zlt-job/**/*, zlt-register/**/*, zlt-web/**/*</sonar.exclusions>
