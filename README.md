@@ -89,10 +89,6 @@ central-platform -- 父项目，公共依赖
 │  ├─zlt-doc -- 项目文档
 │  ├─zlt-gateway -- api网关一级工程
 │  │  ├─sc-gateway -- spring-cloud-gateway[9900]
-│  ├─zlt-job -- 分布式任务调度一级工程
-│  │  ├─job-admin -- 任务管理器[8081]
-│  │  ├─job-core -- 任务调度核心代码
-│  │  ├─job-executor-samples -- 任务执行者executor样例[8082]
 │  ├─zlt-monitor -- 监控一级工程
 │  │  ├─sc-admin -- 应用监控[6500]
 │  │  ├─log-center -- 日志中心[7200]
@@ -101,8 +97,6 @@ central-platform -- 父项目，公共依赖
 │  ├─zlt-web -- 前端一级工程
 │  │  ├─layui-web -- layui前端[8066]
 │  │  ├─react-web -- react前端[8066]
-│  ├─zlt-transaction -- 事务一级工程
-│  │  ├─txlcn-tm -- tx-lcn事务管理器[7970]
 │  ├─zlt-demo -- demo一级工程
 │  │  ├─txlcn-demo -- txlcn分布式事务demo
 │  │  ├─seata-demo -- seata分布式事务demo
