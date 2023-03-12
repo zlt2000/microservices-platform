@@ -495,12 +495,8 @@
         <module>zlt-business</module>
         <!-- 前端 -->
         <module>zlt-web</module>
-        <!-- 任务 -->
-        <module>zlt-job</module>
         <!-- 监控 -->
         <module>zlt-monitor</module>
-        <!-- 事务 -->
-        <module>zlt-transaction</module>
         <!-- 配置 -->
         <module>zlt-config</module>
         <!-- demo -->
