@@ -11,10 +11,6 @@
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
-            <groupId>com.zlt</groupId>
-            <artifactId>zlt-log-spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-extension</artifactId>
         </dependency>
@@ -96,6 +92,11 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>transmittable-thread-local</artifactId>
         </dependency>
     </dependencies>
 </project>
