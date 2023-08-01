@@ -1,6 +1,0 @@
-server:
-  port: 12011
-
-spring:
-  application:
-    name: txlcn-demo-spring-service-a
