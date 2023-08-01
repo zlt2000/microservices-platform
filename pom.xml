@@ -9,10 +9,10 @@
     <packaging>pom</packaging>
 
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>8</java.version>
+        <java.version>17</java.version>
         <spring-cloud-alibaba-dependencies.version>2021.1</spring-cloud-alibaba-dependencies.version>
         <spring-boot-dependencies.version>2.5.14</spring-boot-dependencies.version>
         <spring-cloud-dependencies.version>2020.0.6</spring-cloud-dependencies.version>
@@ -63,6 +63,8 @@
         <docker.java.security.egd>-Djava.security.egd=file:/dev/./urandom</docker.java.security.egd>
         <docker.java.opts>-Xms128m -Xmx128m</docker.java.opts>
         <guava.version>20.0</guava.version>
+        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
+        <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
     </properties>
 
     <dependencies>
@@ -451,6 +453,26 @@
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <version>${spring-boot-dependencies.version}</version>
+                </plugin>
+                <!-- 指定jdk版本，和指定编码 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                        <encoding>UTF-8</encoding>
+                    </configuration>
+                </plugin>
+                <!-- maven 打包时跳过测试 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven-surefire-plugin.version}</version>
+                    <configuration>
+                        <skipTests>true</skipTests>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>com.spotify</groupId>

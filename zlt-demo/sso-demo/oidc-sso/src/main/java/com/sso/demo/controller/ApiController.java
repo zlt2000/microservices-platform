@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-import sun.misc.BASE64Encoder;
+import org.apache.commons.codec.binary.Base64;
 
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
@@ -217,8 +217,7 @@ public class ApiController {
      */
     private String getBase64ClientParam() {
         byte[] authorization = (clientId + ":" + clientSecret).getBytes(StandardCharsets.UTF_8);
-        BASE64Encoder encoder = new BASE64Encoder();
-        return encoder.encode(authorization);
+        return Base64.encodeBase64String(authorization);
     }
 
     @Data
