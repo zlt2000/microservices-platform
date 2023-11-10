@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * @author zlt
  */
-@FeignClient(name = ServiceNameConstants.USER_SERVICE, fallbackFactory = UserServiceFallbackFactory.class, decode404 = true)
+@FeignClient(name = ServiceNameConstants.USER_SERVICE, fallbackFactory = UserServiceFallbackFactory.class, dismiss404 = true)
 public interface UserService {
     /**
      * feign rpc访问远程/users/{username}接口

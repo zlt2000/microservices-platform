@@ -1,11 +1,10 @@
 package com.central.oauth2.common.config;
 
 import com.central.oauth2.common.util.AuthUtils;
+import jakarta.websocket.server.ServerEndpointConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-
-import javax.websocket.server.ServerEndpointConfig;
 
 /**
  * webSocket鉴权配置

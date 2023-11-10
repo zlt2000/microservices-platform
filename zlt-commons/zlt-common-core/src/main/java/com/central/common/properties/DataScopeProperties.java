@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import com.google.common.collect.ImmutableSet;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -16,6 +17,7 @@ import java.util.Set;
  */
 @ConfigurationProperties(prefix = "zlt.datascope")
 @Data
+@Component
 public class DataScopeProperties {
     private static final Set<String> INGORE_SQL_ID = ImmutableSet
             .of("com.central.user.mapper.findRolesByUserId"

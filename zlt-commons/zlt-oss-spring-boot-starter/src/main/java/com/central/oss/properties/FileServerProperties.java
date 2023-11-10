@@ -3,6 +3,7 @@ package com.central.oss.properties;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 /**
  * @author zlt
@@ -14,6 +15,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Setter
 @Getter
 @ConfigurationProperties(prefix = FileServerProperties.PREFIX)
+@Component
 public class FileServerProperties {
     public static final String PREFIX = "zlt.file-server";
     public static final String TYPE_FDFS = "fastdfs";

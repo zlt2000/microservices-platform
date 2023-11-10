@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * @author zlt
  */
-@FeignClient(name = ServiceNameConstants.SEARCH_SERVICE, fallbackFactory = SearchServiceFallbackFactory.class, decode404 = true)
+@FeignClient(name = ServiceNameConstants.SEARCH_SERVICE, fallbackFactory = SearchServiceFallbackFactory.class, dismiss404 = true)
 public interface AggregationService {
     /**
      * 查询文档列表

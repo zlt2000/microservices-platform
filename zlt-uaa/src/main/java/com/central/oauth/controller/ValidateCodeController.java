@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * 验证码提供
@@ -31,7 +32,7 @@ public class ValidateCodeController {
      * @throws Exception
      */
     @GetMapping(SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/{deviceId}")
-    public void createCode(@PathVariable String deviceId, HttpServletResponse response) throws Exception {
+    public void createCode(@PathVariable String deviceId, HttpServletResponse response) throws IOException {
         Assert.notNull(deviceId, "机器码不能为空");
         // 设置请求头为输出图片类型
         CaptchaUtil.setHeader(response);
@@ -54,7 +55,7 @@ public class ValidateCodeController {
      */
     @ResponseBody
     @GetMapping(SecurityConstants.MOBILE_VALIDATE_CODE_URL_PREFIX + "/{mobile}")
-    public Result createCode(@PathVariable String mobile) {
+    public Result<String> createCode(@PathVariable String mobile) {
         Assert.notNull(mobile, "手机号不能为空");
         return validateCodeService.sendSmsCode(mobile);
     }

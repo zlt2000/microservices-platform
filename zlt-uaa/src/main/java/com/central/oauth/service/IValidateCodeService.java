@@ -2,8 +2,6 @@ package com.central.oauth.service;
 
 import com.central.common.model.Result;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author zlt
  * @date 2018/12/10

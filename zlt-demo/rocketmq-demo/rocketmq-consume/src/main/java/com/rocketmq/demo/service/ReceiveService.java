@@ -2,38 +2,38 @@ package com.rocketmq.demo.service;
 
 import com.rocketmq.demo.model.Order;
 
-import org.springframework.cloud.stream.annotation.StreamListener;
-import org.springframework.cloud.stream.messaging.Sink;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.Message;
-import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.stereotype.Service;
+
+import java.util.function.Consumer;
 
 /**
  * @author zlt
  */
-@Service
+@Configuration
 public class ReceiveService {
 	/**
 	 * 字符串消息
 	 */
-	@StreamListener(Sink.INPUT)
-	public void receiveInput(String receiveMsg) {
-		System.out.println("input receive: " + receiveMsg);
+	@Bean
+	public Consumer<String> receiveInput() {
+		return receiveMsg -> System.out.println("input receive: " + receiveMsg);
 	}
 
 	/**
 	 * 对象消息
 	 */
-	@StreamListener("input2")
-	public void receiveInput2(@Payload Order order) {
-		System.out.println("input2 receive: " + order);
+	@Bean
+	public Consumer<Order> receiveInput2() {
+		return order -> System.out.println("input2 receive: " + order);
 	}
 
 	/**
 	 * 通过spring.messaging对象来接收消息
 	 */
-    @StreamListener("input3")
-    public void receiveInput3(Message msg) {
-        System.out.println("input3 receive: " + msg);
-    }
+	@Bean
+	public Consumer<Message<String>> receiveInput3() {
+		return msg -> System.out.println("input3 receive: " + msg);
+	}
 }

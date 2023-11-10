@@ -1,19 +1,20 @@
 package com.central.es.config;
 
 import com.central.es.properties.RestClientPoolProperties;
+import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchRestClientProperties;
-import org.springframework.boot.autoconfigure.elasticsearch.RestClientBuilderCustomizer;
+import org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.boot.context.properties.PropertyMapper;
-import org.springframework.context.annotation.Bean;
-import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
+import org.springframework.data.elasticsearch.config.AbstractElasticsearchConfiguration;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * es自动配置
@@ -25,51 +26,45 @@ import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
  * Github: https://github.com/zlt2000
  */
 @EnableConfigurationProperties(RestClientPoolProperties.class)
-public class RestAutoConfigure {
-    @Bean
-    public RestClientBuilderCustomizer restClientBuilderCustomizer(RestClientPoolProperties poolProperties
-            , ElasticsearchRestClientProperties restProperties) {
-        return (builder) -> {
-            setRequestConfig(builder, poolProperties);
+public class RestAutoConfigure extends AbstractElasticsearchConfiguration {
+    private final static String SCHEME = "http";
+    private final static String URI_SPLIT = ":";
 
-            setHttpClientConfig(builder, poolProperties, restProperties);
-        };
-    }
+    @Resource
+    private ElasticsearchProperties restProperties;
 
-    /**
-     * 异步httpclient连接延时配置
-     */
-    private void setRequestConfig(RestClientBuilder builder, RestClientPoolProperties poolProperties){
-        builder.setRequestConfigCallback(requestConfigBuilder -> {
-            requestConfigBuilder.setConnectTimeout(poolProperties.getConnectTimeOut())
-                    .setSocketTimeout(poolProperties.getSocketTimeOut())
-                    .setConnectionRequestTimeout(poolProperties.getConnectionRequestTimeOut());
-            return requestConfigBuilder;
-        });
-    }
+    @Resource
+    private RestClientPoolProperties poolProperties;
 
-    /**
-     * 异步httpclient连接数配置
-     */
-    private void setHttpClientConfig(RestClientBuilder builder, RestClientPoolProperties poolProperties, ElasticsearchRestClientProperties restProperties){
-        builder.setHttpClientConfigCallback(httpClientBuilder -> {
-            httpClientBuilder.setMaxConnTotal(poolProperties.getMaxConnectNum())
-                    .setMaxConnPerRoute(poolProperties.getMaxConnectPerRoute());
-
-            PropertyMapper map = PropertyMapper.get().alwaysApplyingWhenNonNull();
-            map.from(restProperties::getUsername).to(username -> {
-                CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
-                credentialsProvider.setCredentials(AuthScope.ANY,
-                        new UsernamePasswordCredentials(username, restProperties.getPassword()));
-                httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider);
-            });
-            return httpClientBuilder;
-        });
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
-    public ElasticsearchRestTemplate elasticsearchRestTemplate(RestHighLevelClient restHighLevelClient) {
-        return new ElasticsearchRestTemplate(restHighLevelClient);
+    @Override
+    public RestHighLevelClient elasticsearchClient() {
+        List<String> urlArr = restProperties.getUris();
+        HttpHost[] httpPostArr = new HttpHost[urlArr.size()];
+        for (int i = 0; i < urlArr.size(); i++) {
+            HttpHost httpHost = new HttpHost(urlArr.get(i).split(URI_SPLIT)[0].trim(),
+                    Integer.parseInt(urlArr.get(i).split(URI_SPLIT)[1].trim()), SCHEME);
+            httpPostArr[i] = httpHost;
+        }
+        final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+        credentialsProvider.setCredentials(AuthScope.ANY,
+                new UsernamePasswordCredentials(restProperties.getUsername(), restProperties.getPassword()));
+        RestClientBuilder builder = RestClient.builder(httpPostArr)
+                // 异步httpclient连接数配置
+                .setHttpClientConfigCallback(httpClientBuilder -> {
+                    // 账号密码登录
+                    httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider);
+                    // httpclient连接数配置
+                    httpClientBuilder.setMaxConnTotal(poolProperties.getMaxConnectNum())
+                                     .setMaxConnPerRoute(poolProperties.getMaxConnectPerRoute());
+                    return httpClientBuilder;
+                })
+                // 异步httpclient连接延时配置
+                .setRequestConfigCallback(requestConfigBuilder -> {
+                    requestConfigBuilder.setConnectTimeout(poolProperties.getConnectTimeOut())
+                            .setSocketTimeout(poolProperties.getSocketTimeOut())
+                            .setConnectionRequestTimeout(poolProperties.getConnectionRequestTimeOut());
+                    return requestConfigBuilder;
+                });
+        return new RestHighLevelClient(builder);
     }
 }

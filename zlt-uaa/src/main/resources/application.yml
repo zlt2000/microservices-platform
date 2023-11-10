@@ -44,3 +44,20 @@ zlt:
     includeSqls:
       # 应用列表
       - com.central.oauth.mapper.ClientMapper.findList
+
+springdoc:
+  swagger-ui:
+    path: /doc.html
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'uaa'
+      paths-to-match: '/**'
+      packages-to-scan: com.central.oauth.controller
+  default-flat-param-object: true
+
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+    swagger-model-name: 认证中心接口文档

@@ -3,6 +3,7 @@ package com.central.common.zookeeper.properties;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 /**
  * zookeeper配置
@@ -17,6 +18,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Setter
 @Getter
 @ConfigurationProperties(prefix = "zlt.zookeeper")
+@Component
 public class ZookeeperProperty {
     /**
      * zk连接集群，多个用逗号隔开

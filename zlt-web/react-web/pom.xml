@@ -16,12 +16,12 @@
         <node.version>v16.13.2</node.version>
         <yarn.version>v1.22.19</yarn.version>
     </properties>
-    <dependencies>
+    <!--<dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-    </dependencies>
+    </dependencies>-->
     <!--<build>
         <plugins>
             <plugin>

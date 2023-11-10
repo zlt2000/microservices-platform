@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.stereotype.Component;
 
 /**
  * mybatis-plus 配置
@@ -18,6 +19,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 @Getter
 @ConfigurationProperties(prefix = "zlt.mybatis-plus.auto-fill")
 @RefreshScope
+@Component
 public class MybatisPlusAutoFillProperties {
     /**
      * 是否开启自动填充字段

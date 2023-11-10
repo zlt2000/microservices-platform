@@ -10,6 +10,7 @@ import org.springframework.data.redis.connection.RedisServerCommands;
 import org.springframework.data.redis.core.*;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationUtils;
+import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import java.util.*;
@@ -25,6 +26,7 @@ import java.util.concurrent.TimeUnit;
  * Github: https://github.com/zlt2000
  */
 @Slf4j
+@Component
 public class RedisRepository {
     /**
      * Spring Redis Template

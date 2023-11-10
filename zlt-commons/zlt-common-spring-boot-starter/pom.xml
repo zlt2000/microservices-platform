@@ -14,11 +14,5 @@
             <groupId>com.zlt</groupId>
             <artifactId>zlt-common-core</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <optional>true</optional>
-        </dependency>
     </dependencies>
 </project>

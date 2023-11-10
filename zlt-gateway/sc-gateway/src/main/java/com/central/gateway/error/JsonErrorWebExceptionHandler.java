@@ -80,7 +80,7 @@ public class JsonErrorWebExceptionHandler extends DefaultErrorWebExceptionHandle
      */
     private Map<String, Object> responseError(ServerRequest request, Throwable error) {
         String errorMessage = buildMessage(request, error);
-        int httpStatus = getHttpStatus(error);
+        int httpStatus = 200;//getHttpStatus(error);
         Map<String, Object> map = new HashMap<>();
         map.put("resp_code", 1);
         map.put("resp_msg", errorMessage);

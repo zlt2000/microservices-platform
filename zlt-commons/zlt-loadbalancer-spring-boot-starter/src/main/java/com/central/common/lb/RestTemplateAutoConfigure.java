@@ -1,20 +1,21 @@
 package com.central.common.lb;
 
 import com.central.common.lb.config.RestTemplateProperties;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.config.Registry;
-import org.apache.http.config.RegistryBuilder;
-import org.apache.http.conn.socket.ConnectionSocketFactory;
-import org.apache.http.conn.socket.PlainConnectionSocketFactory;
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.hc.client5.http.classic.HttpClient;
+import org.apache.hc.client5.http.config.ConnectionConfig;
+import org.apache.hc.client5.http.config.RequestConfig;
+import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
+import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
+import org.apache.hc.client5.http.socket.ConnectionSocketFactory;
+import org.apache.hc.client5.http.socket.PlainConnectionSocketFactory;
+import org.apache.hc.client5.http.ssl.SSLConnectionSocketFactory;
+import org.apache.hc.core5.http.config.Registry;
+import org.apache.hc.core5.http.config.RegistryBuilder;
+import org.apache.hc.core5.util.Timeout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
@@ -26,6 +27,7 @@ import org.springframework.web.client.RestTemplate;
  * Blog: https://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
+@Configuration
 @EnableConfigurationProperties(RestTemplateProperties.class)
 public class RestTemplateAutoConfigure {
     @Autowired
@@ -61,19 +63,22 @@ public class RestTemplateAutoConfigure {
         // 同路由并发数20
         connectionManager.setDefaultMaxPerRoute(restTemplateProperties.getMaxPerRoute());
 
-        RequestConfig requestConfig = RequestConfig.custom()
+        ConnectionConfig connectConfig = ConnectionConfig.custom()
                 // 读超时
-                .setSocketTimeout(restTemplateProperties.getReadTimeout())
+                .setSocketTimeout(Timeout.ofMicroseconds(restTemplateProperties.getReadTimeout()))
                 // 链接超时
-                .setConnectTimeout(restTemplateProperties.getConnectTimeout())
+                .setConnectTimeout(Timeout.ofMicroseconds(restTemplateProperties.getConnectTimeout()))
+                .build();
+        connectionManager.setDefaultConnectionConfig(connectConfig);
+
+        RequestConfig requestConfig = RequestConfig.custom()
                 // 链接不够用的等待时间
-                .setConnectionRequestTimeout(restTemplateProperties.getReadTimeout())
+                .setConnectionRequestTimeout(Timeout.ofMicroseconds(restTemplateProperties.getReadTimeout()))
                 .build();
 
         return HttpClientBuilder.create()
                 .setDefaultRequestConfig(requestConfig)
                 .setConnectionManager(connectionManager)
-                .setRetryHandler(new DefaultHttpRequestRetryHandler(3, true))
                 .build();
     }
 }

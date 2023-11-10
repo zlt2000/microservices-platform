@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
+import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
@@ -52,10 +52,10 @@ public class DefaultResourceServerConf extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        ExpressionUrlAuthorizationConfigurer<HttpSecurity>.AuthorizedUrl authorizedUrl = setHttp(http)
-                .authorizeRequests()
-                .antMatchers(securityProperties.getIgnore().getUrls()).permitAll()
-                .antMatchers(HttpMethod.OPTIONS).permitAll()
+        AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizedUrl authorizedUrl = setHttp(http)
+                .authorizeHttpRequests()
+                .requestMatchers(securityProperties.getIgnore().getUrls()).permitAll()
+                .requestMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyRequest();
         setAuthenticate(authorizedUrl);
 
@@ -72,7 +72,7 @@ public class DefaultResourceServerConf extends ResourceServerConfigurerAdapter {
      * url权限控制，默认是认证就通过，可以重写实现个性化
      * @param authorizedUrl
      */
-    public HttpSecurity setAuthenticate(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.AuthorizedUrl authorizedUrl) {
+    public HttpSecurity setAuthenticate(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizedUrl authorizedUrl) {
         return authorizedUrl.authenticated().and();
     }
 

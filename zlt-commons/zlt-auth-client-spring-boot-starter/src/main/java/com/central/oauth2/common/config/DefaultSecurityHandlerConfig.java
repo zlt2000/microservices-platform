@@ -10,9 +10,8 @@ import org.springframework.security.oauth2.provider.expression.OAuth2WebSecurity
 import org.springframework.security.web.AuthenticationEntryPoint;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
@@ -47,7 +46,7 @@ public class DefaultSecurityHandlerConfig {
         return new OAuth2AccessDeniedHandler() {
 
             @Override
-            public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException authException) throws IOException, ServletException {
+            public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException authException) throws IOException {
                 ResponseUtil.responseFailed(objectMapper, response, authException.getMessage());
             }
         };

@@ -3,8 +3,7 @@ package com.rocketmq.demo.controller;
 import cn.hutool.core.util.RandomUtil;
 import com.central.common.utils.IdGenerator;
 import com.rocketmq.demo.model.Order;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.stream.messaging.Source;
+import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.Message;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,11 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class OrderController {
-    private final Source source;
+    private final static String ORDER_OUT = "order-out-0";
+    private final StreamBridge streamBridge;
 
-    @Autowired
-    public OrderController(Source source) {
-        this.source = source;
+    public OrderController(StreamBridge streamBridge) {
+        this.streamBridge = streamBridge;
     }
 
     /**
@@ -31,12 +30,12 @@ public class OrderController {
         order.setOrderId(IdGenerator.getId());
         order.setOrderNo(RandomUtil.randomString(4));
 
-        Message message = MessageBuilder
+        Message<Order> message = MessageBuilder
                 .withPayload(order)
                 .setHeader("orderId", order.getOrderId())
                 .build();
         //发送半消息
-        source.output().send(message);
+        streamBridge.send(ORDER_OUT, message);
         return "下单成功";
     }
 
@@ -49,13 +48,13 @@ public class OrderController {
         order.setOrderId(IdGenerator.getId());
         order.setOrderNo(RandomUtil.randomString(4));
 
-        Message message = MessageBuilder
+        Message<Order> message = MessageBuilder
                 .withPayload(order)
                 .setHeader("orderId", order.getOrderId())
                 .setHeader("produceError", "1")
                 .build();
         //发送半消息
-        source.output().send(message);
+        streamBridge.send(ORDER_OUT, message);
         return "发送消息失败";
     }
 
@@ -68,13 +67,13 @@ public class OrderController {
         order.setOrderId(IdGenerator.getId());
         order.setOrderNo(RandomUtil.randomString(4));
 
-        Message message = MessageBuilder
+        Message<Order> message = MessageBuilder
                 .withPayload(order)
                 .setHeader("orderId", order.getOrderId())
                 .setHeader("consumeError", "1")
                 .build();
         //发送半消息
-        source.output().send(message);
+        streamBridge.send(ORDER_OUT, message);
         return "消费消息失败";
     }
 }

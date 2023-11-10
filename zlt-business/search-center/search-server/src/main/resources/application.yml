@@ -1,9 +1,8 @@
 spring:
   elasticsearch:
-    rest:
-      uris: ${zlt.elasticsearch.uris}
-      username: ${zlt.elasticsearch.username}
-      password: ${zlt.elasticsearch.password}
+    uris: ${zlt.elasticsearch.uris}
+    username: ${zlt.elasticsearch.username}
+    password: ${zlt.elasticsearch.password}
 
 zlt:
   indices:

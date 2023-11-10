@@ -58,7 +58,7 @@ public class SwaggerAutoConfiguration implements BeanFactoryAware {
         return new SwaggerProperties();
     }
 
-    @Bean
+    /*@Bean
     @ConditionalOnMissingBean
     @ConditionalOnProperty(name = "zlt.swagger.enabled", matchIfMissing = true)
     public List<Docket> createRestApi(SwaggerProperties swaggerProperties) {
@@ -131,7 +131,7 @@ public class SwaggerAutoConfiguration implements BeanFactoryAware {
             docketList.add(docket);
         }
         return docketList;
-    }
+    }*/
 
     /**
      * 创建 Docket对象
@@ -139,7 +139,7 @@ public class SwaggerAutoConfiguration implements BeanFactoryAware {
      * @param swaggerProperties swagger配置
      * @return Docket
      */
-    private Docket createDocket(final SwaggerProperties swaggerProperties) {
+    /*private Docket createDocket(final SwaggerProperties swaggerProperties) {
         ApiInfo apiInfo = new ApiInfoBuilder()
                 .title(swaggerProperties.getTitle())
                 .description(swaggerProperties.getDescription())
@@ -184,7 +184,7 @@ public class SwaggerAutoConfiguration implements BeanFactoryAware {
                 .build()
                 .securitySchemes(securitySchemes())
                 .securityContexts(securityContexts());
-    }
+    }*/
 
     @Override
     public void setBeanFactory(BeanFactory beanFactory) {
