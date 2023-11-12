@@ -21,7 +21,7 @@ import reactor.core.publisher.Mono;
  * @author zlt
  * @date 2019/10/7
  * <p>
- * Blog: https://zlt2000.gitee.io
+ * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 public class Oauth2AuthSuccessHandler implements ServerAuthenticationSuccessHandler {

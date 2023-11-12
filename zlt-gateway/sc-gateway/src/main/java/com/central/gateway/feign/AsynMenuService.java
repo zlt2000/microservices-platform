@@ -17,7 +17,7 @@ import java.util.concurrent.Future;
  * @version 1.0
  * @date 2021/8/8
  * <p>
- * Blog: https://zlt2000.gitee.io
+ * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 @Component

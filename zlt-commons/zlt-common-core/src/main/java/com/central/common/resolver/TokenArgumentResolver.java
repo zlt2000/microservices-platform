@@ -19,7 +19,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
  * @author zlt
  * @date 2018/12/21
  * <p>
- * Blog: https://zlt2000.gitee.io
+ * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 @Slf4j

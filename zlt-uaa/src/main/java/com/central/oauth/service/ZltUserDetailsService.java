@@ -9,7 +9,7 @@ import org.springframework.social.security.SocialUserDetails;
  * @author zlt
  * @date 2018/12/28
  * <p>
- * Blog: https://zlt2000.gitee.io
+ * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 public interface ZltUserDetailsService extends UserDetailsService {

@@ -12,7 +12,7 @@ import java.util.Collection;
  * @author zlt
  * @date 2020/6/10
  * <p>
- * Blog: https://zlt2000.gitee.io
+ * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 public class TenantUsernamePasswordAuthenticationToken extends UsernamePasswordAuthenticationToken {

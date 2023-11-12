@@ -7,7 +7,7 @@ package com.central.oauth2.common.constants;
  * @version 1.0
  * @date 2021/4/23
  * <p>
- * Blog: https://zlt2000.gitee.io
+ * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 public class IdTokenClaimNames {

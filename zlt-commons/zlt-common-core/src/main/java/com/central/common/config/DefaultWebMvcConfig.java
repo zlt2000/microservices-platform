@@ -16,7 +16,7 @@ import java.util.List;
  * @author zlt
  * @date 2019/8/5
  * <p>
- * Blog: https://zlt2000.gitee.io
+ * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 public class DefaultWebMvcConfig implements WebMvcConfigurer {

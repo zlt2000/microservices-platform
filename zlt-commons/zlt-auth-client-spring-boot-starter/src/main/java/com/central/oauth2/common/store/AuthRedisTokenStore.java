@@ -16,7 +16,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
  * @author zlt
  * @date 2018/7/25 9:36
  * <p>
- * Blog: https://zlt2000.gitee.io
+ * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 @Configuration

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * @version 1.0
  * @date 2019/1/4
  * <p>
- * Blog: https://zlt2000.gitee.io
+ * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 @Setter

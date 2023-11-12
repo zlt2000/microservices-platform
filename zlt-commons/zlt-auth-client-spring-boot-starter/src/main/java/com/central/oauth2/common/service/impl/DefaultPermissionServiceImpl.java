@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
  * @author zlt
  * @date 2018/10/28
  * <p>
- * Blog: https://zlt2000.gitee.io
+ * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 @Slf4j

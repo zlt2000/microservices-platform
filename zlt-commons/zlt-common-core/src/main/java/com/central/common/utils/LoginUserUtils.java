@@ -23,7 +23,7 @@ import java.util.List;
  * @version 1.0
  * @date 2022/6/26
  * <p>
- * Blog: https://zlt2000.gitee.io
+ * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 public class LoginUserUtils {

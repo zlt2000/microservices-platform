@@ -20,7 +20,7 @@ import java.io.IOException;
  * @author zlt
  * @date 2022/6/26
  * <p>
- * Blog: https://zlt2000.gitee.io
+ * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 @ConditionalOnClass(Filter.class)
