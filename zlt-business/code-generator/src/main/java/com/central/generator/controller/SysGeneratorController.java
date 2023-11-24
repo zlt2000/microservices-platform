@@ -3,6 +3,7 @@ package com.central.generator.controller;
 import java.io.IOException;
 import java.util.Map;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 
 import com.central.common.model.PageResult;
@@ -11,13 +12,11 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import io.swagger.annotations.Api;
-
 /**
  * @Author: zlt
  */
 @RestController
-@Api(tags = "代码生成器")
+@Tag(name = "代码生成器")
 @RequestMapping("/generator")
 public class SysGeneratorController {
     @Autowired

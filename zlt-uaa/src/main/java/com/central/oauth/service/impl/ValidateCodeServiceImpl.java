@@ -54,7 +54,7 @@ public class ValidateCodeServiceImpl implements IValidateCodeService {
      * @return true、false
      */
     @Override
-    public Result sendSmsCode(String mobile) {
+    public Result<String> sendSmsCode(String mobile) {
         Object tempCode = redisRepository.get(buildKey(mobile));
         if (tempCode != null) {
             log.error("用户:{}验证码未失效{}", mobile, tempCode);

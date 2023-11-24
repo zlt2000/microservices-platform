@@ -81,7 +81,6 @@ central-platform -- 父项目，公共依赖
 │  │  ├─zlt-redis-spring-boot-starter -- 封装Redis通用操作逻辑
 │  │  ├─zlt-loadbalancer-spring-boot-starter -- 封装Loadbalancer和Feign的通用操作逻辑
 │  │  ├─zlt-sentinel-spring-boot-starter -- 封装Sentinel的通用操作逻辑
-│  │  ├─zlt-swagger2-spring-boot-starter -- 封装Swagger通用操作逻辑
 │  │  ├─zlt-elasticsearch-spring-boot-starter -- 封装Elasticsearch通用操作逻辑
 │  │  ├─zlt-oss-spring-boot-starter -- 封装对象存储通用操作逻辑
 │  │  ├─zlt-zookeeper-spring-boot-starter -- 封装Zookeeper通用操作逻辑

@@ -13,6 +13,25 @@ mybatis-plus:
     db-config:
       id-type: INPUT
 
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'file'
+      paths-to-match: '/**'
+      packages-to-scan: com.central.file.controller
+  default-flat-param-object: true
+
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+    swagger-model-name: 文件中心接口文档
+
 zlt:
   file-server:
     type: s3
@@ -23,12 +42,6 @@ zlt:
       accessKeySecret: ${zlt.s3.accessKeySecret}
       endpoint: ${zlt.s3.endpoint}
       bucketName: ${zlt.s3.bucketName}
-  swagger:
-    enabled: true
-    title: 文件中心
-    description: 文件中心接口文档
-    version: 1.0
-    base-package: com.central.file.controller
   #多租户配置
   tenant:
     enable: true

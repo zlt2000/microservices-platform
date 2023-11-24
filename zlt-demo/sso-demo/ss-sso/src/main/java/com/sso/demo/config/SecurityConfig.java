@@ -31,14 +31,14 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests().anyRequest().authenticated()
+        /*http.authorizeHttpRequests().anyRequest().authenticated()
                 .and()
                     .csrf().disable()
                 .logout()
                     .logoutSuccessHandler(ssoLogoutSuccessHandler);
         if (StrUtil.isNotEmpty(loginPath)) {
             http.formLogin().loginProcessingUrl(loginPath);
-        }
+        }*/
         return http.build();
     }
 }

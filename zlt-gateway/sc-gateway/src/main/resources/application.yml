@@ -82,6 +82,12 @@ spring:
 #      filter:
 #        enabled: true
 
+knife4j:
+  gateway:
+    enabled: true
+    discover:
+      excluded-services: ${spring.application.name}
+
 zlt:
   swagger-agg:
     generate-routes: user,file

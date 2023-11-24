@@ -18,6 +18,11 @@ import com.central.search.model.LogicDelDto;
 import com.central.search.model.SearchDto;
 import com.central.user.model.SysUserExcel;
 import com.fasterxml.jackson.databind.JsonNode;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -27,10 +32,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.central.user.service.ISysUserService;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -42,7 +43,7 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 @Slf4j
 @RestController
-@Api(tags = "用户模块api")
+@Tag(name = "用户模块api")
 public class SysUserController {
     private static final String ADMIN_CHANGE_MSG = "超级管理员不给予修改";
 
@@ -62,7 +63,7 @@ public class SysUserController {
      *
      * @return
      */
-    @ApiOperation(value = "根据access_token当前登录用户")
+    @Operation(summary = "根据access_token当前登录用户")
     @GetMapping("/users/current")
     public Result<LoginAppUser> getLoginAppUser(@LoginUser(isFull = true) SysUser user) {
         return Result.succeed(appUserService.getLoginAppUser(user));
@@ -72,7 +73,7 @@ public class SysUserController {
      * 查询用户实体对象SysUser
      */
     @GetMapping(value = "/users/name/{username}")
-    @ApiOperation(value = "根据用户名查询用户实体")
+    @Operation(summary = "根据用户名查询用户实体")
     @Cacheable(value = "user", key = "#username")
     public SysUser selectByUsername(@PathVariable String username) {
         return appUserService.selectByUsername(username);
@@ -82,7 +83,7 @@ public class SysUserController {
      * 查询用户登录对象LoginAppUser
      */
     @GetMapping(value = "/users-anon/login", params = "username")
-    @ApiOperation(value = "根据用户名查询用户")
+    @Operation(summary = "根据用户名查询用户")
     public LoginAppUser findByUsername(String username) {
         return appUserService.findByUsername(username);
     }
@@ -93,7 +94,7 @@ public class SysUserController {
      * @param mobile 手机号
      */
     @GetMapping(value = "/users-anon/mobile", params = "mobile")
-    @ApiOperation(value = "根据手机号查询用户")
+    @Operation(summary = "根据手机号查询用户")
     public SysUser findByMobile(String mobile) {
         return appUserService.findByMobile(mobile);
     }
@@ -104,7 +105,7 @@ public class SysUserController {
      * @param openId openId
      */
     @GetMapping(value = "/users-anon/openId", params = "openId")
-    @ApiOperation(value = "根据OpenId查询用户")
+    @Operation(summary = "根据OpenId查询用户")
     public SysUser findByOpenId(String openId) {
         return appUserService.findByOpenId(openId);
     }
@@ -154,10 +155,10 @@ public class SysUserController {
      * @param params
      * @return
      */
-    @ApiOperation(value = "用户查询列表")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "page", value = "分页起始位置", required = true, dataType = "Integer"),
-            @ApiImplicitParam(name = "limit", value = "分页结束位置", required = true, dataType = "Integer")
+    @Operation(summary = "用户查询列表")
+    @Parameters({
+            @Parameter(name = "page",description = "分页起始位置",required = true,in=ParameterIn.QUERY),
+            @Parameter(name = "limit",description = "分页结束位置",required = true,in= ParameterIn.QUERY)
     })
     @GetMapping("/users")
     public PageResult<SysUser> findUsers(@RequestParam Map<String, Object> params) {
@@ -170,11 +171,11 @@ public class SysUserController {
      * @param params
      * @return
      */
-    @ApiOperation(value = "修改用户状态")
+    @Operation(summary = "修改用户状态")
     @GetMapping("/users/updateEnabled")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "Integer"),
-            @ApiImplicitParam(name = "enabled", value = "是否启用", required = true, dataType = "Boolean")
+    @Parameters({
+            @Parameter(name = "id",description = "用户id",required = true,in=ParameterIn.QUERY),
+            @Parameter(name = "enabled",description = "是否启用",required = true,in= ParameterIn.QUERY)
     })
     public Result updateEnabled(@RequestParam Map<String, Object> params) {
         Long id = MapUtils.getLong(params, "id");
@@ -273,11 +274,11 @@ public class SysUserController {
         return Result.succeed("导入数据成功，一共【"+rowNum+"】行");
     }
 
-    @ApiOperation(value = "用户全文搜索列表")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "page", value = "分页起始位置", required = true, dataType = "Integer"),
-            @ApiImplicitParam(name = "limit", value = "分页结束位置", required = true, dataType = "Integer"),
-            @ApiImplicitParam(name = "queryStr", value = "搜索关键字", dataType = "String")
+    @Operation(summary = "用户全文搜索列表")
+    @Parameters({
+            @Parameter(name = "page",description = "分页起始位置",required = true,in=ParameterIn.QUERY),
+            @Parameter(name = "limit",description = "分页结束位置",required = true,in= ParameterIn.QUERY),
+            @Parameter(name = "queryStr",description = "搜索关键字",in= ParameterIn.QUERY)
     })
     @GetMapping("/users/search")
     public PageResult<JsonNode> search(SearchDto searchDto) {
@@ -292,7 +293,7 @@ public class SysUserController {
      * @return
      */
     @GetMapping(value = "/users/roleUser/{username}")
-    @ApiOperation(value = "查询用户-带角色信息")
+    @Operation(summary = "查询用户-带角色信息")
     @Cacheable(value = "userRoles", key = "#username")
     public SysUser selectRoleUser(@PathVariable("username") String username){
         SysUser sysUser = selectByUsername(username);

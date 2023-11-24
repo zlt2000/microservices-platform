@@ -26,8 +26,8 @@
             <artifactId>zlt-db-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.zlt</groupId>
-            <artifactId>zlt-swagger2-spring-boot-starter</artifactId>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>com.alibaba.cloud</groupId>

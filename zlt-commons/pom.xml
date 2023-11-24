@@ -14,7 +14,6 @@
         <module>zlt-redis-spring-boot-starter</module>
         <module>zlt-common-spring-boot-starter</module>
         <module>zlt-db-spring-boot-starter</module>
-        <module>zlt-swagger2-spring-boot-starter</module>
         <module>zlt-log-spring-boot-starter</module>
         <module>zlt-loadbalancer-spring-boot-starter</module>
         <module>zlt-auth-client-spring-boot-starter</module>

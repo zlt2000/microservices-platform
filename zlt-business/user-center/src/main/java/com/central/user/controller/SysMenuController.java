@@ -10,6 +10,8 @@ import com.central.common.annotation.LoginUser;
 import com.central.common.constant.CommonConstant;
 import com.central.common.context.LoginUserContextHolder;
 import com.central.common.model.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +20,11 @@ import org.springframework.web.bind.annotation.*;
 
 import com.central.user.service.ISysMenuService;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-
 /**
  * @author 作者 owen E-mail: 624191343@qq.com
  */
 @RestController
-@Api(tags = "菜单模块api")
+@Tag(name = "菜单模块api")
 @Slf4j
 @RequestMapping("/menus")
 public class SysMenuController {
@@ -61,7 +60,7 @@ public class SysMenuController {
      *
      * @param id
      */
-    @ApiOperation(value = "删除菜单")
+    @Operation(summary = "删除菜单")
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Long id) {
         try {
@@ -73,7 +72,7 @@ public class SysMenuController {
         }
     }
 
-    @ApiOperation(value = "根据roleId获取对应的菜单")
+    @Operation(summary = "根据roleId获取对应的菜单")
     @GetMapping("/{roleId}/menus")
     public List<Map<String, Object>> findMenusByRoleId(@PathVariable Long roleId) {
         Set<Long> roleIds = new HashSet<>();
@@ -101,7 +100,7 @@ public class SysMenuController {
         return authTrees;
     }
 
-    @ApiOperation(value = "根据roleCodes获取对应的权限")
+    @Operation(summary = "根据roleCodes获取对应的权限")
     @SuppressWarnings("unchecked")
     @Cacheable(value = "menu", key ="#roleCodes")
     @GetMapping("/{roleCodes}")
@@ -117,21 +116,21 @@ public class SysMenuController {
     /**
      * 给角色分配菜单
      */
-    @ApiOperation(value = "角色分配菜单")
+    @Operation(summary = "角色分配菜单")
     @PostMapping("/granted")
     public Result setMenuToRole(@RequestBody SysMenu sysMenu) {
         menuService.setMenuToRole(sysMenu.getRoleId(), sysMenu.getMenuIds());
         return Result.succeed("操作成功");
     }
 
-    @ApiOperation(value = "查询所有菜单")
+    @Operation(summary = "查询所有菜单")
     @GetMapping("/findAlls")
     public PageResult<SysMenu> findAlls() {
         List<SysMenu> list = menuService.findAll();
         return PageResult.<SysMenu>builder().data(list).code(0).count((long) list.size()).build();
     }
 
-    @ApiOperation(value = "获取菜单以及顶级菜单")
+    @Operation(summary = "获取菜单以及顶级菜单")
     @GetMapping("/findOnes")
     public PageResult<SysMenu> findOnes() {
         List<SysMenu> list = menuService.findOnes();
@@ -144,7 +143,7 @@ public class SysMenuController {
      * @param menu
      * @return
      */
-    @ApiOperation(value = "新增菜单")
+    @Operation(summary = "新增菜单")
     @PostMapping("saveOrUpdate")
     public Result saveOrUpdate(@RequestBody SysMenu menu) {
         try {
@@ -165,7 +164,7 @@ public class SysMenuController {
      * @return
      */
     @GetMapping("/current")
-    @ApiOperation(value = "查询当前用户菜单")
+    @Operation(summary = "查询当前用户菜单")
     public List<SysMenu> findMyMenu(@LoginUser SysUser user) {
         List<SysRole> roles = user.getRoles();
         if (CollectionUtil.isEmpty(roles)) {

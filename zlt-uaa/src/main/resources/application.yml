@@ -13,17 +13,30 @@ mybatis-plus:
     db-config:
       id-type: auto
 
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'uaa'
+      paths-to-match: '/**'
+      packages-to-scan: com.central.oauth.controller
+  default-flat-param-object: true
+
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+    swagger-model-name: 认证中心接口文档
+
 zlt:
   oauth2:
     token:
       store:
         type: redis
-  swagger:
-    enabled: true
-    title: 认证中心
-    description: 认证中心接口文档
-    version: 1.0
-    base-package: com.central.oauth.controller
   security:
     code:
       # 忽略验证码的应用编号
@@ -44,20 +57,3 @@ zlt:
     includeSqls:
       # 应用列表
       - com.central.oauth.mapper.ClientMapper.findList
-
-springdoc:
-  swagger-ui:
-    path: /doc.html
-  api-docs:
-    path: /v3/api-docs
-  group-configs:
-    - group: 'uaa'
-      paths-to-match: '/**'
-      packages-to-scan: com.central.oauth.controller
-  default-flat-param-object: true
-
-knife4j:
-  enable: true
-  setting:
-    language: zh_cn
-    swagger-model-name: 认证中心接口文档

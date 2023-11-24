@@ -1,22 +1,24 @@
 package com.central.oauth2.common.util;
 
+import cn.hutool.extra.spring.SpringUtil;
 import com.central.common.constant.CommonConstant;
 import com.central.common.constant.SecurityConstants;
 import com.central.common.context.LoginUserContextHolder;
 import com.central.common.model.SysUser;
-import com.central.common.utils.SpringUtil;
-import com.central.oauth2.common.token.CustomWebAuthenticationDetails;
+import com.central.oauth2.common.exception.CustomOAuth2AuthenticationException;
+import com.central.oauth2.common.token.BaseAuthenticationToken;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.common.OAuth2AccessToken;
-import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
-import org.springframework.security.oauth2.common.exceptions.UnapprovedClientAuthenticationException;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
+import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
+import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
+import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
+
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
@@ -45,7 +47,7 @@ public class AuthUtils {
     public static String extractToken(HttpServletRequest request) {
         String token = extractHeaderToken(request);
         if (token == null) {
-            token = request.getParameter(OAuth2AccessToken.ACCESS_TOKEN);
+            token = request.getParameter(OAuth2ParameterNames.ACCESS_TOKEN);
             if (token == null) {
                 log.debug("Token not found in request parameters.  Not an OAuth2 request.");
             }
@@ -62,8 +64,8 @@ public class AuthUtils {
         Enumeration<String> headers = request.getHeaders(CommonConstant.TOKEN_HEADER);
         while (headers.hasMoreElements()) {
             String value = headers.nextElement();
-            if ((value.startsWith(OAuth2AccessToken.BEARER_TYPE))) {
-                String authHeaderValue = value.substring(OAuth2AccessToken.BEARER_TYPE.length()).trim();
+            if ((value.startsWith(OAuth2AccessToken.TokenType.BEARER.getValue()))) {
+                String authHeaderValue = value.substring(OAuth2AccessToken.TokenType.BEARER.getValue().length()).trim();
                 int commaIndex = authHeaderValue.indexOf(',');
                 if (commaIndex > 0) {
                     authHeaderValue = authHeaderValue.substring(0, commaIndex);
@@ -83,19 +85,20 @@ public class AuthUtils {
     }
 
     public static SysUser checkAccessToken(String accessTokenValue) {
-        TokenStore tokenStore = SpringUtil.getBean(TokenStore.class);
-        OAuth2AccessToken accessToken = tokenStore.readAccessToken(accessTokenValue);
-        if (accessToken == null || accessToken.getValue() == null) {
-            throw new InvalidTokenException("Invalid access token: " + accessTokenValue);
-        } else if (accessToken.isExpired()) {
-            tokenStore.removeAccessToken(accessToken);
-            throw new InvalidTokenException("Access token expired: " + accessTokenValue);
+        OAuth2AuthorizationService tokenService = SpringUtil.getBean(OAuth2AuthorizationService.class);
+        OAuth2Authorization oAuth2Authorization = tokenService.findByToken(accessTokenValue, OAuth2TokenType.ACCESS_TOKEN);
+        if (oAuth2Authorization == null || oAuth2Authorization.getAccessToken() == null) {
+            throw new CustomOAuth2AuthenticationException("Invalid access token: " + accessTokenValue);
+        } else if (oAuth2Authorization.getAccessToken().isExpired()) {
+            tokenService.remove(oAuth2Authorization);
+            throw new CustomOAuth2AuthenticationException("Access token expired: " + accessTokenValue);
         }
-        OAuth2Authentication result = tokenStore.readAuthentication(accessToken);
+        /*OAuth2Authentication result = tokenStore.readAuthentication(accessToken);
         if (result == null) {
-            throw new InvalidTokenException("Invalid access token: " + accessTokenValue);
-        }
-        return setContext(result);
+            throw new OAuth2AuthenticationException("Invalid access token: " + accessTokenValue);
+        }*/
+        // TODO 如何生成 Authentication 对象
+        return setContext(null);
     }
 
     /**
@@ -114,9 +117,18 @@ public class AuthUtils {
     public static String[] extractClient(HttpServletRequest request) {
         String header = request.getHeader("Authorization");
         if (header == null || !header.startsWith(BASIC_)) {
-            throw new UnapprovedClientAuthenticationException("请求头中client信息为空");
+            throw new CustomOAuth2AuthenticationException("The client information in the request header is empty");
         }
         return extractHeaderClient(header);
+    }
+
+    public static String extractClientId(HttpServletRequest request) {
+        String header = request.getHeader("Authorization");
+        if (header == null || !header.startsWith(BASIC_)) {
+            throw new CustomOAuth2AuthenticationException("The client information in the request header is empty");
+        }
+        String[] clientArr = extractHeaderClient(header);
+        return clientArr[0];
     }
 
     /**
@@ -130,7 +142,7 @@ public class AuthUtils {
         String clientStr = new String(decoded, StandardCharsets.UTF_8);
         String[] clientArr = clientStr.split(":");
         if (clientArr.length != 2) {
-            throw new RuntimeException("Invalid basic authentication token");
+            throw new CustomOAuth2AuthenticationException("Invalid basic authentication token");
         }
         return clientArr;
     }
@@ -170,17 +182,8 @@ public class AuthUtils {
     public static String getAccountType(Authentication authentication) {
         String accountType = null;
         if (authentication != null) {
-            Object details = authentication.getDetails();
-            if (details != null) {
-                if (details instanceof CustomWebAuthenticationDetails) {
-                    CustomWebAuthenticationDetails detailsObj = (CustomWebAuthenticationDetails) details;
-                    accountType = detailsObj.getAccountType();
-                } else {
-                    Map<String, String> detailsMap = (Map<String, String>) details;
-                    if (detailsMap != null) {
-                        accountType = detailsMap.get(SecurityConstants.ACCOUNT_TYPE_PARAM_NAME);
-                    }
-                }
+            if (authentication instanceof BaseAuthenticationToken authenticationToken) {
+                accountType = (String)authenticationToken.getAdditionalParameters().get(SecurityConstants.ACCOUNT_TYPE_PARAM_NAME);
             }
         }
         return accountType;

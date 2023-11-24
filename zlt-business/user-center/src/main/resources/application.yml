@@ -13,13 +13,26 @@ mybatis-plus:
     db-config:
       id-type: auto
 
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'user'
+      paths-to-match: '/**'
+      packages-to-scan: com.central.user.controller
+  default-flat-param-object: true
+
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+    swagger-model-name: 用户中心接口文档
+
 zlt:
-  swagger:
-    enabled: true
-    title: 用户中心
-    description: 用户中心接口文档
-    version: 1.0
-    base-package: com.central.user.controller
   cache-manager:
     configs:
       - key: menu

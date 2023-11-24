@@ -14,8 +14,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>17</java.version>
         <spring-cloud-alibaba-dependencies.version>2022.0.0.0</spring-cloud-alibaba-dependencies.version>
-        <spring-boot-dependencies.version>3.0.9</spring-boot-dependencies.version>
-        <spring-cloud-dependencies.version>2022.0.3</spring-cloud-dependencies.version>
+        <spring-boot-dependencies.version>3.1.6</spring-boot-dependencies.version>
+        <spring-cloud-dependencies.version>2022.0.4</spring-cloud-dependencies.version>
         <commons-collections4.version>4.4</commons-collections4.version>
         <swagger.butler.version>2.0.1</swagger.butler.version>
         <jjwt.version>0.9.1</jjwt.version>
@@ -24,10 +24,9 @@
         <sharding-sphere.version>3.1.0</sharding-sphere.version>
         <security-oauth2.version>2.3.8.RELEASE</security-oauth2.version>
         <security-jwt.version>1.1.0.RELEASE</security-jwt.version>
-        <redisson-starter.version>3.23.2</redisson-starter.version>
-        <easyCaptcha.version>1.6.2</easyCaptcha.version>
+        <redisson-starter.version>3.24.3</redisson-starter.version>
         <hutool.version>5.7.20</hutool.version>
-        <mybatis-plus-boot-starter.version>3.5.3.1</mybatis-plus-boot-starter.version>
+        <mybatis-plus-boot-starter.version>3.5.4.1</mybatis-plus-boot-starter.version>
         <aliyun-sdk-oss>3.8.1</aliyun-sdk-oss>
         <qiniu-java-sdk>7.2.28</qiniu-java-sdk>
         <easypoi.version>4.1.3</easypoi.version>
@@ -35,7 +34,6 @@
         <spring-boot-admin.version>2.5.6</spring-boot-admin.version>
         <velocity.version>1.7</velocity.version>
         <commons-configuration2.version>2.7</commons-configuration2.version>
-        <txlcn.version>5.0.2.RELEASE</txlcn.version>
         <fastdfs-client.version>1.27.2</fastdfs-client.version>
         <userAgent.version>1.21</userAgent.version>
         <transmittable.version>2.14.3</transmittable.version>
@@ -43,20 +41,17 @@
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <spring-social-security.version>1.1.6.RELEASE</spring-social-security.version>
         <commons-io.version>2.7</commons-io.version>
-        <servlet-api.version>4.0.1</servlet-api.version>
         <spring-data-elasticsearch.version>4.2.3</spring-data-elasticsearch.version>
         <elasticsearch.version>7.13.4</elasticsearch.version>
-        <knife4j.version>3.0.3</knife4j.version>
+        <knife4j.version>4.3.0</knife4j.version>
         <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
         <dubbo.version>2.7.8</dubbo.version>
         <curator.version>5.1.0</curator.version>
         <jackson-databind.version>2.13.4</jackson-databind.version>
         <commons-configuration.version>1.10</commons-configuration.version>
-        <zuul.version>2.2.9.RELEASE</zuul.version>
         <aws-java-sdk-s3.version>1.12.40</aws-java-sdk-s3.version>
         <spring-cloud-starter-oauth2.version>2.2.5.RELEASE</spring-cloud-starter-oauth2.version>
         <docker-maven-plugin.version>1.2.2</docker-maven-plugin.version>
-        <sonar.exclusions>zlt-job/**/*, zlt-register/**/*, zlt-web/**/*</sonar.exclusions>
         <docker.baseImage>openjdk:8-jre-alpine</docker.baseImage>
         <docker.volumes>/tmp</docker.volumes>
         <docker.image.prefix>hub.zlt.com:8080/microservices-platform</docker.image.prefix>
@@ -69,6 +64,7 @@
         <javax.annotation-api.version>1.3.2</javax.annotation-api.version>
         <tomcat-embed-core.version>10.1.11</tomcat-embed-core.version>
         <httpclient.version>5.2.1</httpclient.version>
+        <spring.authorization.version>1.1.1</spring.authorization.version>
     </properties>
 
     <dependencies>
@@ -134,11 +130,6 @@
             <dependency>
                 <groupId>com.zlt</groupId>
                 <artifactId>zlt-redis-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.zlt</groupId>
-                <artifactId>zlt-swagger2-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -221,12 +212,6 @@
                 <artifactId>swagger-butler-core</artifactId>
                 <version>${swagger.butler.version}</version>
             </dependency>
-            <!-- 验证码生成工具 -->
-            <dependency>
-                <groupId>com.github.whvcse</groupId>
-                <artifactId>easy-captcha</artifactId>
-                <version>${easyCaptcha.version}</version>
-            </dependency>
             <!-- hutool java工具类库  -->
             <dependency>
                 <groupId>cn.hutool</groupId>
@@ -276,21 +261,6 @@
                 <version>${commons-configuration2.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.codingapi.txlcn</groupId>
-                <artifactId>txlcn-tm</artifactId>
-                <version>${txlcn.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.codingapi.txlcn</groupId>
-                <artifactId>txlcn-tc</artifactId>
-                <version>${txlcn.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.codingapi.txlcn</groupId>
-                <artifactId>txlcn-txmsg-netty</artifactId>
-                <version>${txlcn.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>io.shardingsphere</groupId>
                 <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
                 <version>${sharding-sphere.version}</version>
@@ -329,11 +299,6 @@
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>${commons-io.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>javax.servlet-api</artifactId>
-                <version>${servlet-api.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.data</groupId>
@@ -406,6 +371,11 @@
                 <version>${jackson-databind.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-oauth2-authorization-server</artifactId>
+                <version>${spring.authorization.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-oauth2</artifactId>
                 <version>${spring-cloud-starter-oauth2.version}</version>
@@ -414,11 +384,6 @@
                 <groupId>com.amazonaws</groupId>
                 <artifactId>aws-java-sdk-s3</artifactId>
                 <version>${aws-java-sdk-s3.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
-                <version>${zuul.version}</version>
             </dependency>
             <dependency>
                 <groupId>commons-configuration</groupId>
@@ -467,13 +432,13 @@
                 <artifactId>httpclient5</artifactId>
                 <version>${httpclient.version}</version>
             </dependency>
-            <!--<dependency>
+            <dependency>
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-dependencies</artifactId>
                 <version>${knife4j.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>-->
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
