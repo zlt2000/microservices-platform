@@ -4,14 +4,12 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
 
 /**
  * spring获取bean工具类
  *
  * @author 作者 owen E-mail: 624191343@qq.com
  */
-@Component
 @Order(0)
 public class SpringUtil implements ApplicationContextAware {
 

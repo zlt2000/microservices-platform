@@ -1,0 +1,3 @@
+com.central.common.feign.fallback.UserServiceFallbackFactory
+com.central.common.lock.LockAspect
+com.central.common.utils.SpringUtil

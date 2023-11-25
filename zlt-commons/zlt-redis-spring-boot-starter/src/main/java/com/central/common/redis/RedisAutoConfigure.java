@@ -30,7 +30,6 @@ import java.util.Map;
  * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
-@Configuration
 @ComponentScan
 @EnableConfigurationProperties({RedisProperties.class, CacheManagerProperties.class})
 @EnableCaching

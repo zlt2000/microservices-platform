@@ -6,7 +6,6 @@ import com.central.common.model.SysRole;
 import com.central.common.model.SysUser;
 import org.springframework.cloud.openfeign.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.List;
@@ -18,7 +17,6 @@ import java.util.List;
  * @date 2019/1/18
  */
 @Slf4j
-@Component
 public class UserServiceFallbackFactory implements FallbackFactory<UserService> {
     @Override
     public UserService create(Throwable throwable) {
