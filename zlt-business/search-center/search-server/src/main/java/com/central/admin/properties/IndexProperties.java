@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.stereotype.Component;
 
 /**
  * 索引配置
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Component;
 @Getter
 @ConfigurationProperties(prefix = "zlt.indices")
 @RefreshScope
-@Component
 public class IndexProperties {
     /**
      * 配置过滤的索引名：默认只显示这些索引

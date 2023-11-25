@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.stereotype.Component;
 
 /**
  * es的httpClient连接池配置
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Component;
 @Getter
 @ConfigurationProperties(prefix = "zlt.elasticsearch.rest-pool")
 @RefreshScope
-@Component
 public class RestClientPoolProperties {
     /**
      * 链接建立超时时间

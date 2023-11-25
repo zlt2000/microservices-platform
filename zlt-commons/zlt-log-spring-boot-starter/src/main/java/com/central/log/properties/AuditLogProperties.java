@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.stereotype.Component;
 
 /**
  * 审计日志配置
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Component;
 @Getter
 @ConfigurationProperties(prefix = "zlt.audit-log")
 @RefreshScope
-@Component
 public class AuditLogProperties {
     /**
      * 是否开启审计日志

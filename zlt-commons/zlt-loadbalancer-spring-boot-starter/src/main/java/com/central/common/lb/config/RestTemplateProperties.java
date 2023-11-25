@@ -3,7 +3,6 @@ package com.central.common.lb.config;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
 /**
  * RestTemplate 配置
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Component;
 @Setter
 @Getter
 @ConfigurationProperties(prefix = "zlt.rest-template")
-@Component
 public class RestTemplateProperties {
     /**
      * 最大链接数

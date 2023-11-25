@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
 /**
  * 日志数据源配置
@@ -21,6 +20,5 @@ import org.springframework.stereotype.Component;
 @Getter
 @ConfigurationProperties(prefix = "zlt.audit-log.datasource")
 @ConditionalOnClass(HikariConfig.class)
-@Component
 public class LogDbProperties extends HikariConfig {
 }
