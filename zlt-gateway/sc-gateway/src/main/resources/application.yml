@@ -85,12 +85,22 @@ spring:
 knife4j:
   gateway:
     enabled: true
-    discover:
-      excluded-services: ${spring.application.name}
+    strategy: manual
+    routes:
+      - name: 用户服务
+        service-name: user-center
+        url: /api-user/v3/api-docs/default
+        context-path: /api-user
+      - name: 文件服务
+        service-name: file-center
+        url: /api-file/v3/api-docs/default
+        context-path: /api-file
+
+#    discover:
+#      version: openapi3
+#      excluded-services: ${spring.application.name}
 
 zlt:
-  swagger-agg:
-    generate-routes: user,file
   oauth2:
     token:
       store:

@@ -7,7 +7,6 @@ import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.reactive.error.ErrorAttributes;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
 import org.springframework.web.reactive.function.server.*;
 
 import java.util.HashMap;
@@ -91,12 +90,13 @@ public class JsonErrorWebExceptionHandler extends DefaultErrorWebExceptionHandle
 
     private int getHttpStatus(Throwable error) {
         int httpStatus;
-        if (error instanceof InvalidTokenException) {
+        /*if (error instanceof InvalidTokenException) {
             InvalidTokenException ex = (InvalidTokenException)error;
             httpStatus = ex.getHttpErrorCode();
         } else {
             httpStatus = HttpStatus.INTERNAL_SERVER_ERROR.value();
-        }
+        }*/
+        httpStatus = HttpStatus.INTERNAL_SERVER_ERROR.value();
         return httpStatus;
     }
 }

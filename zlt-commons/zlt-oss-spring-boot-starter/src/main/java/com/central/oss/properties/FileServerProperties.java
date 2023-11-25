@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 @Setter
 @Getter
 @ConfigurationProperties(prefix = FileServerProperties.PREFIX)
-@Component
 public class FileServerProperties {
     public static final String PREFIX = "zlt.file-server";
     public static final String TYPE_FDFS = "fastdfs";

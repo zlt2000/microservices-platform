@@ -21,7 +21,7 @@ springdoc:
   api-docs:
     path: /v3/api-docs
   group-configs:
-    - group: 'file'
+    - group: 'default'
       paths-to-match: '/**'
       packages-to-scan: com.central.file.controller
   default-flat-param-object: true
