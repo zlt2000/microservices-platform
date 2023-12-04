@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.social.security.SocialUserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -42,7 +41,7 @@ public class UserDetailServiceImpl implements ZltUserDetailsService {
     }
 
     @Override
-    public SocialUserDetails loadUserByUserId(String openId) {
+    public UserDetails loadUserByUserId(String openId) {
         LoginAppUser loginAppUser = userService.findByOpenId(openId);
         return checkUser(loginAppUser);
     }

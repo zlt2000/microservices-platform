@@ -1,7 +1,7 @@
 package com.central.common.context;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
-import com.central.common.model.SysUser;
+import com.central.common.model.LoginAppUser;
 
 /**
  * 登录用户holder
@@ -13,13 +13,13 @@ import com.central.common.model.SysUser;
  * Github: https://github.com/zlt2000
  */
 public class LoginUserContextHolder {
-    private static final ThreadLocal<SysUser> CONTEXT = new TransmittableThreadLocal<>();
+    private static final ThreadLocal<LoginAppUser> CONTEXT = new TransmittableThreadLocal<>();
 
-    public static void setUser(SysUser user) {
+    public static void setUser(LoginAppUser user) {
         CONTEXT.set(user);
     }
 
-    public static SysUser getUser() {
+    public static LoginAppUser getUser() {
         return CONTEXT.get();
     }
 

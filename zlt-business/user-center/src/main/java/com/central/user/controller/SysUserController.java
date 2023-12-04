@@ -95,7 +95,7 @@ public class SysUserController {
      */
     @GetMapping(value = "/users-anon/mobile", params = "mobile")
     @Operation(summary = "根据手机号查询用户")
-    public SysUser findByMobile(String mobile) {
+    public LoginAppUser findByMobile(String mobile) {
         return appUserService.findByMobile(mobile);
     }
 
@@ -106,7 +106,7 @@ public class SysUserController {
      */
     @GetMapping(value = "/users-anon/openId", params = "openId")
     @Operation(summary = "根据OpenId查询用户")
-    public SysUser findByOpenId(String openId) {
+    public LoginAppUser findByOpenId(String openId) {
         return appUserService.findByOpenId(openId);
     }
 

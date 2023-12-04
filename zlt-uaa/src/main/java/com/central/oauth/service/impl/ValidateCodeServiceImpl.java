@@ -4,8 +4,8 @@ import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import com.central.common.constant.SecurityConstants;
 import com.central.common.feign.UserService;
+import com.central.common.model.LoginAppUser;
 import com.central.common.model.Result;
-import com.central.common.model.SysUser;
 import com.central.common.redis.template.RedisRepository;
 import com.central.oauth.exception.ValidateCodeException;
 import com.central.oauth.service.IValidateCodeService;
@@ -61,7 +61,7 @@ public class ValidateCodeServiceImpl implements IValidateCodeService {
             return Result.failed("验证码未失效，请失效后再次申请");
         }
 
-        SysUser user = userService.findByMobile(mobile);
+        LoginAppUser user = userService.findByMobile(mobile);
         if (user == null) {
             log.error("根据用户手机号{}查询用户为空", mobile);
             return Result.failed("手机号不存在");

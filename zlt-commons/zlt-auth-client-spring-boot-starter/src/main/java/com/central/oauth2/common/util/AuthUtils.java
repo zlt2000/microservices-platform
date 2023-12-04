@@ -3,14 +3,12 @@ package com.central.oauth2.common.util;
 import cn.hutool.extra.spring.SpringUtil;
 import com.central.common.constant.CommonConstant;
 import com.central.common.constant.SecurityConstants;
-import com.central.common.context.LoginUserContextHolder;
-import com.central.common.model.SysUser;
+import com.central.common.model.LoginAppUser;
+import com.central.common.utils.LoginUserUtils;
 import com.central.oauth2.common.exception.CustomOAuth2AuthenticationException;
 import com.central.oauth2.common.token.BaseAuthenticationToken;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 
@@ -18,8 +16,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
+import org.springframework.security.oauth2.server.resource.introspection.OAuth2IntrospectionException;
 
 import java.nio.charset.StandardCharsets;
+import java.security.Principal;
 import java.util.*;
 
 /**
@@ -79,36 +79,33 @@ public class AuthUtils {
     /**
      * 校验accessToken
      */
-    public static SysUser checkAccessToken(HttpServletRequest request) {
+    public static LoginAppUser checkAccessToken(HttpServletRequest request) {
         String accessToken = extractToken(request);
         return checkAccessToken(accessToken);
     }
 
-    public static SysUser checkAccessToken(String accessTokenValue) {
-        OAuth2AuthorizationService tokenService = SpringUtil.getBean(OAuth2AuthorizationService.class);
-        OAuth2Authorization oAuth2Authorization = tokenService.findByToken(accessTokenValue, OAuth2TokenType.ACCESS_TOKEN);
-        if (oAuth2Authorization == null || oAuth2Authorization.getAccessToken() == null) {
-            throw new CustomOAuth2AuthenticationException("Invalid access token: " + accessTokenValue);
-        } else if (oAuth2Authorization.getAccessToken().isExpired()) {
-            tokenService.remove(oAuth2Authorization);
-            throw new CustomOAuth2AuthenticationException("Access token expired: " + accessTokenValue);
+    public static LoginAppUser checkAccessToken(String accessTokenValue) {
+        OAuth2Authorization authorization = checkAccessTokenToAuth(accessTokenValue);
+        Authentication authentication = (Authentication)authorization.getAttributes().get(Principal.class.getName());
+        if (authentication == null) {
+            throw new OAuth2IntrospectionException("Invalid access token: " + accessTokenValue);
         }
-        /*OAuth2Authentication result = tokenStore.readAuthentication(accessToken);
-        if (result == null) {
-            throw new OAuth2AuthenticationException("Invalid access token: " + accessTokenValue);
-        }*/
-        // TODO 如何生成 Authentication 对象
-        return setContext(null);
+        return LoginUserUtils.setContext(authentication);
     }
 
-    /**
-     * 用户信息赋值 context 对象
-     */
-    public static SysUser setContext(Authentication authentication) {
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        SysUser user = getUser(authentication);
-        LoginUserContextHolder.setUser(user);
-        return user;
+    public static OAuth2Authorization checkAccessTokenToAuth(String accessTokenValue) {
+        if (accessTokenValue == null) {
+            throw new OAuth2IntrospectionException("Invalid access token: " + null);
+        }
+        OAuth2AuthorizationService authorizationService = SpringUtil.getBean(OAuth2AuthorizationService.class);
+        OAuth2Authorization authorization = authorizationService.findByToken(accessTokenValue, OAuth2TokenType.ACCESS_TOKEN);
+        if (authorization == null || authorization.getAccessToken() == null) {
+            throw new OAuth2IntrospectionException("Invalid access token: " + accessTokenValue);
+        } else if (authorization.getAccessToken().isExpired()) {
+            authorizationService.remove(authorization);
+            throw new OAuth2IntrospectionException("Access token expired: " + accessTokenValue);
+        }
+        return authorization;
     }
 
     /**
@@ -145,35 +142,6 @@ public class AuthUtils {
             throw new CustomOAuth2AuthenticationException("Invalid basic authentication token");
         }
         return clientArr;
-    }
-
-    /**
-     * 获取登陆的用户名
-     */
-    public static String getUsername(Authentication authentication) {
-        Object principal = authentication.getPrincipal();
-        String username = null;
-        if (principal instanceof SysUser) {
-            username = ((SysUser) principal).getUsername();
-        } else if (principal instanceof String) {
-            username = (String) principal;
-        }
-        return username;
-    }
-
-    /**
-     * 获取登陆的用户对象
-     */
-    public static SysUser getUser(Authentication authentication) {
-        SysUser user = null;
-        if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
-            Object principal = authentication.getPrincipal();
-            //客户端模式只返回一个clientId
-            if (principal instanceof SysUser) {
-                user = (SysUser)principal;
-            }
-        }
-        return user;
     }
 
     /**

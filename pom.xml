@@ -25,7 +25,6 @@
         <security-oauth2.version>2.3.8.RELEASE</security-oauth2.version>
         <security-jwt.version>1.1.0.RELEASE</security-jwt.version>
         <redisson-starter.version>3.24.3</redisson-starter.version>
-        <hutool.version>5.7.20</hutool.version>
         <mybatis-plus-boot-starter.version>3.5.4.1</mybatis-plus-boot-starter.version>
         <aliyun-sdk-oss>3.8.1</aliyun-sdk-oss>
         <qiniu-java-sdk>7.2.28</qiniu-java-sdk>
@@ -47,7 +46,6 @@
         <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
         <dubbo.version>2.7.8</dubbo.version>
         <curator.version>5.1.0</curator.version>
-        <jackson-databind.version>2.13.4</jackson-databind.version>
         <commons-configuration.version>1.10</commons-configuration.version>
         <aws-java-sdk-s3.version>1.12.40</aws-java-sdk-s3.version>
         <spring-cloud-starter-oauth2.version>2.2.5.RELEASE</spring-cloud-starter-oauth2.version>
@@ -65,6 +63,7 @@
         <tomcat-embed-core.version>10.1.11</tomcat-embed-core.version>
         <httpclient.version>5.2.1</httpclient.version>
         <spring.authorization.version>1.1.1</spring.authorization.version>
+        <oauth2-oidc-sdk.version>11.7</oauth2-oidc-sdk.version>
     </properties>
 
     <dependencies>
@@ -214,11 +213,6 @@
             </dependency>
             <!-- hutool java工具类库  -->
             <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-all</artifactId>
-                <version>${hutool.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.aliyun.oss</groupId>
                 <artifactId>aliyun-sdk-oss</artifactId>
                 <version>${aliyun-sdk-oss}</version>
@@ -366,11 +360,6 @@
                 <version>${curator.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>${jackson-databind.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-oauth2-authorization-server</artifactId>
                 <version>${spring.authorization.version}</version>
@@ -423,11 +412,6 @@
                 <version>${guava.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-core</artifactId>
-                <version>${jackson-databind.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.apache.httpcomponents.client5</groupId>
                 <artifactId>httpclient5</artifactId>
                 <version>${httpclient.version}</version>
@@ -438,6 +422,11 @@
                 <version>${knife4j.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.nimbusds</groupId>
+                <artifactId>oauth2-oidc-sdk</artifactId>
+                <version>${oauth2-oidc-sdk.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

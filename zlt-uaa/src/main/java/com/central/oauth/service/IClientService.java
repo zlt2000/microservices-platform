@@ -26,4 +26,6 @@ public interface IClientService extends ISuperService<Client> {
     void delClient(long id);
 
     Client loadClientByClientId(String clientId);
+
+    void loadAllClientToCache();
 }

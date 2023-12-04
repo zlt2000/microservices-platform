@@ -23,15 +23,11 @@ public class PermitProperties {
      * 监控中心和swagger需要访问的url
      */
     private static final String[] ENDPOINTS = {
-            "/oauth/**",
-            "/actuator/**",
-            "/*/v2/api-docs",
-            "/swagger/api-docs",
-            "/swagger-ui.html",
-            "/doc.html",
-            "/swagger-resources/**",
-            "/webjars/**",
-            "/druid/**"
+            "/login.html", "/validata/code/**",
+            "/v3/api-docs/**", "/*/v3/api-docs/**",
+            "/doc.html", "/swagger-ui.html", "/swagger-ui/**",
+            "/actuator/**", "/webjars/**", "/druid/**",
+            "/css/**", "/js/**", "/images/**", "/favicon.ico", "/error",
     };
 
     /**

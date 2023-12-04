@@ -13,7 +13,7 @@ import java.util.Map;
  * Github: https://github.com/zlt2000
  */
 public class CustomAccessToken extends OAuth2Authorization.Token<OAuth2AccessToken> {
-    protected CustomAccessToken(OAuth2AccessToken token, Map metadata) {
+    public CustomAccessToken(OAuth2AccessToken token, Map metadata) {
         super(token, metadata);
     }
 }

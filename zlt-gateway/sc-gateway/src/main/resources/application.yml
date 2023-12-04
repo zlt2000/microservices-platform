@@ -96,10 +96,6 @@ knife4j:
         url: /api-file/v3/api-docs/default
         context-path: /api-file
 
-#    discover:
-#      version: openapi3
-#      excluded-services: ${spring.application.name}
-
 zlt:
   oauth2:
     token:

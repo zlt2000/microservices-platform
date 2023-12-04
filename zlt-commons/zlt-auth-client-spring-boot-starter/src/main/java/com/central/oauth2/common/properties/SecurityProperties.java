@@ -23,4 +23,6 @@ public class SecurityProperties {
     private PermitProperties ignore = new PermitProperties();
 
     private ValidateCodeProperties code = new ValidateCodeProperties();
+
+    private ResourceServerProperties resourceServer = new ResourceServerProperties();
 }

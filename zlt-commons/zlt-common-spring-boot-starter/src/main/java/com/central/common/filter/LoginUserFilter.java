@@ -1,7 +1,7 @@
 package com.central.common.filter;
 
 import com.central.common.context.LoginUserContextHolder;
-import com.central.common.model.SysUser;
+import com.central.common.model.LoginAppUser;
 import com.central.common.utils.LoginUserUtils;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
@@ -30,7 +30,7 @@ public class LoginUserFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws IOException, ServletException {
         try {
-            SysUser user = LoginUserUtils.getCurrentUser(request, false);
+            LoginAppUser user = LoginUserUtils.getCurrentUser(request, false);
             LoginUserContextHolder.setUser(user);
             filterChain.doFilter(request, response);
         } finally {

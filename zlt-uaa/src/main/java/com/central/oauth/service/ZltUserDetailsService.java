@@ -3,7 +3,6 @@ package com.central.oauth.service;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.social.security.SocialUserDetails;
 
 /**
  * @author zlt
@@ -31,5 +30,5 @@ public interface ZltUserDetailsService extends UserDetailsService {
      * 根据用户id/openId查询用户
      * @param userId 用户id/openId
      */
-    SocialUserDetails loadUserByUserId(String userId) throws UsernameNotFoundException;
+    UserDetails loadUserByUserId(String userId) throws UsernameNotFoundException;
 }

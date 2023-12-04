@@ -21,6 +21,8 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,24 +75,26 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
     @Override
     public LoginAppUser getLoginAppUser(SysUser sysUser) {
         if (sysUser != null) {
-            LoginAppUser loginAppUser = new LoginAppUser();
-            BeanUtils.copyProperties(sysUser, loginAppUser);
-
             List<SysRole> sysRoles = roleUserService.findRolesByUserId(sysUser.getId());
-            // 设置角色
-            loginAppUser.setRoles(sysRoles);
+            Collection<GrantedAuthority> authorities = new HashSet<>();
+            if (sysRoles != null) {
+                sysRoles.forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getCode())));
+            }
 
+            Set<String> permissions = null;
             if (!CollectionUtils.isEmpty(sysRoles)) {
                 Set<Long> roleIds = sysRoles.stream().map(SuperEntity::getId).collect(Collectors.toSet());
                 List<SysMenu> menus = roleMenuMapper.findMenusByRoleIds(roleIds, CommonConstant.PERMISSION);
                 if (!CollectionUtils.isEmpty(menus)) {
-                    Set<String> permissions = menus.stream().map(p -> p.getPath())
+                    permissions = menus.stream().map(p -> p.getPath())
                             .collect(Collectors.toSet());
-                    // 设置权限集合
-                    loginAppUser.setPermissions(permissions);
                 }
             }
-            return loginAppUser;
+            return new LoginAppUser(sysUser.getId()
+                    , sysUser.getUsername(), sysUser.getPassword()
+                    , sysUser.getMobile(), permissions
+                    , sysUser.getEnabled(), true, true, true
+                    , authorities);
         }
         return null;
     }

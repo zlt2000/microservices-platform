@@ -189,4 +189,32 @@ public interface SecurityConstants {
      * 账号类型参数名
      */
     String ACCOUNT_TYPE_PARAM_NAME = "account_type";
+
+    /**
+     * 协议字段
+     */
+    String LICENSE_NAME = "license";
+
+    /**
+     * 客户端ID
+     */
+    String CLIENT_ID = "clientId";
+
+    /**
+     * 用户信息
+     */
+    String DETAILS_USER = "user_info";
+    /**
+     * 用户ID
+     */
+    String DETAILS_USER_ID = "user_id";
+    /**
+     * 用户名
+     */
+    String USERNAME = "username";
+
+    /**
+     * jwk set缓存前缀
+     */
+    String AUTHORIZATION_JWS_PREFIX_KEY = "authorization_jws";
 }
