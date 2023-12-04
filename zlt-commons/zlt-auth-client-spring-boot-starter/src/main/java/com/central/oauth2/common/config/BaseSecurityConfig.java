@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.central.common.constant.SecurityConstants;
 import com.central.common.utils.ResponseUtil;
 import com.central.common.utils.WebfluxResponseUtil;
+import com.central.oauth2.common.enums.TokenType;
 import com.central.oauth2.common.properties.SecurityProperties;
 import com.central.oauth2.common.service.impl.RedisOAuth2AuthorizationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,22 +13,20 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
-import jakarta.servlet.http.HttpServletRequest;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
+import org.springframework.security.oauth2.server.authorization.InMemoryOAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.server.ServerAuthenticationEntryPoint;
 import org.springframework.security.web.server.authorization.ServerAccessDeniedHandler;
-import org.springframework.web.server.ServerWebExchange;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -47,6 +46,10 @@ import java.util.UUID;
 public class BaseSecurityConfig {
     @Bean
     public OAuth2AuthorizationService oAuth2AuthorizationService(SecurityProperties securityProperties, RedissonClient redisson) {
+        String tokenType = securityProperties.getResourceServer().getTokenType();
+        if (TokenType.MEMORY.getName().equals(tokenType)) {
+            return new InMemoryOAuth2AuthorizationService();
+        }
         return new RedisOAuth2AuthorizationService(securityProperties, redisson);
     }
 
