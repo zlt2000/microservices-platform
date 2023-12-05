@@ -17,6 +17,10 @@
             <artifactId>spring-boot-starter-oauth2-authorization-server</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.zlt</groupId>
+            <artifactId>zlt-common-core</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.nimbusds</groupId>
             <artifactId>oauth2-oidc-sdk</artifactId>
         </dependency>

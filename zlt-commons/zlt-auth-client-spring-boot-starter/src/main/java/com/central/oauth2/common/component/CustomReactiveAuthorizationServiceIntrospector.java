@@ -16,6 +16,8 @@ import java.security.Principal;
 import java.util.*;
 
 /**
+ * webFlux 内省 token 解析器
+ *
  * @author zlt
  * @version 1.0
  * @date 2023/12/4

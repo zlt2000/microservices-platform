@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.server.resource.introspection.OAuth2IntrospectionAuthenticatedPrincipal;
 import org.springframework.security.web.server.WebFilterExchange;
 import org.springframework.security.web.server.authentication.ServerAuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.server.ServerWebExchange;
@@ -26,6 +27,7 @@ import java.util.Map;
  * Blog: https://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
+@Component
 public class Oauth2ServerAuthSuccessHandler implements ServerAuthenticationSuccessHandler {
     @Override
     public Mono<Void> onAuthenticationSuccess(WebFilterExchange webFilterExchange, Authentication authentication) {
