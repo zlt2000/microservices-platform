@@ -1,7 +1,8 @@
-package com.central.oauth2.common.service.impl;
+package com.central.oauth2.common.component;
 
 import com.central.oauth2.common.properties.PermitProperties;
 import com.central.oauth2.common.properties.SecurityProperties;
+import com.central.oauth2.common.util.AuthUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.http.HttpHeaders;
@@ -13,11 +14,8 @@ import org.springframework.security.oauth2.server.resource.web.BearerTokenResolv
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
-import org.springframework.util.StringUtils;
 
 import java.util.Arrays;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author: zlt
@@ -29,9 +27,6 @@ import java.util.regex.Pattern;
 @ConditionalOnClass(HttpServletRequest.class)
 @Component
 public class CustomBearerTokenResolver implements BearerTokenResolver {
-	private static final Pattern authorizationPattern = Pattern.compile("^Bearer (?<token>[a-zA-Z0-9-:._~+/]+=*)$",
-			Pattern.CASE_INSENSITIVE);
-
 	private final boolean allowFormEncodedBodyParameter = false;
 
 	private final boolean allowUriQueryParameter = true;
@@ -55,7 +50,7 @@ public class CustomBearerTokenResolver implements BearerTokenResolver {
 			return null;
 		}
 
-		final String authorizationHeaderToken = resolveFromAuthorizationHeader(request);
+		final String authorizationHeaderToken = AuthUtils.extractHeaderToken(request);
 		final String parameterToken = isParameterTokenSupportedForRequest(request)
 				? resolveFromRequestParameters(request) : null;
 		if (authorizationHeaderToken != null) {
@@ -70,19 +65,6 @@ public class CustomBearerTokenResolver implements BearerTokenResolver {
 			return parameterToken;
 		}
 		return null;
-	}
-
-	private String resolveFromAuthorizationHeader(HttpServletRequest request) {
-		String authorization = request.getHeader(this.bearerTokenHeaderName);
-		if (!StringUtils.startsWithIgnoreCase(authorization, "bearer")) {
-			return null;
-		}
-		Matcher matcher = authorizationPattern.matcher(authorization);
-		if (!matcher.matches()) {
-			BearerTokenError error = BearerTokenErrors.invalidToken("Bearer token is malformed");
-			throw new OAuth2AuthenticationException(error);
-		}
-		return matcher.group("token");
 	}
 
 	private static String resolveFromRequestParameters(HttpServletRequest request) {

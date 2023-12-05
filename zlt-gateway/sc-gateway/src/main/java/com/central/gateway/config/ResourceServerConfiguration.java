@@ -2,6 +2,7 @@ package com.central.gateway.config;
 
 import com.central.gateway.auth.*;
 import com.central.oauth2.common.component.CustomReactiveAuthorizationServiceIntrospector;
+import com.central.oauth2.common.component.CustomServerBearerTokenAuthConverter;
 import com.central.oauth2.common.config.BaseSecurityConfig;
 import com.central.oauth2.common.properties.SecurityProperties;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +14,6 @@ import org.springframework.security.config.annotation.web.reactive.EnableWebFlux
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.oauth2.server.resource.authentication.OpaqueTokenReactiveAuthenticationManager;
-import org.springframework.security.oauth2.server.resource.web.server.authentication.ServerBearerTokenAuthenticationConverter;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.ServerAuthenticationEntryPoint;
 import org.springframework.security.web.server.authentication.AuthenticationWebFilter;
@@ -58,17 +58,19 @@ public class ResourceServerConfiguration {
                     .anyExchange().access(permissionAuthManager);
         });
 
-        http.addFilterAt(this.getAuthWebFilter(authenticationEntryPoint)
+        http.addFilterAt(this.getAuthWebFilter(authenticationEntryPoint, securityProperties)
                 , SecurityWebFiltersOrder.AUTHENTICATION);
 
         return http.build();
     }
 
-    private AuthenticationWebFilter getAuthWebFilter(ServerAuthenticationEntryPoint authenticationEntryPoint) {
+    private AuthenticationWebFilter getAuthWebFilter(ServerAuthenticationEntryPoint authenticationEntryPoint
+                , SecurityProperties securityProperties) {
         OpaqueTokenReactiveAuthenticationManager authenticationManager =
                 new OpaqueTokenReactiveAuthenticationManager(
                         new CustomReactiveAuthorizationServiceIntrospector());
-        ServerBearerTokenAuthenticationConverter authenticationConverter = new ServerBearerTokenAuthenticationConverter();
+        CustomServerBearerTokenAuthConverter authenticationConverter =
+                new CustomServerBearerTokenAuthConverter(securityProperties);
         authenticationConverter.setAllowUriQueryParameter(true);
 
         AuthenticationWebFilter oauth2 = new AuthenticationWebFilter(authenticationManager);

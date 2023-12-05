@@ -198,7 +198,7 @@ public interface SecurityConstants {
     /**
      * 客户端ID
      */
-    String CLIENT_ID = "clientId";
+    String CLIENT_ID = "client_id";
 
     /**
      * 用户信息

@@ -9,7 +9,6 @@ import com.central.oauth2.common.exception.CustomOAuth2AuthenticationException;
 import com.central.oauth2.common.token.BaseAuthenticationToken;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,10 +16,13 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.security.oauth2.server.resource.introspection.OAuth2IntrospectionException;
+import org.springframework.util.StringUtils;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 认证授权相关工具类
@@ -38,6 +40,9 @@ public class AuthUtils {
     }
 
     private static final String BASIC_ = "Basic ";
+
+    private static final Pattern authorizationPattern = Pattern.compile("^Bearer (?<token>[a-zA-Z0-9-:._~+/]+=*)$",
+            Pattern.CASE_INSENSITIVE);
 
     /**
      * 获取requet(head/param)中的token
@@ -60,18 +65,14 @@ public class AuthUtils {
      * @param request
      * @return
      */
-    private static String extractHeaderToken(HttpServletRequest request) {
-        Enumeration<String> headers = request.getHeaders(CommonConstant.TOKEN_HEADER);
-        while (headers.hasMoreElements()) {
-            String value = headers.nextElement();
-            if ((value.startsWith(OAuth2AccessToken.TokenType.BEARER.getValue()))) {
-                String authHeaderValue = value.substring(OAuth2AccessToken.TokenType.BEARER.getValue().length()).trim();
-                int commaIndex = authHeaderValue.indexOf(',');
-                if (commaIndex > 0) {
-                    authHeaderValue = authHeaderValue.substring(0, commaIndex);
-                }
-                return authHeaderValue;
-            }
+    public static String extractHeaderToken(HttpServletRequest request) {
+        String authorization = request.getHeader(CommonConstant.TOKEN_HEADER);
+        if (!StringUtils.startsWithIgnoreCase(authorization, "bearer")) {
+            return null;
+        }
+        Matcher matcher = authorizationPattern.matcher(authorization);
+        if (matcher.matches()) {
+            return matcher.group("token");
         }
         return null;
     }
