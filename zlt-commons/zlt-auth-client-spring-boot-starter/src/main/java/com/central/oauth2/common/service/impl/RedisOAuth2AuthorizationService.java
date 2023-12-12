@@ -6,6 +6,7 @@ import com.central.oauth2.common.properties.SecurityProperties;
 import com.central.oauth2.common.token.CustomAccessToken;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.ExpiredObjectListener;
 import org.redisson.api.RBucket;
 import org.redisson.api.RList;
 import org.redisson.api.RedissonClient;
@@ -28,6 +29,11 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 /**
+ * 实现 Redis 存储 OAuth2Authorization 对象
+ * 1. 自动续签token（可配置是否开启）
+ * 2. 增加 client_id_to_access 和 uname_to_access 两个集合，用于查看在线用户
+ * 3. 增加过期监听，删除 client_id_to_access 和 uname_to_access 集合的值
+ *
  * @author: zlt
  * @date: 2023/11/9
  * <p>
@@ -38,7 +44,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationService {
 	private final static SerializationCodec AUTH_CODEC = new SerializationCodec();
-	private final static Long TIMEOUT = 10L;
+	private final static Long STATE_TIMEOUT_MINUTES = 10L;
 
 	private static final String AUTHORIZATION = "token";
 
@@ -46,11 +52,32 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 
 	private final RedissonClient redisson;
 
+	private final ExpiredObjectListener expiredObjectListener = new ExpiredObjectListener() {
+		private final static String KEY_SPLIT = "::";
+		/**
+		 * redis 失效监听，删除集合里的值
+		 * 在 redis.conf 文件中，确保以下设置是启用的：notify-keyspace-events Ex
+		 * 监听的key格式为：token::access_token::${clientId}::${username}::${access_token}
+		 * 	例如：token::access_token::webApp::admin::q7ySjsjZoinAx0zUJADqV9P1VmCwYmQDdemwOuhDHjNXVmkzkvquMk_vUBX_Yz40JModOhUwixu-ICH5hti50-KXngBgkn_V1pxu-PZ1YGNkBIDXneE0z4WYx6uFIVHS
+		 */
+		@Override
+		public void onExpired(String name) {
+			String[] keyArr = name.split(KEY_SPLIT);
+			if (keyArr.length == 5) {
+				String clientId = keyArr[2];
+				String username = keyArr[3];
+				String accessToken = keyArr[4];
+				redisListDelete(getClientIdListKey(clientId), accessToken);
+				redisListDelete(getUnameListKey(clientId, username), accessToken);
+			}
+		}
+	};
+
 	@Override
 	public void save(OAuth2Authorization authorization) {
 		if (isState(authorization)) {
 			String token = authorization.getAttribute("state");
-			this.redisBucketSet(OAuth2ParameterNames.STATE, token, authorization, Duration.ofMinutes(TIMEOUT));
+			this.redisBucketSet(OAuth2ParameterNames.STATE, token, authorization, Duration.ofMinutes(STATE_TIMEOUT_MINUTES));
 		}
 
 		if (isCode(authorization)) {
@@ -76,9 +103,22 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 	}
 
 	private Duration saveAccessToken(OAuth2Authorization authorization) {
+		return this.saveAccessToken(authorization, false);
+	}
+
+	private Duration saveAccessToken(OAuth2Authorization authorization, boolean isRenew) {
 		OAuth2AccessToken accessToken = authorization.getAccessToken().getToken();
 		Duration duration = this.getExpireSeconds(accessToken);
 		this.redisBucketSet(OAuth2ParameterNames.ACCESS_TOKEN, accessToken.getTokenValue(), authorization, duration);
+		RBucket<Integer> listenKeyBucket = redisson.getBucket(buildListenerKey(
+				OAuth2ParameterNames.ACCESS_TOKEN, authorization.getRegisteredClientId()
+				, authorization.getPrincipalName(), accessToken.getTokenValue()));
+		if (!isRenew) {
+			listenKeyBucket.set(1, duration);
+			listenKeyBucket.addListener(expiredObjectListener);
+		} else {
+			listenKeyBucket.expire(duration);
+		}
 		return duration;
 	}
 
@@ -94,7 +134,7 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 
 		if (isCode(authorization)) {
 			OAuth2Authorization.Token<OAuth2AuthorizationCode> authorizationCode = authorization
-				.getToken(OAuth2AuthorizationCode.class);
+					.getToken(OAuth2AuthorizationCode.class);
 			OAuth2AuthorizationCode authorizationCodeToken = authorizationCode.getToken();
 			keys.add(buildKey(OAuth2ParameterNames.CODE, authorizationCodeToken.getTokenValue()));
 		}
@@ -154,13 +194,17 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 		return String.format("%s::%s::%s", AUTHORIZATION, type, id);
 	}
 
+	private String buildListenerKey(String type, String clientId, String username, String tokenValue) {
+		return String.format("%s::%s::%s::%s::%s", AUTHORIZATION, type, clientId, username, tokenValue);
+	}
+
 	private static boolean isState(OAuth2Authorization authorization) {
 		return Objects.nonNull(authorization.getAttribute("state"));
 	}
 
 	private static boolean isCode(OAuth2Authorization authorization) {
 		OAuth2Authorization.Token<OAuth2AuthorizationCode> authorizationCode = authorization
-			.getToken(OAuth2AuthorizationCode.class);
+				.getToken(OAuth2AuthorizationCode.class);
 		return Objects.nonNull(authorizationCode);
 	}
 
@@ -228,10 +272,6 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 		return SecurityConstants.ACCESS_TOKEN_VALIDITY_SECONDS;
 	}
 
-	private String clientRedisKey(String clientId) {
-		return SecurityConstants.CACHE_CLIENT_KEY + ":" + clientId;
-	}
-
 	/**
 	 * 更新 access_token 的过期时间
 	 */
@@ -247,7 +287,7 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 			Map<Class<? extends OAuth2Token>, OAuth2Authorization.Token<?>> newTokens = new HashMap<>(tokens);
 			newTokens.put(OAuth2AccessToken.class, newToken);
 			tokensField.set(authorization, Collections.unmodifiableMap(newTokens));
-			this.saveAccessToken(authorization);
+			this.saveAccessToken(authorization, true);
 			// 更新集合中的过期时间
 			this.updateListExpiresAt(this.getClientIdListKey(authorization), Duration.ofSeconds(validitySeconds));
 			this.updateListExpiresAt(this.getUnameListKey(authorization), Duration.ofSeconds(validitySeconds));
@@ -286,7 +326,6 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 	private RBucket<OAuth2Authorization> redisBucketSet(String type, String id, OAuth2Authorization value, Duration duration) {
 		RBucket<OAuth2Authorization> rBucket = redisson.getBucket(buildKey(type, id), AUTH_CODEC);
 		rBucket.set(value, duration);
-
 		return rBucket;
 	}
 
@@ -318,5 +357,9 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 		RList<String> rList = redisson.getList(key);
 		rList.remove(value);
 		return rList;
+	}
+
+	private String clientRedisKey(String clientId) {
+		return SecurityConstants.CACHE_CLIENT_KEY + ":" + clientId;
 	}
 }

@@ -1,5 +1,6 @@
 package com.central.oauth2.common.properties;
 
+import com.central.common.constant.SecurityConstants;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,11 +24,11 @@ public class PermitProperties {
      * 监控中心和swagger需要访问的url
      */
     private static final String[] ENDPOINTS = {
-            "/login.html", "/validata/code/**",
-            "/v3/api-docs/**", "/*/v3/api-docs/**",
-            "/doc.html", "/swagger-ui.html", "/swagger-ui/**",
+            SecurityConstants.LOGIN_PAGE,
+            SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/**",
+            "/doc.html", "/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**",
             "/actuator/**", "/webjars/**", "/druid/**",
-            "/css/**", "/js/**", "/images/**", "/favicon.ico", "/error",
+            "/css/**", "/js/**", "/images/**", "/favicon.ico", "/error"
     };
 
     /**

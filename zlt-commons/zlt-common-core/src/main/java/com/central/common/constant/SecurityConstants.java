@@ -9,6 +9,8 @@ package com.central.common.constant;
  * Github: https://github.com/zlt2000
  */
 public interface SecurityConstants {
+    String PROJECT_LICENSE= "http://zlt2000.gitee.io/";
+
     /**
      * 用户信息分隔符
      */
@@ -63,6 +65,8 @@ public interface SecurityConstants {
      * oauth token
      */
     String OAUTH_TOKEN_URL = "/oauth/token";
+
+    String OAUTH_CHECK_TOKEN_URL = "/oauth/check_token";
 
     /**
      * 默认的处理验证码的url前缀
@@ -161,11 +165,11 @@ public interface SecurityConstants {
     /**
      * redis中应用对应的token集合的key
      */
-    String REDIS_CLIENT_ID_TO_ACCESS = "client_id_to_access:";
+    String REDIS_CLIENT_ID_TO_ACCESS = "client_id_to_access";
     /**
      * redis中用户名对应的token集合的key
      */
-    String REDIS_UNAME_TO_ACCESS = "uname_to_access:";
+    String REDIS_UNAME_TO_ACCESS = "uname_to_access";
     /**
      * rsa公钥
      */

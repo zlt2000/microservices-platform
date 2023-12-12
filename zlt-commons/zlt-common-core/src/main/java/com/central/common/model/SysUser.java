@@ -1,6 +1,7 @@
 package com.central.common.model;
 
 import java.util.List;
+import java.util.Set;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
@@ -39,4 +40,6 @@ public class SysUser extends SuperEntity {
 	private String oldPassword;
 	@TableField(exist = false)
 	private String newPassword;
+	@TableField(exist = false)
+	private Set<String> permissions;
 }

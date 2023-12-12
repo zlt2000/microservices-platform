@@ -5,7 +5,7 @@ import com.central.common.constant.CommonConstant;
 import com.central.common.constant.SecurityConstants;
 import com.central.common.model.LoginAppUser;
 import com.central.common.utils.LoginUserUtils;
-import com.central.oauth2.common.exception.CustomOAuth2AuthenticationException;
+import com.central.oauth2.common.exception.CustomOAuth2AuthorizationException;
 import com.central.oauth2.common.token.BaseAuthenticationToken;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -115,7 +115,7 @@ public class AuthUtils {
     public static String[] extractClient(HttpServletRequest request) {
         String header = request.getHeader("Authorization");
         if (header == null || !header.startsWith(BASIC_)) {
-            throw new CustomOAuth2AuthenticationException("The client information in the request header is empty");
+            throw new CustomOAuth2AuthorizationException("The client information in the request header is empty");
         }
         return extractHeaderClient(header);
     }
@@ -123,7 +123,7 @@ public class AuthUtils {
     public static String extractClientId(HttpServletRequest request) {
         String header = request.getHeader("Authorization");
         if (header == null || !header.startsWith(BASIC_)) {
-            throw new CustomOAuth2AuthenticationException("The client information in the request header is empty");
+            throw new CustomOAuth2AuthorizationException("The client information in the request header is empty");
         }
         String[] clientArr = extractHeaderClient(header);
         return clientArr[0];
@@ -140,7 +140,7 @@ public class AuthUtils {
         String clientStr = new String(decoded, StandardCharsets.UTF_8);
         String[] clientArr = clientStr.split(":");
         if (clientArr.length != 2) {
-            throw new CustomOAuth2AuthenticationException("Invalid basic authentication token");
+            throw new CustomOAuth2AuthorizationException("Invalid basic authentication token");
         }
         return clientArr;
     }

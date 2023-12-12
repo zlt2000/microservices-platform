@@ -2,13 +2,13 @@ package com.central.oauth.controller;
 
 import com.central.common.model.PageResult;
 import com.central.common.model.Result;
-import com.central.oauth.dto.ClientDto;
 import com.central.oauth.model.Client;
-import com.central.oauth.service.IClientService;
+import com.central.oauth.service.impl.RegisteredClientService;
+import com.central.oauth2.common.pojo.ClientDto;
 import com.google.common.collect.Maps;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,26 +25,26 @@ import java.util.Map;
 @Tag(name = "应用")
 @RestController
 @RequestMapping("/clients")
+@RequiredArgsConstructor
 public class ClientController {
-    @Autowired
-    private IClientService clientService;
+    private final RegisteredClientService clientService;
 
     @GetMapping("/list")
     @Operation(summary = "应用列表")
-    public PageResult<Client> list(@RequestParam Map<String, Object> params) {
+    public PageResult<ClientDto> list(@RequestParam Map<String, Object> params) {
         return clientService.listClient(params, true);
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "根据id获取应用")
-    public Client get(@PathVariable Long id) {
+    public ClientDto get(@PathVariable Long id) {
         return clientService.getById(id);
     }
 
     @GetMapping("/all")
     @Operation(summary = "所有应用")
-    public Result<List<Client>> allClient() {
-        PageResult<Client> page = clientService.listClient(Maps.newHashMap(), false);
+    public Result<List<ClientDto>> allClient() {
+        PageResult<ClientDto> page = clientService.listClient(Maps.newHashMap(), false);
         return Result.succeed(page.getData());
     }
 
@@ -56,7 +56,8 @@ public class ClientController {
 
     @PostMapping("/saveOrUpdate")
     @Operation(summary = "保存或者修改应用")
-    public Result saveOrUpdate(@RequestBody ClientDto clientDto) throws Exception {
-        return clientService.saveClient(clientDto);
+    public Result<String> saveOrUpdate(@RequestBody Client client) throws Exception {
+        clientService.saveClient(client);
+        return Result.succeed("操作成功");
     }
 }

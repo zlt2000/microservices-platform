@@ -2,7 +2,6 @@ package com.central.common.feign;
 
 import com.central.common.constant.ServiceNameConstants;
 import com.central.common.feign.fallback.UserServiceFallbackFactory;
-import com.central.common.model.LoginAppUser;
 import com.central.common.model.SysRole;
 import com.central.common.model.SysUser;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -34,7 +33,7 @@ public interface UserService {
      * @return
      */
     @GetMapping(value = "/users-anon/login", params = "username")
-    LoginAppUser findByUsername(@RequestParam("username") String username);
+    SysUser findByUsername(@RequestParam("username") String username);
 
     /**
      * 通过手机号查询用户、角色信息
@@ -42,7 +41,7 @@ public interface UserService {
      * @param mobile 手机号
      */
     @GetMapping(value = "/users-anon/mobile", params = "mobile")
-    LoginAppUser findByMobile(@RequestParam("mobile") String mobile);
+    SysUser findByMobile(@RequestParam("mobile") String mobile);
 
     /**
      * 根据OpenId查询用户信息
@@ -50,7 +49,7 @@ public interface UserService {
      * @param openId openId
      */
     @GetMapping(value = "/users-anon/openId", params = "openId")
-    LoginAppUser findByOpenId(@RequestParam("openId") String openId);
+    SysUser findByOpenId(@RequestParam("openId") String openId);
 
 
     /**

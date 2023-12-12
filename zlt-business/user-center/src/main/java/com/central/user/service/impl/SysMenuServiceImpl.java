@@ -66,6 +66,10 @@ public class SysMenuServiceImpl extends SuperServiceImpl<SysMenuMapper, SysMenu>
 	public List<SysMenu> findByRoleCodes(Set<String> roleCodes, Integer type) {
 		return roleMenuService.findMenusByRoleCodes(roleCodes, type);
 	}
+	@Override
+	public List<SysMenu> findByUserId(Long userId, Integer type) {
+		return baseMapper.findByUserId(userId, type);
+	}
 
     /**
      * 查询所有菜单

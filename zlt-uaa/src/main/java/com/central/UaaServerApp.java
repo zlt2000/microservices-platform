@@ -14,7 +14,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @MapperScan(basePackages = "com.central.oauth.mapper")
 @EnableFeignInterceptor
 @EnableDiscoveryClient
-//@EnableRedisHttpSession
 @SpringBootApplication
 public class UaaServerApp {
 	public static void main(String[] args) {

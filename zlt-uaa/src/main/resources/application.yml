@@ -33,10 +33,6 @@ knife4j:
     swagger-model-name: 认证中心接口文档
 
 zlt:
-  oauth2:
-    token:
-      store:
-        type: redis
   security:
     code:
       # 忽略验证码的应用编号

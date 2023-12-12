@@ -97,10 +97,6 @@ knife4j:
         context-path: /api-file
 
 zlt:
-  oauth2:
-    token:
-      store:
-        type: redis
   security:
     ignore:
       # 忽略认证的地址
@@ -111,7 +107,7 @@ zlt:
         /api-uaa/images/**,
         /api-uaa/js/**,
         /login.html,
-        /user/login,
+        /user/login, /oauth/authorize,
         /api-uaa/tokens/key
     auth:
       urlPermission:

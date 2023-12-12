@@ -6,6 +6,8 @@ import com.central.common.constant.SecurityConstants;
 import com.central.common.context.LoginUserContextHolder;
 import com.central.common.feign.UserService;
 import com.central.common.model.LoginAppUser;
+import com.central.common.model.SysRole;
+import com.central.common.model.SysUser;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -49,7 +51,10 @@ public class LoginUserUtils {
             if (StrUtil.isAllNotBlank(username, userId)) {
                 if (isFull) {
                     UserService userService = SpringUtil.getBean(UserService.class);
-                    user = userService.findByUsername(username);
+                    SysUser sysUser = userService.findByUsername(username);
+                    if (sysUser != null) {
+                        return getLoginAppUser(sysUser);
+                    }
                 } else {
                     Collection<GrantedAuthority> authorities = new HashSet<>();
                     if (StrUtil.isNotBlank(roles)) {
@@ -110,6 +115,20 @@ public class LoginUserUtils {
         LoginAppUser user = getUser(authentication);
         LoginUserContextHolder.setUser(user);
         return user;
+    }
+
+    public static LoginAppUser getLoginAppUser(SysUser sysUser) {
+        List<SysRole> sysRoles = sysUser.getRoles();
+        Collection<GrantedAuthority> authorities = new HashSet<>();
+        if (sysRoles != null) {
+            sysRoles.forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getCode())));
+        }
+
+        return new LoginAppUser(sysUser.getId()
+                , sysUser.getUsername(), sysUser.getPassword()
+                , sysUser.getMobile(), sysUser.getPermissions()
+                , sysUser.getEnabled(), true, true, true
+                , authorities);
     }
 
     @SuppressWarnings("unchecked")

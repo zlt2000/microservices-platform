@@ -21,8 +21,6 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,48 +53,43 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
     private DistributedLock lock;
 
     @Override
-    public LoginAppUser findByUsername(String username) {
+    public SysUser findByUsername(String username) {
         SysUser sysUser = this.selectByUsername(username);
-        return getLoginAppUser(sysUser);
+        setUserPermission(sysUser);
+        return sysUser;
     }
 
     @Override
-    public LoginAppUser findByOpenId(String username) {
+    public SysUser findByOpenId(String username) {
         SysUser sysUser = this.selectByOpenId(username);
-        return getLoginAppUser(sysUser);
+        setUserPermission(sysUser);
+        return sysUser;
     }
 
     @Override
-    public LoginAppUser findByMobile(String username) {
+    public SysUser findByMobile(String username) {
         SysUser sysUser = this.selectByMobile(username);
-        return getLoginAppUser(sysUser);
+        setUserPermission(sysUser);
+        return sysUser;
     }
 
     @Override
-    public LoginAppUser getLoginAppUser(SysUser sysUser) {
+    public void setUserPermission(SysUser sysUser) {
         if (sysUser != null) {
             List<SysRole> sysRoles = roleUserService.findRolesByUserId(sysUser.getId());
-            Collection<GrantedAuthority> authorities = new HashSet<>();
-            if (sysRoles != null) {
-                sysRoles.forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getCode())));
-            }
+            sysUser.setRoles(sysRoles);
 
-            Set<String> permissions = null;
+            Set<String> permissions;
             if (!CollectionUtils.isEmpty(sysRoles)) {
                 Set<Long> roleIds = sysRoles.stream().map(SuperEntity::getId).collect(Collectors.toSet());
                 List<SysMenu> menus = roleMenuMapper.findMenusByRoleIds(roleIds, CommonConstant.PERMISSION);
                 if (!CollectionUtils.isEmpty(menus)) {
                     permissions = menus.stream().map(p -> p.getPath())
                             .collect(Collectors.toSet());
+                    sysUser.setPermissions(permissions);
                 }
             }
-            return new LoginAppUser(sysUser.getId()
-                    , sysUser.getUsername(), sysUser.getPassword()
-                    , sysUser.getMobile(), permissions
-                    , sysUser.getEnabled(), true, true, true
-                    , authorities);
         }
-        return null;
     }
 
     /**

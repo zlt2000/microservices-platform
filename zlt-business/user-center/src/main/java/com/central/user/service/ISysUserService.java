@@ -8,7 +8,6 @@ import com.central.common.service.ISuperService;
 import com.central.user.model.SysUserExcel;
 import com.central.common.model.PageResult;
 import com.central.common.model.Result;
-import com.central.common.model.LoginAppUser;
 import com.central.common.model.SysRole;
 import com.central.common.model.SysUser;
 
@@ -24,18 +23,18 @@ public interface ISysUserService extends ISuperService<SysUser> {
 	 * @param username
 	 * @return
 	 */
-	LoginAppUser findByUsername(String username);
+	SysUser findByUsername(String username);
 
-	LoginAppUser findByOpenId(String username);
+	SysUser findByOpenId(String username);
 
-	LoginAppUser findByMobile(String username);
+	SysUser findByMobile(String username);
 
 	/**
-	 * 通过SysUser 转换为 LoginAppUser，把roles和permissions也查询出来
+	 * 通过SysUser 把roles和permissions也查询出来
 	 * @param sysUser
 	 * @return
 	 */
-	LoginAppUser getLoginAppUser(SysUser sysUser);
+	void setUserPermission(SysUser sysUser);
 
 	/**
 	 * 根据用户名查询用户

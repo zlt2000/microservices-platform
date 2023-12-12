@@ -3,10 +3,8 @@ package com.central.user.controller;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ObjectUtil;
-import com.central.common.annotation.LoginUser;
 import com.central.common.constant.CommonConstant;
 import com.central.common.context.LoginUserContextHolder;
 import com.central.common.model.*;
@@ -165,12 +163,9 @@ public class SysMenuController {
      */
     @GetMapping("/current")
     @Operation(summary = "查询当前用户菜单")
-    public List<SysMenu> findMyMenu(@LoginUser SysUser user) {
-        List<SysRole> roles = user.getRoles();
-        if (CollectionUtil.isEmpty(roles)) {
-            return Collections.emptyList();
-        }
-        List<SysMenu> menus = menuService.findByRoleCodes(roles.stream().map(SysRole::getCode).collect(Collectors.toSet()), CommonConstant.MENU);
+    public List<SysMenu> findMyMenu() {
+        LoginAppUser user = LoginUserContextHolder.getUser();
+        List<SysMenu> menus = menuService.findByUserId(user.getId(), CommonConstant.MENU);
         return treeBuilder(menus);
     }
 }

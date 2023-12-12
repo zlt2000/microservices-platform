@@ -1,7 +1,6 @@
 package com.central.common.feign.fallback;
 
 import com.central.common.feign.UserService;
-import com.central.common.model.LoginAppUser;
 import com.central.common.model.SysRole;
 import com.central.common.model.SysUser;
 import org.springframework.cloud.openfeign.FallbackFactory;
@@ -28,21 +27,21 @@ public class UserServiceFallbackFactory implements FallbackFactory<UserService> 
             }
 
             @Override
-            public LoginAppUser findByUsername(String username) {
+            public SysUser findByUsername(String username) {
                 log.error("通过用户名查询用户异常:{}", username, throwable);
-                return new LoginAppUser();
+                return new SysUser();
             }
 
             @Override
-            public LoginAppUser findByMobile(String mobile) {
+            public SysUser findByMobile(String mobile) {
                 log.error("通过手机号查询用户异常:{}", mobile, throwable);
-                return new LoginAppUser();
+                return new SysUser();
             }
 
             @Override
-            public LoginAppUser findByOpenId(String openId) {
+            public SysUser findByOpenId(String openId) {
                 log.error("通过openId查询用户异常:{}", openId, throwable);
-                return new LoginAppUser();
+                return new SysUser();
             }
 
             /**

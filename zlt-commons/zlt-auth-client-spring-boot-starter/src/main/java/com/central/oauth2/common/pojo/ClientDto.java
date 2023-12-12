@@ -35,14 +35,11 @@ public class ClientDto implements Serializable {
     private Integer refreshTokenValiditySeconds = 28800;
     private String additionalInformation = "{}";
     private String autoapprove = "true";
+
     /**
-     * 是否支持id_token
+     * token格式: reference 引用令牌(不透明), self-contained 自包含令牌(jwt))
      */
-    private Boolean supportIdToken = true;
-    /**
-     * id_token有效时间(s)
-     */
-    private Integer idTokenValiditySeconds = 60;
+    private String tokenFormat = "reference";
 
     private Long creatorId;
 }

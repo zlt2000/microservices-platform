@@ -56,6 +56,7 @@ public class DefaultResourceServerConf {
                 // 避免iframe同源无法登录许iframe
                 .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
         ).csrf(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED));
 

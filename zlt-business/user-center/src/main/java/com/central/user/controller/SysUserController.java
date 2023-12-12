@@ -8,10 +8,10 @@ import java.util.Set;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
-import com.central.common.annotation.LoginUser;
 import com.central.common.constant.CommonConstant;
 import com.central.common.model.*;
 import com.central.common.utils.ExcelUtil;
+import com.central.common.utils.LoginUserUtils;
 import com.central.log.annotation.AuditLog;
 import com.central.search.client.service.IQueryService;
 import com.central.search.model.LogicDelDto;
@@ -65,8 +65,8 @@ public class SysUserController {
      */
     @Operation(summary = "根据access_token当前登录用户")
     @GetMapping("/users/current")
-    public Result<LoginAppUser> getLoginAppUser(@LoginUser(isFull = true) SysUser user) {
-        return Result.succeed(appUserService.getLoginAppUser(user));
+    public Result<LoginAppUser> getLoginAppUser() {
+        return Result.succeed(LoginUserUtils.getCurrentUser(true));
     }
 
     /**
@@ -84,7 +84,7 @@ public class SysUserController {
      */
     @GetMapping(value = "/users-anon/login", params = "username")
     @Operation(summary = "根据用户名查询用户")
-    public LoginAppUser findByUsername(String username) {
+    public SysUser findByUsername(String username) {
         return appUserService.findByUsername(username);
     }
 
@@ -95,7 +95,7 @@ public class SysUserController {
      */
     @GetMapping(value = "/users-anon/mobile", params = "mobile")
     @Operation(summary = "根据手机号查询用户")
-    public LoginAppUser findByMobile(String mobile) {
+    public SysUser findByMobile(String mobile) {
         return appUserService.findByMobile(mobile);
     }
 
@@ -106,7 +106,7 @@ public class SysUserController {
      */
     @GetMapping(value = "/users-anon/openId", params = "openId")
     @Operation(summary = "根据OpenId查询用户")
-    public LoginAppUser findByOpenId(String openId) {
+    public SysUser findByOpenId(String openId) {
         return appUserService.findByOpenId(openId);
     }
 
