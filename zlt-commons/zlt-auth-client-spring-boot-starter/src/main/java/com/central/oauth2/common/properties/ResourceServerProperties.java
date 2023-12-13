@@ -16,7 +16,7 @@ import lombok.Setter;
 @Getter
 public class ResourceServerProperties {
     /**
-     * token格式:
+     * 令牌类型:
      *  - redis: 通过 redis 来验证
      *  - inMemory: 通过本地内存来验证
      *  - jwt: 自包含令牌，自己解析内容

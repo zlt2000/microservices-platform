@@ -50,8 +50,7 @@ public class LoginUserUtils {
 
             if (StrUtil.isAllNotBlank(username, userId)) {
                 if (isFull) {
-                    UserService userService = SpringUtil.getBean(UserService.class);
-                    SysUser sysUser = userService.findByUsername(username);
+                    SysUser sysUser = getSysUser(username);
                     if (sysUser != null) {
                         return getLoginAppUser(sysUser);
                     }
@@ -73,6 +72,14 @@ public class LoginUserUtils {
         HttpServletRequest contextRequest = requestAttributes.getRequest();
         if (contextRequest != null) {
             return LoginUserUtils.getCurrentUser(contextRequest, isFull);
+        }
+        return null;
+    }
+
+    public static SysUser getCurrentSysUser() {
+        LoginAppUser appUser = getCurrentUser(false);
+        if (appUser != null) {
+            return getSysUser(appUser.getUsername());
         }
         return null;
     }
@@ -150,5 +157,10 @@ public class LoginUserUtils {
             return result;
         }
         return null;
+    }
+
+    private static SysUser getSysUser(String username) {
+        UserService userService = SpringUtil.getBean(UserService.class);
+        return userService.findByUsername(username);
     }
 }

@@ -17,6 +17,7 @@ import java.io.Serializable;
 public class ClientDto implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
+    private String id;
     private String clientId;
     /**
      * 应用名称
@@ -37,7 +38,7 @@ public class ClientDto implements Serializable {
     private String autoapprove = "true";
 
     /**
-     * token格式: reference 引用令牌(不透明), self-contained 自包含令牌(jwt))
+     * 令牌类型: reference 引用令牌(不透明), self-contained 自包含令牌(jwt))
      */
     private String tokenFormat = "reference";
 

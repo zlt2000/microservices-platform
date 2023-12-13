@@ -30,7 +30,8 @@ public class RegisteredClientService {
 
     public void saveClient(Client client) throws Exception {
         clientService.saveClient(client);
-        redisson.getBucket(clientRedisKey(client.getClientId())).set(client);
+        ClientDto clientDto = BeanUtil.copyProperties(client, ClientDto.class);
+        redisson.getBucket(clientRedisKey(client.getClientId())).set(clientDto);
     }
 
     public PageResult<ClientDto> listClient(Map<String, Object> params, boolean isPage) {

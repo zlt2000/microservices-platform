@@ -33,7 +33,7 @@ public class Client extends SuperEntity {
    private String additionalInformation = "{}";
    private String autoapprove = "true";
    /**
-    * token格式: reference 引用令牌(不透明), self-contained 自包含令牌(jwt))
+    * 令牌类型: reference 引用令牌(不透明), self-contained 自包含令牌(jwt))
     */
    private String tokenFormat = "reference";
 

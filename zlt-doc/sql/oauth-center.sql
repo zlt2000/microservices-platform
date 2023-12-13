@@ -22,7 +22,7 @@ CREATE TABLE `oauth_client_details`  (
   `create_time` datetime(0) NULL DEFAULT NULL,
   `update_time` datetime(0) NULL DEFAULT NULL,
   `client_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '' COMMENT '应用名称',
-  `token_format` varchar(10) not null DEFAULT 'reference' COMMENT 'token格式: reference 引用令牌(不透明), self-contained 自包含令牌(jwt))',
+  `token_format` varchar(20) not null DEFAULT 'reference' COMMENT 'token格式: reference 引用令牌(不透明), self-contained 自包含令牌(jwt))',
   `creator_id` int(11) COMMENT '创建人id',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;

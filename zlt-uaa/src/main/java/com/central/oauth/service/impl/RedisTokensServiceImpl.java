@@ -67,7 +67,7 @@ public class RedisTokensServiceImpl implements ITokensService {
                 if (authorization != null) {
                     OAuth2AccessToken accessToken = authorization.getAccessToken().getToken();
                     if (accessToken != null && accessToken.getExpiresAt() != null) {
-                        tokenVo.setExpiration(Date.from(accessToken.getExpiresAt().plus(8, ChronoUnit.HOURS)));
+                        tokenVo.setExpiration(Date.from(accessToken.getExpiresAt()));
                     }
                     tokenVo.setUsername(authorization.getPrincipalName());
                     tokenVo.setClientId(authorization.getRegisteredClientId());
