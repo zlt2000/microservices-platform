@@ -162,38 +162,20 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
           fieldProps={{suffix:'秒'}}
         />
         <ProFormRadio.Group
-          name="supportIdToken"
-          label="支持ID令牌"
+          name="tokenFormat"
+          label="令牌类型"
           width="md"
           colProps={{ span: 12 }}
           options={[
             {
-              label: '是',
-              value: true,
+              label: '引用令牌(不透明)',
+              value: 'reference',
             },
             {
-              label: '否',
-              value: false,
+              label: '自包含令牌(jwt)',
+              value: 'self-contained',
             },
           ]}
-        />
-        <ProFormText
-          rules={[
-            {
-              required: true,
-              message: 'ID时效不为空',
-            },
-            {
-              pattern: new RegExp(/^[1-9]\d*$/, 'g'),
-              message: 'ID时效必须为整数',
-            },
-          ]}
-          width="md"
-          colProps={{ span: 12 }}
-          name="idTokenValiditySeconds"
-          label="ID时效(s)"
-          placeholder="输入ID时效"
-          fieldProps={{suffix:'秒'}}
         />
       </ProForm.Group>
     </ModalForm>
