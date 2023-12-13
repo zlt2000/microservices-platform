@@ -68,6 +68,8 @@ public interface SecurityConstants {
 
     String OAUTH_CHECK_TOKEN_URL = "/oauth/check_token";
 
+    String OAUTH_JWKS_URL = "/oauth/jwks";
+
     /**
      * 默认的处理验证码的url前缀
      */

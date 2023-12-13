@@ -93,6 +93,7 @@ public class SecurityConfig {
 				.authorizationEndpoint(SecurityConstants.AUTH_CODE_URL)
 				.tokenEndpoint(SecurityConstants.OAUTH_TOKEN_URL)
 				.tokenIntrospectionEndpoint(SecurityConstants.OAUTH_CHECK_TOKEN_URL)
+				.jwkSetEndpoint(SecurityConstants.OAUTH_JWKS_URL)
 				.build();
 	}
 
