@@ -3,7 +3,10 @@ package com.central.gateway.monitor.config;
 import de.codecentric.boot.admin.server.config.AdminServerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
@@ -25,20 +28,19 @@ public class SecuritySecureConfig {
         successHandler.setTargetUrlParameter("redirectTo");
         successHandler.setDefaultTargetUrl(adminContextPath + "/");
 
-        http.authorizeHttpRequests()
+        http.authorizeHttpRequests(authorizeRequests -> {
+            // 授权服务器关闭basic认证
+            authorizeRequests
                     .requestMatchers(adminContextPath + "/assets/**").permitAll()
                     .requestMatchers(adminContextPath + "/login").permitAll()
-                    .anyRequest().authenticated()
-                .and()
-                    .formLogin().loginPage(adminContextPath + "/login").successHandler(successHandler).and()
-                    .logout().logoutUrl(adminContextPath + "/logout").and()
-                    .httpBasic()
-                .and()
-                    .headers()
-                    .frameOptions()
-                    .disable()
-                .and()
-                    .csrf().disable();
+                    .anyRequest().authenticated();
+        })
+        .formLogin(formLogin -> formLogin.loginPage(adminContextPath + "/login").successHandler(successHandler))
+        .logout(logout -> logout.logoutUrl(adminContextPath + "/logout"))
+        .httpBasic(Customizer.withDefaults())
+        .headers(header -> header.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
+        .csrf(AbstractHttpConfigurer::disable);
+
         return http.build();
     }
 }
