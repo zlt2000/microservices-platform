@@ -2,6 +2,7 @@ package com.central.oauth.support.base;
 
 import cn.hutool.core.util.StrUtil;
 import com.central.common.constant.SecurityConstants;
+import com.central.common.context.TenantContextHolder;
 import com.central.oauth2.common.token.BaseAuthenticationToken;
 import lombok.Getter;
 import lombok.Setter;
@@ -74,7 +75,9 @@ public abstract class BaseAuthenticationProvider implements AuthenticationProvid
         }
 
         // 执行登录验证逻辑
+        TenantContextHolder.setTenant(registeredClient.getClientId());
         Authentication principal = this.getPrincipal(authentication);
+        TenantContextHolder.clear();
 
         String accountType = (String)authToken.getAdditionalParameters().get(SecurityConstants.ACCOUNT_TYPE_PARAM_NAME);
         if (StrUtil.isEmpty(accountType)) {

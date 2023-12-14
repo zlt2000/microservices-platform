@@ -108,7 +108,8 @@ zlt:
         /api-uaa/js/**,
         /login.html,
         /user/login, /oauth/authorize,
-        /api-uaa/tokens/key
+        /api-uaa/tokens/key,
+        /*/v3/api-docs/**
     auth:
       urlPermission:
         #是否开启url级别权限

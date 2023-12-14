@@ -16,7 +16,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 /**
- * 设置租户id过滤器
+ * 授权码模式登录时设置租户id过滤器
  *
  * @author zlt
  * @date 2020/3/29
