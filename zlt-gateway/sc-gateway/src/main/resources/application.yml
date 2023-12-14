@@ -91,6 +91,14 @@ knife4j:
         service-name: user-center
         url: /api-user/v3/api-docs/default
         context-path: /api-user
+      - name: 授权服务
+        service-name: uaa-server
+        url: /api-uaa/v3/api-docs/default
+        context-path: /api-uaa
+      - name: 搜索服务
+        service-name: search-center
+        url: /api-search/v3/api-docs/default
+        context-path: /api-search
       - name: 文件服务
         service-name: file-center
         url: /api-file/v3/api-docs/default

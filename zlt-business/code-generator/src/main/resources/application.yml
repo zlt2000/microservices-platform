@@ -11,20 +11,12 @@ mybatis-plus:
   typeAliasesPackage: com.central.generator.model
 
 springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-    tags-sorter: alpha
-    operations-sorter: alpha
-  api-docs:
-    path: /v3/api-docs
   group-configs:
     - group: 'code'
       paths-to-match: '/**'
       packages-to-scan: com.central.generator.controller
-  default-flat-param-object: true
 
 knife4j:
   enable: true
   setting:
-    language: zh_cn
     swagger-model-name: 代码生成器接口文档

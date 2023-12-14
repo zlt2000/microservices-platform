@@ -5,22 +5,14 @@ spring:
     password: ${zlt.elasticsearch.password}
 
 springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-    tags-sorter: alpha
-    operations-sorter: alpha
-  api-docs:
-    path: /v3/api-docs
   group-configs:
     - group: 'search'
       paths-to-match: '/**'
       packages-to-scan: com.central.search.controller
-  default-flat-param-object: true
 
 knife4j:
   enable: true
   setting:
-    language: zh_cn
     swagger-model-name: 搜索中心接口文档
 
 zlt:
