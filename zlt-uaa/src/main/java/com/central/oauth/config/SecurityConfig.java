@@ -5,6 +5,7 @@ import com.central.common.constant.SecurityConstants;
 import com.central.common.utils.ResponseUtil;
 import com.central.oauth.component.CustomAccessTokenResponseHttpMessageConverter;
 import com.central.oauth.component.CustomeOAuth2TokenCustomizer;
+import com.central.oauth2.common.properties.SecurityProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.catalina.util.StandardSessionIdGenerator;
 import org.springframework.context.annotation.Bean;
@@ -87,9 +88,9 @@ public class SecurityConfig {
 	 * 授权服务信息配置
 	 */
 	@Bean
-	public AuthorizationServerSettings authorizationServerSettings() {
+	public AuthorizationServerSettings authorizationServerSettings(SecurityProperties securityProperties) {
 		return AuthorizationServerSettings.builder()
-				.issuer(SecurityConstants.PROJECT_LICENSE)
+				.issuer(securityProperties.getAuth().getIssuer())
 				.authorizationEndpoint(SecurityConstants.AUTH_CODE_URL)
 				.tokenEndpoint(SecurityConstants.OAUTH_TOKEN_URL)
 				.tokenIntrospectionEndpoint(SecurityConstants.OAUTH_CHECK_TOKEN_URL)
