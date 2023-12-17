@@ -445,12 +445,12 @@
         <repository>
             <id>releases</id>
             <name>releases Repository</name>
-            <url>http://192.168.28.138:8081/repository/maven-releases/</url>
+            <url>https://192.168.28.138:8081/repository/maven-releases/</url>
         </repository>
 
         <snapshotRepository>
             <id>snapshots</id>
-            <url>http://192.168.28.138:8081/repository/maven-snapshots/</url>
+            <url>https://192.168.28.138:8081/repository/maven-snapshots/</url>
             <uniqueVersion>true</uniqueVersion>
         </snapshotRepository>
     </distributionManagement>
