@@ -87,16 +87,10 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">支持ID令牌</label>
+            <label class="layui-form-label">令牌类型</label>
             <div class="layui-input-block">
-                <input type="radio" name="supportIdToken" value="true" title="是" checked/>
-                <input type="radio" name="supportIdToken" value="false" title="否"/>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">ID时效(s)</label>
-            <div class="layui-input-block">
-                <input name="idTokenValiditySeconds" lay-verify="number" type="text" class="layui-input" maxlength="20" value="60"/>
+                <input type="radio" name="tokenFormat" value="reference" title="引用令牌(不透明)" checked/>
+                <input type="radio" name="tokenFormat" value="self-contained" title="自包含令牌(jwt)"/>
             </div>
         </div>
         <div class="layui-form-item model-form-footer">
@@ -134,10 +128,9 @@
                 }},
                 {field: 'accessTokenValiditySeconds',width:130, sort: true, title: '令牌时效(s)'},
                 {field: 'refreshTokenValiditySeconds',width:130, sort: true, title: '刷新时效(s)'},
-                {width:120, sort: true, title: '支持ID令牌', templet:function (d) {
-                    return d.supportIdToken ? "是" : "否"
+                {width:150, sort: true, title: '令牌类型', templet:function (d) {
+                    return d.tokenFormat == 'reference' ? "引用令牌" : "自包含令牌"
                 }},
-                {field: 'idTokenValiditySeconds',width:130, sort: true, title: 'ID时效(s)'},
                 {fixed: 'right', align: 'center',width:150, toolbar: '#app-table-bar', title: '操作'}
             ]]
         });

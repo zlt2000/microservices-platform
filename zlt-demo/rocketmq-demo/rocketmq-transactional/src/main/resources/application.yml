@@ -6,27 +6,16 @@ spring:
     name: rocketmq-tx
   cloud:
     stream:
-      rocketmq:
-        binder:
-          # RocketMQ 服务器地址
-          name-server: 192.168.28.130:9876
-        bindings:
-          output:
-            producer:
-              group: order-tx-produce-group
-              #开启事务消息
-              transactional: true
-          input:
-            consumer:
-              #重试失败直接进入死信队列
-              delayLevelWhenNextConsume: -1
+      function:
+        definition: receive;receiveDlq
       bindings:
         # 生产者
-        output:
+        order-out-0:
           destination: TransactionTopic
           content-type: application/json
+          group: order-tx-produce-group
         # 消费者
-        input:
+        receive-in-0:
           destination: TransactionTopic
           content-type: application/json
           group: order-tx-consume-group
@@ -35,18 +24,27 @@ spring:
             concurrency: 20
             #重试1次
             maxAttempts: 2
-        inputDlq:
-          destination: '%DLQ%${spring.cloud.stream.bindings.input.group}'
+        receiveDlq-in-0:
+          destination: '%DLQ%${spring.cloud.stream.bindings.receive-in-0.group}'
           content-type: application/json
           group: order-dlq-group
           consumer:
             concurrency: 20
+      rocketmq:
+        binder:
+          # RocketMQ 服务器地址
+          name-server: 192.168.28.130:9876
+        bindings:
+          order-out-0:
+            producer:
+              #开启事务消息
+              transactionListener: myTransactionListener
+              producerType: Trans
+          receive-in-0:
+            consumer:
+              #重试失败直接进入死信队列
+              delayLevelWhenNextConsume: -1
 
 logging:
   level:
-    org:
-      springframework:
-        cloud:
-          stream:
-            binder:
-              rocketmq: DEBUG
+    org.springframework.context.support: debug

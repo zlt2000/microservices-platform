@@ -19,7 +19,7 @@ import java.io.OutputStream;
  * @author zlt
  * @date 2021/2/13
  * <p>
- * Blog: https://zlt2000.gitee.io
+ * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 @Service

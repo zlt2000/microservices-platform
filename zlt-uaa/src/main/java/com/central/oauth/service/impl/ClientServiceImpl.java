@@ -5,17 +5,14 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.central.common.context.LoginUserContextHolder;
 import com.central.common.lock.DistributedLock;
-import com.central.common.redis.template.RedisRepository;
-import com.central.common.constant.SecurityConstants;
 import com.central.common.model.PageResult;
-import com.central.common.model.Result;
 import com.central.common.service.impl.SuperServiceImpl;
 import com.central.oauth.mapper.ClientMapper;
 import com.central.oauth.model.Client;
 import com.central.oauth.service.IClientService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,25 +22,21 @@ import java.util.Map;
 /**
  * @author zlt
  * <p>
- * Blog: https://zlt2000.gitee.io
+ * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class ClientServiceImpl extends SuperServiceImpl<ClientMapper, Client> implements IClientService {
     private final static String LOCK_KEY_CLIENTID = "clientId:";
 
-    @Autowired
-    private RedisRepository redisRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private DistributedLock lock;
+    private final DistributedLock lock;
 
     @Override
-    public Result saveClient(Client client) throws Exception {
+    public void saveClient(Client client) throws Exception {
         client.setClientSecret(passwordEncoder.encode(client.getClientSecretStr()));
         String clientId = client.getClientId();
         if (client.getId() == null) {
@@ -53,7 +46,6 @@ public class ClientServiceImpl extends SuperServiceImpl<ClientMapper, Client> im
                 , LOCK_KEY_CLIENTID+clientId
                 , new QueryWrapper<Client>().eq("client_id", clientId)
                 , clientId + "已存在");
-        return Result.succeed("操作成功");
     }
 
     @Override
@@ -71,9 +63,7 @@ public class ClientServiceImpl extends SuperServiceImpl<ClientMapper, Client> im
 
     @Override
     public void delClient(long id) {
-        String clientId = baseMapper.selectById(id).getClientId();
         baseMapper.deleteById(id);
-        redisRepository.del(clientRedisKey(clientId));
     }
 
     @Override
@@ -81,9 +71,5 @@ public class ClientServiceImpl extends SuperServiceImpl<ClientMapper, Client> im
         QueryWrapper<Client> wrapper = Wrappers.query();
         wrapper.eq("client_id", clientId);
         return this.getOne(wrapper);
-    }
-
-    private String clientRedisKey(String clientId) {
-        return SecurityConstants.CACHE_CLIENT_KEY + ":" + clientId;
     }
 }

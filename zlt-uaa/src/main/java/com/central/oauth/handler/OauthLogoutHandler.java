@@ -4,19 +4,17 @@ import cn.hutool.core.util.StrUtil;
 import com.central.oauth.utils.UsernameHolder;
 import com.central.oauth2.common.properties.SecurityProperties;
 import com.central.oauth2.common.util.AuthUtils;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.common.OAuth2AccessToken;
-import org.springframework.security.oauth2.common.OAuth2RefreshToken;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
+import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
+import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author zlt
@@ -26,36 +24,26 @@ import javax.servlet.http.HttpServletResponse;
  * Github: https://github.com/zlt2000
  */
 @Slf4j
+@RequiredArgsConstructor
+@Component
 public class OauthLogoutHandler implements LogoutHandler {
-	@Resource
-	private TokenStore tokenStore;
-
-	@Resource
-	private SecurityProperties securityProperties;
-
+	private final OAuth2AuthorizationService oAuth2AuthorizationService;
+	private final SecurityProperties securityProperties;
 	@Override
 	public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-		Assert.notNull(tokenStore, "tokenStore must be set");
+		Assert.notNull(oAuth2AuthorizationService, "oAuth2AuthorizationService must be set");
 		String token = request.getParameter("token");
 		if (StrUtil.isEmpty(token)) {
 			token = AuthUtils.extractToken(request);
 		}
 		if(StrUtil.isNotEmpty(token)){
-			if (securityProperties.getAuth().getUnifiedLogout()) {
-				OAuth2Authentication oAuth2Authentication = tokenStore.readAuthentication(token);
-				UsernameHolder.setContext(oAuth2Authentication.getName());
-			}
-
-			OAuth2AccessToken existingAccessToken = tokenStore.readAccessToken(token);
-			OAuth2RefreshToken refreshToken;
+			OAuth2Authorization existingAccessToken = oAuth2AuthorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
 			if (existingAccessToken != null) {
-				if (existingAccessToken.getRefreshToken() != null) {
-					log.info("remove refreshToken!", existingAccessToken.getRefreshToken());
-					refreshToken = existingAccessToken.getRefreshToken();
-					tokenStore.removeRefreshToken(refreshToken);
+				if (securityProperties.getAuth().getUnifiedLogout()) {
+					UsernameHolder.setContext(existingAccessToken.getPrincipalName());
 				}
-				log.info("remove existingAccessToken!", existingAccessToken);
-				tokenStore.removeAccessToken(existingAccessToken);
+				oAuth2AuthorizationService.remove(existingAccessToken);
+				log.info("remove existingAccessToken!", existingAccessToken.getAccessToken().getToken().getTokenType());
 			}
 		}
 	}

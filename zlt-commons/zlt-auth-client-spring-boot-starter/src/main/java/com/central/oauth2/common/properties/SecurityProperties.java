@@ -10,7 +10,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
  * @version 1.0
  * @date 2019/1/4
  * <p>
- * Blog: https://zlt2000.gitee.io
+ * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 @Setter
@@ -23,4 +23,6 @@ public class SecurityProperties {
     private PermitProperties ignore = new PermitProperties();
 
     private ValidateCodeProperties code = new ValidateCodeProperties();
+
+    private ResourceServerProperties resourceServer = new ResourceServerProperties();
 }

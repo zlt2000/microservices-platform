@@ -56,6 +56,7 @@ const TableList: React.FC = () => {
     {
       title: 'token',
       dataIndex: 'tokenValue',
+      width: 120,
     },
     {
       title: '到期时间',

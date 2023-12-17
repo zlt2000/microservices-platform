@@ -1,0 +1,2 @@
+com.central.common.lb.RestTemplateAutoConfigure
+com.central.common.lb.config.VerionIsolationAutoConfig

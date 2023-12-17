@@ -76,7 +76,7 @@ declare namespace SYSTEM {
     refreshTokenValiditySeconds?: number;
     resourceIds?: string;
     scope?: string;
-    supportIdToken?: boolean;
+    tokenFormat?: string;
     updateTime?: Date;
     webServerRedirectUri?: string;
   };

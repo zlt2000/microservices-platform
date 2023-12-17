@@ -2,23 +2,21 @@ package com.central.oauth.service.impl;
 
 import com.central.common.constant.SecurityConstants;
 import com.central.common.feign.UserService;
+import com.central.common.model.SysUser;
+import com.central.common.utils.LoginUserUtils;
 import com.central.oauth.service.ZltUserDetailsService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.social.security.SocialUserDetails;
 import org.springframework.stereotype.Service;
-
-import com.central.common.model.LoginAppUser;
-
-import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.Resource;
 
 /**
  * @author zlt
  * <p>
- * Blog: https://zlt2000.gitee.io
+ * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 @Slf4j
@@ -36,29 +34,31 @@ public class UserDetailServiceImpl implements ZltUserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        LoginAppUser loginAppUser = userService.findByUsername(username);
-        if (loginAppUser == null) {
+        SysUser sysUser = userService.findByUsername(username);
+        if (sysUser == null) {
             throw new InternalAuthenticationServiceException("用户名或密码错误");
         }
-        return checkUser(loginAppUser);
+        checkUser(sysUser);
+        return LoginUserUtils.getLoginAppUser(sysUser);
     }
 
     @Override
-    public SocialUserDetails loadUserByUserId(String openId) {
-        LoginAppUser loginAppUser = userService.findByOpenId(openId);
-        return checkUser(loginAppUser);
+    public UserDetails loadUserByUserId(String openId) {
+        SysUser sysUser = userService.findByOpenId(openId);
+        checkUser(sysUser);
+        return LoginUserUtils.getLoginAppUser(sysUser);
     }
 
     @Override
     public UserDetails loadUserByMobile(String mobile) {
-        LoginAppUser loginAppUser = userService.findByMobile(mobile);
-        return checkUser(loginAppUser);
+        SysUser sysUser = userService.findByMobile(mobile);
+        checkUser(sysUser);
+        return LoginUserUtils.getLoginAppUser(sysUser);
     }
 
-    private LoginAppUser checkUser(LoginAppUser loginAppUser) {
-        if (loginAppUser != null && !loginAppUser.isEnabled()) {
+    private void checkUser(SysUser sysUser) {
+        if (sysUser != null && !sysUser.getEnabled()) {
             throw new DisabledException("用户已作废");
         }
-        return loginAppUser;
     }
 }

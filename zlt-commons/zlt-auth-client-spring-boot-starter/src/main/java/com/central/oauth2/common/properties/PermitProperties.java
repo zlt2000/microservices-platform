@@ -1,5 +1,6 @@
 package com.central.oauth2.common.properties;
 
+import com.central.common.constant.SecurityConstants;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +14,7 @@ import java.util.List;
  * @version 1.0
  * @date 2019/1/19
  * <p>
- * Blog: https://zlt2000.gitee.io
+ * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 @Setter
@@ -23,15 +24,11 @@ public class PermitProperties {
      * 监控中心和swagger需要访问的url
      */
     private static final String[] ENDPOINTS = {
-            "/oauth/**",
-            "/actuator/**",
-            "/*/v2/api-docs",
-            "/swagger/api-docs",
-            "/swagger-ui.html",
-            "/doc.html",
-            "/swagger-resources/**",
-            "/webjars/**",
-            "/druid/**"
+            SecurityConstants.LOGIN_PAGE,
+            SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/**",
+            "/doc.html", "/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**",
+            "/actuator/**", "/webjars/**", "/druid/**",
+            "/css/**", "/js/**", "/images/**", "/favicon.ico", "/error"
     };
 
     /**

@@ -1,16 +1,20 @@
 spring:
   elasticsearch:
-    rest:
-      uris: ${zlt.elasticsearch.uris}
-      username: ${zlt.elasticsearch.username}
-      password: ${zlt.elasticsearch.password}
+    uris: ${zlt.elasticsearch.uris}
+    username: ${zlt.elasticsearch.username}
+    password: ${zlt.elasticsearch.password}
+
+springdoc:
+  group-configs:
+    - group: 'search'
+      paths-to-match: '/**'
+      packages-to-scan: com.central.search.controller
+
+knife4j:
+  enable: true
+  setting:
+    swagger-model-name: 搜索中心接口文档
 
 zlt:
   indices:
     show: sys-log-*,mysql-slowlog-*,sys_user,point-log-*,audit-log-*
-  swagger:
-    enabled: true
-    title: 搜索中心
-    description: 搜索中心接口文档
-    version: 1.0
-    base-package: com.central.search.controller

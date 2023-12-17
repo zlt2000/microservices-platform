@@ -6,9 +6,8 @@ import com.central.log.service.TraceLogService;
 import com.central.search.client.service.IQueryService;
 import com.central.search.model.SearchDto;
 import com.fasterxml.jackson.databind.JsonNode;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,6 +19,7 @@ import java.util.*;
  *
  * @author zlt
  */
+@Tag(name = "系统日志")
 @RestController
 public class SysLogController {
     /**
@@ -33,27 +33,13 @@ public class SysLogController {
     @Resource
     private TraceLogService traceLogService;
 
-    @ApiOperation(value = "系统日志全文搜索列表")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "page", value = "分页起始位置", required = true, dataType = "Integer"),
-            @ApiImplicitParam(name = "limit", value = "分页结束位置", required = true, dataType = "Integer"),
-            @ApiImplicitParam(name = "queryStr", value = "搜索关键字", dataType = "String"),
-            @ApiImplicitParam(name = "sortCol", value = "排序字段", dataType = "String"),
-            @ApiImplicitParam(name = "sortOrder", value = "排序顺序", dataType = "String"),
-            @ApiImplicitParam(name = "isHighlighter", value = "是否显示高亮", dataType = "String")
-    })
+    @Operation(summary = "系统日志全文搜索列表")
     @GetMapping(value = "/sysLog")
     public PageResult<JsonNode> sysLog(SearchDto searchDto) {
         return queryService.strQuery(SYS_LOG_INDEXNAME, searchDto);
     }
 
-    @ApiOperation(value = "系统日志链路列表")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "queryStr", value = "搜索关键字", dataType = "String"),
-            @ApiImplicitParam(name = "sortCol", value = "排序字段", dataType = "String"),
-            @ApiImplicitParam(name = "sortOrder", value = "排序顺序", dataType = "String"),
-            @ApiImplicitParam(name = "isHighlighter", value = "是否显示高亮", dataType = "String")
-    })
+    @Operation(summary = "系统日志链路列表")
     @GetMapping(value = "/traceLog")
     public PageResult<TraceLog> traceLog(SearchDto searchDto) {
         PageResult<JsonNode> pageResult = queryService.strQuery(SYS_LOG_INDEXNAME, searchDto);

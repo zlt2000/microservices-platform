@@ -1,6 +1,0 @@
-server:
-  port: 12002
-
-spring:
-  application:
-    name: txlcn-demo-spring-service-b

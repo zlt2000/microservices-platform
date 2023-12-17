@@ -1,0 +1,2 @@
+com.central.db.config.TenantAutoConfigure
+com.central.db.config.MybatisPlusAutoConfigure

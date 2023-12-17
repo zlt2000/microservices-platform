@@ -2,13 +2,11 @@ package com.central.oauth.service;
 
 import com.central.common.model.Result;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author zlt
  * @date 2018/12/10
  * <p>
- * Blog: https://zlt2000.gitee.io
+ * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 public interface IValidateCodeService {
@@ -19,7 +17,7 @@ public interface IValidateCodeService {
      */
     void saveImageCode(String deviceId, String imageCode);
 
-    Result sendSmsCode(String mobile);
+    Result<String> sendSmsCode(String mobile);
 
     /**
      * 获取验证码

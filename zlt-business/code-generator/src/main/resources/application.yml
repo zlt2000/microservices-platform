@@ -9,3 +9,14 @@ mybatis-plus:
   mapper-locations: classpath:/mapper/*Mapper.xml
   #实体扫描，多个package用逗号或者分号分隔
   typeAliasesPackage: com.central.generator.model
+
+springdoc:
+  group-configs:
+    - group: 'code'
+      paths-to-match: '/**'
+      packages-to-scan: com.central.generator.controller
+
+knife4j:
+  enable: true
+  setting:
+    swagger-model-name: 代码生成器接口文档

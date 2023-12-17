@@ -16,7 +16,7 @@ import java.nio.charset.Charset;
  * @author zlt
  * @date 2020/5/5
  * <p>
- * Blog: https://zlt2000.gitee.io
+ * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 public class WebfluxResponseUtil {

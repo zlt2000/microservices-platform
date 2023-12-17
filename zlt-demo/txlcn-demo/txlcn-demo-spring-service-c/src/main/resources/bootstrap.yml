@@ -1,6 +1,0 @@
-server:
-  port: 12003
-
-spring:
-  application:
-    name: txlcn-demo-spring-service-c

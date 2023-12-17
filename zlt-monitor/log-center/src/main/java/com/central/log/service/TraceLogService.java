@@ -18,7 +18,7 @@ import java.util.Set;
  * @version 1.0
  * @date 2022/1/27
  * <p>
- * Blog: https://zlt2000.gitee.io
+ * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 @Service

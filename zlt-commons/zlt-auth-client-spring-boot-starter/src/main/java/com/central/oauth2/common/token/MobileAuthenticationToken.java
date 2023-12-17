@@ -1,84 +1,36 @@
-/**
- * 
- */
 package com.central.oauth2.common.token;
 
-import org.springframework.security.authentication.AbstractAuthenticationToken;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.SpringSecurityCoreVersion;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.AuthorizationGrantType;
 
 import java.util.Collection;
 
 /**
- * @author zlt
+ * @author: zlt
+ * @date: 2023/11/10
+ * <p>
+ * Blog: http://zlt2000.gitee.io
+ * Github: https://github.com/zlt2000
  */
-public class MobileAuthenticationToken extends AbstractAuthenticationToken {
-
-	private static final long serialVersionUID = SpringSecurityCoreVersion.SERIAL_VERSION_UID;
-
-	// ~ Instance fields
-	// ================================================================================================
+@Getter
+public class MobileAuthenticationToken extends BaseAuthenticationToken {
+	public static final AuthorizationGrantType GRANT_TYPE = new  AuthorizationGrantType("mobile_password");
 
 	private final Object principal;
-	private Object credentials;
+	private final String credentials;
 
-	// ~ Constructors
-	// ===================================================================================================
-
-	/**
-	 * This constructor can be safely used by any code that wishes to create a
-	 * <code>UsernamePasswordAuthenticationToken</code>, as the {@link #isAuthenticated()}
-	 * will return <code>false</code>.
-	 *
-	 */
 	public MobileAuthenticationToken(String mobile, String password) {
-		super(null);
+		super(GRANT_TYPE);
 		this.principal = mobile;
 		this.credentials = password;
-		setAuthenticated(false);
-	}
-
-	/**
-	 * This constructor should only be used by <code>AuthenticationManager</code> or
-	 * <code>AuthenticationProvider</code> implementations that are satisfied with
-	 * producing a trusted (i.e. {@link #isAuthenticated()} = <code>true</code>)
-	 * authentication token.
-	 *
-	 * @param principal
-	 * @param authorities
-	 */
-	public MobileAuthenticationToken(Object principal, Object credentials,
-									 Collection<? extends GrantedAuthority> authorities) {
-		super(authorities);
-		this.principal = principal;
-		this.credentials = credentials;
 		super.setAuthenticated(true);
 	}
 
-	// ~ Methods
-	// ========================================================================================================
-
-	@Override
-	public Object getCredentials() {
-		return this.credentials;
-	}
-
-	@Override
-	public Object getPrincipal() {
-		return this.principal;
-	}
-
-	@Override
-	public void setAuthenticated(boolean isAuthenticated) {
-		if (isAuthenticated) {
-			throw new IllegalArgumentException(
-					"Cannot set this token to trusted - use constructor which takes a GrantedAuthority list instead");
-		}
-		super.setAuthenticated(false);
-	}
-
-	@Override
-	public void eraseCredentials() {
-		super.eraseCredentials();
+	public MobileAuthenticationToken(UserDetails user, String password, Collection<? extends GrantedAuthority> authorities) {
+		super(authorities);
+		this.principal = user;
+		this.credentials = password;
 	}
 }

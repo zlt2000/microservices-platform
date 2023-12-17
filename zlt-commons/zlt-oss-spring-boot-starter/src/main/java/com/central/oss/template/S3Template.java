@@ -35,7 +35,7 @@ import java.util.Calendar;
  * @author zlt
  * @date 2021/2/11
  * <p>
- * Blog: https://zlt2000.gitee.io
+ * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 @ConditionalOnClass(AmazonS3.class)

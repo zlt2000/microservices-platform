@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
  * @author zlt
  * @date 2020/2/3
  * <p>
- * Blog: https://zlt2000.gitee.io
+ * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 @Slf4j

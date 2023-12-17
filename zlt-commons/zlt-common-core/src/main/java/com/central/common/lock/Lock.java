@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
  * @author zlt
  * @date 2020/6/6
  * <p>
- * Blog: https://zlt2000.gitee.io
+ * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 @Target({ElementType.METHOD, ElementType.TYPE})

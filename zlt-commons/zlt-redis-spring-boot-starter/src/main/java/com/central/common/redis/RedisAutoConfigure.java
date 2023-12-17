@@ -1,13 +1,14 @@
 package com.central.common.redis;
 
 import com.central.common.redis.properties.CacheManagerProperties;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
@@ -25,13 +26,14 @@ import java.util.Map;
  * @author zlt
  * @date 2018/11/6 11:02
  * <p>
- * Blog: https://zlt2000.gitee.io
+ * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
+@ComponentScan
 @EnableConfigurationProperties({RedisProperties.class, CacheManagerProperties.class})
 @EnableCaching
 public class RedisAutoConfigure {
-    @Autowired
+    @Resource
     private CacheManagerProperties cacheManagerProperties;
 
     @Bean

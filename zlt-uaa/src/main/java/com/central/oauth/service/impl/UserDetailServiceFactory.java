@@ -4,13 +4,13 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.central.common.constant.SecurityConstants;
 import com.central.oauth.service.ZltUserDetailsService;
+import com.central.oauth.exception.CustomOAuth2AuthenticationException;
 import com.central.oauth2.common.util.AuthUtils;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -20,13 +20,13 @@ import java.util.List;
  * @version 1.0
  * @date 2021/7/24
  * <p>
- * Blog: https://zlt2000.gitee.io
+ * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 @Slf4j
 @Service
 public class UserDetailServiceFactory {
-    private static final String ERROR_MSG = "找不到账号类型为 {} 的实现类";
+    private static final String ERROR_MSG = "Cannot find the implementation class for the account type {}";
 
     @Resource
     private List<ZltUserDetailsService> userDetailsServices;
@@ -48,6 +48,6 @@ public class UserDetailServiceFactory {
                 }
             }
         }
-        throw new InternalAuthenticationServiceException(StrUtil.format(ERROR_MSG, accountType));
+        throw new CustomOAuth2AuthenticationException(StrUtil.format(ERROR_MSG, accountType));
     }
 }
