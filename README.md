@@ -1,18 +1,14 @@
 #  zlt-microservices-platform
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Version-5.5.0-critical" alt="Downloads"/>
-  <img src="https://img.shields.io/badge/Spring%20Boot-2.5.14-blue" alt="Downloads"/>
-  <img src="https://img.shields.io/badge/Spring%20Cloud-2020.0.6-blue" alt="Downloads"/>
-  <img src="https://img.shields.io/badge/Spring%20Cloud%20Alibaba-2021.1-blue" alt="Downloads"/>
-  <img src="https://img.shields.io/badge/Elasticsearch-7.x-brightgreen" alt="Downloads"/>
+  <img src="https://img.shields.io/badge/Version-6.0.0-critical" alt="Downloads"/>
+  <img src="https://img.shields.io/badge/JDK-17-8A2BE2" alt="Downloads"/>
+  <img src="https://img.shields.io/badge/Spring Authorization Server-1.1.3-40A24E" alt="Downloads"/>
+  <img src="https://img.shields.io/badge/Spring%20Boot-3.1.6-blue" alt="Downloads"/>
+  <img src="https://img.shields.io/badge/Spring%20Cloud-2022.0.4-blue" alt="Downloads"/>
+  <img src="https://img.shields.io/badge/Spring%20Cloud%20Alibaba-2022.0.0.0-blue" alt="Downloads"/>
+  <img src="https://img.shields.io/badge/Elasticsearch-7.x-34A2AE" alt="Downloads"/>
   <img src="https://img.shields.io/badge/Ant%20Design-pro-9cf" alt="Downloads"/>
-  <a target="_blank" href='https://gitee.com/zlt2000/microservices-platform'>
-    <img src='https://gitee.com/zlt2000/microservices-platform/badge/star.svg' alt='star'/>
-  </a>
-  <a target="_blank" href='https://github.com/zlt2000/microservices-platform'>
-    <img src="https://img.shields.io/github/stars/zlt2000/microservices-platform.svg?style=social" alt="github star"/>
-  </a>
 </p>
 
 
@@ -46,15 +42,13 @@
   * **[文档更新日志](https://www.kancloud.cn/zlt2000/microservices-platform/936236)**
 * **演示环境地址**： [http://zlt2000.cn](http://zlt2000.cn/)
   * 账号密码：admin/admin
-  * APM监控账号密码：admin/admin
   * Grafana账号：zlt/zlt123
-  * 任务管理账号密码：admin/123456
 * **演示环境有全方位的监控示例：日志系统 + APM系统 + GPE系统**
 * Gitee地址：https://gitee.com/zlt2000/microservices-platform
 * Github地址：https://github.com/zlt2000/microservices-platform
 * 前后端分离的企业级微服务架构
 * 主要针对解决微服务和业务开发时常见的**非功能性需求**
-* 深度定制`Spring Security`真正实现了基于`RBAC`、`jwt`和`oauth2`的无状态统一权限认证的解决方案
+* 基于 `Spring Authorization Server` 深度定制`Spring Security`真正实现了基于`RBAC`、`jwt`和`oauth2`的无状态统一权限认证的解决方案
 * 提供应用管理，方便第三方系统接入，**支持多租户(应用隔离)**
 * 引入组件化的思想实现高内聚低耦合并且高度可配置化
 * 注重代码规范，严格控制包依赖，每个工程基本都是最小依赖
@@ -62,7 +56,15 @@
 >重构于开源项目OCP&cp：https://gitee.com/owenwangwen/open-capacity-platform
 
 &nbsp;
-## 4. 模块说明
+## 4. 分支说明
+| 分支名 | JDK | Spring Boot | Spring Cloud | Spring Security |
+| --- | --- | --- | --- |---|
+| master | 17 | 3.x | 2022.x | Spring Authorization Server  |
+| 5.x | 1.8 | 2.5.x | 2020.x | Spring Security OAuth        |
+| 4.x | 1.8 | 2.3.x | 2.2.x | Spring Security OAuth        |
+
+&nbsp;
+## 5. 模块说明
 ```lua
 central-platform -- 父项目，公共依赖
 │  ├─zlt-business -- 业务模块一级工程
@@ -97,11 +99,13 @@ central-platform -- 父项目，公共依赖
 │  │  ├─layui-web -- layui前端[8066]
 │  │  ├─react-web -- react前端[8066]
 │  ├─zlt-demo -- demo一级工程
-│  │  ├─txlcn-demo -- txlcn分布式事务demo
+│  │  ├─dubbo-demo -- dubbo服务demo
+│  │  ├─resource-server-demo -- 资源服务器demo
 │  │  ├─seata-demo -- seata分布式事务demo
 │  │  ├─sharding-jdbc-demo -- sharding-jdbc分库分表demo
 │  │  ├─rocketmq-demo -- rocketmq和mq事务demo
 │  │  ├─sso-demo -- 单点登录demo
+│  │  ├─websocket-demo -- websocket demo
 ```
 
 <table>
@@ -112,7 +116,7 @@ central-platform -- 父项目，公共依赖
 </table>
 
 
-## 5. 交流反馈
+## 6. 交流反馈
 * 有问题先看看 [F&Q](https://www.kancloud.cn/zlt2000/microservices-platform/981382) 中有没有相关的回答
 * 欢迎提交`ISSUS`，请写清楚问题的具体原因，重现步骤和环境(上下文)
 * 项目/微服务交流请进群：
@@ -125,7 +129,7 @@ central-platform -- 父项目，公共依赖
 * GitChat：[https://gitbook.cn/gitchat/author/5b2362320398d50d7b7ab29e](https://gitbook.cn/gitchat/author/5b2362320398d50d7b7ab29e)
 
 &nbsp;
-## 6. 截图（点击可大图预览）
+## 7. 截图（点击可大图预览）
 <table>
     <tr>
         <td><img alt="首页" src="https://gitee.com/zlt2000/images/raw/master/%E9%A6%96%E9%A1%B5.png"/></td>
