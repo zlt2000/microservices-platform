@@ -34,6 +34,8 @@ public interface ISysMenuService extends ISuperService<SysMenu> {
 	 */
 	List<SysMenu> findByRoles(Set<Long> roleIds);
 
+	List<SysMenu> findByUserId(Long userId, Integer type);
+
 	/**
 	 * 角色菜单列表
 	 * @param roleIds 角色ids

@@ -5,7 +5,7 @@ import com.central.admin.properties.IndexProperties;
 import com.central.admin.service.IIndexService;
 import com.central.common.model.PageResult;
 import com.central.common.model.Result;
-import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +20,7 @@ import java.util.*;
  */
 @Slf4j
 @RestController
-@Api(tags = "索引管理api")
+@Tag(name = "索引管理api")
 @RequestMapping("/admin")
 public class IndexController {
     @Autowired

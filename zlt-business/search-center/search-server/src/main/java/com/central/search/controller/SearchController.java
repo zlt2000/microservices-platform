@@ -5,9 +5,9 @@ import com.central.common.model.*;
 import com.central.search.model.SearchDto;
 import com.central.search.service.ISearchService;
 import com.fasterxml.jackson.databind.JsonNode;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
-import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -19,7 +19,7 @@ import java.io.IOException;
  */
 @Slf4j
 @RestController
-@Api(tags = "搜索模块api")
+@Tag(name = "搜索模块api")
 @RequestMapping("/search")
 public class SearchController {
     private final ISearchService searchService;

@@ -13,17 +13,18 @@ mybatis-plus:
     db-config:
       id-type: auto
 
+springdoc:
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.central.oauth.controller
+
+knife4j:
+  enable: true
+  setting:
+    swagger-model-name: 认证中心接口文档
+
 zlt:
-  oauth2:
-    token:
-      store:
-        type: redis
-  swagger:
-    enabled: true
-    title: 认证中心
-    description: 认证中心接口文档
-    version: 1.0
-    base-package: com.central.oauth.controller
   security:
     code:
       # 忽略验证码的应用编号

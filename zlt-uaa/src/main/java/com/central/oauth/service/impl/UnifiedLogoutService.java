@@ -2,26 +2,27 @@ package com.central.oauth.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import com.central.oauth.utils.UsernameHolder;
+import com.central.oauth2.common.pojo.ClientDto;
+import com.central.oauth2.common.service.impl.RedisOAuth2AuthorizationService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Lazy;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.task.TaskExecutor;
-import org.springframework.security.oauth2.common.OAuth2AccessToken;
-import org.springframework.security.oauth2.provider.ClientDetails;
-import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
-import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import javax.annotation.Resource;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 统一登出服务
  *
  * @author zlt
  * @version 1.0
- * @date 2021/10/21
+ * @date 2023/11/18
  * <p>
  * Blog: https://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
@@ -31,23 +32,28 @@ import java.util.*;
 public class UnifiedLogoutService {
     private final static String LOGOUT_NOTIFY_URL_KEY = "LOGOUT_NOTIFY_URL_LIST";
 
-    @Resource
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
-    @Resource
-    private TaskExecutor taskExecutor;
+    private final TaskExecutor taskExecutor;
 
-    @Resource
-    private RedisClientDetailsService redisClientDetailsService;
+    private final RegisteredClientService clientService;
 
-    @Resource
-    private TokenStore tokenStore;
+    private final RedisOAuth2AuthorizationService authorizationService;
 
-    @Lazy
-    @Resource
-    private DefaultTokenServices tokenServices;
+    public UnifiedLogoutService(RestTemplate restTemplate, TaskExecutor taskExecutor
+            , RegisteredClientService clientService
+            , @Autowired(required = false) RedisOAuth2AuthorizationService authorizationService) {
+        this.restTemplate = restTemplate;
+        this.taskExecutor = taskExecutor;
+        this.clientService = clientService;
+        this.authorizationService = authorizationService;
+    }
 
     public void allLogout() {
+        if (authorizationService == null) {
+            throw new RuntimeException("the 'zlt.oauth2.token.store' parameter must be redis");
+        }
+
         Set<String> urls = this.getLogoutNotifyUrl();
         for (String url : urls) {
             taskExecutor.execute(() -> {
@@ -67,16 +73,16 @@ public class UnifiedLogoutService {
         String username = UsernameHolder.getContext();
         Set<String> logoutNotifyUrls = new HashSet<>();
         try {
-            List<ClientDetails> clientDetails = redisClientDetailsService.listClientDetails();
+            List<ClientDto> clientDetails = clientService.list();
             Map<String, Object> informationMap;
-            for (ClientDetails client : clientDetails) {
-                informationMap = client.getAdditionalInformation();
+            for (ClientDto client : clientDetails) {
+                informationMap = this.getInfoMap(client.getAdditionalInformation());
                 String urls = (String)informationMap.get(LOGOUT_NOTIFY_URL_KEY);
                 if (StrUtil.isNotEmpty(urls)) {
-                    Collection<OAuth2AccessToken> tokens = tokenStore.findTokensByClientIdAndUserName(client.getClientId(), username);
+                    List<String> tokens = authorizationService.findTokensByClientIdAndUserName(client.getClientId(), username);
                     if (CollUtil.isNotEmpty(tokens)) {
                         //注销所有该用户名下的token
-                        tokens.forEach(t -> tokenServices.revokeToken(t.getValue()));
+                        tokens.forEach(authorizationService::remove);
                         String tokenStr = getTokenValueStr(tokens);
                         logoutNotifyUrls.addAll(generateNotifyUrls(urls.split(","), tokenStr));
                     }
@@ -88,7 +94,7 @@ public class UnifiedLogoutService {
         return logoutNotifyUrls;
     }
 
-    private String getTokenValueStr(Collection<OAuth2AccessToken> tokens) {
+    private String getTokenValueStr(List<String> tokens) {
         if (CollUtil.isNotEmpty(tokens)) {
             return StrUtil.join( ",", tokens);
         }
@@ -108,5 +114,12 @@ public class UnifiedLogoutService {
             urlSet.add(urlBuilder.toString());
         }
         return urlSet;
+    }
+
+    private Map<String, Object> getInfoMap(String additionalInformation) {
+        if (StrUtil.isNotEmpty(additionalInformation)) {
+            return JSONUtil.toBean(additionalInformation, Map.class);
+        }
+        return Map.of();
     }
 }

@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  * @author zlt
  * @date 2018/5/29 14:16
  * <p>
- * Blog: https://zlt2000.gitee.io
+ * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  *
  * @deprecated 建议使用Redisson的实现方式 {@link RedissonDistributedLock}

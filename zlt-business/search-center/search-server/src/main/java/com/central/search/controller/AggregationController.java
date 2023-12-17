@@ -1,7 +1,7 @@
 package com.central.search.controller;
 
 import com.central.search.service.IAggregationService;
-import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +16,7 @@ import java.util.Map;
  */
 @Slf4j
 @RestController
-@Api(tags = "搜索模块api")
+@Tag(name = "搜索模块api")
 @RequestMapping("/agg")
 public class AggregationController {
     private final IAggregationService aggregationService;

@@ -159,7 +159,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
                   {
                     key: '2',
                     label: (
-                      <a target="_blank" rel="noopener noreferrer" href="https://zlt2000.gitee.io/">
+                      <a target="_blank" rel="noopener noreferrer" href="http://zlt2000.gitee.io/">
                         个人博客
                       </a>
                     ),

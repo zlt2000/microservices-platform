@@ -7,16 +7,23 @@ import com.central.common.model.PageResult;
 import com.central.common.redis.template.RedisRepository;
 import com.central.oauth.model.TokenVo;
 import com.central.oauth.service.ITokensService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
+import org.redisson.api.RBucket;
+import org.redisson.api.RList;
+import org.redisson.api.RedissonClient;
+import org.redisson.codec.SerializationCodec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.serializer.RedisSerializer;
-import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.security.oauth2.provider.OAuth2Request;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
+import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
+import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.stereotype.Service;
 
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -31,9 +38,11 @@ import java.util.Map;
  */
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class RedisTokensServiceImpl implements ITokensService {
-    @Autowired
-    private RedisRepository redisRepository;
+    private final static SerializationCodec AUTH_CODEC = new SerializationCodec();
+    private static final String AUTHORIZATION = "token";
+    private final RedissonClient redisson;
 
     @Override
     public PageResult<TokenVo> listTokens(Map<String, Object> params, String clientId) {
@@ -42,33 +51,31 @@ public class RedisTokensServiceImpl implements ITokensService {
         int[] startEnds = PageUtil.transToStartEnd(page-1, limit);
         //根据请求参数生成redis的key
         String redisKey = getRedisKey(params, clientId);
-        long size = redisRepository.length(redisKey);
+        RList<String> tokenList = redisson.getList(redisKey);
+        long size = tokenList.size();
         List<TokenVo> result = new ArrayList<>(limit);
-        RedisSerializer<Object> valueSerializer = RedisSerializer.java();
         //查询token集合
-        List<Object> tokenObjs = redisRepository.getList(redisKey, startEnds[0], startEnds[1]-1, valueSerializer);
-        if (tokenObjs != null) {
-            for (Object obj : tokenObjs) {
-                DefaultOAuth2AccessToken accessToken = (DefaultOAuth2AccessToken)obj;
+        List<String> tokens = tokenList.range(startEnds[0], startEnds[1]-1);
+        if (tokens != null) {
+            for (String token : tokens) {
                 //构造token对象
                 TokenVo tokenVo = new TokenVo();
-                tokenVo.setTokenValue(accessToken.getValue());
-                tokenVo.setExpiration(accessToken.getExpiration());
-
+                tokenVo.setTokenValue(token);
                 //获取用户信息
-                Object authObj = redisRepository.get(SecurityConstants.REDIS_TOKEN_AUTH + accessToken.getValue(), valueSerializer);
-                OAuth2Authentication authentication = (OAuth2Authentication)authObj;
-                if (authentication != null) {
-                    OAuth2Request request = authentication.getOAuth2Request();
-                    tokenVo.setUsername(authentication.getName());
-                    tokenVo.setClientId(request.getClientId());
-                    tokenVo.setGrantType(request.getGrantType());
+                RBucket<OAuth2Authorization> rBucket = redisson.getBucket(buildKey(OAuth2ParameterNames.ACCESS_TOKEN, token), AUTH_CODEC);
+                OAuth2Authorization authorization = rBucket.get();
+                if (authorization != null) {
+                    OAuth2AccessToken accessToken = authorization.getAccessToken().getToken();
+                    if (accessToken != null && accessToken.getExpiresAt() != null) {
+                        tokenVo.setExpiration(Date.from(accessToken.getExpiresAt()));
+                    }
+                    tokenVo.setUsername(authorization.getPrincipalName());
+                    tokenVo.setClientId(authorization.getRegisteredClientId());
+                    tokenVo.setGrantType(authorization.getAuthorizationGrantType().getValue());
+
+                    String accountType = (String)authorization.getAttributes().get(SecurityConstants.ACCOUNT_TYPE_PARAM_NAME);
+                    tokenVo.setAccountType(accountType);
                 }
-
-                Map<String, Object> additionalInformation = accessToken.getAdditionalInformation();
-                String accountType = (String)additionalInformation.get(SecurityConstants.ACCOUNT_TYPE_PARAM_NAME);
-                tokenVo.setAccountType(accountType);
-
                 result.add(tokenVo);
             }
         }
@@ -82,10 +89,14 @@ public class RedisTokensServiceImpl implements ITokensService {
         String result;
         String username = MapUtils.getString(params, "username");
         if (StrUtil.isNotEmpty(username)) {
-            result = SecurityConstants.REDIS_UNAME_TO_ACCESS + clientId + ":" + username;
+            result = this.buildKey(SecurityConstants.REDIS_UNAME_TO_ACCESS, clientId + "::" + username);
         } else {
-            result = SecurityConstants.REDIS_CLIENT_ID_TO_ACCESS + clientId;
+            result = this.buildKey(SecurityConstants.REDIS_CLIENT_ID_TO_ACCESS, clientId);
         }
         return result;
+    }
+
+    private String buildKey(String type, String id) {
+        return String.format("%s::%s::%s", AUTHORIZATION, type, id);
     }
 }

@@ -6,34 +6,35 @@ spring:
     name: rocketmq-produce
   cloud:
     stream:
-      rocketmq:
-        binder:
-          # RocketMQ 服务器地址
-          name-server: 192.168.28.130:9876
-        bindings:
-          input2:
-            consumer:
-              #增加tag过滤
-              tags: tagObj
+      function:
+        definition: receiveInput;receiveInput2;receiveInput3
       bindings:
-        input:
+        receiveInput-in-0:
           destination: test-topic
           content-type: text/plain
           group: consume-group1
           consumer:
             #并发消费线程数
             concurrency: 20
-        input2:
+        receiveInput2-in-0:
           destination: test-topic
           content-type: application/json
           group: consume-group2
           consumer:
             #并发消费线程数
             concurrency: 20
-        input3:
+        receiveInput3-in-0:
           destination: test-topic
           content-type: text/plain
           group: consume-group3
           consumer:
             #并发消费线程数
             concurrency: 20
+      rocketmq:
+        binder:
+          # RocketMQ 服务器地址
+          name-server: 192.168.28.130:9876
+
+logging:
+  level:
+    org.springframework.context.support: debug

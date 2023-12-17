@@ -1,23 +1,21 @@
 package com.central.oauth.handler;
 
 import cn.hutool.core.util.StrUtil;
-import com.central.common.model.Result;
-import com.central.common.utils.JsonUtil;
+import com.central.common.utils.ResponseUtil;
 import com.central.oauth.service.impl.UnifiedLogoutService;
 import com.central.oauth2.common.properties.SecurityProperties;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  * @author zlt
@@ -27,14 +25,14 @@ import java.io.PrintWriter;
  * Github: https://github.com/zlt2000
  */
 @Slf4j
+@RequiredArgsConstructor
+@Component
 public class OauthLogoutSuccessHandler implements LogoutSuccessHandler {
+	private static final String REDIRECT_URL = "redirect_url";
 	private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
-
-	@Resource
-	private UnifiedLogoutService unifiedLogoutService;
-
-	@Resource
-	private SecurityProperties securityProperties;
+	private final UnifiedLogoutService unifiedLogoutService;
+	private final SecurityProperties securityProperties;
+	private final ObjectMapper objectMapper;
 
 	@Override
 	public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
@@ -42,18 +40,12 @@ public class OauthLogoutSuccessHandler implements LogoutSuccessHandler {
 			unifiedLogoutService.allLogout();
 		}
 
-		String redirectUri = request.getParameter("redirect_uri");
+		String redirectUri = request.getParameter(REDIRECT_URL);
 		if (StrUtil.isNotEmpty(redirectUri)) {
 			//重定向指定的地址
 			redirectStrategy.sendRedirect(request, response, redirectUri);
 		} else {
-			response.setStatus(HttpStatus.OK.value());
-			response.setCharacterEncoding("UTF-8");
-			response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-			PrintWriter writer = response.getWriter();
-			String jsonStr = JsonUtil.toJSONString(Result.succeed("登出成功"));
-			writer.write(jsonStr);
-			writer.flush();
+			ResponseUtil.responseWriter(objectMapper, response, "登出成功", 0);
 		}
 	}
 }

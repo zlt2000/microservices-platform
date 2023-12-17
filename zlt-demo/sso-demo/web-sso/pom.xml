@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.zlt</groupId>
         <artifactId>sso-demo</artifactId>
-        <version>5.6.0</version>
+        <version>6.0.0</version>
     </parent>
     <artifactId>web-sso</artifactId>
     <description>前后端分离单点登录demo</description>
@@ -21,6 +21,10 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
         </dependency>
     </dependencies>
 

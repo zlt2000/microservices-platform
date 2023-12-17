@@ -33,14 +33,9 @@ public class Client extends SuperEntity {
    private String additionalInformation = "{}";
    private String autoapprove = "true";
    /**
-    * 是否支持id_token
+    * 令牌类型: reference 引用令牌(不透明), self-contained 自包含令牌(jwt))
     */
-   private Boolean supportIdToken = true;
-   /**
-    * id_token有效时间(s)
-    */
-   @TableField(value = "id_token_validity")
-   private Integer idTokenValiditySeconds = 60;
+   private String tokenFormat = "reference";
 
    private Long creatorId;
 }

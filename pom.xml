@@ -5,64 +5,61 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.zlt</groupId>
     <artifactId>central-platform</artifactId>
-    <version>5.6.0</version>
+    <version>6.0.0</version>
     <packaging>pom</packaging>
 
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>8</java.version>
-        <spring-cloud-alibaba-dependencies.version>2021.1</spring-cloud-alibaba-dependencies.version>
-        <spring-boot-dependencies.version>2.5.14</spring-boot-dependencies.version>
-        <spring-cloud-dependencies.version>2020.0.6</spring-cloud-dependencies.version>
+        <java.version>17</java.version>
+        <spring-cloud-alibaba-dependencies.version>2022.0.0.0</spring-cloud-alibaba-dependencies.version>
+        <spring-boot-dependencies.version>3.1.6</spring-boot-dependencies.version>
+        <spring-cloud-dependencies.version>2022.0.4</spring-cloud-dependencies.version>
         <commons-collections4.version>4.4</commons-collections4.version>
-        <swagger.butler.version>2.0.1</swagger.butler.version>
         <jjwt.version>0.9.1</jjwt.version>
-        <druid-starter>1.2.6</druid-starter>
+        <druid-starter>1.2.18</druid-starter>
         <jasypt.version>1.14</jasypt.version>
         <sharding-sphere.version>3.1.0</sharding-sphere.version>
-        <security-oauth2.version>2.3.8.RELEASE</security-oauth2.version>
         <security-jwt.version>1.1.0.RELEASE</security-jwt.version>
-        <redisson-starter.version>3.16.1</redisson-starter.version>
-        <easyCaptcha.version>1.6.2</easyCaptcha.version>
-        <hutool.version>5.7.20</hutool.version>
-        <mybatis-plus-boot-starter.version>3.5.1</mybatis-plus-boot-starter.version>
+        <redisson-starter.version>3.25.0</redisson-starter.version>
+        <mybatis-plus-boot-starter.version>3.5.4.1</mybatis-plus-boot-starter.version>
         <aliyun-sdk-oss>3.8.1</aliyun-sdk-oss>
         <qiniu-java-sdk>7.2.28</qiniu-java-sdk>
         <easypoi.version>4.1.3</easypoi.version>
         <poi.version>4.1.1</poi.version>
-        <spring-boot-admin.version>2.5.6</spring-boot-admin.version>
+        <spring-boot-admin.version>3.1.8</spring-boot-admin.version>
         <velocity.version>1.7</velocity.version>
         <commons-configuration2.version>2.7</commons-configuration2.version>
-        <txlcn.version>5.0.2.RELEASE</txlcn.version>
         <fastdfs-client.version>1.27.2</fastdfs-client.version>
         <userAgent.version>1.21</userAgent.version>
-        <transmittable.version>2.12.1</transmittable.version>
+        <transmittable.version>2.14.4</transmittable.version>
         <banner.version>1.0.2</banner.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
-        <spring-social-security.version>1.1.6.RELEASE</spring-social-security.version>
         <commons-io.version>2.7</commons-io.version>
-        <servlet-api.version>4.0.1</servlet-api.version>
         <spring-data-elasticsearch.version>4.2.3</spring-data-elasticsearch.version>
         <elasticsearch.version>7.13.4</elasticsearch.version>
-        <knife4j.version>2.0.5</knife4j.version>
-        <hibernate-validator.version>6.2.0.Final</hibernate-validator.version>
+        <knife4j.version>4.3.0</knife4j.version>
+        <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
         <dubbo.version>2.7.8</dubbo.version>
         <curator.version>5.1.0</curator.version>
-        <jackson-databind.version>2.13.4</jackson-databind.version>
         <commons-configuration.version>1.10</commons-configuration.version>
-        <zuul.version>2.2.9.RELEASE</zuul.version>
         <aws-java-sdk-s3.version>1.12.40</aws-java-sdk-s3.version>
         <spring-cloud-starter-oauth2.version>2.2.5.RELEASE</spring-cloud-starter-oauth2.version>
         <docker-maven-plugin.version>1.2.2</docker-maven-plugin.version>
-        <sonar.exclusions>zlt-job/**/*, zlt-register/**/*, zlt-web/**/*</sonar.exclusions>
         <docker.baseImage>openjdk:8-jre-alpine</docker.baseImage>
         <docker.volumes>/tmp</docker.volumes>
         <docker.image.prefix>hub.zlt.com:8080/microservices-platform</docker.image.prefix>
         <docker.java.security.egd>-Djava.security.egd=file:/dev/./urandom</docker.java.security.egd>
         <docker.java.opts>-Xms128m -Xmx128m</docker.java.opts>
         <guava.version>20.0</guava.version>
+        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
+        <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
+        <mysql-connector-java.version>8.0.33</mysql-connector-java.version>
+        <javax.annotation-api.version>1.3.2</javax.annotation-api.version>
+        <tomcat-embed-core.version>10.1.11</tomcat-embed-core.version>
+        <httpclient.version>5.2.1</httpclient.version>
+        <oauth2-oidc-sdk.version>11.7</oauth2-oidc-sdk.version>
     </properties>
 
     <dependencies>
@@ -95,6 +92,16 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+            <version>${javax.annotation-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
+            <version>${tomcat-embed-core.version}</version>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -118,11 +125,6 @@
             <dependency>
                 <groupId>com.zlt</groupId>
                 <artifactId>zlt-redis-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.zlt</groupId>
-                <artifactId>zlt-swagger2-spring-boot-starter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -182,12 +184,6 @@
                 <artifactId>mybatis-plus</artifactId>
                 <version>${mybatis-plus-boot-starter.version}</version>
             </dependency>
-            <!-- 加入spring security spring security oauth2的处理 -->
-            <dependency>
-                <groupId>org.springframework.security.oauth</groupId>
-                <artifactId>spring-security-oauth2</artifactId>
-                <version>${security-oauth2.version}</version>
-            </dependency>
             <dependency>
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-jwt</artifactId>
@@ -199,24 +195,7 @@
                 <artifactId>redisson-spring-boot-starter</artifactId>
                 <version>${redisson-starter.version}</version>
             </dependency>
-            <!-- swagger -->
-            <dependency>
-                <groupId>com.github.zlt2000</groupId>
-                <artifactId>swagger-butler-core</artifactId>
-                <version>${swagger.butler.version}</version>
-            </dependency>
-            <!-- 验证码生成工具 -->
-            <dependency>
-                <groupId>com.github.whvcse</groupId>
-                <artifactId>easy-captcha</artifactId>
-                <version>${easyCaptcha.version}</version>
-            </dependency>
             <!-- hutool java工具类库  -->
-            <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-all</artifactId>
-                <version>${hutool.version}</version>
-            </dependency>
             <dependency>
                 <groupId>com.aliyun.oss</groupId>
                 <artifactId>aliyun-sdk-oss</artifactId>
@@ -260,21 +239,6 @@
                 <version>${commons-configuration2.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.codingapi.txlcn</groupId>
-                <artifactId>txlcn-tm</artifactId>
-                <version>${txlcn.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.codingapi.txlcn</groupId>
-                <artifactId>txlcn-tc</artifactId>
-                <version>${txlcn.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.codingapi.txlcn</groupId>
-                <artifactId>txlcn-txmsg-netty</artifactId>
-                <version>${txlcn.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>io.shardingsphere</groupId>
                 <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
                 <version>${sharding-sphere.version}</version>
@@ -305,19 +269,9 @@
                 <version>${banner.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.springframework.social</groupId>
-                <artifactId>spring-social-security</artifactId>
-                <version>${spring-social-security.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>${commons-io.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>javax.servlet-api</artifactId>
-                <version>${servlet-api.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.data</groupId>
@@ -343,16 +297,6 @@
                 <groupId>org.elasticsearch</groupId>
                 <artifactId>elasticsearch</artifactId>
                 <version>${elasticsearch.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-spring-boot-starter</artifactId>
-                <version>${knife4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-micro-spring-boot-starter</artifactId>
-                <version>${knife4j.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.hibernate</groupId>
@@ -385,11 +329,6 @@
                 <version>${curator.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>${jackson-databind.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-oauth2</artifactId>
                 <version>${spring-cloud-starter-oauth2.version}</version>
@@ -400,14 +339,14 @@
                 <version>${aws-java-sdk-s3.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
-                <version>${zuul.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>commons-configuration</groupId>
                 <artifactId>commons-configuration</artifactId>
                 <version>${commons-configuration.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connector-java.version}</version>
             </dependency>
 
             <dependency>
@@ -437,9 +376,21 @@
                 <version>${guava.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-core</artifactId>
-                <version>${jackson-databind.version}</version>
+                <groupId>org.apache.httpcomponents.client5</groupId>
+                <artifactId>httpclient5</artifactId>
+                <version>${httpclient.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-dependencies</artifactId>
+                <version>${knife4j.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.nimbusds</groupId>
+                <artifactId>oauth2-oidc-sdk</artifactId>
+                <version>${oauth2-oidc-sdk.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -451,6 +402,26 @@
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <version>${spring-boot-dependencies.version}</version>
+                </plugin>
+                <!-- 指定jdk版本，和指定编码 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                        <encoding>UTF-8</encoding>
+                    </configuration>
+                </plugin>
+                <!-- maven 打包时跳过测试 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven-surefire-plugin.version}</version>
+                    <configuration>
+                        <skipTests>true</skipTests>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>com.spotify</groupId>

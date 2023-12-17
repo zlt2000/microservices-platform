@@ -12,7 +12,7 @@ import java.util.Date;
  * @author zlt
  * @date 2018/12/11
  * <p>
- * Blog: https://zlt2000.gitee.io
+ * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 public class DateMetaObjectHandler implements MetaObjectHandler {

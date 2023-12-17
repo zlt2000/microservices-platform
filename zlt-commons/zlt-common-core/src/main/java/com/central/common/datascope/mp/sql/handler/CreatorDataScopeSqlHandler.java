@@ -6,11 +6,11 @@ import cn.hutool.core.util.StrUtil;
 import com.central.common.context.LoginUserContextHolder;
 import com.central.common.enums.DataScope;
 import com.central.common.feign.UserService;
+import com.central.common.model.LoginAppUser;
 import com.central.common.model.SysRole;
-import com.central.common.model.SysUser;
 import com.central.common.properties.DataScopeProperties;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,10 +21,10 @@ import java.util.Objects;
  */
 public class CreatorDataScopeSqlHandler implements SqlHandler{
 
-    @Autowired
+    @Resource
     UserService userService;
 
-    @Autowired
+    @Resource
     private DataScopeProperties dataScopeProperties;
 
     /**
@@ -35,7 +35,7 @@ public class CreatorDataScopeSqlHandler implements SqlHandler{
      */
     @Override
     public String handleScopeSql() {
-        SysUser user = LoginUserContextHolder.getUser();
+        LoginAppUser user = LoginUserContextHolder.getUser();
         Assert.notNull(user, "登陆人不能为空");
         List<SysRole> roleList = userService.findRolesByUserId(user.getId());
         return StrUtil.isBlank(dataScopeProperties.getCreatorIdColumnName())

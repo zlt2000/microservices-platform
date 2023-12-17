@@ -38,7 +38,7 @@ public class PermissionAuthManager extends DefaultPermissionServiceImpl implemen
         return authentication.map(auth -> {
             ServerWebExchange exchange = authorizationContext.getExchange();
             ServerHttpRequest request = exchange.getRequest();
-            boolean isPermission = super.hasPermission(auth, request.getMethodValue(), request.getURI().getPath());
+            boolean isPermission = super.hasPermission(auth, request.getMethod().name(), request.getURI().getPath());
             return new AuthorizationDecision(isPermission);
         }).defaultIfEmpty(new AuthorizationDecision(false));
     }

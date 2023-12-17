@@ -1,9 +1,9 @@
 package com.central.oauth2.common.util;
 
-import com.fasterxml.jackson.databind.JsonNode;
+/*import com.fasterxml.jackson.databind.JsonNode;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit4.SpringRunner;*/
 
 /**
  * 测试工具类
@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author zlt
  * @date 2019/7/16
  */
+/*
 @RunWith(SpringRunner.class)
 public class JwtUtilsTest {
     @Test
@@ -24,3 +25,4 @@ public class JwtUtilsTest {
         System.out.println(isValid);
     }
 }
+*/

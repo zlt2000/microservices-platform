@@ -6,27 +6,16 @@ spring:
     name: rocketmq-produce
   cloud:
     stream:
+      bindings:
+        test-out-0:
+          destination: test-topic
+          content-type: application/json
+          group: produce-group
       rocketmq:
         binder:
           # RocketMQ 服务地址
           name-server: 192.168.28.130:9876
-        bindings:
-          output:
-            producer:
-              group: produce-group
-          output2:
-            producer:
-              group: test-group2
-      bindings:
-        output:
-          destination: test-topic
-          content-type: application/json
 
 logging:
   level:
-    org:
-      springframework:
-        cloud:
-          stream:
-            binder:
-              rocketmq: DEBUG
+    org.springframework.context.support: debug

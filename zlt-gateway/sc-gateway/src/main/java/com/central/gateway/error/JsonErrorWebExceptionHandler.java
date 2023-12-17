@@ -7,7 +7,6 @@ import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.reactive.error.ErrorAttributes;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
 import org.springframework.web.reactive.function.server.*;
 
 import java.util.HashMap;
@@ -19,7 +18,7 @@ import java.util.Map;
  * @author zlt
  * @date 2020/3/30
  * <p>
- * Blog: https://zlt2000.gitee.io
+ * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 public class JsonErrorWebExceptionHandler extends DefaultErrorWebExceptionHandler {
@@ -80,7 +79,7 @@ public class JsonErrorWebExceptionHandler extends DefaultErrorWebExceptionHandle
      */
     private Map<String, Object> responseError(ServerRequest request, Throwable error) {
         String errorMessage = buildMessage(request, error);
-        int httpStatus = getHttpStatus(error);
+        int httpStatus = 200;//getHttpStatus(error);
         Map<String, Object> map = new HashMap<>();
         map.put("resp_code", 1);
         map.put("resp_msg", errorMessage);
@@ -91,12 +90,13 @@ public class JsonErrorWebExceptionHandler extends DefaultErrorWebExceptionHandle
 
     private int getHttpStatus(Throwable error) {
         int httpStatus;
-        if (error instanceof InvalidTokenException) {
+        /*if (error instanceof InvalidTokenException) {
             InvalidTokenException ex = (InvalidTokenException)error;
             httpStatus = ex.getHttpErrorCode();
         } else {
             httpStatus = HttpStatus.INTERNAL_SERVER_ERROR.value();
-        }
+        }*/
+        httpStatus = HttpStatus.INTERNAL_SERVER_ERROR.value();
         return httpStatus;
     }
 }

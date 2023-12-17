@@ -4,12 +4,13 @@
     <parent>
         <groupId>com.zlt</groupId>
         <artifactId>zlt-gateway</artifactId>
-        <version>5.6.0</version>
+        <version>6.0.0</version>
     </parent>
     <artifactId>sc-gateway</artifactId>
     <description>spring cloud gateway网关</description>
 
     <dependencies>
+
         <dependency>
             <groupId>com.zlt</groupId>
             <artifactId>zlt-config</artifactId>
@@ -18,6 +19,7 @@
             <groupId>com.zlt</groupId>
             <artifactId>zlt-log-spring-boot-starter</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.zlt</groupId>
             <artifactId>zlt-loadbalancer-spring-boot-starter</artifactId>
@@ -26,26 +28,10 @@
             <groupId>com.zlt</groupId>
             <artifactId>zlt-sentinel-spring-boot-starter</artifactId>
         </dependency>
-        <!--<dependency>
+        <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-alibaba-sentinel-gateway</artifactId>
-        </dependency>-->
-        <dependency>
-            <groupId>com.zlt</groupId>
-            <artifactId>zlt-auth-client-spring-boot-starter</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>com.zlt</groupId>
-            <artifactId>zlt-redis-spring-boot-starter</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-web</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
@@ -58,6 +44,22 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.zlt</groupId>
+            <artifactId>zlt-redis-spring-boot-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zlt</groupId>
+            <artifactId>zlt-auth-client-spring-boot-starter</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
@@ -74,13 +76,9 @@
         <!-- swagger -->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <artifactId>knife4j-gateway-spring-boot-starter</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-oauth2-resource-server</artifactId>
-        </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-extension</artifactId>
@@ -92,10 +90,6 @@
         <dependency>
             <groupId>eu.bitwalker</groupId>
             <artifactId>UserAgentUtils</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security.oauth</groupId>
-            <artifactId>spring-security-oauth2</artifactId>
         </dependency>
     </dependencies>
 

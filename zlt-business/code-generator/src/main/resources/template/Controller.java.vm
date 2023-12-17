@@ -2,12 +2,13 @@ package ${package}.${moduleName}.controller;
 
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import lombok.extern.slf4j.Slf4j;
 
 import ${package}.${moduleName}.model.${className};
@@ -24,18 +25,18 @@ import com.central.common.model.Result;
 @Slf4j
 @RestController
 @RequestMapping("/${pathName}")
-@Api(tags = "${comments}")
+@Tag(name = "${comments}")
+@RequiredArgsConstructor
 public class ${className}Controller {
-    @Autowired
-    private I${className}Service ${classname}Service;
+    private final I${className}Service ${classname}Service;
 
     /**
      * 列表
      */
-    @ApiOperation(value = "查询列表")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "page", value = "分页起始位置", required = true, dataType = "Integer"),
-            @ApiImplicitParam(name = "limit", value = "分页结束位置", required = true, dataType = "Integer")
+    @Operation(summary = "查询列表")
+    @Parameters({
+            @Parameter(name = "page",description = "分页起始位置",required = true,in=ParameterIn.QUERY),
+            @Parameter(name = "limit",description = "分页结束位置",required = true,in=ParameterIn.QUERY)
     })
     @GetMapping
     public PageResult list(@RequestParam Map<String, Object> params) {
@@ -45,7 +46,7 @@ public class ${className}Controller {
     /**
      * 查询
      */
-    @ApiOperation(value = "查询")
+    @Operation(summary = "查询")
     @GetMapping("/{${pk.attrname}}")
     public Result findUserById(@PathVariable Long ${pk.attrname}) {
         ${className} model = ${classname}Service.getById(${pk.attrname});
@@ -55,7 +56,7 @@ public class ${className}Controller {
     /**
      * 新增or更新
      */
-    @ApiOperation(value = "保存")
+    @Operation(summary = "保存")
     @PostMapping
     public Result save(@RequestBody ${className} ${classname}) {
         ${classname}Service.saveOrUpdate(${classname});
@@ -65,7 +66,8 @@ public class ${className}Controller {
     /**
      * 删除
      */
-    @ApiOperation(value = "删除")
+    @Operation(summary = "删除")
+    @Parameter(name = "id", description = "id", in = ParameterIn.PATH, required = true)
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Long ${pk.attrname}) {
         ${classname}Service.removeById(${pk.attrname});

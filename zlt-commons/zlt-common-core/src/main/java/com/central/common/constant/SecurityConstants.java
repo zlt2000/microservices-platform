@@ -5,10 +5,12 @@ package com.central.common.constant;
  *
  * @author zlt
  * <p>
- * Blog: https://zlt2000.gitee.io
+ * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 public interface SecurityConstants {
+    String PROJECT_LICENSE= "http://zlt2000.gitee.io/";
+
     /**
      * 用户信息分隔符
      */
@@ -63,6 +65,10 @@ public interface SecurityConstants {
      * oauth token
      */
     String OAUTH_TOKEN_URL = "/oauth/token";
+
+    String OAUTH_CHECK_TOKEN_URL = "/oauth/check_token";
+
+    String OAUTH_JWKS_URL = "/oauth/jwks";
 
     /**
      * 默认的处理验证码的url前缀
@@ -161,11 +167,11 @@ public interface SecurityConstants {
     /**
      * redis中应用对应的token集合的key
      */
-    String REDIS_CLIENT_ID_TO_ACCESS = "client_id_to_access:";
+    String REDIS_CLIENT_ID_TO_ACCESS = "client_id_to_access";
     /**
      * redis中用户名对应的token集合的key
      */
-    String REDIS_UNAME_TO_ACCESS = "uname_to_access:";
+    String REDIS_UNAME_TO_ACCESS = "uname_to_access";
     /**
      * rsa公钥
      */
@@ -189,4 +195,32 @@ public interface SecurityConstants {
      * 账号类型参数名
      */
     String ACCOUNT_TYPE_PARAM_NAME = "account_type";
+
+    /**
+     * 协议字段
+     */
+    String LICENSE_NAME = "license";
+
+    /**
+     * 客户端ID
+     */
+    String CLIENT_ID = "client_id";
+
+    /**
+     * 用户信息
+     */
+    String DETAILS_USER = "user_info";
+    /**
+     * 用户ID
+     */
+    String DETAILS_USER_ID = "user_id";
+    /**
+     * 用户名
+     */
+    String USERNAME = "username";
+
+    /**
+     * jwk set缓存前缀
+     */
+    String AUTHORIZATION_JWS_PREFIX_KEY = "authorization_jws";
 }

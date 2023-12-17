@@ -11,7 +11,7 @@ import com.central.common.service.ISuperService;
 /**
  * @author zlt
  * <p>
- * Blog: https://zlt2000.gitee.io
+ * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 public interface ISysRoleService extends ISuperService<SysRole> {

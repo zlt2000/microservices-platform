@@ -1,6 +1,5 @@
 package com.central.user.service;
 
-import com.central.common.model.LoginAppUser;
 import static org.assertj.core.api.Assertions.*;
 
 import com.central.common.model.PageResult;
@@ -27,8 +26,8 @@ public class SysUserServiceTest {
 
 	@Test
 	public void testFindByUsername() {
-		LoginAppUser loginAppUser = sysUserService.findByUsername("admin");
-		assertThat(loginAppUser).isNotNull();
+		SysUser sysUser = sysUserService.findByUsername("admin");
+		assertThat(sysUser).isNotNull();
 	}
 
 	@Test

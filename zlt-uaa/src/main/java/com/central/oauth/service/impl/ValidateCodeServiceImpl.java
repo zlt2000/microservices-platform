@@ -2,34 +2,34 @@ package com.central.oauth.service.impl;
 
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
-import com.central.common.feign.UserService;
-import com.central.common.redis.template.RedisRepository;
 import com.central.common.constant.SecurityConstants;
+import com.central.common.feign.UserService;
 import com.central.common.model.Result;
 import com.central.common.model.SysUser;
-import com.central.oauth.exception.ValidateCodeException;
 import com.central.oauth.service.IValidateCodeService;
+import com.central.oauth.exception.CustomOAuth2AuthenticationException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.redisson.api.RBucket;
+import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
+import java.time.Duration;
 
 /**
  * @author zlt
  * @date 2018/12/10
  * <p>
- * Blog: https://zlt2000.gitee.io
+ * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class ValidateCodeServiceImpl implements IValidateCodeService {
-    @Autowired
-    private RedisRepository redisRepository;
+    private final RedissonClient redisson;
 
-    @Resource
-    private UserService userService;
+    private final UserService userService;
 
     /**
      * 保存用户验证码，和randomStr绑定
@@ -39,7 +39,8 @@ public class ValidateCodeServiceImpl implements IValidateCodeService {
      */
     @Override
     public void saveImageCode(String deviceId, String imageCode) {
-        redisRepository.setExpire(buildKey(deviceId), imageCode, SecurityConstants.DEFAULT_IMAGE_EXPIRE);
+        this.getBucket(deviceId)
+                .set(imageCode, Duration.ofSeconds(SecurityConstants.DEFAULT_IMAGE_EXPIRE));
     }
 
     /**
@@ -54,8 +55,9 @@ public class ValidateCodeServiceImpl implements IValidateCodeService {
      * @return true、false
      */
     @Override
-    public Result sendSmsCode(String mobile) {
-        Object tempCode = redisRepository.get(buildKey(mobile));
+    public Result<String> sendSmsCode(String mobile) {
+        RBucket<String> rBucket = this.getBucket(mobile);
+        Object tempCode = rBucket.get();
         if (tempCode != null) {
             log.error("用户:{}验证码未失效{}", mobile, tempCode);
             return Result.failed("验证码未失效，请失效后再次申请");
@@ -69,7 +71,7 @@ public class ValidateCodeServiceImpl implements IValidateCodeService {
 
         String code = RandomUtil.randomNumbers(4);
         log.info("短信发送请求消息中心 -> 手机号:{} -> 验证码：{}", mobile, code);
-        redisRepository.setExpire(buildKey(mobile), code, SecurityConstants.DEFAULT_IMAGE_EXPIRE);
+        rBucket.set(code, Duration.ofSeconds(SecurityConstants.DEFAULT_IMAGE_EXPIRE));
         return Result.succeed("true");
     }
 
@@ -79,7 +81,7 @@ public class ValidateCodeServiceImpl implements IValidateCodeService {
      */
     @Override
     public String getCode(String deviceId) {
-        return (String)redisRepository.get(buildKey(deviceId));
+        return this.getBucket(deviceId).get();
     }
 
     /**
@@ -88,7 +90,7 @@ public class ValidateCodeServiceImpl implements IValidateCodeService {
      */
     @Override
     public void remove(String deviceId) {
-        redisRepository.del(buildKey(deviceId));
+        this.getBucket(deviceId).delete();
     }
 
     /**
@@ -97,19 +99,19 @@ public class ValidateCodeServiceImpl implements IValidateCodeService {
     @Override
     public void validate(String deviceId, String validCode) {
         if (StrUtil.isBlank(deviceId)) {
-            throw new ValidateCodeException("请在请求参数中携带deviceId参数");
+            throw new CustomOAuth2AuthenticationException("请在请求参数中携带deviceId参数");
         }
         String code = this.getCode(deviceId);
         if (StrUtil.isBlank(validCode)) {
-            throw new ValidateCodeException("请填写验证码");
+            throw new CustomOAuth2AuthenticationException("请填写验证码");
         }
 
         if (code == null) {
-            throw new ValidateCodeException("验证码不存在或已过期");
+            throw new CustomOAuth2AuthenticationException("验证码不存在或已过期");
         }
 
         if (!StrUtil.equals(code, validCode.toLowerCase())) {
-            throw new ValidateCodeException("验证码不正确");
+            throw new CustomOAuth2AuthenticationException("验证码不正确");
         }
 
         this.remove(deviceId);
@@ -117,5 +119,9 @@ public class ValidateCodeServiceImpl implements IValidateCodeService {
 
     private String buildKey(String deviceId) {
         return SecurityConstants.DEFAULT_CODE_KEY + ":" + deviceId;
+    }
+
+    private RBucket<String> getBucket(String deviceId) {
+        return redisson.getBucket(buildKey(deviceId));
     }
 }

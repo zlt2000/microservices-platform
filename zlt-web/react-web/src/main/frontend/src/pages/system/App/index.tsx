@@ -118,17 +118,11 @@ const TableList: React.FC = () => {
       width: 40,
     },
     {
-      title: '支持ID令牌',
-      key: 'supportIdToken',
+      title: '令牌类型',
+      key: 'tokenFormat',
       width: 40,
       align: 'center',
-      renderText: (_, record) => (record.supportIdToken ? '是' : '否'),
-    },
-    {
-      title: 'ID时效',
-      dataIndex: 'idTokenValiditySeconds',
-      valueType: 'second',
-      width: 40,
+      renderText: (_, record) => (record.tokenFormat == 'reference' ? '引用令牌' : '自包含令牌'),
     },
     {
       title: '操作',

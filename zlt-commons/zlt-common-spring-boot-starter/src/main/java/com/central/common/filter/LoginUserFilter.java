@@ -1,17 +1,17 @@
 package com.central.common.filter;
 
 import com.central.common.context.LoginUserContextHolder;
-import com.central.common.model.SysUser;
+import com.central.common.model.LoginAppUser;
 import com.central.common.utils.LoginUserUtils;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
@@ -20,7 +20,7 @@ import java.io.IOException;
  * @author zlt
  * @date 2022/6/26
  * <p>
- * Blog: https://zlt2000.gitee.io
+ * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
 @ConditionalOnClass(Filter.class)
@@ -30,7 +30,7 @@ public class LoginUserFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws IOException, ServletException {
         try {
-            SysUser user = LoginUserUtils.getCurrentUser(request, false);
+            LoginAppUser user = LoginUserUtils.getCurrentUser(request, false);
             LoginUserContextHolder.setUser(user);
             filterChain.doFilter(request, response);
         } finally {

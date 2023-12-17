@@ -53,46 +53,43 @@ public class SysUserServiceImpl extends SuperServiceImpl<SysUserMapper, SysUser>
     private DistributedLock lock;
 
     @Override
-    public LoginAppUser findByUsername(String username) {
+    public SysUser findByUsername(String username) {
         SysUser sysUser = this.selectByUsername(username);
-        return getLoginAppUser(sysUser);
+        setUserPermission(sysUser);
+        return sysUser;
     }
 
     @Override
-    public LoginAppUser findByOpenId(String username) {
+    public SysUser findByOpenId(String username) {
         SysUser sysUser = this.selectByOpenId(username);
-        return getLoginAppUser(sysUser);
+        setUserPermission(sysUser);
+        return sysUser;
     }
 
     @Override
-    public LoginAppUser findByMobile(String username) {
+    public SysUser findByMobile(String username) {
         SysUser sysUser = this.selectByMobile(username);
-        return getLoginAppUser(sysUser);
+        setUserPermission(sysUser);
+        return sysUser;
     }
 
     @Override
-    public LoginAppUser getLoginAppUser(SysUser sysUser) {
+    public void setUserPermission(SysUser sysUser) {
         if (sysUser != null) {
-            LoginAppUser loginAppUser = new LoginAppUser();
-            BeanUtils.copyProperties(sysUser, loginAppUser);
-
             List<SysRole> sysRoles = roleUserService.findRolesByUserId(sysUser.getId());
-            // 设置角色
-            loginAppUser.setRoles(sysRoles);
+            sysUser.setRoles(sysRoles);
 
+            Set<String> permissions;
             if (!CollectionUtils.isEmpty(sysRoles)) {
                 Set<Long> roleIds = sysRoles.stream().map(SuperEntity::getId).collect(Collectors.toSet());
                 List<SysMenu> menus = roleMenuMapper.findMenusByRoleIds(roleIds, CommonConstant.PERMISSION);
                 if (!CollectionUtils.isEmpty(menus)) {
-                    Set<String> permissions = menus.stream().map(p -> p.getPath())
+                    permissions = menus.stream().map(p -> p.getPath())
                             .collect(Collectors.toSet());
-                    // 设置权限集合
-                    loginAppUser.setPermissions(permissions);
+                    sysUser.setPermissions(permissions);
                 }
             }
-            return loginAppUser;
         }
-        return null;
     }
 
     /**

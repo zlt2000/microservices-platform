@@ -4,3 +4,5 @@ server:
 spring:
   application:
     name: sc-gateway
+  main:
+    web-application-type: reactive

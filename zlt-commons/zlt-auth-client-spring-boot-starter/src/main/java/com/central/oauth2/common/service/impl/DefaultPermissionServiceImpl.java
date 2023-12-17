@@ -3,7 +3,9 @@ package com.central.oauth2.common.service.impl;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.central.common.constant.CommonConstant;
+import com.central.common.constant.SecurityConstants;
 import com.central.common.context.TenantContextHolder;
+import com.central.common.model.LoginAppUser;
 import com.central.common.model.SysMenu;
 import com.central.oauth2.common.properties.SecurityProperties;
 import com.central.oauth2.common.util.AuthUtils;
@@ -14,10 +16,13 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.server.resource.introspection.OAuth2IntrospectionAuthenticatedPrincipal;
 import org.springframework.util.AntPathMatcher;
 
+import java.security.Principal;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -54,15 +59,17 @@ public abstract class DefaultPermissionServiceImpl {
             if (!securityProperties.getAuth().getUrlPermission().getEnable()) {
                 return true;
             }
+
+            OAuth2IntrospectionAuthenticatedPrincipal authenticatedPrincipal = (OAuth2IntrospectionAuthenticatedPrincipal)authentication.getPrincipal();
             //超级管理员admin不需认证
-            String username = AuthUtils.getUsername(authentication);
+            String username = authenticatedPrincipal.getName();
             if (CommonConstant.ADMIN_USER_NAME.equals(username)) {
                 return true;
             }
-
-            OAuth2Authentication auth2Authentication = (OAuth2Authentication)authentication;
+            Map<String, Object> claims = authenticatedPrincipal.getAttributes();
+            String clientId = (String)claims.get(SecurityConstants.CLIENT_ID);
             //判断应用黑白名单
-            if (!isNeedAuth(auth2Authentication.getOAuth2Request().getClientId())) {
+            if (!isNeedAuth(clientId)) {
                 return true;
             }
 
@@ -73,14 +80,13 @@ public abstract class DefaultPermissionServiceImpl {
                 }
             }
 
-            List<SimpleGrantedAuthority> grantedAuthorityList = (List<SimpleGrantedAuthority>) authentication.getAuthorities();
+            Collection<SimpleGrantedAuthority> grantedAuthorityList = (Collection<SimpleGrantedAuthority>) authentication.getAuthorities();
             if (CollectionUtil.isEmpty(grantedAuthorityList)) {
                 log.warn("角色列表为空：{}", authentication.getPrincipal());
                 return false;
             }
 
             //保存租户信息
-            String clientId = auth2Authentication.getOAuth2Request().getClientId();
             TenantContextHolder.setTenant(clientId);
 
             String roleCodes = grantedAuthorityList.stream().map(SimpleGrantedAuthority::getAuthority).collect(Collectors.joining(", "));

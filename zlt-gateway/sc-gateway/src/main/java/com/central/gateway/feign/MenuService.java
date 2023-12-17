@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @author zlt
  */
-@FeignClient(name = ServiceNameConstants.USER_SERVICE, fallbackFactory = MenuServiceFallbackFactory.class, decode404 = true)
+@FeignClient(name = ServiceNameConstants.USER_SERVICE, fallbackFactory = MenuServiceFallbackFactory.class, dismiss404 = true)
 public interface MenuService {
 	/**
 	 * 角色菜单列表
