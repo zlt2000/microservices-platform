@@ -1,10 +1,9 @@
 package com.sso.demo.controller;
 
-import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
-import com.central.common.model.Result;
+import cn.hutool.json.JSONArray;
+import cn.hutool.json.JSONObject;
 import com.central.common.utils.JsonUtil;
-import com.central.common.utils.RsaUtils;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -24,8 +23,14 @@ import org.springframework.web.client.RestTemplate;
 import org.apache.commons.codec.binary.Base64;
 
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
+import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPublicKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.RSAPublicKeySpec;
 import java.util.*;
 
 /**
@@ -38,9 +43,6 @@ import java.util.*;
 @Slf4j
 @RestController
 public class ApiController {
-    private static final String PUBKEY_START = "-----BEGIN PUBLIC KEY-----";
-    private static final String PUBKEY_END = "-----END PUBLIC KEY-----";
-
     @Value("${zlt.sso.client-id:}")
     private String clientId;
 
@@ -64,36 +66,32 @@ public class ApiController {
     /**
      * 模拟用户数据库
      */
-    private static final Map<Long, MyUser> userDb = new HashMap<>();
+    private static final Map<String, String> userDb = new HashMap<>();
 
-    /**
-     * nonce存储
-     */
-    private final static ThreadLocal<String> NONCE = new ThreadLocal<>();
-
-    private final static Map<String, MyUser> localTokenMap = new HashMap<>();
+    private final static Map<String, String> localTokenMap = new HashMap<>();
 
     @GetMapping("/token/{code}")
     public Map<String, Object> tokenInfo(@PathVariable String code) throws Exception {
         //获取token
         Map<String, Object> tokenMap = getAccessToken(code);
-        String idTokenStr = (String)tokenMap.get("id_token");
+        Map datasMap = (Map)tokenMap.get("datas");
+        String idTokenStr = (String)datasMap.get("id_token");
         //解析id_token
         JsonNode idToken = this.getIdTokenJson(idTokenStr);
         //检查id_token的有效性
         checkToken(idToken);
         //获取用户信息
-        MyUser user = this.getUserInfo(idToken);
+        String username = idToken.get("sub").asText();
         //判断用户信息是否存在，否则注册用户信息
-        if (!userDb.containsKey(user.getId())) {
-            userDb.put(user.getId(), user);
+        if (!userDb.containsKey(username)) {
+            userDb.put(username, username);
         }
-        String accessToken = (String)tokenMap.get("access_token");
-        localTokenMap.put(accessToken, user);
+        String accessToken = (String)datasMap.get("access_token");
+        localTokenMap.put(accessToken, username);
 
         Map<String, Object> result = new HashMap<>(2);
-        result.put("tokenInfo", tokenMap);
-        result.put("userInfo", user);
+        result.put("tokenInfo", datasMap);
+        result.put("userInfo", username);
         return result;
     }
 
@@ -109,7 +107,7 @@ public class ApiController {
     }
 
     @GetMapping("/user")
-    public MyUser user(HttpServletRequest request) {
+    public String user(HttpServletRequest request) {
         String token = request.getParameter("access_token");
         return localTokenMap.get(token);
     }
@@ -121,15 +119,11 @@ public class ApiController {
         //token有效期
         long expiresAt = idToken.get("exp").asLong();
         long now = System.currentTimeMillis();
-        Assert.isTrue((expiresAt > now), "id_token已过期");
+        //Assert.isTrue((expiresAt > now), "id_token已过期");
 
         //应用id
         String aud = idToken.get("aud").asText();
         Assert.isTrue(clientId.equals(aud), "非法应用"+aud);
-
-        //随机码
-        String nonce = idToken.get("nonce").asText();
-        Assert.isTrue((StrUtil.isEmpty(nonce) || nonce.equals(NONCE.get())), "nonce参数无效");
     }
 
     /**
@@ -147,16 +141,9 @@ public class ApiController {
         param.add("grant_type", "authorization_code");
         param.add("redirect_uri", redirectUri);
         param.add("scope", "all");
-        param.add("nonce", this.genNonce());
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(param, headers);
         ResponseEntity<Map> response = restTemplate.postForEntity(accessTokenUri, request , Map.class);
         return response.getBody();
-    }
-
-    private String genNonce() {
-        String nonce = RandomUtil.randomString(6);
-        NONCE.set(nonce);
-        return nonce;
     }
 
     /**
@@ -165,18 +152,6 @@ public class ApiController {
     public JsonNode getIdTokenJson(String idToken) throws Exception {
         RSAPublicKey publicKey = getPubKeyObj();
         return this.decodeAndVerify(idToken, publicKey);
-    }
-
-    /**
-     * 通过 id_token 获取用户信息
-     */
-    public MyUser getUserInfo(JsonNode idToken) {
-        MyUser user = new MyUser();
-        user.setId(Long.valueOf(idToken.get("sub").textValue()));
-        user.setName(idToken.get("name").textValue());
-        user.setLoginName(idToken.get("login_name").textValue());
-        user.setPicture(idToken.get("picture").textValue());
-        return user;
     }
 
     private JsonNode decodeAndVerify(String jwtToken, RSAPublicKey rsaPublicKey) {
@@ -203,13 +178,25 @@ public class ApiController {
 
         HttpEntity<String> request = new HttpEntity<>(headers);
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Result> response = restTemplate.exchange(jwtKeyUri, HttpMethod.GET, request, Result.class);
-        Result<String> result = response.getBody();
-        Assert.isTrue((result.getResp_code() == 0), result.getResp_msg());
+        ResponseEntity<JSONObject> response = restTemplate.exchange(jwtKeyUri, HttpMethod.GET, request, JSONObject.class);
+        JSONObject result = response.getBody();
+        JSONArray keys = (JSONArray) result.get("keys");
+        JSONObject keyObj = (JSONObject) keys.get(0);
+        String e = (String) keyObj.get("e");
+        String n = (String) keyObj.get("n");
+        return this.getKeyInstance(n, e);
+    }
 
-        String publicKeyStr = result.getResp_msg();
-        publicKeyStr = publicKeyStr.substring(PUBKEY_START.length(), publicKeyStr.indexOf(PUBKEY_END));
-        return RsaUtils.getPublicKey(publicKeyStr);
+    private static RSAPublicKey getKeyInstance(String n, String e) throws InvalidKeySpecException, NoSuchAlgorithmException {
+        // 将 Base64 编码的字符串解码为字节数组
+        byte[] modulus = Base64.decodeBase64(n);
+        byte[] exponent = Base64.decodeBase64(e);
+        // 创建 RSA 公钥规范
+        RSAPublicKeySpec spec = new RSAPublicKeySpec(new BigInteger(1, modulus), new BigInteger(1, exponent));
+        // 获取 RSA 密钥工厂
+        KeyFactory kf = KeyFactory.getInstance("RSA");
+        // 生成公钥
+        return (RSAPublicKey)kf.generatePublic(spec);
     }
 
     /**

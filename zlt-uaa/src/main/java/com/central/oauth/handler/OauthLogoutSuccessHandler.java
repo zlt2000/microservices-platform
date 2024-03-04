@@ -28,7 +28,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 @Component
 public class OauthLogoutSuccessHandler implements LogoutSuccessHandler {
-	private static final String REDIRECT_URL = "redirect_url";
+	private static final String REDIRECT_URL = "redirect_uri";
 	private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 	private final UnifiedLogoutService unifiedLogoutService;
 	private final SecurityProperties securityProperties;
