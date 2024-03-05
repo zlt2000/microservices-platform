@@ -16,10 +16,8 @@
 </div>
 <script>
     function login() {
-        let state = getState();
         sessionStorage.setItem("visitUri", window.location.href);
-        sessionStorage.setItem("state", state);
-        window.location = getAuthorizeUri(state);
+        window.location = getAuthorizeUri();
     }
 
     window.onload = function() {

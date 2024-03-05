@@ -10,16 +10,6 @@
 <body>
 <script>
     window.onload = function() {
-        //url获取state
-        let state = getQueryVariable('state');
-        let localState = sessionStorage.getItem("state");
-        //判断state防止CSRF攻击
-        if (localState !== state) {
-            alert('state参数无效！');
-            let state = getState();
-            sessionStorage.setItem("state", state);
-            window.location = getAuthorizeUri(state);
-        }
         //url获取code
         let code = getQueryVariable('code');
 
