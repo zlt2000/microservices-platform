@@ -45,7 +45,7 @@ public class DefaultResourceServerConf {
     private AccessDeniedHandler oAuth2AccessDeniedHandler;
 
     @Bean
-    public SecurityFilterChain springSecurityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authorizeRequests -> {
             AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizedUrl authorizedUrl = authorizeRequests
                     .requestMatchers(HttpMethod.OPTIONS).permitAll()
