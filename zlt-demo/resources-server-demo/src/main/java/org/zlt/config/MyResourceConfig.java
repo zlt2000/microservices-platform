@@ -1,7 +1,7 @@
 package org.zlt.config;
 
+import com.central.oauth2.common.config.DefaultResourceServerConf;
 import org.springframework.context.annotation.Configuration;
-//import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 
 /**
  * security资源服务器配置
@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Configuration;
  * Blog: http://zlt2000.gitee.io
  * Github: https://github.com/zlt2000
  */
-/*@Configuration
-@EnableResourceServer
+@Configuration
 public class MyResourceConfig extends DefaultResourceServerConf {
-}*/
+}

@@ -6,20 +6,12 @@ let uaaUri = 'http://127.0.0.1:9900/api-uaa/oauth/';
 //端口
 let port = 8082;
 
-function getAuthorizeUri(state) {
-    return uaaUri+'authorize?client_id='+clientId+'&redirect_uri=http://127.0.0.1:'+port+'/callback.html&response_type=code%20id_token&state='+state;
+function getAuthorizeUri() {
+    return uaaUri+'authorize?client_id='+clientId+'&redirect_uri=http://127.0.0.1:'+port+'/callback.html&scope=openid&response_type=code';
 }
 
 function getLogoutUri(accessToken) {
     return uaaUri+'remove/token?redirect_uri=http://127.0.0.1:'+port+'/index.html&access_token='+accessToken;
-}
-
-function getState() {
-    let state='';
-    for (let i = 0; i < 6; i++) {
-        state += FULL_CHARTER[Math.floor(Math.random() * 52)];
-    }
-    return state;
 }
 
 /**

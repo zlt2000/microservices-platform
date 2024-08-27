@@ -3,10 +3,12 @@ package com.central.oauth2.common.config;
 import cn.hutool.extra.spring.SpringUtil;
 import com.central.oauth2.common.component.CustomAuthorizationServiceIntrospector;
 import com.central.oauth2.common.component.CustomBearerTokenResolver;
+import com.central.oauth2.common.enums.TokenType;
 import com.central.oauth2.common.properties.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -45,7 +47,7 @@ public class DefaultResourceServerConf {
     private AccessDeniedHandler oAuth2AccessDeniedHandler;
 
     @Bean
-    public SecurityFilterChain springSecurityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authorizeRequests -> {
             AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizedUrl authorizedUrl = authorizeRequests
                     .requestMatchers(HttpMethod.OPTIONS).permitAll()
@@ -64,8 +66,13 @@ public class DefaultResourceServerConf {
         http.oauth2ResourceServer(oauth2 -> {
             oauth2.authenticationEntryPoint(authenticationEntryPoint)
                     .bearerTokenResolver(customBearerTokenResolver)
-                    .accessDeniedHandler(oAuth2AccessDeniedHandler)
-                    .opaqueToken(token -> token.introspector(this.getOpaqueTokenIntrospector()));
+                    .accessDeniedHandler(oAuth2AccessDeniedHandler);
+            if (TokenType.JWT.getName().equals(securityProperties.getResourceServer().getTokenType())) {
+                oauth2.jwt(Customizer.withDefaults());
+            } else {
+                oauth2.opaqueToken(token -> token.introspector(this.getOpaqueTokenIntrospector()));
+            }
+                    //.opaqueToken(token -> token.introspector(this.getOpaqueTokenIntrospector()));
         });
 
         return http.build();
