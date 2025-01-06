@@ -10,13 +10,23 @@
 <body>
 <script>
     window.onload = function() {
+        //url获取state
+        let state = getQueryVariable('state');
+        let localState = sessionStorage.getItem("state");
+        //判断state防止CSRF攻击
+        if (localState !== state) {
+            alert('state参数无效！');
+            let state = getState();
+            sessionStorage.setItem("state", state);
+            window.location = getAuthorizeUri(state);
+        }
         //url获取code
         let code = getQueryVariable('code');
 
         //获取token和用户信息
-        $.ajax({url:'http://127.0.0.1:'+port+'/token/'+code, success:function(result) {
+        $.ajax({url:'http://127.0.0.1:8080/token/'+code, success:function(result) {
             console.log(result);
-            sessionStorage.setItem('access_token', result.tokenInfo.access_token);
+            sessionStorage.setItem('access_token', result);
             window.location = sessionStorage.getItem('visitUri');
         }});
     };

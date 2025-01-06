@@ -9,25 +9,29 @@
 </head>
 <body>
 <div>
-    <p>登录名：<span id="loginName"></span></p>
+    <p>用户名：<span id="userName"></span></p>
+    <p>权限：[<span id="roles"></span>]</p>
     <p>应用id：<span id="clientId"></span></p>
     <p>token：<span id="accessToken"></span></p>
     <p><input type="button" value="登出" onclick="logout()"/></p>
 </div>
 <script>
     function login() {
+        let state = getState();
         sessionStorage.setItem("visitUri", window.location.href);
-        window.location = getAuthorizeUri();
+        sessionStorage.setItem("state", state);
+        window.location = getAuthorizeUri(state);
     }
 
     window.onload = function() {
         let accessToken = sessionStorage.getItem('access_token');
         if (accessToken) {//已登录
             //获取token和用户信息
-            $.ajax({url:'http://127.0.0.1:'+port+'/user?access_token='+accessToken, success:function(result) {
-                if (result) {
+            $.ajax({url:'http://127.0.0.1:8080/user?access_token='+accessToken, success:function(result) {
+                if (result.username) {
                     $('#accessToken').html(accessToken);
-                    $('#loginName').html(result);
+                    $('#userName').html(result.username);
+                    $('#roles').html(result.roles);
                     $('#clientId').html(clientId);
                 } else {
                     login();
