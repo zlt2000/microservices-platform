@@ -160,3 +160,16 @@ central-platform -- 父项目，公共依赖
         <td><img alt="应用吞吐量监控" src="https://gitee.com/zlt2000/images/raw/master/%E5%BA%94%E7%94%A8%E5%90%9E%E5%90%90%E9%87%8F%E7%9B%91%E6%8E%A7.png"/></td>
     </tr>
 </table>
+
+
+## 8.友情链接
+
+### flowsphere
+
+云原生微服务流量治理解决方案，项目地址：https://github.com/flowsphere-projects/flowsphere
+
+项目亮点：
+
+1.全网唯一使用JavaAgent实现Http、MQ、Job全链路灰度
+
+2.全网唯一支持JavaAgent接入Sentinel

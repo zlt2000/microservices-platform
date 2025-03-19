@@ -95,10 +95,10 @@
         <discardingThreshold>0</discardingThreshold>
         <appender-ref ref="audit_log"/>
     </appender>
-    <logger name="com.central.log.monitor" level="debug" addtivity="false">
+    <logger name="com.central.log.monitor" level="debug" additivity="false">
         <appender-ref ref="point_log_async" />
     </logger>
-    <logger name="com.central.log.service.impl.LoggerAuditServiceImpl" level="debug" addtivity="false">
+    <logger name="com.central.log.service.impl.LoggerAuditServiceImpl" level="debug" additivity="false">
         <appender-ref ref="audit_log_async" />
     </logger>
 
