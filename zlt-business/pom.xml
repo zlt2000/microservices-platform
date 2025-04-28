@@ -14,8 +14,6 @@
         <module>user-center</module>
         <!-- 文件中心 -->
         <module>file-center</module>
-        <!-- 代码生成器 -->
-        <module>code-generator</module>
         <!-- 搜索中心 -->
         <module>search-center</module>
     </modules>

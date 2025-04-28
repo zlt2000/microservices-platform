@@ -1,6 +1,0 @@
-server:
-  port: 7300
-
-spring:
-  application:
-    name: code-generator

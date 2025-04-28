@@ -36,6 +36,10 @@ public class UserDetailServiceFactory {
         return this.getService(accountType);
     }
 
+    public ZltUserDetailsService getService() {
+        return this.getService(SecurityConstants.DEF_ACCOUNT_TYPE);
+    }
+
     public ZltUserDetailsService getService(String accountType) {
         if (StrUtil.isEmpty(accountType)) {
             accountType = SecurityConstants.DEF_ACCOUNT_TYPE;

@@ -177,7 +177,9 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 
 	public void remove(String accessToken) {
 		OAuth2Authorization oAuth2Authorization = this.findById(accessToken);
-		this.remove(oAuth2Authorization);
+		if (oAuth2Authorization != null) {
+			this.remove(oAuth2Authorization);
+		}
 	}
 
 	public List<String> findTokensByClientId(String clientId) {
