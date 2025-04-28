@@ -1,10 +1,13 @@
 package com.central.common.feign.fallback;
 
 import com.central.common.feign.UserService;
+import com.central.common.model.Result;
 import com.central.common.model.SysRole;
 import com.central.common.model.SysUser;
 import org.springframework.cloud.openfeign.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Collections;
 import java.util.List;
@@ -65,6 +68,15 @@ public class UserServiceFallbackFactory implements FallbackFactory<UserService> 
             public List<SysRole> findRolesByUserId(Long id) {
                 log.error("通过用户id查询角色列表异常:{}", id, throwable);
                 return Collections.emptyList();
+            }
+
+            /**
+             * 保存用户
+             */
+            @PostMapping("/users/saveOrUpdate")
+            public Result saveOrUpdate(@RequestBody SysUser sysUser) {
+                log.error("保存用户异常", throwable);
+                return Result.failed(throwable.getMessage());
             }
         };
     }
